@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<meta name="theme-color" content="#003B6F">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Predicador">
+<title>Predicador</title>
+<link rel="manifest" href="/manifest.json">
+<style>
+:root{--az:#009FDA;--marino:#003B6F;--oro:#F0AB00;--bg:#F0F4F8;--card:#fff;--texto:#1a2e3b;--gris:#7a93a8;--border:#e0eaf2;--sombra:0 1px 6px rgba(0,59,111,.09);--radio:12px}
+[data-theme=dark]{--bg:#0d1117;--card:#161b22;--texto:#e6edf3;--gris:#8b949e;--border:#30363d;--sombra:0 1px 6px rgba(0,0,0,.3)}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:var(--bg);color:var(--texto);height:100vh;overflow:hidden;transition:background .25s,color .25s}
+#splash{position:fixed;inset:0;background:linear-gradient(160deg,var(--marino),var(--az));display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:999;transition:opacity .5s}
+.splash-icon{font-size:64px;margin-bottom:14px;animation:pulse 1.5s ease-in-out infinite}
+@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.08)}}
+#splash h1{color:white;font-size:24px;font-weight:800;letter-spacing:2px}
+#splash p{color:rgba(255,255,255,.6);font-size:12px;margin-top:6px;letter-spacing:1px}
+#app{display:none;flex-direction:column;height:100vh}
+#header{background:linear-gradient(90deg,var(--marino),#005a9e);padding:10px 14px;display:flex;align-items:center;gap:10px;flex-shrink:0;box-shadow:0 2px 10px rgba(0,0,0,.2)}
+.h-title{color:white;font-size:16px;font-weight:800;flex:1;letter-spacing:.5px}
+.h-btn{background:rgba(255,255,255,.15);border:none;color:white;width:34px;height:34px;border-radius:50%;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+#content{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch}
+.sub{background:linear-gradient(135deg,var(--marino),#005a9e);padding:12px 14px 10px}
+.bib-search{display:flex;align-items:center;background:rgba(255,255,255,.14);border-radius:10px;padding:0 12px;height:40px;gap:8px}
+.bib-search svg{width:16px;height:16px;stroke:rgba(255,255,255,.7);fill:none;flex-shrink:0;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.bib-search input{flex:1;background:none;border:none;outline:none;color:white;font-size:13px;font-family:inherit}
+.bib-search input::placeholder{color:rgba(255,255,255,.45)}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;padding:12px 14px 4px}
+.stat{background:var(--card);border-radius:var(--radio);padding:10px 8px;text-align:center;box-shadow:var(--sombra)}
+.stat-n{font-size:20px;font-weight:800;color:var(--az);line-height:1}
+.stat-l{font-size:10px;color:var(--gris);font-weight:600;text-transform:uppercase;letter-spacing:.4px;margin-top:3px}
+.pills{display:flex;gap:8px;overflow-x:auto;padding:8px 14px 4px;scrollbar-width:none}
+.pills::-webkit-scrollbar{display:none}
+.pill{padding:6px 14px;border-radius:100px;font-size:12px;font-weight:700;white-space:nowrap;cursor:pointer;border:1.5px solid var(--border);font-family:inherit;transition:all .2s;flex-shrink:0;background:var(--card);color:var(--gris)}
+.pill.all{background:var(--marino);color:white;border-color:var(--marino)}
+.pill.on-bosquejo{background:#009FDA;color:white;border-color:#009FDA}
+.pill.on-ebook{background:#6C3FC5;color:white;border-color:#6C3FC5}
+.pill.on-evangelismo{background:#E05C2A;color:white;border-color:#E05C2A}
+.pill.on-estudio{background:#00A878;color:white;border-color:#00A878}
+.pill.on-devocion{background:#F0AB00;color:#003B6F;border-color:#F0AB00}
+.pill.on-serie{background:#534AB7;color:white;border-color:#534AB7}
+.grid{display:flex;flex-direction:column;gap:10px;padding:10px 14px 100px}
+.card{background:var(--card);border-radius:var(--radio);padding:14px;box-shadow:var(--sombra);cursor:pointer;display:flex;gap:12px;align-items:flex-start;transition:transform .15s;border-left:3px solid transparent}
+.card:active{transform:scale(.98)}
+.card[data-cat="bosquejo"]{border-left-color:#009FDA}
+.card[data-cat="ebook"]{border-left-color:#6C3FC5}
+.card[data-cat="evangelismo"]{border-left-color:#E05C2A}
+.card[data-cat="estudio"]{border-left-color:#00A878}
+.card[data-cat="devocion"]{border-left-color:#F0AB00}
+.card[data-cat="serie"]{border-left-color:#534AB7}
+.card-emoji{font-size:28px;flex-shrink:0;margin-top:2px}
+.card-body{flex:1;min-width:0}
+.card-cat{font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:3px}
+.card[data-cat="bosquejo"] .card-cat{color:#009FDA}
+.card[data-cat="ebook"] .card-cat{color:#6C3FC5}
+.card[data-cat="evangelismo"] .card-cat{color:#E05C2A}
+.card[data-cat="estudio"] .card-cat{color:#00A878}
+.card[data-cat="devocion"] .card-cat{color:#b8860b}
+.card[data-cat="serie"] .card-cat{color:#534AB7}
+.card-titulo{font-size:14px;font-weight:700;color:var(--texto);margin-bottom:3px;line-height:1.3}
+.card-verso{font-size:11px;color:var(--gris);font-style:italic;margin-bottom:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.card-resumen{font-size:12px;color:var(--gris);line-height:1.5;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.card-meta{display:flex;align-items:center;justify-content:space-between;margin-top:8px}
+.card-nuevo{font-size:9px;background:#e8f5e9;color:#2e7d32;padding:2px 7px;border-radius:20px;font-weight:700}
+.empty{text-align:center;padding:50px 20px;color:var(--gris)}
+.empty-icon{font-size:44px;margin-bottom:10px}
+.fab{position:fixed;bottom:20px;right:16px;z-index:40;background:var(--oro);color:var(--marino);border:none;width:52px;height:52px;border-radius:50%;font-size:26px;cursor:pointer;box-shadow:0 4px 16px rgba(240,171,0,.5);display:flex;align-items:center;justify-content:center}
+.modal-bg{display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:100;align-items:flex-end;justify-content:center}
+.modal-bg.open{display:flex}
+.sheet{background:var(--card);border-radius:20px 20px 0 0;padding:20px 16px 36px;width:100%;max-width:480px;max-height:92vh;overflow-y:auto}
+.sheet-title{font-size:16px;font-weight:800;color:var(--texto);margin-bottom:16px;display:flex;align-items:center;justify-content:space-between}
+.sheet-close{background:none;border:none;font-size:24px;cursor:pointer;color:var(--gris);line-height:1}
+.lbl{font-size:11px;font-weight:700;color:var(--gris);margin-bottom:4px;display:block;text-transform:uppercase;letter-spacing:.5px}
+.inp,.sel,.ta{width:100%;border:1.5px solid var(--border);border-radius:10px;padding:10px 12px;font-size:13px;font-family:inherit;color:var(--texto);background:var(--card);margin-bottom:12px;outline:none}
+.ta{min-height:60px;resize:vertical}
+.file-zone{border:2px dashed var(--border);border-radius:12px;padding:24px;text-align:center;cursor:pointer;margin-bottom:8px;transition:all .2s;position:relative;overflow:hidden}
+.file-zone.ok{border-color:#00A878;background:#f0faf6}
+[data-theme=dark] .file-zone.ok{background:#0d2e1c}
+.file-zone input{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%}
+.check-row{display:flex;gap:8px;align-items:center;margin-bottom:12px}
+.check-row input{width:18px;height:18px;accent-color:var(--oro);cursor:pointer}
+.check-row label{font-size:13px;color:var(--gris);cursor:pointer}
+.btn-sub{width:100%;background:linear-gradient(135deg,var(--marino),var(--az));color:white;border:none;padding:14px;border-radius:12px;font-size:15px;font-weight:800;cursor:pointer;margin-top:4px}
+#lector{display:none;position:fixed;inset:0;z-index:200;background:#001f3f;flex-direction:column}
+#lector.open{display:flex}
+.lector-bar{background:var(--marino);padding:12px 14px;display:flex;align-items:center;gap:10px;flex-shrink:0}
+.lector-back{background:rgba(255,255,255,.15);border:none;color:white;width:34px;height:34px;border-radius:50%;font-size:20px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.lector-titulo{flex:1;color:white;font-size:14px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.lector-del{background:rgba(255,80,80,.15);border:1px solid rgba(255,80,80,.3);color:#ff7070;padding:6px 10px;border-radius:8px;font-size:11px;font-weight:700;cursor:pointer;display:none}
+#lector-frame{flex:1;border:none;width:100%;background:white}
+#toast{position:fixed;bottom:80px;left:50%;transform:translateX(-50%) translateY(20px);background:#1a2e3b;color:white;padding:10px 20px;border-radius:100px;font-size:13px;font-weight:600;opacity:0;transition:all .3s;z-index:500;white-space:nowrap;pointer-events:none}
+#toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+</style>
+</head>
+<body>
+
+<div id="splash">
+  <div class="splash-icon">🎤</div>
+  <h1>PREDICADOR</h1>
+  <p>Recursos para el ministro</p>
+</div>
+
+<div id="app">
+  <div id="header">
+    <span style="font-size:22px">🎤</span>
+    <span class="h-title">Predicador</span>
+    <button class="h-btn" onclick="toggleTheme()" id="theme-btn">🌙</button>
+  </div>
+  <div id="content">
+    <div class="sub">
+      <div class="bib-search">
+        <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <input type="text" id="s-input" placeholder="Buscar título, versículo..." oninput="filtrar()">
+      </div>
+    </div>
+    <div class="stats">
+      <div class="stat"><div class="stat-n" id="st-total">0</div><div class="stat-l">Total</div></div>
+      <div class="stat"><div class="stat-n" id="st-nuevos">0</div><div class="stat-l">Nuevos</div></div>
+      <div class="stat"><div class="stat-n" id="st-cats">0</div><div class="stat-l">Categorías</div></div>
+    </div>
+    <div class="pills">
+      <button class="pill all" data-cat="all" onclick="filtraCat('all',this)">Todos</button>
+      <button class="pill" data-cat="bosquejo" onclick="filtraCat('bosquejo',this)">📋 Bosquejos</button>
+      <button class="pill" data-cat="ebook" onclick="filtraCat('ebook',this)">📕 Ebooks</button>
+      <button class="pill" data-cat="evangelismo" onclick="filtraCat('evangelismo',this)">✝️ Evangelismo</button>
+      <button class="pill" data-cat="estudio" onclick="filtraCat('estudio',this)">📖 Estudios</button>
+      <button class="pill" data-cat="devocion" onclick="filtraCat('devocion',this)">🙏 Devocionales</button>
+      <button class="pill" data-cat="serie" onclick="filtraCat('serie',this)">🔗 Series</button>
+    </div>
+    <div class="grid" id="grid">
+      <div class="empty"><div class="empty-icon">⏳</div><p>Cargando...</p></div>
+    </div>
+  </div>
+</div>
+
+<button class="fab" id="fab" onclick="abrirAdmin()">＋</button>
+
+<div class="modal-bg" id="modal-sub">
+  <div class="sheet">
+    <div class="sheet-title">📤 Subir contenido <button class="sheet-close" onclick="cerrarModal('modal-sub')">×</button></div>
+    <label class="lbl">Categoría</label>
+    <select class="sel" id="f-tipo">
+      <option value="bosquejo">📋 Bosquejo</option>
+      <option value="ebook">📕 Ebook</option>
+      <option value="evangelismo">✝️ Evangelismo</option>
+      <option value="estudio">📖 Estudio</option>
+      <option value="devocion">🙏 Devocional</option>
+      <option value="serie">🔗 Serie</option>
+    </select>
+    <label class="lbl">Emoji</label>
+    <input class="inp" id="f-emoji" type="text" placeholder="📖" maxlength="4">
+    <label class="lbl">Título</label>
+    <input class="inp" id="f-titulo" type="text" placeholder="Ej: Creciendo en la Obra del Señor">
+    <label class="lbl">Versículo / Referencia</label>
+    <input class="inp" id="f-versiculo" type="text" placeholder="Ej: 1 Corintios 15:58">
+    <label class="lbl">Resumen breve</label>
+    <textarea class="ta" id="f-resumen" placeholder="Una línea que describa el contenido..."></textarea>
+    <label class="lbl">Contenido HTML (pega el código aquí)</label>
+    <textarea class="ta" id="f-html" placeholder="Pega aquí el HTML completo generado por Claude..." style="min-height:160px;font-family:monospace;font-size:11px"></textarea>
+    <div class="check-row"><input type="checkbox" id="f-dest"><label for="f-dest">Destacado ⭐</label></div>
+    <div class="check-row"><input type="checkbox" id="f-nuevo" checked><label for="f-nuevo">Nuevo 🆕</label></div>
+    <button class="btn-sub" onclick="subir()">📤 Subir a Predicador</button>
+  </div>
+</div>
+
+<div id="lector">
+  <div class="lector-bar">
+    <button class="lector-back" onclick="cerrarLector()">←</button>
+    <span class="lector-titulo" id="l-titulo">Cargando...</span>
+    <button class="lector-del" id="l-del" onclick="eliminar()">🗑 Eliminar</button>
+  </div>
+  <iframe id="lector-frame" sandbox="allow-same-origin allow-scripts"></iframe>
+</div>
+
+<div id="toast"></div>
+
+<script type="module">
+import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
+import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc, query, orderBy, serverTimestamp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
+
+const app = initializeApp({
+  apiKey:"AIzaSyCUfKWwZmb6icZ1VuTxH_NLxULindho8pU",
+  authDomain:"predicador-e12b2.firebaseapp.com",
+  projectId:"predicador-e12b2",
+  storageBucket:"predicador-e12b2.firebasestorage.app",
+  messagingSenderId:"610522492869",
+  appId:"1:610522492869:web:95e94ae1477ef621b525ac"
+});
+const db = getFirestore(app);
+const COLL = 'predicador';
+const PIN = '0721';
+const CATS = {bosquejo:'Bosquejo',ebook:'Ebook',evangelismo:'Evangelismo',estudio:'Estudio',devocion:'Devocional',serie:'Serie'};
+
+let items=[], catActual='all', itemActual=null;
+
+async function cargar(){
+  try{
+    const snap=await getDocs(query(collection(db,COLL),orderBy('creado','desc')));
+    items=snap.docs.map(d=>({id:d.id,...d.data()}));
+  }catch(e){items=[];}
+  actualizar();
+}
+
+function actualizar(){
+  document.getElementById('st-total').textContent=items.length;
+  document.getElementById('st-nuevos').textContent=items.filter(i=>i.nuevo).length;
+  document.getElementById('st-cats').textContent=new Set(items.map(i=>i.tipo)).size;
+  filtrar();
+}
+
+window.filtraCat=function(cat,btn){
+  catActual=cat;
+  document.querySelectorAll('.pill').forEach(p=>{
+    const c=p.dataset.cat;
+    if(c==='all') p.className='pill'+(cat==='all'?' all':'');
+    else p.className='pill'+(cat===c?' on-'+c:'');
+  });
+  filtrar();
+}
+
+window.filtrar=function(){
+  const q=(document.getElementById('s-input')?.value||'').toLowerCase();
+  let r=catActual==='all'?[...items]:items.filter(i=>i.tipo===catActual);
+  if(q) r=r.filter(i=>(i.titulo||'').toLowerCase().includes(q)||(i.versiculo||'').toLowerCase().includes(q)||(i.resumen||'').toLowerCase().includes(q));
+  render(r);
+}
+
+function esc(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+
+function render(data){
+  const g=document.getElementById('grid');
+  if(!data.length){g.innerHTML='<div class="empty"><div class="empty-icon">📚</div><p>Sin contenido aquí aún.</p></div>';return;}
+  g.innerHTML=data.map(i=>{
+    const nuevo=i.nuevo?'<span class="card-nuevo">NUEVO</span>':'<span></span>';
+    const verso=i.versiculo?'<div class="card-verso">'+esc(i.versiculo)+'</div>':'';
+    const res=i.resumen?'<div class="card-resumen">'+esc(i.resumen)+'</div>':'';
+    return '<div class="card" data-cat="'+i.tipo+'" onclick="abrirLector(\''+i.id+'\')">'
+      +'<div class="card-emoji">'+(i.emoji||'📄')+'</div>'
+      +'<div class="card-body">'
+      +'<div class="card-cat">'+(CATS[i.tipo]||i.tipo)+'</div>'
+      +'<div class="card-titulo">'+esc(i.titulo)+'</div>'
+      +verso+res
+      +'<div class="card-meta">'+nuevo+'<span style="color:var(--gris);font-size:18px">›</span></div>'
+      +'</div></div>';
+  }).join('');
+}
+
+window.abrirLector=function(id){
+  const item=items.find(i=>i.id===id);
+  if(!item) return;
+  itemActual=item;
+  document.getElementById('l-titulo').textContent=item.titulo||'Lectura';
+  const blob=new Blob([item.contenido||''],{type:'text/html'});
+  document.getElementById('lector-frame').src=URL.createObjectURL(blob);
+  document.getElementById('l-del').style.display='inline-block';
+  document.getElementById('lector').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+
+window.cerrarLector=function(){
+  document.getElementById('lector').classList.remove('open');
+  document.body.style.overflow='';
+  itemActual=null;
+}
+
+window.abrirAdmin=function(){
+  const pin=prompt('PIN de administrador:');
+  if(pin!==PIN){toast('⛔ PIN incorrecto');return;}
+  document.getElementById('modal-sub').classList.add('open');
+}
+
+
+
+
+window.subir=async function(){
+  const titulo=document.getElementById('f-titulo').value.trim();
+  if(!titulo){toast('⚠️ Título obligatorio');return;}
+  const archivoHTML=document.getElementById('f-html').value.trim();
+  if(!archivoHTML){toast('⚠️ Pega el HTML del contenido');return;}
+  const btn=document.querySelector('.btn-sub');
+  btn.disabled=true;btn.textContent='Subiendo...';
+  try{
+    await addDoc(collection(db,COLL),{
+      tipo:document.getElementById('f-tipo').value,
+      emoji:document.getElementById('f-emoji').value.trim()||'📄',
+      titulo,
+      versiculo:document.getElementById('f-versiculo').value.trim(),
+      resumen:document.getElementById('f-resumen').value.trim(),
+      contenido:archivoHTML,
+      destacado:document.getElementById('f-dest').checked,
+      nuevo:document.getElementById('f-nuevo').checked,
+      creado:serverTimestamp()
+    });
+    cerrarModal('modal-sub');
+    ['f-titulo','f-versiculo','f-resumen','f-emoji','f-html'].forEach(id=>document.getElementById(id).value='');
+    document.getElementById('f-dest').checked=false;
+    document.getElementById('f-nuevo').checked=true;
+    toast('✅ Subido correctamente');
+    cargar();
+  }catch(e){toast('❌ '+e.message);}
+  finally{btn.disabled=false;btn.textContent='📤 Subir a Predicador';}
+}
+
+window.eliminar=async function(){
+  if(!itemActual) return;
+  const pin=prompt('PIN para eliminar:');
+  if(pin!==PIN){toast('⛔ PIN incorrecto');return;}
+  if(!confirm('¿Eliminar "'+itemActual.titulo+'"?')) return;
+  try{
+    await deleteDoc(doc(db,COLL,itemActual.id));
+    cerrarLector();toast('🗑 Eliminado');cargar();
+  }catch(e){toast('❌ Error al eliminar');}
+}
+
+window.cerrarModal=function(id){document.getElementById(id).classList.remove('open');}
+
+// Tema
+let dark=localStorage.getItem('pred_theme')==='dark';
+function applyTheme(d){
+  dark=d;
+  document.documentElement.setAttribute('data-theme',d?'dark':'light');
+  const b=document.getElementById('theme-btn');
+  if(b) b.textContent=d?'☀️':'🌙';
+  localStorage.setItem('pred_theme',d?'dark':'light');
+}
+window.toggleTheme=()=>applyTheme(!dark);
+applyTheme(dark);
+
+// Toast
+let _tt;
+window.toast=function(msg){
+  const el=document.getElementById('toast');
+  el.textContent=msg;el.classList.add('show');
+  clearTimeout(_tt);_tt=setTimeout(()=>el.classList.remove('show'),2800);
+}
+
+// Init
+cargar();
+setTimeout(()=>{
+  document.getElementById('splash').style.opacity='0';
+  setTimeout(()=>{
+    document.getElementById('splash').style.display='none';
+    document.getElementById('app').style.display='flex';
+  },500);
+},1400);
+</script>
+<script>if('serviceWorker' in navigator) navigator.serviceWorker.register('/sw.js').catch(()=>{});</script>
+</body>
+</html>

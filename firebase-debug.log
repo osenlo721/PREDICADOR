@@ -1,0 +1,37 @@
+[debug] [2026-06-03T19:56:43.935Z] ----------------------------------------------------------------------
+[debug] [2026-06-03T19:56:43.958Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\OSENL\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js deploy --only hosting
+[debug] [2026-06-03T19:56:43.960Z] CLI Version:   15.18.0
+[debug] [2026-06-03T19:56:43.961Z] Platform:      win32
+[debug] [2026-06-03T19:56:43.961Z] Node Version:  v26.2.0
+[debug] [2026-06-03T19:56:43.962Z] Time:          Wed Jun 03 2026 14:56:43 GMT-0500 (hora estándar de Colombia)
+[debug] [2026-06-03T19:56:43.963Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2026-06-03T19:56:55.202Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2026-06-03T19:56:55.204Z] > authorizing via signed-in user (osmar0721@gmail.com)
+[debug] [2026-06-03T19:56:55.205Z] [iam] checking project predicador-e12b2 for permissions ["firebase.projects.get","firebasehosting.sites.update"]
+[debug] [2026-06-03T19:56:55.211Z] Checked if tokens are valid: true, expires at: 1780517551748
+[debug] [2026-06-03T19:56:55.212Z] Checked if tokens are valid: true, expires at: 1780517551748
+[debug] [2026-06-03T19:56:55.216Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects/predicador-e12b2:testIamPermissions [none]
+[debug] [2026-06-03T19:56:55.217Z] >>> [apiv2][(partial)header] POST https://cloudresourcemanager.googleapis.com/v1/projects/predicador-e12b2:testIamPermissions  x-goog-user-project=predicador-e12b2
+[debug] [2026-06-03T19:56:55.217Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/predicador-e12b2:testIamPermissions {"permissions":["firebase.projects.get","firebasehosting.sites.update"]}
+[debug] [2026-06-03T19:57:00.937Z] <<< [apiv2][status] POST https://cloudresourcemanager.googleapis.com/v1/projects/predicador-e12b2:testIamPermissions 200
+[debug] [2026-06-03T19:57:00.937Z] <<< [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/predicador-e12b2:testIamPermissions {"permissions":["firebase.projects.get","firebasehosting.sites.update"]}
+[debug] [2026-06-03T19:57:00.939Z] Checked if tokens are valid: true, expires at: 1780517551748
+[debug] [2026-06-03T19:57:00.939Z] Checked if tokens are valid: true, expires at: 1780517551748
+[debug] [2026-06-03T19:57:00.941Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/predicador-e12b2 [none]
+[debug] [2026-06-03T19:57:18.705Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/predicador-e12b2 200
+[debug] [2026-06-03T19:57:18.706Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/predicador-e12b2 {"projectId":"predicador-e12b2","projectNumber":"610522492869","displayName":"PREDICADOR","name":"projects/predicador-e12b2","resources":{"hostingSite":"predicador-e12b2"},"state":"ACTIVE","etag":"1_f96b06e4-4461-4784-ace3-31d24f4c5d36"}
+[info] 
+[info] === Deploying to 'predicador-e12b2'...
+[info] 
+[info] i  deploying hosting 
+[debug] [2026-06-03T19:57:18.723Z] Checked if tokens are valid: true, expires at: 1780517551748
+[debug] [2026-06-03T19:57:18.724Z] Checked if tokens are valid: true, expires at: 1780517551748
+[debug] [2026-06-03T19:57:18.724Z] >>> [apiv2][query] GET https://firebasehosting.googleapis.com/v1beta1/projects/predicador-e12b2/sites/predicador-e12b2 [none]
+[debug] [2026-06-03T19:57:41.582Z] *** [apiv2] error from fetch(https://firebasehosting.googleapis.com/v1beta1/projects/predicador-e12b2/sites/predicador-e12b2, {"headers":{},"method":"GET"}): FetchError: request to https://firebasehosting.googleapis.com/v1beta1/projects/predicador-e12b2/sites/predicador-e12b2 failed, reason: 
+[debug] [2026-06-03T19:57:46.634Z] Error: Timed out.
+    at Timeout._onTimeout (C:\Users\OSENL\AppData\Roaming\npm\node_modules\firebase-tools\lib\utils.js:309:49)
+    at listOnTimeout (node:internal/timers:605:17)
+    at process.processTimers (node:internal/timers:541:7)
+[error] 
+[error] Error: An unexpected error has occurred.

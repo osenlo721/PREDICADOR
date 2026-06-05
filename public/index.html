@@ -169,10 +169,13 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;backgrou
 <div id="lector">
   <div class="lector-bar">
     <button class="lector-back" onclick="cerrarLector()">←</button>
+    <button id="ar-btn" onclick="toggleAudio()" style="background:rgba(240,171,0,.2);border:1px solid rgba(240,171,0,.4);color:#F0AB00;width:34px;height:34px;border-radius:50%;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;" title="Escuchar">🎧</button>
+    <input type="range" id="ar-speed" min="0.5" max="2" step="0.1" value="1" style="width:70px;accent-color:#F0AB00;" title="Velocidad">
+    <span id="ar-speed-label" style="color:#F0AB00;font-size:11px;min-width:28px;">1.0x</span>
     <span class="lector-titulo" id="l-titulo">Cargando...</span>
     <button class="lector-del" id="l-del" onclick="eliminar()">🗑 Eliminar</button>
   </div>
-  <iframe id="lector-frame" sandbox="allow-same-origin allow-scripts"></iframe>
+  <iframe id="lector-frame" sandbox="allow-same-origin allow-scripts allow-popups allow-modals"></iframe>
 </div>
 
 <div id="toast"></div>
@@ -348,5 +351,52 @@ setTimeout(()=>{
 },1400);
 </script>
 <script>if('serviceWorker' in navigator) navigator.serviceWorker.register('/sw.js').catch(()=>{});</script>
+<script src="audio-reader.js"></script>
+<script>
+// ── AUDIO READER ──
+let arPlaying=false, arUtts=[], arIdx=0, arRate=1;
+function arGetText(){
+  try{
+    const doc=document.getElementById('lector-frame').contentDocument||document.getElementById('lector-frame').contentWindow.document;
+    const skip='nav,.nav-toggle,script,style,cite,.ch-num,.cover-tag,.cover-author,.nav-brand,.nav-section';
+    const clone=doc.body.cloneNode(true);
+    clone.querySelectorAll(skip).forEach(e=>e.remove());
+    return (clone.innerText||clone.textContent).replace(/\s+/g,' ').trim();
+  }catch(e){return '';}
+}
+function arBuild(){
+  const text=arGetText(); if(!text)return [];
+  const words=text.split(' '); const chunks=[]; let buf='';
+  words.forEach(w=>{buf+=w+' '; if(buf.length>250){chunks.push(buf.trim());buf='';}});
+  if(buf.trim())chunks.push(buf.trim());
+  return chunks.map(t=>{const u=new SpeechSynthesisUtterance(t);u.lang='es-MX';u.rate=arRate;return u;});
+}
+function arSpeak(idx){
+  if(idx>=arUtts.length){arStop();return;}
+  arIdx=idx;
+  const u=arUtts[idx];
+  u.rate=arRate;
+  u.onend=()=>{if(arPlaying)arSpeak(arIdx+1);};
+  speechSynthesis.speak(u);
+}
+function arStop(){arPlaying=false;speechSynthesis.cancel();arIdx=0;document.getElementById('ar-btn').innerHTML='🎧';}
+function toggleAudio(){
+  if(arPlaying){arPlaying=false;speechSynthesis.cancel();document.getElementById('ar-btn').innerHTML='🎧';}
+  else{
+    arPlaying=true;
+    document.getElementById('ar-btn').innerHTML='⏹';
+    arUtts=arBuild();
+    if(!arUtts.length){arPlaying=false;return;}
+    arSpeak(arIdx);
+  }
+}
+document.getElementById('ar-speed').addEventListener('input',function(){
+  arRate=parseFloat(this.value);
+  document.getElementById('ar-speed-label').textContent=arRate.toFixed(1)+'x';
+});
+// detener al cerrar lector
+const _cerrar=window.cerrarLector;
+window.cerrarLector=function(){arStop();if(_cerrar)_cerrar();};
+</script>
 </body>
 </html>

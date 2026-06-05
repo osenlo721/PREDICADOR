@@ -1,7 +1,7 @@
 {
   "hosting": {
     "site": "predicador-e12b2",
-    "public": ".",
+    "public": "public",
     "ignore": ["firebase.json", "**/.*", "**/node_modules/**"]
   }
 }

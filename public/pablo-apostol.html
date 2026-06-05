@@ -1,0 +1,720 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pablo de Tarso — El Apóstol que lo dejó todo</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Raleway:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--azul:#009FDA;--marino:#003B6F;--oro:#F0AB00;--oro-claro:#FFD166;--fondo:#040e1c;--texto:#e8e0d0;--texto-suave:#a89f90;--linea:rgba(240,171,0,.2);}
+*{margin:0;padding:0;box-sizing:border-box;}html{scroll-behavior:smooth;}
+body{background:var(--fondo);color:var(--texto);font-family:'Crimson Pro',Georgia,serif;font-size:18px;line-height:1.9;overflow-x:hidden;}
+::-webkit-scrollbar{width:4px;}::-webkit-scrollbar-track{background:var(--fondo);}::-webkit-scrollbar-thumb{background:var(--azul);border-radius:2px;}
+.nav-toggle{position:fixed;top:16px;left:16px;z-index:300;background:var(--marino);border:1px solid var(--linea);color:var(--oro);width:44px;height:44px;border-radius:8px;cursor:pointer;font-size:20px;display:flex;align-items:center;justify-content:center;transition:all .2s;box-shadow:0 2px 12px rgba(0,0,0,.4);}
+.nav-toggle:hover{background:var(--azul);color:#fff;}
+nav{position:fixed;left:0;top:0;bottom:0;width:265px;background:linear-gradient(180deg,var(--marino) 0%,#011529 100%);border-right:1px solid var(--linea);z-index:200;overflow-y:auto;transform:translateX(0);transition:transform .35s ease;padding:32px 0;}
+nav.hidden{transform:translateX(-100%);}
+nav .nav-brand{font-family:'Cinzel',serif;font-size:12px;font-weight:700;color:var(--oro);padding:0 20px 20px;border-bottom:1px solid var(--linea);margin-bottom:8px;letter-spacing:1px;line-height:1.5;}
+nav .nav-section{font-family:'Cinzel',serif;font-size:9px;letter-spacing:3px;color:var(--azul);padding:12px 20px 4px;text-transform:uppercase;opacity:.8;}
+nav a{display:flex;align-items:center;gap:10px;padding:7px 20px;font-family:'Raleway',sans-serif;font-size:11px;font-weight:500;letter-spacing:.5px;color:var(--texto-suave);text-decoration:none;border-left:2px solid transparent;transition:all .2s;}
+nav a:hover,nav a.active{color:var(--oro);border-left-color:var(--oro);background:rgba(240,171,0,.06);}
+nav a .nav-num{font-family:'Cinzel',serif;font-size:10px;color:var(--azul);min-width:20px;}
+.page-wrap{margin-left:265px;transition:margin .35s ease;}
+.page-wrap.full{margin-left:0;}
+
+.cover{min-height:100vh;background:linear-gradient(160deg,#041830 0%,var(--fondo) 65%);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:80px 32px 60px;position:relative;overflow:hidden;}
+.cover::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 50% at 50% 10%,rgba(0,159,218,.15) 0%,transparent 70%),radial-gradient(ellipse 40% 40% at 80% 85%,rgba(240,171,0,.1) 0%,transparent 60%);pointer-events:none;}
+.cover-icon{font-size:64px;margin-bottom:24px;animation:fadeDown .8s ease both;}
+.cover-tag{font-family:'Cinzel',serif;font-size:10px;letter-spacing:5px;color:var(--azul);text-transform:uppercase;margin-bottom:16px;animation:fadeDown .9s ease .1s both;}
+.cover-title{font-family:'Cinzel',serif;font-size:clamp(40px,9vw,92px);font-weight:900;line-height:1;margin-bottom:8px;animation:fadeDown 1s ease .2s both;}
+.cover-title .t1{color:var(--texto);}
+.cover-title .t2{color:var(--oro);}
+.cover-sub{font-family:'Cinzel',serif;font-size:clamp(13px,2vw,17px);color:var(--azul);letter-spacing:2px;margin-bottom:8px;animation:fadeDown 1s ease .25s both;}
+.cover-sub2{font-family:'Crimson Pro',serif;font-style:italic;font-size:clamp(14px,2vw,18px);color:var(--texto-suave);margin-bottom:32px;animation:fadeDown 1s ease .3s both;}
+.cover-line{width:60px;height:1px;background:linear-gradient(to right,transparent,var(--oro),transparent);margin:0 auto 24px;}
+.cover-author{font-family:'Raleway',sans-serif;font-size:13px;letter-spacing:4px;color:var(--texto-suave);text-transform:uppercase;}
+.cover-verse{position:absolute;bottom:40px;font-family:'Crimson Pro',serif;font-style:italic;font-size:14px;color:var(--texto-suave);max-width:460px;text-align:center;line-height:1.6;}
+
+/* CAPÍTULOS NARRATIVOS */
+main{max-width:740px;margin:0 auto;padding:0 24px;}
+.chapter{padding:72px 0 56px;border-bottom:1px solid rgba(240,171,0,.1);opacity:0;transform:translateY(30px);transition:opacity .7s ease,transform .7s ease;}
+.chapter.visible{opacity:1;transform:none;}
+
+/* Cabecera narrativa con año */
+.ch-header{display:flex;align-items:flex-start;gap:20px;margin-bottom:28px;}
+.ch-year{font-family:'Cinzel',serif;font-size:clamp(48px,7vw,72px);font-weight:900;color:transparent;-webkit-text-stroke:1px rgba(240,171,0,.3);line-height:1;min-width:100px;}
+.ch-meta{}
+.ch-num{font-family:'Cinzel',serif;font-size:10px;letter-spacing:4px;color:var(--azul);text-transform:uppercase;margin-bottom:6px;}
+.ch-title{font-family:'Cinzel',serif;font-size:clamp(18px,3.5vw,28px);font-weight:700;color:var(--oro);line-height:1.2;margin-bottom:4px;}
+.ch-sub{font-family:'Cinzel',serif;font-size:clamp(12px,2vw,16px);color:var(--azul);letter-spacing:1px;}
+.ch-divider{width:40px;height:2px;background:linear-gradient(to right,var(--oro),var(--azul));margin-bottom:28px;border-radius:2px;}
+
+p{margin-bottom:20px;}
+strong{color:var(--oro);font-weight:600;}
+em{color:var(--azul);font-style:italic;}
+
+/* CITA BÍBLICA */
+.quote{border-left:3px solid var(--oro);padding:16px 24px;margin:28px 0;background:rgba(240,171,0,.05);border-radius:0 8px 8px 0;}
+.quote p{font-family:'Crimson Pro',serif;font-style:italic;font-size:1.05em;color:var(--oro-claro);margin-bottom:6px;}
+.quote cite{font-family:'Raleway',sans-serif;font-size:12px;letter-spacing:2px;color:var(--texto-suave);}
+
+/* VOZ DE PABLO — carta estilo */
+.pablo-voz{background:rgba(4,14,28,.8);border:1px solid rgba(240,171,0,.18);border-radius:10px;padding:24px 28px;margin:28px 0;position:relative;}
+.pablo-voz::before{content:'📜';position:absolute;top:-14px;left:20px;font-size:20px;}
+.pablo-voz .pv-label{font-family:'Cinzel',serif;font-size:9px;letter-spacing:4px;color:var(--oro);text-transform:uppercase;margin-bottom:12px;}
+.pablo-voz p{font-family:'Crimson Pro',serif;font-style:italic;font-size:1em;color:var(--texto-suave);margin-bottom:8px;}
+.pablo-voz cite{font-family:'Raleway',sans-serif;font-size:11px;letter-spacing:2px;color:var(--azul);}
+
+.section-label{font-family:'Cinzel',serif;font-size:11px;letter-spacing:3px;color:var(--azul);text-transform:uppercase;margin:36px 0 12px;}
+
+.frase{text-align:center;padding:40px 24px;margin:32px 0;position:relative;}
+.frase::before{content:'"';font-family:'Cinzel',serif;font-size:100px;color:rgba(240,171,0,.07);position:absolute;top:-10px;left:16px;line-height:1;}
+.frase p{font-family:'Cinzel',serif;font-size:clamp(15px,2.2vw,20px);color:var(--texto);line-height:1.5;position:relative;z-index:1;margin:0;}
+
+.tip-box{background:linear-gradient(135deg,rgba(0,59,111,.4) 0%,rgba(4,14,28,.8) 100%);border:1px solid rgba(0,159,218,.25);border-radius:12px;padding:24px;margin:28px 0;}
+.tip-box h4{font-family:'Cinzel',serif;font-size:11px;letter-spacing:4px;color:var(--azul);text-transform:uppercase;margin-bottom:14px;}
+.tip-box p,.tip-box li{color:var(--texto-suave);font-size:.95em;margin-bottom:8px;}
+.tip-box ol,.tip-box ul{padding-left:20px;}
+.tip-box li{margin-bottom:8px;}
+
+.gold-box{background:rgba(240,171,0,.06);border:1px solid rgba(240,171,0,.2);border-radius:12px;padding:24px;margin:28px 0;}
+.gold-box h4{font-family:'Cinzel',serif;font-size:11px;letter-spacing:4px;color:var(--oro);text-transform:uppercase;margin-bottom:14px;}
+.gold-box p{color:var(--texto-suave);font-size:.95em;margin-bottom:10px;}
+.gold-box strong{color:var(--oro);}
+
+.etimo{background:rgba(240,171,0,.04);border:1px solid rgba(240,171,0,.15);border-radius:8px;padding:18px 22px;margin:20px 0;}
+.etimo .e-palabra{font-family:'Cinzel',serif;font-size:20px;color:var(--oro);margin-bottom:4px;}
+.etimo .e-origen{font-family:'Raleway',sans-serif;font-size:12px;color:var(--azul);letter-spacing:2px;margin-bottom:8px;}
+.etimo p{color:var(--texto-suave);font-size:.95em;margin:0;}
+
+/* PERSONAS */
+.persona{background:rgba(0,59,111,.2);border:1px solid rgba(0,159,218,.2);border-radius:10px;padding:18px 22px;margin:14px 0;}
+.persona .per-nombre{font-family:'Cinzel',serif;font-size:16px;color:var(--azul);margin-bottom:4px;letter-spacing:1px;}
+.persona .per-rol{font-family:'Raleway',sans-serif;font-size:11px;color:var(--oro);letter-spacing:2px;margin-bottom:8px;text-transform:uppercase;}
+.persona p{color:var(--texto-suave);font-size:.95em;margin:0;}
+
+/* LÍNEA DE TIEMPO */
+.timeline{border-left:2px solid rgba(240,171,0,.2);padding-left:24px;margin:28px 0;}
+.tl-item{position:relative;margin-bottom:28px;padding-bottom:4px;}
+.tl-item::before{content:'';position:absolute;left:-31px;top:6px;width:12px;height:12px;background:var(--oro);border-radius:50%;border:2px solid var(--fondo);}
+.tl-year{font-family:'Cinzel',serif;font-size:12px;letter-spacing:3px;color:var(--oro);text-transform:uppercase;margin-bottom:4px;}
+.tl-titulo{font-family:'Cinzel',serif;font-size:15px;color:var(--azul);margin-bottom:6px;}
+.tl-texto{font-family:'Crimson Pro',serif;font-size:.95em;color:var(--texto-suave);line-height:1.6;}
+
+.epilogo{text-align:center;padding:80px 32px 120px;}
+.epilogo .big{font-family:'Cinzel',serif;font-size:clamp(32px,7vw,68px);font-weight:900;color:transparent;-webkit-text-stroke:1px rgba(240,171,0,.35);letter-spacing:6px;display:block;margin-bottom:40px;}
+.epilogo h2{font-family:'Cinzel',serif;font-size:clamp(18px,3vw,28px);color:var(--oro);margin-bottom:24px;}
+.epilogo p{max-width:540px;margin:0 auto 16px;color:var(--texto-suave);}
+.epilogo .firma{margin-top:48px;font-family:'Cinzel',serif;font-size:13px;letter-spacing:4px;color:var(--azul);}
+
+@keyframes fadeDown{from{opacity:0;transform:translateY(-20px);}to{opacity:1;transform:none;}}
+@media(max-width:768px){nav{transform:translateX(-100%);}nav.show{transform:translateX(0);}.page-wrap{margin-left:0!important;}}
+@media(max-width:600px){nav{width:220px;}.ch-header{flex-direction:column;gap:8px;}.ch-year{font-size:40px;min-width:auto;}}
+</style>
+</head>
+<body>
+<button class="nav-toggle" id="navToggle" onclick="toggleNav()">☰</button>
+<nav id="sidenav">
+  <div class="nav-brand">✉️ Pablo de Tarso<br>El Apóstol</div>
+  <div class="nav-section">La Historia</div>
+  <a href="#portada"><span class="nav-num">·</span>Portada</a>
+  <a href="#c1"><span class="nav-num">I</span>El hombre antes del camino</a>
+  <a href="#c2"><span class="nav-num">II</span>El día que el cielo lo detuvo</a>
+  <a href="#c3"><span class="nav-num">III</span>Los años silenciosos</a>
+  <a href="#c4"><span class="nav-num">IV</span>Sus amigos — los que caminaron con él</a>
+  <a href="#c5"><span class="nav-num">V</span>El primer viaje — el mundo se abre</a>
+  <a href="#c6"><span class="nav-num">VI</span>La batalla doctrinal — Jerusalén</a>
+  <a href="#c7"><span class="nav-num">VII</span>Europa — el evangelio cruza el mar</a>
+  <a href="#c8"><span class="nav-num">VIII</span>El pensamiento de Pablo</a>
+  <a href="#c9"><span class="nav-num">IX</span>Las cadenas que no lo callaron</a>
+  <a href="#c10"><span class="nav-num">X</span>La pasión que lo consumió</a>
+  <a href="#c11"><span class="nav-num">XI</span>Las cartas — su voz eterna</a>
+  <a href="#c12"><span class="nav-num">XII</span>El final — peleé la buena batalla</a>
+</nav>
+
+<div class="page-wrap" id="pageWrap">
+
+<section class="cover" id="portada">
+  <div class="cover-icon">✉️</div>
+  <div class="cover-tag">Ebook · Serie Personajes Bíblicos</div>
+  <h1 class="cover-title">
+    <div class="t1">Pablo</div>
+    <div class="t2">de Tarso</div>
+  </h1>
+  <div class="cover-sub">El apóstol que lo dejó todo</div>
+  <div class="cover-sub2">Una historia de fuego, doctrina, amor y abnegación</div>
+  <div class="cover-line"></div>
+  <div class="cover-author">Predicador IPUC</div>
+  <div class="cover-verse">"He peleado la buena batalla, he acabado la carrera, he guardado la fe." — 2 Timoteo 4:7</div>
+</section>
+
+<main>
+
+<!-- ═══ CAP I ═══ -->
+<section class="chapter" id="c1">
+  <div class="ch-header">
+    <span class="ch-year">5 DC</span>
+    <div class="ch-meta">
+      <div class="ch-num">Capítulo I</div>
+      <div class="ch-title">El hombre antes del camino</div>
+      <div class="ch-sub">Tarsus, Gamaliel y el fariseo en llamas</div>
+    </div>
+  </div>
+  <div class="ch-divider"></div>
+
+  <p>Para entender al Pablo que predicó el evangelio hasta la muerte, primero hay que conocer al Saulo que persiguió a los que lo predicaban. Porque Pablo no se convirtió de una vida ordinaria — se convirtió de una vida extraordinariamente comprometida con algo completamente diferente.</p>
+
+  <p>Saulo nació en Tarso, la capital de Cilicia — una de las ciudades más cosmopolitas del Imperio Romano. Tarso no era una aldea provincial: era un centro intelectual de primer orden, sede de una escuela filosófica que rivalizaba con Atenas y Alejandría. Crecer en Tarso significaba respirar cultura griega, escuchar debates filosóficos en el mercado y moverse con naturalidad entre el mundo helenístico.</p>
+
+  <div class="section-label">Tres identidades en una sola persona</div>
+
+  <div class="tip-box">
+    <h4>El ADN de Saulo de Tarso</h4>
+    <p><strong>Judío de la tribu de Benjamín:</strong> linaje puro, familia devota, circuncidado al octavo día (Filipenses 3:5). Su identidad más profunda era la del pueblo del pacto.</p>
+    <p><strong>Ciudadano romano de nacimiento:</strong> no por compra ni por mérito — por nacimiento. Esa ciudadanía le daría acceso, protección y voz donde ningún judío común podría hablar.</p>
+    <p><strong>Heredero de la cultura griega:</strong> Tarso le dio dominio del griego, conocimiento de la filosofía estoica y la capacidad de hablar con cualquier auditorio en su propio idioma intelectual.</p>
+  </div>
+
+  <p>Esta triple identidad no fue accidental — fue la preparación providencial de Dios para el hombre que llevaría el evangelio desde Jerusalén hasta Roma. Solo alguien que pensara como judío, hablara como griego y tuviera derechos como romano podría atravesar los mundos que Pablo atravesó.</p>
+
+  <div class="section-label">Bajo los pies de Gamaliel</div>
+  <p>A temprana edad, Saulo fue enviado a Jerusalén para estudiar <em>a los pies de Gamaliel</em> — Hechos 22:3. Gamaliel era el rabino más respetado de su generación, nieto del gran Hillel, doctor de la Ley cuya reputación llenaba todo Israel. Sentarse a sus pies no era una educación ordinaria — era ingresar a la élite intelectual del judaísmo.</p>
+
+  <div class="section-label">El fariseo que era Saulo</div>
+  <div class="pablo-voz">
+    <div class="pv-label">Sus propias palabras</div>
+    <p>"Circuncidado al octavo día, del linaje de Israel, de la tribu de Benjamín, hebreo de hebreos; en cuanto a la ley, fariseo; en cuanto a celo, perseguidor de la iglesia; en cuanto a la justicia que es en la ley, irreprensible."</p>
+    <cite>Filipenses 3:5-6</cite>
+  </div>
+
+  <p>Saulo no era un hipócrita religioso — era un creyente genuinamente convencido. Su persecución a los cristiano no era crueldad arbitraria: era <em>celo por Dios</em>, la misma pasión que Finees mostró al clavar la lanza, la misma que Elías manifestó al matar a los profetas de Baal. En su mente, los seguidores del "camino" eran blasfemos que amenazaban la pureza de Israel.</p>
+
+  <div class="section-label">El día que guardó las ropas</div>
+  <p>El primer registro de Saulo en el Nuevo Testamento es oscuro: estaba de acuerdo con la muerte de Esteban. Hechos 7:58 — "los testigos pusieron sus ropas a los pies de un joven que se llamaba Saulo." Guardó las ropas de los que lanzaban piedras. No lanzó él mismo — pero aprobó. Y esa imagen de Esteban orando por sus asesinos mientras moría quedó grabada en algún lugar de su memoria.</p>
+
+  <div class="frase"><p>"El hombre que más tarde escribiría 'todo lo puedo en Cristo' comenzó su historia guardando las ropas de los que mataban a los seguidores de Cristo."</p></div>
+</section>
+
+<!-- ═══ CAP II ═══ -->
+<section class="chapter" id="c2">
+  <div class="ch-header">
+    <span class="ch-year">33 DC</span>
+    <div class="ch-meta">
+      <div class="ch-num">Capítulo II</div>
+      <div class="ch-title">El día que el cielo lo detuvo</div>
+      <div class="ch-sub">El camino a Damasco — la conversión más famosa de la historia</div>
+    </div>
+  </div>
+  <div class="ch-divider"></div>
+
+  <p>Era el camino más peligroso que Saulo había recorrido — no por los bandidos en el desierto sino por la persona que iba a encontrar en él. Iba a Damasco con cartas del sumo sacerdote autorizándolo a arrestar a los seguidores del Camino — hombres y mujeres — y traerlos presos a Jerusalén. El texto de Hechos 9:1 describe su estado: <em>"todavía respirando amenazas y muerte contra los discípulos del Señor."</em></p>
+
+  <p>No había vacilación en Saulo. No había duda en su misión. Era el defensor del judaísmo, el guardián de la Torah, el soldado de Dios marchando a extirpar la herejía antes de que se extendiera más.</p>
+
+  <div class="section-label">El mediodía que cambió todo</div>
+  <div class="pablo-voz">
+    <div class="pv-label">Pablo lo recordaría toda su vida</div>
+    <p>"Y aconteció que yendo yo a Damasco, al mediodía vi en el camino una luz del cielo que sobrepasaba el resplandor del sol, la cual me rodeó a mí y a los que iban conmigo. Y habiendo caído todos nosotros en tierra, oí una voz que me hablaba: Saulo, Saulo, ¿por qué me persigues? Entonces respondí: ¿Quién eres, Señor? Y me dijo: Yo soy Jesús de Nazaret, a quien tú persigues."</p>
+    <cite>Hechos 26:13-15</cite>
+  </div>
+
+  <p>La luz fue al mediodía — cuando el sol mediterráneo está en su punto más alto — y la superó. No fue una alucinación de la oscuridad ni un sueño en la noche. Fue pleno día, con testigos, en el camino polvoriento de Siria. Y la voz que habló hizo en un instante lo que años de argumentos no podrían haber logrado: <strong>demolió toda su certeza.</strong></p>
+
+  <div class="section-label">La pregunta que lo detuvo</div>
+  <p>"Saulo, Saulo, ¿por qué me persigues?" La doble repetición del nombre — el mismo patrón con que Dios llamó a Abraham (Génesis 22:11) y a Moisés (Éxodo 3:4) — era señal de urgencia y cercanía. Y la pregunta no era una acusación fría: era una invitación al autoexamen. Jesús no dijo "¿sabes lo que estás haciendo?" — dijo "¿por qué?" Apelaba a la conciencia, no solo a la voluntad.</p>
+
+  <p>Lo que derrumbó a Saulo fue una palabra: <em>"Yo soy Jesús, a quien tú persigues."</em> Si Jesús estaba vivo y hablando desde la gloria, entonces la resurrección era real. Y si la resurrección era real, entonces todo lo que los discípulos predicaban era verdad. Y si era verdad, entonces Saulo había estado persiguiendo a Dios mismo con sus propias manos.</p>
+
+  <div class="section-label">Tres días en la oscuridad</div>
+  <p>Ciego, fue llevado a Damasco. No comió, no bebió, no vio durante tres días. Era el tiempo de la muerte y la resurrección — el mismo patrón de Cristo. En esa oscuridad, el intelectual más brillante de su generación se quedó sin argumentos. Todos los versículos que sabía de memoria estaban siendo reorganizados por el Espíritu Santo alrededor de una nueva comprensión: <strong>todo señalaba a Jesús.</strong></p>
+
+  <div class="persona">
+    <div class="per-nombre">Ananías de Damasco</div>
+    <div class="per-rol">El discípulo que obedeció con miedo</div>
+    <p>Dios le apareció en visión y le dijo que fuera a poner manos sobre Saulo. Su respuesta fue honesta: "Señor, he oído de muchos acerca de este hombre, cuántos males ha hecho a tus santos en Jerusalén." Pero obedeció. Entró a la casa de Judas en la calle Derecha, puso las manos sobre el hombre que había ido a arrestar a sus hermanos, y dijo: "Hermano Saulo." Esas dos palabras — hermano Saulo — son una de las expresiones de gracia más poderosas del Nuevo Testamento.</p>
+  </div>
+
+  <div class="frase"><p>"Dios detuvo al hombre que más daño le hacía y lo convirtió en el que más bien le haría. Eso es soberanía."</p></div>
+</section>
+
+<!-- ═══ CAP III ═══ -->
+<section class="chapter" id="c3">
+  <div class="ch-header">
+    <span class="ch-year">33–46 DC</span>
+    <div class="ch-meta">
+      <div class="ch-num">Capítulo III</div>
+      <div class="ch-title">Los años silenciosos</div>
+      <div class="ch-sub">Arabia, Damasco y Tarso — la preparación que nadie vio</div>
+    </div>
+  </div>
+  <div class="ch-divider"></div>
+
+  <p>Hay un período de la vida de Pablo que la mayoría de los estudios omiten porque no tiene acción visible — y sin embargo es probablemente el más determinante de su ministerio. Entre su conversión en el 33 DC y su primer viaje misionero alrededor del 47 DC, transcurrieron casi catorce años. ¿Dónde estuvo Pablo? ¿Qué estaba haciendo?</p>
+
+  <div class="pablo-voz">
+    <div class="pv-label">Pablo lo explica en Gálatas</div>
+    <p>"Porque no consulté en seguida con carne y sangre, ni subí a Jerusalén a los que eran apóstoles antes que yo; sino que fui a Arabia, y volví de nuevo a Damasco."</p>
+    <cite>Gálatas 1:16-17</cite>
+  </div>
+
+  <p>Fue a Arabia. No a recibir entrenamiento apostólico. No a consultar con Pedro o Santiago. Fue a Arabia — al desierto — donde Dios mismo le reveló el evangelio directamente. El mismo desierto donde Moisés estuvo cuarenta años. Donde Elías huyó después del Carmelo. Donde Juan el Bautista se preparó. El desierto es la escuela de Dios para los que Él forma directamente.</p>
+
+  <div class="section-label">La teología que llegó por revelación</div>
+  <div class="pablo-voz">
+    <div class="pv-label">Su declaración más radical</div>
+    <p>"Mas os hago saber, hermanos, que el evangelio anunciado por mí, no es según hombre; pues yo ni lo recibí ni lo aprendí de hombre alguno, sino por revelación de Jesucristo."</p>
+    <cite>Gálatas 1:11-12</cite>
+  </div>
+
+  <p>En el silencio del desierto, el Espíritu Santo tomó todas las Escrituras que Saulo había memorizado desde niño y las reorganizó completamente bajo la luz de la resurrección de Cristo. Cada profecía cobró un nuevo sentido. Cada tipo y sombra del Antiguo Testamento se iluminó. El hombre que había estudiado la Torah más que la mayoría entendió, por primera vez, a quién señalaba la Torah.</p>
+
+  <div class="section-label">La huida en una canasta</div>
+  <p>Cuando Pablo comenzó a predicar en Damasco que Jesús era el Cristo, los judíos de la ciudad conspiraron para matarlo. Guardaron las puertas de la ciudad esperándolo. Y Pablo escapó por la muralla <em>bajado en una canasta</em> (2 Corintios 11:32-33). El gran intelectual, el ciudadano romano, el discípulo de Gamaliel — bajando en una canasta por la noche como un fugitivo. Era el inicio de una vida donde la humillación sería el precio normal del evangelio.</p>
+
+  <div class="section-label">Los años en Tarso</div>
+  <p>Después de una breve visita a Jerusalén donde conoció a Pedro y Santiago, Pablo regresó a su ciudad natal, Tarso. Hechos no dice qué hizo allí durante esos años. Pero Pablo lo insinúa en sus cartas: predicó en Siria y Cilicia (Gálatas 1:21), probablemente sufrió las "cinco veces cuarenta azotes menos uno" durante ese período, y muy posiblemente vivió la experiencia del "tercer cielo" (2 Corintios 12:2) que no podría contar por catorce años.</p>
+
+  <div class="frase"><p>"Dios tarda años en preparar lo que solo toma horas en usar. Los años silenciosos de Pablo no fueron años perdidos — fueron los años donde se formó todo lo que después predicó."</p></div>
+</section>
+
+<!-- ═══ CAP IV ═══ -->
+<section class="chapter" id="c4">
+  <div class="ch-header">
+    <span class="ch-year">47–68 DC</span>
+    <div class="ch-meta">
+      <div class="ch-num">Capítulo IV</div>
+      <div class="ch-title">Sus amigos — los que caminaron con él</div>
+      <div class="ch-sub">Los compañeros que el ministerio le dio</div>
+    </div>
+  </div>
+  <div class="ch-divider"></div>
+
+  <p>Pablo no caminó solo. Detrás de cada carta, cada iglesia y cada milla recorrida, había una red de personas que creyeron en él, que lo acompañaron, que lo defendieron y que a veces también le causaron dolor. Conocerlos es conocer mejor a Pablo.</p>
+
+  <div class="persona">
+    <div class="per-nombre">Bernabé — el que creyó cuando nadie creía</div>
+    <div class="per-rol">Hechos 9:27 · El primer puente</div>
+    <p>Cuando Pablo llegó a Jerusalén después de su conversión, los apóstoles le tenían miedo — nadie creía que realmente fuera discípulo. Fue Bernabé quien lo tomó, lo presentó ante los apóstoles y les contó su historia. Sin Bernabé, Pablo no habría tenido acceso a la iglesia en Jerusalén. Años después, Bernabé lo fue a buscar a Tarso cuando nadie más lo recordaba (Hechos 11:25-26). Le devolvió el ministerio cuando el ministerio parecía terminado.</p>
+  </div>
+
+  <div class="persona">
+    <div class="per-nombre">Timoteo — su hijo en la fe</div>
+    <div class="per-rol">Hechos 16:1-3 · El discípulo del alma</div>
+    <p>Pablo conoció a Timoteo en Listra — joven, hijo de madre judía creyente y padre griego. Lo eligió para acompañarlo en el segundo viaje. Le escribió dos cartas que son el legado más íntimo de Pablo — no son tratados teológicos sino cartas de padre a hijo: "Timoteo, verdadero hijo en la fe." Cuando Pablo estaba solo en Roma esperando la muerte, una de sus últimas peticiones fue: "Ven pronto a verme... solo Lucas está conmigo." Le pedía a su hijo que viniera.</p>
+  </div>
+
+  <div class="persona">
+    <div class="per-nombre">Silas — el compañero de cárcel</div>
+    <div class="per-rol">Hechos 15:40 · El que cantó en la madrugada</div>
+    <p>Profeta y ciudadano romano como Pablo, Silas lo acompañó en el segundo viaje. Juntos fueron apresados en Filipos, azotados y encerrados en el calabozo con los pies en el cepo. Y a la medianoche, Pablo y Silas cantaban himnos a Dios. No oraban para salir — adoraban mientras estaban adentro. Ese momento en la cárcel de Filipos es quizás la imagen más poderosa de la fe en todo el libro de Hechos.</p>
+  </div>
+
+  <div class="persona">
+    <div class="per-nombre">Lucas — el médico historiador</div>
+    <div class="per-rol">Colosenses 4:14 · El compañero fiel hasta el final</div>
+    <p>"Lucas, el médico amado." Era gentil, culto, meticuloso. Escribió el Evangelio de Lucas y los Hechos de los Apóstoles — la historia más detallada del ministerio de Pablo. Estuvo con él en el naufragio. Estuvo con él en Roma en la primera y segunda prisión. Cuando todos se fueron, Lucas permaneció: "Solo Lucas está conmigo" — las últimas palabras conocidas de Pablo sobre sus compañeros.</p>
+  </div>
+
+  <div class="persona">
+    <div class="per-nombre">Priscila y Aquila — el matrimonio itinerante</div>
+    <div class="per-rol">Hechos 18:2 · Los que arriesgaron su vida por él</div>
+    <p>Los conoció en Corinto — también fabricantes de tiendas como él. Los llevó a Éfeso. Ellos instruyeron a Apolos. Su casa fue iglesia en Roma y en Éfeso. Pablo los llama en Romanos 16:4: "los cuales pusieron en riesgo su propia vida por mí." No dice cómo. Solo que lo hicieron.</p>
+  </div>
+
+  <div class="persona">
+    <div class="per-nombre">Juan Marcos — el que falló y fue restaurado</div>
+    <div class="per-rol">Hechos 15:37-39 · La grieta que sanó</div>
+    <p>Marcos acompañó a Pablo y Bernabé en el primer viaje pero se regresó a Jerusalén a mitad del camino (Hechos 13:13). Cuando Bernabé quiso llevarlo en el segundo viaje, Pablo se negó con tanta firmeza que Bernabé y Pablo se separaron. Años después, en la segunda prisión, Pablo escribió a Timoteo: "Toma a Marcos y tráele contigo, porque me es útil para el ministerio" (2 Timoteo 4:11). La grieta sanó. El hombre que abandonó fue restaurado y declarado útil.</p>
+  </div>
+
+  <div class="frase"><p>"Pablo enseñó que somos miembros los unos de los otros. Lo vivió con cada persona que caminó con él — en los triunfos y en los naufragios."</p></div>
+</section>
+
+<!-- ═══ CAP V ═══ -->
+<section class="chapter" id="c5">
+  <div class="ch-header">
+    <span class="ch-year">47–49 DC</span>
+    <div class="ch-meta">
+      <div class="ch-num">Capítulo V</div>
+      <div class="ch-title">El primer viaje — el mundo se abre</div>
+      <div class="ch-sub">Chipre, Antioquía de Pisidia, Listra — el evangelio sale de Siria</div>
+    </div>
+  </div>
+  <div class="ch-divider"></div>
+
+  <p>La iglesia de Antioquía ayunó, oró y puso sus manos sobre Pablo y Bernabé. El Espíritu Santo había hablado: <em>"Apartadme a Bernabé y a Saulo para la obra a que los he llamado"</em> (Hechos 13:2). Era el inicio de algo que cambiaría el mundo.</p>
+
+  <div class="timeline">
+    <div class="tl-item">
+      <div class="tl-year">Chipre</div>
+      <div class="tl-titulo">La primera isla — y el primer enfrentamiento</div>
+      <div class="tl-texto">En Pafos, Pablo enfrentó a Elimas el mago que intentaba apartar al procónsul Sergio Paulo de la fe. Pablo lo miró fijamente y proclamó ceguera sobre él. El procónsul vio y creyó. Fue también aquí donde Saulo comenzó a ser llamado sistemáticamente <em>Pablo</em> — su nombre romano, de cara al mundo gentil.</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-year">Antioquía de Pisidia</div>
+      <div class="tl-titulo">El sermón que definió el evangelio paulino</div>
+      <div class="tl-texto">En la sinagoga, Pablo predicó uno de los discursos más completos del libro de Hechos: la historia de Israel que culmina en Jesús, la resurrección como cumplimiento de las Escrituras y la justificación que la ley no podía dar. Los judíos lo escucharon con interés el primer sábado — el segundo vinieron casi todos de la ciudad. La envidia de los líderes judíos desató la primera persecución del viaje.</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-year">Iconio</div>
+      <div class="tl-titulo">Señales y división</div>
+      <div class="tl-texto">Predicaron con tanto poder que "se hizo una gran multitud" — tanto de judíos como de griegos. Pero la ciudad se dividió. Pablo y Bernabé lo supieron y continuaron predicando, "confiadamente, apoyados en el Señor, quien daba testimonio con señales y prodigios." La oposición no los detuvo — los expulsaron de la ciudad pero continuaron el camino.</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-year">Listra</div>
+      <div class="tl-titulo">De dios a apedreado en un día</div>
+      <div class="tl-texto">Pablo sanó a un cojo de nacimiento. La multitud los proclamó dioses: "¡Los dioses han bajado a nosotros en forma de hombres!" Apenas lograron detener los sacrificios. Después llegaron los judíos de Antioquía e Iconio. La misma multitud que quería adorarlos los apedreó a Pablo hasta creerlo muerto. Lo arrastraron fuera de la ciudad. Los discípulos lo rodearon. Pablo se levantó.</div>
+    </div>
+  </div>
+
+  <div class="pablo-voz">
+    <div class="pv-label">Lo que aprendió en el primer viaje</div>
+    <p>"Es necesario que a través de muchas tribulaciones entremos en el reino de Dios."</p>
+    <cite>Hechos 14:22 — Lo que enseñó a las iglesias recién fundadas al regresar</cite>
+  </div>
+
+  <div class="frase"><p>"Pablo no prometió un camino fácil a los que recién habían creído. Les prometió tribulaciones y les enseñó a perseverar en ellas. Eso es predicación honesta."</p></div>
+</section>
+
+<!-- ═══ CAP VI ═══ -->
+<section class="chapter" id="c6">
+  <div class="ch-header">
+    <span class="ch-year">49 DC</span>
+    <div class="ch-meta">
+      <div class="ch-num">Capítulo VI</div>
+      <div class="ch-title">La batalla doctrinal — Jerusalén</div>
+      <div class="ch-sub">El Concilio de Jerusalén — la primera gran crisis de la iglesia</div>
+    </div>
+  </div>
+  <div class="ch-divider"></div>
+
+  <p>Pablo regresó a Antioquía y encontró la primera crisis doctrinal de la historia de la iglesia. Unos hombres habían llegado desde Judea enseñando: <em>"Si no os circuncidáis conforme al rito de Moisés, no podéis ser salvos"</em> (Hechos 15:1). Para Pablo, esto no era un debate teológico secundario — era una negación directa del evangelio.</p>
+
+  <p>Si la circuncisión era necesaria para la salvación, entonces la gracia no era suficiente. Si la gracia no era suficiente, entonces la muerte de Cristo no era suficiente. Para Pablo, cualquier adición a la obra de Cristo era una traición a la cruz. <strong>No había término medio.</strong></p>
+
+  <div class="section-label">El enfrentamiento con Pedro — cara a cara</div>
+  <div class="pablo-voz">
+    <div class="pv-label">La confrontación más valiente del apóstol</div>
+    <p>"Pero cuando Pedro vino a Antioquía, le resistí cara a cara, porque era de condenar... y no andaban rectamente conforme a la verdad del evangelio."</p>
+    <cite>Gálatas 2:11,14</cite>
+  </div>
+
+  <p>Pedro era el apóstol más prominente de la iglesia. Pablo había conocido la fe solo tres años antes de conocerlo. Y sin embargo, cuando Pedro actuó hipócritamente — comiendo con los gentiles cuando no estaban los judíos de Jerusalén pero retirándose cuando llegaban — Pablo lo enfrentó en público. No en privado para no incomodar a nadie. Públicamente, porque la hipocresía pública requiere corrección pública. El evangelio estaba en juego y ningún título apostólico podía ponerlo en segundo plano.</p>
+
+  <div class="section-label">El Concilio y su resolución</div>
+  <p>El Concilio de Jerusalén del año 49 DC fue la primera asamblea doctrinal de la historia de la iglesia. Pedro, Santiago y Pablo presentaron sus posiciones. La conclusión fue la victoria del evangelio de la gracia: los gentiles no necesitaban circuncidarse ni guardar la ley mosaica para ser salvos. La carta enviada a las iglesias fue histórica: <em>"Ha parecido bien al Espíritu Santo, y a nosotros, no imponeros ninguna carga más que estas cosas necesarias"</em> (Hechos 15:28).</p>
+
+  <div class="frase"><p>"Pablo entendió algo que muchos líderes modernos olvidan: hay momentos en que la fidelidad al evangelio requiere enfrentar a la autoridad, incluso cuando la autoridad tiene nombre apostólico."</p></div>
+</section>
+
+<!-- ═══ CAP VII ═══ -->
+<section class="chapter" id="c7">
+  <div class="ch-header">
+    <span class="ch-year">50–57 DC</span>
+    <div class="ch-meta">
+      <div class="ch-num">Capítulo VII</div>
+      <div class="ch-title">Europa — el evangelio cruza el mar</div>
+      <div class="ch-sub">Macedonia, Filipos, Atenas, Corinto, Éfeso</div>
+    </div>
+  </div>
+  <div class="ch-divider"></div>
+
+  <p>El segundo viaje comenzó con ruptura — la separación de Pablo y Bernabé por el asunto de Juan Marcos. Pablo tomó a Silas, y en Listra se unió Timoteo. Llegaron a Troas, ciudad costera del Mar Egeo, y allí ocurrió uno de los momentos más decisivos de la historia de la civilización occidental:</p>
+
+  <div class="pablo-voz">
+    <div class="pv-label">La visión que llevó el evangelio a Europa</div>
+    <p>"Y se le mostró a Pablo una visión de noche: un varón macedonio estaba en pie, rogándole y diciendo: Pasa a Macedonia y ayúdanos."</p>
+    <cite>Hechos 16:9</cite>
+  </div>
+
+  <p>Un hombre en una visión nocturna. Esa fue la razón por la que el evangelio llegó a Europa. No una estrategia misionera elaborada — una visión y la obediencia inmediata al Espíritu Santo. Al día siguiente embarcaron hacia Macedonia.</p>
+
+  <div class="section-label">Filipos — la primera iglesia de Europa</div>
+  <p>La primera convertida de Europa no fue un filósofo griego ni un senador romano. Fue <strong>Lidia</strong>, una vendedora de púrpura de Tiatira. El Señor abrió su corazón, fue bautizada con toda su casa, y su hogar se convirtió en la base del ministerio en Filipos. La iglesia de Filipos sería la más querida de Pablo — la única que le permitió recibir apoyo económico.</p>
+
+  <div class="section-label">La cárcel que se convirtió en culto</div>
+  <p>Después de expulsar un espíritu de adivinación de una joven esclava, Pablo y Silas fueron arrastrados al foro, golpeados con varas y arrojados al calabozo interior con los pies en el cepo. A medianoche cantaban. El carcelero se despertó con un terremoto, vio las puertas abiertas y sacó su espada. Pablo gritó: <em>"No te hagas ningún mal, pues todos estamos aquí."</em> Esa noche el carcelero y toda su familia fueron bautizados. A la madrugada, un convertido.</p>
+
+  <div class="section-label">Atenas — el evangelio en el ágora</div>
+  <p>En Atenas, Pablo caminó por el ágora observando los altares y los ídolos. El texto dice que <em>"su espíritu se enardecía"</em> (Hechos 17:16) — fue provocationalmente movido por el paganismo que veía. Llegó al Areópago y pronunció el sermón más filosóficamente sofisticado del NT: citó a sus propios poetas griegos — Aratus y Cleantes — para hablar del Dios desconocido.</p>
+
+  <div class="section-label">Corinto — dieciocho meses de ministerio</div>
+  <p>Corinto era la ciudad más cosmopolita y moralmente degradada del mundo greco-romano. Pablo llegó solo, desalentado, y escuchó la voz del Señor de noche: <em>"No temas, sino habla, y no calles; porque yo estoy contigo... porque yo tengo mucho pueblo en esta ciudad"</em> (Hechos 18:9-10). Permaneció dieciocho meses. Fundó una iglesia que luego le causaría inmensas dolores de cabeza — y que le inspiró las cartas más profundas de su ministerio.</p>
+
+  <div class="section-label">Éfeso — tres años, el ministerio más largo</div>
+  <p>En Éfeso, Pablo enseñó cada día en la escuela de Tirano durante dos años — tan ferviente que "todos los que habitaban en Asia, judíos y griegos, oyeron la palabra del Señor" (Hechos 19:10). Los fabricantes de ídolos organizaron un motín cuando sus ventas comenzaron a caer. La ciudad entera gritó durante dos horas: "¡Grande es Diana de los Efesios!" Era el evangelio amenazando la economía del paganismo.</p>
+
+  <div class="frase"><p>"Pablo no buscaba la comodidad de la audiencia receptiva. Iba donde el evangelio no había llegado — y se quedaba hasta que la ciudad lo escuchara."</p></div>
+</section>
+
+<!-- ═══ CAP VIII ═══ -->
+<section class="chapter" id="c8">
+  <div class="ch-header">
+    <span class="ch-year">48–68 DC</span>
+    <div class="ch-meta">
+      <div class="ch-num">Capítulo VIII</div>
+      <div class="ch-title">El pensamiento de Pablo</div>
+      <div class="ch-sub">La teología que cambió la historia del mundo</div>
+    </div>
+  </div>
+  <div class="ch-divider"></div>
+
+  <p>Pablo no solo fue un evangelista y un plantador de iglesias — fue el mayor teólogo de la historia del cristianismo. Sus cartas contienen la arquitectura intelectual sobre la que toda la teología cristiana posterior fue construida. Para entenderlo como persona hay que entender cómo pensaba.</p>
+
+  <div class="section-label">La justificación por la fe — su gran descubrimiento</div>
+  <div class="pablo-voz">
+    <div class="pv-label">La declaración que escandalizó al judaísmo</div>
+    <p>"Sabiendo que el hombre no es justificado por las obras de la ley, sino por la fe de Jesucristo... porque por las obras de la ley nadie será justificado."</p>
+    <cite>Gálatas 2:16</cite>
+  </div>
+
+  <p>Pablo entendió algo que el judaísmo farisaico no podía aceptar: la ley era perfectamente buena — pero ningún ser humano era capaz de cumplirla perfectamente. La ley revelaba el estándar de Dios; no era el medio de alcanzarlo. Solo la gracia de Dios, recibida por fe en Cristo, podía declarar justo al que era injusto. Esta doctrina era tan radical que los judaizantes la persiguieron durante todo su ministerio.</p>
+
+  <div class="section-label">La gracia — el centro gravitacional</div>
+  <div class="pablo-voz">
+    <div class="pv-label">Romanos — el tratado más denso del NT</div>
+    <p>"Porque por gracia sois salvos por medio de la fe; y esto no de vosotros, pues es don de Dios; no por obras, para que nadie se gloríe."</p>
+    <cite>Efesios 2:8-9</cite>
+  </div>
+
+  <p>La gracia para Pablo no era solo el favor de Dios — era la lógica completa del evangelio. Si la salvación fuera por méritos, la gloria sería del hombre. Pero es por gracia, de modo que la gloria solo puede ser de Dios. La gracia no era una concesión divina — era el plan eterno de Dios revelado en Cristo.</p>
+
+  <div class="section-label">El cuerpo de Cristo — su eclesiología</div>
+  <p>Pablo desarrolló la imagen más poderosa de la iglesia en todo el NT: el cuerpo de Cristo. No una organización religiosa, no un club de creyentes — un organismo vivo donde cada miembro es necesario, donde el dolor de uno es sentido por todos, donde la gloria de uno pertenece a todos. "Vosotros, pues, sois el cuerpo de Cristo, y miembros cada uno en particular." (1 Corintios 12:27).</p>
+
+  <div class="gold-box">
+    <h4>Los pilares del pensamiento paulino</h4>
+    <p><strong>Justificación por fe:</strong> declarado justo por gracia, no por obras de mérito — Romanos 3:21-26</p>
+    <p><strong>La cruz como centro:</strong> "me propuse no saber entre vosotros cosa alguna sino a Jesucristo, y a éste crucificado" — 1 Corintios 2:2</p>
+    <p><strong>La resurrección como fundamento:</strong> "si Cristo no resucitó, vuestra fe es vana" — 1 Corintios 15:17</p>
+    <p><strong>La unidad en Cristo:</strong> "no hay judío ni griego, no hay esclavo ni libre, no hay varón ni mujer; porque todos vosotros sois uno en Cristo Jesús" — Gálatas 3:28</p>
+    <p><strong>El Espíritu Santo como habitante:</strong> "¿no sabéis que vuestro cuerpo es templo del Espíritu Santo?" — 1 Corintios 6:19</p>
+    <p><strong>La eternidad como perspectiva:</strong> "para mí el vivir es Cristo, y el morir es ganancia" — Filipenses 1:21</p>
+  </div>
+
+  <div class="frase"><p>"Pablo no construyó una teología para ganar debates — la construyó porque había conocido a Cristo en el camino a Damasco y todo lo demás tenía que ser reorganizado alrededor de ese encuentro."</p></div>
+</section>
+
+<!-- ═══ CAP IX ═══ -->
+<section class="chapter" id="c9">
+  <div class="ch-header">
+    <span class="ch-year">57–62 DC</span>
+    <div class="ch-meta">
+      <div class="ch-num">Capítulo IX</div>
+      <div class="ch-title">Las cadenas que no lo callaron</div>
+      <div class="ch-sub">Cesarea, el naufragio y Roma — el prisionero que evangelizó el Imperio</div>
+    </div>
+  </div>
+  <div class="ch-divider"></div>
+
+  <p>En Jerusalén, una muchedumbre intentó matar a Pablo en el Templo. Los soldados romanos lo rescataron. Comenzó así el período más paradójico de su vida: los siguientes cinco años los pasaría encadenado — y serían algunos de los más fructíferos.</p>
+
+  <div class="section-label">Dos años en Cesarea</div>
+  <p>El gobernador Félix lo mantuvo preso en Cesarea esperando un soborno que nunca llegó. Pablo compareció ante Félix, ante Festo y ante el rey Agripa. Ante Agripa predicó con tal fuerza que el rey dijo: <em>"Por poco me persuades a ser cristiano"</em> (Hechos 26:28). Pablo respondió con una de las frases más generosas de todo el NT: "quisiera Dios que por poco o por mucho, no solamente tú, sino también todos los que hoy me oyen, fueseis hechos tales cual yo soy, excepto estas cadenas."</p>
+
+  <div class="section-label">El naufragio — la fe en el mediterráneo</div>
+  <p>El viaje a Roma comenzó mal y terminó peor. Pablo advirtió al centurión que el viaje sería peligroso — el centurión no le creyó. Una tormenta los golpeó durante catorce días. La tripulación perdió toda esperanza. Y Pablo se puso de pie en medio del barco que se hundía y habló:</p>
+
+  <div class="pablo-voz">
+    <div class="pv-label">En la tormenta — su calma era sobrenatural</div>
+    <p>"Por tanto, oh varones, tened buen ánimo; porque yo confío en Dios que será así como se me ha dicho. Con todo, es necesario que demos en alguna isla."</p>
+    <cite>Hechos 27:25-26</cite>
+  </div>
+
+  <p>Naufragaron en Malta. Doscientas setenta y seis personas llegaron a tierra — ninguna perdida. En la isla, una víbora se prendió de su mano y él la sacudió al fuego sin consecuencia. Sanó al padre del gobernador de la isla y luego a todos los enfermos de Malta. Tres meses en una isla que no esperaba y que fue evangelizada de paso.</p>
+
+  <div class="section-label">Roma — el prisionero que evangelizó el palacio</div>
+  <p>En Roma, Pablo vivió dos años bajo custodia domiciliaria — encadenado a un soldado pero libre para recibir visitantes y predicar. Y desde esa habitación encadenada escribió cuatro de sus cartas más profundas: Efesios, Filipenses, Colosenses y Filemón. Las "cartas de la prisión." En Filipenses escribió desde las cadenas con una alegría que desconcertaba a sus guardas:</p>
+
+  <div class="pablo-voz">
+    <div class="pv-label">Desde la cárcel, con gozo</div>
+    <p>"Pero quiero que sepáis, hermanos, que las cosas que me han sucedido, han redundado más bien para el progreso del evangelio, de tal manera que mis prisiones se han hecho patentes en Cristo en todo el pretorio, y a todos los demás."</p>
+    <cite>Filipenses 1:12-13</cite>
+  </div>
+
+  <div class="frase"><p>"Pablo encontró en cada cadena una oportunidad. Cada carcelero fue su auditorio cautivo. Cada juicio, su plataforma. El Imperio Romano lo encarceló — y él evangelizó al Imperio desde adentro."</p></div>
+</section>
+
+<!-- ═══ CAP X ═══ -->
+<section class="chapter" id="c10">
+  <div class="ch-header">
+    <span class="ch-year">33–68 DC</span>
+    <div class="ch-meta">
+      <div class="ch-num">Capítulo X</div>
+      <div class="ch-title">La pasión que lo consumió</div>
+      <div class="ch-sub">El aguijón, la abnegación y el amor por las iglesias</div>
+    </div>
+  </div>
+  <div class="ch-divider"></div>
+
+  <p>Pablo no fue solo un teólogo brillante y un viajero intrépido. Fue un hombre con emociones profundas, con vulnerabilidades reales, con cargas que lo aplastaban y con una pasión por Cristo y por las iglesias que superaba todo lo que sentía por sí mismo.</p>
+
+  <div class="section-label">El inventario del sufrimiento</div>
+  <div class="pablo-voz">
+    <div class="pv-label">El catálogo que ningún currículo moderno podría igualar</div>
+    <p>"En trabajos más abundante; en azotes sin número; en cárceles más; en peligros de muerte muchas veces. De los judíos cinco veces he recibido cuarenta azotes menos uno. Tres veces he sido azotado con varas; una vez apedreado; tres veces he padecido naufragio; una noche y un día he estado como náufrago en alta mar; en caminos muchas veces; en peligros de ríos, peligros de ladrones, peligros de los de mi nación, peligros de los gentiles, peligros en la ciudad, peligros en el desierto, peligros en el mar, peligros entre falsos hermanos; en trabajo y fatiga, en muchos desvelos, en hambre y sed, en muchos ayunos, en frío y en desnudez."</p>
+    <cite>2 Corintios 11:23-27</cite>
+  </div>
+
+  <p>Cinco veces: cuarenta azotes menos uno. Eso es 195 azotes de los judíos. Tres palizas con varas de los romanos. Apedreado hasta ser dado por muerto en Listra. Tres naufragios. Una noche en el océano abierto. Y después de todo eso añadió: <em>"y además de otras cosas, lo que sobre mí se agolpa cada día, la preocupación por todas las iglesias"</em> (v.28). El sufrimiento físico era lo de menos. La carga emocional de las iglesias era más pesada.</p>
+
+  <div class="section-label">El aguijón en la carne</div>
+  <div class="pablo-voz">
+    <div class="pv-label">La vulnerabilidad que Dios no quitó</div>
+    <p>"Y para que la grandeza de las revelaciones no me exaltase desmedidamente, me fue dado un aguijón en mi carne, un mensajero de Satanás que me abofetee, para que no me enaltezca sobremanera... Tres veces he rogado al Señor, que lo quite de mí. Y me ha dicho: Bástate mi gracia; porque mi poder se perfecciona en la debilidad."</p>
+    <cite>2 Corintios 12:7-9</cite>
+  </div>
+
+  <p>El hombre que había sido arrebatado al tercer cielo, que sanó a enfermos en cada ciudad, que resucitó a Eutico que cayó de la ventana — ese mismo hombre tenía una debilidad que no pudo sanar. Oró tres veces. La respuesta fue no. Y Pablo encontró en ese no la gracia más profunda: <em>"Por tanto, de buena gana me gloriaré más bien en mis debilidades, para que repose sobre mí el poder de Cristo."</em></p>
+
+  <div class="section-label">Su amor por Israel — el dolor más profundo</div>
+  <div class="pablo-voz">
+    <div class="pv-label">La carga que no podía soltar</div>
+    <p>"Tengo gran tristeza y continuo dolor en mi corazón. Porque deseara yo mismo ser anatema, separado de Cristo, por amor a mis hermanos, los que son mis parientes según la carne."</p>
+    <cite>Romanos 9:2-3</cite>
+  </div>
+
+  <p>Pablo deseaba ser maldito — separado de Cristo — si con eso sus hermanos judíos podieran ser salvos. Era una hipérbole del amor imposible. No podía hacerlo, y lo sabía. Pero la intensidad del deseo revela la profundidad del amor. El hombre que fue perseguido por Israel amaba a Israel con un amor que no disminuyó con cada piedra que le lanzaron.</p>
+
+  <div class="frase"><p>"Pablo no sufrió porque no tenía otra opción. Sufrió porque eligió deliberadamente no protegerse cuando el evangelio lo requería."</p></div>
+</section>
+
+<!-- ═══ CAP XI ═══ -->
+<section class="chapter" id="c11">
+  <div class="ch-header">
+    <span class="ch-year">48–68 DC</span>
+    <div class="ch-meta">
+      <div class="ch-num">Capítulo XI</div>
+      <div class="ch-title">Las cartas — su voz eterna</div>
+      <div class="ch-sub">Trece epístolas que siguen hablando dos mil años después</div>
+    </div>
+  </div>
+  <div class="ch-divider"></div>
+
+  <p>Pablo escribió para resolver problemas concretos de iglesias concretas — y produjo accidentalmente la colección de documentos más influyente en la historia del pensamiento humano. Sus trece cartas no son tratados abstractos: son respuestas pastorales urgentes, llenas de su personalidad, sus emociones y su amor feroz por las iglesias que fundó.</p>
+
+  <div class="timeline">
+    <div class="tl-item">
+      <div class="tl-year">1 y 2 Tesalonicenses — ~50 DC</div>
+      <div class="tl-titulo">Las cartas más tempranas</div>
+      <div class="tl-texto">Escritas desde Corinto para una iglesia joven y asustada. Contienen la enseñanza más detallada del NT sobre el arrebatamiento y la segunda venida. Pablo los consuela: los muertos en Cristo resucitarán primero. No os entristezcáis como los que no tienen esperanza.</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-year">Gálatas — ~48-50 DC</div>
+      <div class="tl-titulo">La carta más furiosa</div>
+      <div class="tl-texto">Escrita en respuesta a los judaizantes que pervertían el evangelio. Pablo comienza sin saludo — va directo al punto: "estoy maravillado de que tan pronto os hayáis alejado del que os llamó por la gracia de Cristo." Si alguien predicara otro evangelio, sea anatema — incluyendo un ángel del cielo.</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-year">1 y 2 Corintios — ~55-56 DC</div>
+      <div class="tl-titulo">Las cartas más personales</div>
+      <div class="tl-texto">La iglesia más problemática inspiró las cartas más ricas. División de partidos, inmoralidad, litigios, desorden en el culto, negación de la resurrección — Pablo aborda todo con paciencia, firmeza y amor. 1 Corintios 13 — el himno del amor — nació de una iglesia dividida.</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-year">Romanos — ~57 DC</div>
+      <div class="tl-titulo">La carta más profunda — el tratado del evangelio</div>
+      <div class="tl-texto">Escrita a una iglesia que no fundó y a la que aún no había visitado. Es el tratado más sistemático de su teología: la universalidad del pecado, la justificación por fe, la vida en el Espíritu, el misterio de Israel y la ética del amor. Es la carta que transformó a Agustín, a Lutero y a Juan Wesley.</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-year">Filipenses — ~61 DC</div>
+      <div class="tl-titulo">La carta más gozosa — escrita desde la cárcel</div>
+      <div class="tl-texto">"Regocijaos en el Señor siempre. Otra vez digo: ¡Regocijaos!" Escrita encadenado, enfrentando posible ejecución. Contiene la kenosis de Filipenses 2 — el pasaje cristológico más sublime del NT — y la promesa de Filipenses 4:13. Desde las cadenas, la carta más alegre de su colección.</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-year">2 Timoteo — ~67 DC</div>
+      <div class="tl-titulo">La última carta — el testamento espiritual</div>
+      <div class="tl-texto">Escrita en la segunda prisión romana, esperando la ejecución. "He peleado la buena batalla, he acabado la carrera, he guardado la fe." Pide a Timoteo que venga pronto, que traiga la capa y los pergaminos. Solo Lucas está con él. Es la despedida más digna de la historia de la iglesia.</div>
+    </div>
+  </div>
+
+  <div class="frase"><p>"Pablo escribió para resolver los problemas de Corinto y Galacia. Dos mil años después, sus cartas siguen resolviendo los problemas de cada iglesia en cada siglo."</p></div>
+</section>
+
+<!-- ═══ CAP XII ═══ -->
+<section class="chapter" id="c12">
+  <div class="ch-header">
+    <span class="ch-year">~68 DC</span>
+    <div class="ch-meta">
+      <div class="ch-num">Capítulo XII</div>
+      <div class="ch-title">El final — peleé la buena batalla</div>
+      <div class="ch-sub">Roma, la segunda prisión y la corona de justicia</div>
+    </div>
+  </div>
+  <div class="ch-divider"></div>
+
+  <p>Después de su primera prisión en Roma, Pablo aparentemente fue liberado y continuó su ministerio — visitó España (Romanos 15:24 había prometido hacerlo), Macedonia, Creta. Pero la persecución de Nerón contra los cristianos cambió todo. Pablo fue arrestado de nuevo, esta vez en condiciones mucho más severas.</p>
+
+  <div class="section-label">La segunda prisión — el frío y la soledad</div>
+  <div class="pablo-voz">
+    <div class="pv-label">La última carta que Pablo escribió</div>
+    <p>"Procura venir a mí pronto; porque Demas me ha desamparado, amando este siglo... Lucas está solo conmigo. Toma a Marcos y tráele contigo... Trae, cuando vengas, el capote que dejé en Tróade en casa de Carpo, y los libros, mayormente los pergaminos."</p>
+    <cite>2 Timoteo 4:9-13</cite>
+  </div>
+
+  <p>El hombre que había evangelizado el Imperio Romano estaba solo, con frío, pidiendo su abrigo y sus libros. Demas se fue. Crescente se fue. Tito se fue. Solo Lucas permanecía. Era el invierno del alma — y Pablo lo sabía. No fingía que estaba bien. Pedía compañía, pedía calidez, pedía sus pergaminos porque hasta el final quería leer.</p>
+
+  <div class="section-label">El primer juicio — la soledad total</div>
+  <div class="pablo-voz">
+    <div class="pv-label">Abandonado — pero no solo</div>
+    <p>"En mi primera defensa ninguno estuvo a mi lado, sino que todos me desampararon; no les sea tomado en cuenta. Pero el Señor estuvo a mi lado, y me dio fuerzas, para que por mí fuese cumplida la predicación, y que todos los gentiles oyesen. Así fui librado de la boca del león."</p>
+    <cite>2 Timoteo 4:16-17</cite>
+  </div>
+
+  <p>Nadie fue a su defensa. El hombre que había fundado iglesias en cuatro continentes, que había formado discípulos por toda Asia Menor, que había escrito las cartas que formarían la teología cristiana — compareció ante el tribunal de Nerón completamente solo. Y aun así, el Señor estuvo a su lado.</p>
+
+  <div class="section-label">La corona al final del camino</div>
+  <div class="pablo-voz">
+    <div class="pv-label">Las palabras más serenas de toda la Biblia</div>
+    <p>"He peleado la buena batalla, he acabado la carrera, he guardado la fe. Por lo demás, me está guardada la corona de justicia, la cual me dará el Señor, juez justo, en aquel día; y no sólo a mí, sino también a todos los que aman su venida."</p>
+    <cite>2 Timoteo 4:7-8</cite>
+  </div>
+
+  <p>Tres declaraciones perfectas al final de una vida perfectamente vivida para Cristo. No "he alcanzado la perfección." No "he tenido éxito." <strong>He peleado. He acabado. He guardado.</strong> Verbo por verbo, el resumen de una vida que no huyó de la batalla, no abandonó la carrera y no soltó la fe cuando todo lo demás fue soltado.</p>
+
+  <div class="section-label">La muerte del apóstol</div>
+  <p>La tradición histórica antigua — Clemente de Roma, Eusebio, Tertuliano — registra que Pablo fue decapitado fuera de Roma, en la Vía Ostiense, durante la persecución de Nerón, alrededor del año 67-68 DC. Como ciudadano romano no podía ser crucificado. La espada fue su instrumento. Murió como vivió: de cara al enemigo, sin retractarse, sin huir.</p>
+
+  <p>Sobre su tumba, la tradición dice que se levantó la Basílica de San Pablo Extramuros. Pero el monumento más grande que Pablo dejó no está en Roma — está en cada carta que se lee, en cada iglesia que predica la justificación por fe, en cada creyente que dice: "para mí el vivir es Cristo."</p>
+
+  <div class="frase"><p>"Pablo murió como ciudadano romano bajo la espada de Nerón. Pero el Imperio de Nerón cayó hace 1,500 años. Las cartas de Pablo siguen siendo leídas hoy."</p></div>
+</section>
+
+</main>
+
+<section class="epilogo">
+  <span class="big">PABLO</span>
+  <h2>El hombre que Dios detuvo en el camino</h2>
+  <p>Nadie eligió a Pablo — él iba en dirección contraria. Dios lo detuvo, lo cegó, lo transformó y lo envió. Y ese hombre que iba a destruir la iglesia se convirtió en el que más la construyó.</p>
+  <p>Cinco veces azotado. Tres veces varillado. Una vez apedreado. Tres naufragios. Noches sin dormir. Hambre. Frío. Solo al final. Y aun así: regocijaos. Siempre. Otra vez digo: regocijaos.</p>
+  <div class="quote" style="max-width:480px;margin:32px auto;">
+    <p>"Pero por la gracia de Dios soy lo que soy; y su gracia no ha sido en vano para conmigo."</p>
+    <cite>1 Corintios 15:10 — El resumen de toda su vida</cite>
+  </div>
+  <div class="firma">Pablo de Tarso · Serie Personajes · Predicador IPUC</div>
+</section>
+
+</div>
+
+<script>
+const obs=new IntersectionObserver(e=>{e.forEach(el=>{if(el.isIntersecting)el.target.classList.add('visible');});},{threshold:.06});
+document.querySelectorAll('.chapter').forEach(e=>obs.observe(e));
+const nav=document.getElementById('sidenav');
+const wrap=document.getElementById('pageWrap');
+const isMobile=()=>window.innerWidth<=768;
+function toggleNav(){
+  if(isMobile()){nav.classList.toggle('show');}
+  else{nav.classList.toggle('hidden');wrap.classList.toggle('full');}
+}
+const secs=document.querySelectorAll('section[id]');
+const links=document.querySelectorAll('nav a');
+window.addEventListener('scroll',()=>{
+  let cur='';
+  secs.forEach(s=>{if(window.scrollY>=s.offsetTop-200)cur=s.id;});
+  links.forEach(a=>{a.classList.remove('active');if(a.getAttribute('href')==='#'+cur)a.classList.add('active');});
+});
+links.forEach(a=>{a.addEventListener('click',()=>{if(isMobile())nav.classList.remove('show');});});
+document.addEventListener('click',e=>{
+  if(isMobile()&&nav.classList.contains('show')&&!nav.contains(e.target)&&!e.target.closest('.nav-toggle')){nav.classList.remove('show');}
+});
+</script>
+</body>
+</html>

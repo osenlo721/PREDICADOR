@@ -1,0 +1,844 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Creer o Atraer — Osmar Lugo</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Raleway:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --azul: #009FDA;
+  --marino: #003B6F;
+  --oro: #F0AB00;
+  --oro-claro: #FFD166;
+  --fondo: #040e1c;
+  --fondo2: #071628;
+  --fondo3: #0a1e38;
+  --texto: #e8e0d0;
+  --texto-suave: #a89f90;
+  --linea: rgba(240,171,0,0.25);
+  --teal: #0e7a8a;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--fondo);
+  color: var(--texto);
+  font-family: 'Crimson Pro', Georgia, serif;
+  font-size: 18px;
+  line-height: 1.85;
+  overflow-x: hidden;
+}
+
+::-webkit-scrollbar{width:4px;}
+::-webkit-scrollbar-track{background:var(--fondo);}
+::-webkit-scrollbar-thumb{background:var(--azul);border-radius:2px;}
+
+/* NAV LATERAL */
+nav {
+  position: fixed;
+  left: 0; top: 0; bottom: 0;
+  width: 240px;
+  background: linear-gradient(180deg, var(--marino) 0%, #011529 100%);
+  border-right: 1px solid var(--linea);
+  z-index: 100;
+  overflow-y: auto;
+  transform: translateX(-100%);
+  transition: transform .35s ease;
+  padding: 32px 0 32px;
+}
+nav.show { transform: translateX(0); }
+nav .nav-title {
+  font-family: 'Cinzel', serif;
+  font-size: 10px;
+  letter-spacing: 4px;
+  color: var(--oro);
+  padding: 0 20px 16px;
+  border-bottom: 1px solid var(--linea);
+  margin-bottom: 12px;
+}
+nav a {
+  display: block;
+  padding: 8px 20px;
+  font-family: 'Raleway', sans-serif;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 1px;
+  color: var(--texto-suave);
+  text-decoration: none;
+  transition: all .2s;
+  border-left: 2px solid transparent;
+}
+nav a:hover, nav a.active {
+  color: var(--oro);
+  border-left-color: var(--oro);
+  background: rgba(240,171,0,.06);
+}
+
+/* TOGGLE NAV */
+.nav-toggle {
+  position: fixed;
+  top: 20px; left: 20px;
+  z-index: 200;
+  background: var(--marino);
+  border: 1px solid var(--linea);
+  color: var(--oro);
+  width: 40px; height: 40px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 18px;
+  display: flex; align-items: center; justify-content: center;
+  transition: all .2s;
+}
+.nav-toggle:hover { background: var(--azul); color: #fff; }
+
+/* PORTADA */
+.cover {
+  min-height: 100vh;
+  background: linear-gradient(160deg, #041830 0%, var(--fondo) 60%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 80px 32px 60px;
+  position: relative;
+  overflow: hidden;
+}
+.cover::before {
+  content: '';
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse 70% 50% at 50% 0%, rgba(0,159,218,.2) 0%, transparent 70%),
+    radial-gradient(ellipse 40% 40% at 80% 80%, rgba(240,171,0,.1) 0%, transparent 60%);
+  pointer-events: none;
+}
+.cover-tag {
+  font-family: 'Cinzel', serif;
+  font-size: 10px;
+  letter-spacing: 5px;
+  color: var(--oro);
+  text-transform: uppercase;
+  margin-bottom: 32px;
+  animation: fadeDown .8s ease both;
+}
+.cover-vs {
+  font-family: 'Cinzel', serif;
+  font-size: clamp(60px, 12vw, 110px);
+  font-weight: 900;
+  line-height: 1;
+  margin-bottom: 8px;
+  animation: fadeDown .9s ease .1s both;
+}
+.cover-vs .c1 { color: var(--azul); }
+.cover-vs .sep { color: var(--texto-suave); font-size: .5em; vertical-align: middle; }
+.cover-vs .c2 { color: var(--oro); }
+.cover-subtitle {
+  font-family: 'Crimson Pro', serif;
+  font-style: italic;
+  font-size: clamp(15px, 2.5vw, 20px);
+  color: var(--texto-suave);
+  max-width: 480px;
+  margin: 16px auto 40px;
+  animation: fadeDown 1s ease .2s both;
+}
+.cover-author {
+  font-family: 'Raleway', sans-serif;
+  font-size: 12px;
+  letter-spacing: 3px;
+  color: var(--texto-suave);
+  text-transform: uppercase;
+  animation: fadeDown 1.1s ease .3s both;
+}
+.cover-line {
+  width: 60px; height: 1px;
+  background: linear-gradient(to right, transparent, var(--oro), transparent);
+  margin: 24px auto;
+  animation: fadeIn 1.2s ease .4s both;
+}
+.cover-scroll {
+  position: absolute; bottom: 32px;
+  font-family: 'Raleway', sans-serif;
+  font-size: 10px;
+  letter-spacing: 3px;
+  color: var(--texto-suave);
+  animation: pulse 2s ease infinite;
+}
+
+/* MAIN */
+main { max-width: 740px; margin: 0 auto; padding: 0 24px; }
+
+/* CAPÍTULOS */
+.chapter {
+  padding: 80px 0 60px;
+  border-bottom: 1px solid rgba(240,171,0,.1);
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity .7s ease, transform .7s ease;
+}
+.chapter.visible { opacity: 1; transform: none; }
+
+.ch-num {
+  font-family: 'Cinzel', serif;
+  font-size: 11px;
+  letter-spacing: 4px;
+  color: var(--azul);
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+.ch-title {
+  font-family: 'Cinzel', serif;
+  font-size: clamp(22px, 4vw, 34px);
+  font-weight: 700;
+  color: var(--oro);
+  line-height: 1.2;
+  margin-bottom: 8px;
+}
+.ch-sub {
+  font-family: 'Cinzel', serif;
+  font-size: clamp(16px, 2.5vw, 22px);
+  color: var(--azul);
+  margin-bottom: 32px;
+}
+.ch-divider {
+  width: 40px; height: 2px;
+  background: linear-gradient(to right, var(--oro), var(--azul));
+  margin-bottom: 32px;
+  border-radius: 2px;
+}
+
+p { margin-bottom: 20px; }
+strong { color: var(--oro); font-weight: 600; }
+em { color: var(--azul); font-style: italic; }
+
+/* CITA DESTACADA */
+.quote {
+  border-left: 3px solid var(--oro);
+  padding: 16px 24px;
+  margin: 32px 0;
+  background: rgba(240,171,0,.05);
+  border-radius: 0 8px 8px 0;
+}
+.quote p {
+  font-family: 'Crimson Pro', serif;
+  font-style: italic;
+  font-size: 1.1em;
+  color: var(--oro-claro);
+  margin-bottom: 6px;
+}
+.quote cite {
+  font-family: 'Raleway', sans-serif;
+  font-size: 12px;
+  letter-spacing: 2px;
+  color: var(--texto-suave);
+}
+
+/* COMPARATIVA */
+.compare {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin: 32px 0;
+}
+.compare-box {
+  padding: 20px;
+  border-radius: 8px;
+  border: 1px solid;
+}
+.compare-box.bad {
+  border-color: rgba(0,159,218,.3);
+  background: rgba(0,159,218,.05);
+}
+.compare-box.good {
+  border-color: rgba(240,171,0,.3);
+  background: rgba(240,171,0,.05);
+}
+.compare-box h4 {
+  font-family: 'Cinzel', serif;
+  font-size: 11px;
+  letter-spacing: 3px;
+  margin-bottom: 12px;
+  text-transform: uppercase;
+}
+.compare-box.bad h4 { color: var(--azul); }
+.compare-box.good h4 { color: var(--oro); }
+.compare-box ul { list-style: none; }
+.compare-box ul li {
+  font-size: 15px;
+  padding: 4px 0;
+  color: var(--texto-suave);
+  border-bottom: 1px solid rgba(255,255,255,.06);
+}
+.compare-box ul li::before { content: '— '; color: inherit; opacity: .5; }
+
+/* FRASE CENTRAL */
+.frase {
+  text-align: center;
+  padding: 48px 24px;
+  margin: 40px 0;
+  position: relative;
+}
+.frase::before {
+  content: '"';
+  font-family: 'Cinzel', serif;
+  font-size: 120px;
+  color: rgba(240,171,0,.08);
+  position: absolute;
+  top: -20px; left: 20px;
+  line-height: 1;
+}
+.frase p {
+  font-family: 'Cinzel', serif;
+  font-size: clamp(16px, 2.5vw, 22px);
+  color: var(--texto);
+  line-height: 1.5;
+  position: relative;
+  z-index: 1;
+  margin: 0;
+}
+
+/* PERSONAJES */
+.personas {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 16px;
+  margin: 32px 0;
+}
+.persona {
+  text-align: center;
+  padding: 20px 12px;
+  background: rgba(0,59,111,.3);
+  border: 1px solid rgba(0,159,218,.2);
+  border-radius: 8px;
+}
+.persona .nombre {
+  font-family: 'Cinzel', serif;
+  font-size: 13px;
+  color: var(--azul);
+  margin-bottom: 6px;
+}
+.persona .desc {
+  font-size: 13px;
+  color: var(--texto-suave);
+  line-height: 1.4;
+}
+
+/* CONCLUSIÓN BOX */
+.conclusion {
+  background: linear-gradient(135deg, rgba(0,59,111,.4) 0%, rgba(4,14,28,.8) 100%);
+  border: 1px solid rgba(240,171,0,.2);
+  border-radius: 12px;
+  padding: 28px;
+  margin-top: 32px;
+}
+.conclusion p { margin-bottom: 0; color: var(--texto-suave); font-style: italic; }
+.conclusion p:last-child { color: var(--oro); margin-top: 12px; font-style: normal; font-weight: 600; }
+
+/* EPÍLOGO */
+.epilogo {
+  text-align: center;
+  padding: 80px 32px 120px;
+}
+.epilogo .big-word {
+  font-family: 'Cinzel', serif;
+  font-size: clamp(48px, 10vw, 96px);
+  font-weight: 900;
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(240,171,0,.4);
+  letter-spacing: 8px;
+  margin-bottom: 40px;
+  display: block;
+}
+.epilogo h2 {
+  font-family: 'Cinzel', serif;
+  font-size: clamp(20px, 4vw, 32px);
+  color: var(--oro);
+  margin-bottom: 24px;
+}
+.epilogo p {
+  max-width: 540px;
+  margin: 0 auto 20px;
+  color: var(--texto-suave);
+  font-size: 1.05em;
+}
+.epilogo .firma {
+  margin-top: 48px;
+  font-family: 'Cinzel', serif;
+  font-size: 13px;
+  letter-spacing: 4px;
+  color: var(--azul);
+}
+
+/* ANIMATIONS */
+@keyframes fadeDown {
+  from { opacity: 0; transform: translateY(-20px); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes pulse {
+  0%,100% { opacity: .4; }
+  50% { opacity: 1; }
+}
+
+@media(max-width:600px){
+  .compare { grid-template-columns: 1fr; }
+  nav { width: 200px; }
+}
+</style>
+</head>
+<body>
+
+<button class="nav-toggle" onclick="toggleNav()" title="Índice">☰</button>
+
+<nav id="sidenav">
+  <div class="nav-title">Índice</div>
+  <a href="#portada">Portada</a>
+  <a href="#intro">Introducción</a>
+  <a href="#cap1">I. ¿Qué es la Ley de Atracción?</a>
+  <a href="#cap2">II. Historia espiritual</a>
+  <a href="#cap3">III. La fe según la Biblia</a>
+  <a href="#cap4">IV. Fe no es magia</a>
+  <a href="#cap5">V. Yo decreto</a>
+  <a href="#cap6">VI. El universo me escucha</a>
+  <a href="#cap7">VII. Pensamiento positivo</a>
+  <a href="#cap8">VIII. Dios no se manifiesta</a>
+  <a href="#cap9">IX. El precio de la fe</a>
+  <a href="#cap10">X. Testimonio</a>
+  <a href="#cap11">XI. ¿Pueden coexistir?</a>
+  <a href="#cap12">XII. Elijo creer</a>
+</nav>
+
+<!-- PORTADA -->
+<section class="cover" id="portada">
+  <div class="cover-tag">Osmar Lugo · Ebook</div>
+  <div class="cover-vs">
+    <span class="c1">Creer</span>
+    <span class="sep"> o </span>
+    <span class="c2">Atraer</span>
+  </div>
+  <p class="cover-subtitle">Un Diálogo entre la Fe y la Ley de Atracción</p>
+  <div class="cover-line"></div>
+  <div class="cover-author">Osmar Lugo</div>
+  <div class="cover-scroll">↓ LEER</div>
+</section>
+
+<main>
+
+<!-- INTRO -->
+<section class="chapter" id="intro">
+  <div class="ch-num">Introducción</div>
+  <h2 class="ch-title">Dos formas de</h2>
+  <div class="ch-sub">mirar la vida</div>
+  <div class="ch-divider"></div>
+  <p>En los últimos años, muchas personas han sido cautivadas por ideas como <strong>"el universo conspira a tu favor"</strong>, <strong>"tus pensamientos crean tu realidad"</strong>, y <strong>"solo atraes lo que vibras"</strong>. Estas frases están profundamente ligadas a lo que se conoce como la <em>Ley de Atracción</em>, un concepto popularizado por libros como <em>El Secreto</em> de Rhonda Byrne.</p>
+  <p>Al mismo tiempo, millones de creyentes seguimos caminando por otro sendero: el de la fe en Dios, revelado en la Biblia, que no responde a decretos mentales sino a una <strong>relación viva y obediente</strong> con un Dios que guía, ama y corrige.</p>
+  <p>Este no es un estudio académico. Es un diálogo desde la experiencia, entre dos formas de mirar la vida: una que gira en torno al <em>yo puedo</em>, y otra que se basa en <em>Dios puede</em>. Como cristiano unicitario, quiero explorar ambas perspectivas con respeto, pero también con convicción, para llegar a una conclusión que no solo informe, sino <strong>transforme</strong>.</p>
+</section>
+
+<!-- CAP 1 -->
+<section class="chapter" id="cap1">
+  <div class="ch-num">Capítulo Uno</div>
+  <h2 class="ch-title">¿Qué es realmente</h2>
+  <div class="ch-sub">la Ley de Atracción?</div>
+  <div class="ch-divider"></div>
+  <p>Vivimos en una era donde las ideas espirituales han dejado de pertenecer solo a templos o libros sagrados. Y una de las ideas más populares es esta: <strong>"Tus pensamientos crean tu realidad."</strong></p>
+  <p>La Ley de Atracción es la creencia de que el pensamiento tiene un poder magnético. Lo que piensas —con suficiente emoción, convicción y visualización— eventualmente se materializa en tu vida. Suena inspirador. Suena incluso parecido a la fe. Pero ¿de dónde viene realmente?</p>
+  <p>Sus raíces están en el movimiento filosófico y espiritual conocido como <em>New Thought</em>, surgido en el siglo XIX en Estados Unidos.</p>
+  <div class="personas">
+    <div class="persona"><div class="nombre">Phineas Quimby</div><div class="desc">Pionero del pensamiento mental como medicina espiritual</div></div>
+    <div class="persona"><div class="nombre">R.W. Emerson</div><div class="desc">Promovía la autosuficiencia y la divinidad interior</div></div>
+    <div class="persona"><div class="nombre">Wallace Wattles</div><div class="desc">Autor de <em>La Ciencia de Hacerse Rico</em> (1910)</div></div>
+    <div class="persona"><div class="nombre">Rhonda Byrne</div><div class="desc"><em>El Secreto</em> (2006) — +30 millones de copias</div></div>
+  </div>
+  <div class="compare">
+    <div class="compare-box bad">
+      <h4>Ley de Atracción</h4>
+      <ul>
+        <li>Cree en ti mismo</li>
+        <li>El universo te servirá</li>
+        <li>Tú eres el arquitecto</li>
+        <li>No necesitas a Dios</li>
+      </ul>
+    </div>
+    <div class="compare-box good">
+      <h4>La Biblia responde</h4>
+      <ul>
+        <li>"Maldito el hombre que confía en el hombre…" — Jer 17:5</li>
+        <li>"Fíate de Jehová de todo tu corazón" — Prov 3:5</li>
+      </ul>
+    </div>
+  </div>
+  <div class="conclusion">
+    <p>La Ley de Atracción puede parecer luminosa, pero en su centro hay una oscuridad peligrosa: la <strong>autosuficiencia espiritual</strong>. Quita a Dios del trono y pone al deseo humano como rey.</p>
+    <p>Yo no nací para manifestar deseos. Nací para cumplir el propósito de Dios.</p>
+  </div>
+</section>
+
+<!-- CAP 2 -->
+<section class="chapter" id="cap2">
+  <div class="ch-num">Capítulo Dos</div>
+  <h2 class="ch-title">La historia espiritual de</h2>
+  <div class="ch-sub">la Ley de Atracción</div>
+  <div class="ch-divider"></div>
+  <p>Toda semilla tiene un espíritu detrás. Toda creencia tiene una historia. Y no todo lo que brilla es de Dios.</p>
+  <p>A finales del siglo XIX surgió el movimiento <em>New Thought</em>. No era cristiano. Era una mezcla de ideas filosóficas, esotéricas y pseudocientíficas que afirmaban: <strong>"La mente tiene poder creador."</strong> Uno de sus fundadores, Phineas Quimby, no enseñaba oración ni fe en Dios, sino <em>autosugestión</em>.</p>
+  <p>En 2006, Rhonda Byrne lanzó <em>El Secreto</em>. Tomó todas esas ideas antiguas y las envolvió en una estética moderna, mística y comercial. Sin darnos cuenta, un mensaje profundamente espiritual —aunque sin Dios— se volvió viral y casi sagrado para una generación.</p>
+  <quote class="quote">
+    <p>"Si permanecéis en mí, y mis palabras permanecen en vosotros, pedid lo que queráis, y os será hecho."</p>
+    <cite>Juan 15:7 — No es pensamiento sin Dios. Es petición dentro de una relación con Él.</cite>
+  </quote>
+  <div class="conclusion">
+    <p>La Ley de Atracción no es nueva. Tiene historia, tiene doctrina, tiene espíritu. Pero no es el Espíritu Santo quien la inspira.</p>
+    <p>Yo no nací para ser Dios. Nací para ser hijo. Y mi Padre no me enseña a atraer, me enseña a confiar.</p>
+  </div>
+</section>
+
+<!-- CAP 3 -->
+<section class="chapter" id="cap3">
+  <div class="ch-num">Capítulo Tres</div>
+  <h2 class="ch-title">¿Qué es la Fe</h2>
+  <div class="ch-sub">según la Biblia?</div>
+  <div class="ch-divider"></div>
+  <div class="quote">
+    <p>"La fe es la certeza de lo que se espera, la convicción de lo que no se ve."</p>
+    <cite>Hebreos 11:1</cite>
+  </div>
+  <p>Este versículo no está hablando de desear algo con fuerza. Está hablando de una certeza que nace de la confianza en Dios, no en las circunstancias.</p>
+  <div class="compare">
+    <div class="compare-box bad">
+      <h4>Hebreo — Emunáh</h4>
+      <ul><li>Firmeza, constancia</li><li>Fidelidad, permanencia</li><li>Compromiso que sostiene en la oscuridad</li></ul>
+    </div>
+    <div class="compare-box good">
+      <h4>Griego — Pistis</h4>
+      <ul><li>Confianza en alguien digno</li><li>No autoconfianza</li><li>Saber quién es Dios y vivir en consecuencia</li></ul>
+    </div>
+  </div>
+  <p>La fe bíblica siempre es <strong>relacional</strong>. Fe no es una técnica. No es un botón espiritual. Es un puente vivo entre mi corazón y el corazón de Dios.</p>
+  <div class="quote">
+    <p>"Aunque la higuera no florezca, ni en las vides haya frutos… con todo, yo me alegraré en Jehová."</p>
+    <cite>Habacuc 3:17–18 — Ese tipo de fe no se aprende en frases virales. Se aprende en los valles.</cite>
+  </div>
+  <div class="conclusion">
+    <p>La fe bíblica no busca atraer bendiciones. Busca honrar a Dios, cueste lo que cueste.</p>
+    <p>"El justo por la fe vivirá." — Romanos 1:17</p>
+  </div>
+</section>
+
+<!-- CAP 4 -->
+<section class="chapter" id="cap4">
+  <div class="ch-num">Capítulo Cuatro</div>
+  <h2 class="ch-title">La fe no es magia —</h2>
+  <div class="ch-sub">Creer vs. Controlar</div>
+  <div class="ch-divider"></div>
+  <p>Vivimos tiempos donde la fe ha sido confundida con una herramienta para obtener lo que deseo. Una especie de fórmula espiritual que si se dice bien, activa bendiciones. Pero eso no es fe bíblica.</p>
+  <div class="compare">
+    <div class="compare-box bad">
+      <h4>La nueva fe</h4>
+      <ul>
+        <li>"Decláralo y se manifestará"</li>
+        <li>"Dios está obligado a responder"</li>
+        <li>"Visualiza tu milagro"</li>
+      </ul>
+    </div>
+    <div class="compare-box good">
+      <h4>Lo que Jesús sí dijo</h4>
+      <ul>
+        <li>"Busquen primero el Reino de Dios" — Mt 6:33</li>
+        <li>"Hágase tu voluntad" — Mt 6:10</li>
+      </ul>
+    </div>
+  </div>
+  <p>Jesús no enseñó decretos mentales. Enseñó <strong>oración humilde, persistente y dependiente</strong>.</p>
+  <div class="frase">
+    <p>"La fe no grita. La fe se arrodilla."</p>
+  </div>
+  <div class="conclusion">
+    <p>Dios no nos dio la fe para convertirnos en comandantes del universo. Nos dio la fe para caminar como <strong>hijos obedientes</strong> en un mundo caído.</p>
+    <p>Cuando entiendes eso, la fe deja de ser una palanca mágica y se convierte en un ancla eterna.</p>
+  </div>
+</section>
+
+<!-- CAP 5 -->
+<section class="chapter" id="cap5">
+  <div class="ch-num">Capítulo Cinco</div>
+  <h2 class="ch-title">"Yo decreto" —</h2>
+  <div class="ch-sub">¿Biblia o ego disfrazado?</div>
+  <div class="ch-divider"></div>
+  <p>La palabra <em>decreto</em> en su raíz significa: una orden dada por una autoridad soberana. En la Biblia, los decretos los hace <strong>Dios, no los hombres</strong>.</p>
+  <div class="quote">
+    <p>"Porque Él dijo, y fue hecho; Él mandó, y existió."</p>
+    <cite>Salmo 33:9 — Cuando Dios decreta, el universo obedece. Los creyentes no tienen esa autoridad.</cite>
+  </div>
+  <p>Esta enseñanza no viene del Nuevo Testamento. Viene de una corriente llamada <em>Teología del Palabrismo o Confesión Positiva</em>, influenciada por el movimiento de fe extrema en Estados Unidos.</p>
+  <p>Jesús tenía toda la autoridad del cielo… y aun así nunca dijo <strong>"Yo decreto"</strong>. Él oraba al Padre. Hacía lo que el Padre le mostraba.</p>
+  <div class="quote">
+    <p>"El Hijo no puede hacer nada por su propia cuenta, sino lo que ve hacer al Padre."</p>
+    <cite>Juan 5:19</cite>
+  </div>
+  <div class="conclusion">
+    <p>Decir "Yo decreto" puede sonar espiritual, pero si no viene del corazón de Dios, es solo <strong>ruido religioso</strong>.</p>
+    <p>"Encomienda a Jehová tu camino, y confía en Él; y Él hará." — Salmo 37:5</p>
+  </div>
+</section>
+
+<!-- CAP 6 -->
+<section class="chapter" id="cap6">
+  <div class="ch-num">Capítulo Seis</div>
+  <h2 class="ch-title">"El universo me escucha" —</h2>
+  <div class="ch-sub">Una visión sin Dios</div>
+  <div class="ch-divider"></div>
+  <p>"Confía en el universo." "El universo tiene un plan para ti." Estas frases están por todos lados. Pero tienen un problema de fondo: <strong>reemplazan a Dios con algo que no vive, no ama y no salva.</strong></p>
+  <div class="compare">
+    <div class="compare-box bad">
+      <h4>El universo</h4>
+      <ul>
+        <li>No tiene oídos ni voluntad</li>
+        <li>No tiene corazón</li>
+        <li>No ama ni perdona</li>
+        <li>No murió por ti</li>
+      </ul>
+    </div>
+    <div class="compare-box good">
+      <h4>Dios</h4>
+      <ul>
+        <li>"Clama a mí, y yo te responderé" — Jer 33:3</li>
+        <li>No responde vibraciones. Responde corazones.</li>
+      </ul>
+    </div>
+  </div>
+  <p>Lo que realmente está ocurriendo es una <em>"espiritualidad a la carta"</em>. En el fondo es una forma elegante de decir: <strong>"Yo no quiero a un Dios que me gobierne. Quiero una energía que me sirva."</strong></p>
+  <div class="quote">
+    <p>"Mi Dios suplirá todo lo que os falte conforme a sus riquezas en gloria en Cristo Jesús."</p>
+    <cite>Filipenses 4:19 — Y ese Dios… sí escucha. Sí responde. Sí transforma.</cite>
+  </div>
+</section>
+
+<!-- CAP 7 -->
+<section class="chapter" id="cap7">
+  <div class="ch-num">Capítulo Siete</div>
+  <h2 class="ch-title">Pensamiento positivo</h2>
+  <div class="ch-sub">vs. Fe bíblica</div>
+  <div class="ch-divider"></div>
+  <div class="compare">
+    <div class="compare-box bad">
+      <h4>Pensamiento positivo dice</h4>
+      <ul>
+        <li>"Yo soy fuerte"</li>
+        <li>"Todo va a salir bien"</li>
+        <li>Se basa en mí</li>
+      </ul>
+    </div>
+    <div class="compare-box good">
+      <h4>La fe dice</h4>
+      <ul>
+        <li>"En mi debilidad, su poder se perfecciona" — 2 Co 12:9</li>
+        <li>"Aunque no salga como espero… yo confío"</li>
+      </ul>
+    </div>
+  </div>
+  <p>Hay días en los que el dolor es más fuerte que cualquier afirmación. Días en que te dices <em>"Soy fuerte"</em> y no lo sientes. Ahí es donde el pensamiento positivo falla. Pero ahí es donde la fe verdadera comienza.</p>
+  <div class="personas">
+    <div class="persona"><div class="nombre">Job</div><div class="desc">Perdió todo… y aún dijo: <em>"Yo sé que mi Redentor vive"</em></div></div>
+    <div class="persona"><div class="nombre">David</div><div class="desc">Lloró, se quebró, y escribió: <em>"Espera en Dios"</em></div></div>
+    <div class="persona"><div class="nombre">Pablo</div><div class="desc">Azotado, encarcelado, y escribió: <em>"Nada me podrá separar del amor de Dios"</em></div></div>
+  </div>
+  <div class="frase">
+    <p>Eso no es pensamiento positivo. Es fe cruda, viva y probada.</p>
+  </div>
+  <div class="quote">
+    <p>"Los que esperan en Jehová tendrán nuevas fuerzas…"</p>
+    <cite>Isaías 40:31</cite>
+  </div>
+</section>
+
+<!-- CAP 8 -->
+<section class="chapter" id="cap8">
+  <div class="ch-num">Capítulo Ocho</div>
+  <h2 class="ch-title">Dios no se manifiesta —</h2>
+  <div class="ch-sub">Se revela</div>
+  <div class="ch-divider"></div>
+  <div class="quote">
+    <p>"Nadie conoce al Hijo, sino el Padre, ni al Padre conoce alguno, sino el Hijo, y aquel a quien el Hijo lo quiera revelar."</p>
+    <cite>Mateo 11:27</cite>
+  </div>
+  <p>Dios no me debe nada. No tengo derecho a atraerlo, invocarlo a mi forma o exigirle que se manifieste. Él es soberano. Y cuando Él se revela, lo hace por <strong>amor, por gracia, por misericordia</strong>.</p>
+  <div class="compare">
+    <div class="compare-box bad">
+      <h4>Manifestar</h4>
+      <ul><li>Centrado en mi experiencia</li><li>Traer cosas a mi realidad</li></ul>
+    </div>
+    <div class="compare-box good">
+      <h4>Recibir revelación</h4>
+      <ul><li>Centrado en la gloria de Dios</li><li>Conocer a alguien</li></ul>
+    </div>
+  </div>
+  <div class="quote">
+    <p>"El que me ha visto a mí, ha visto al Padre."</p>
+    <cite>Juan 14:9</cite>
+  </div>
+  <div class="conclusion">
+    <p>No necesitas más técnicas para atraer. Necesitas más verdad para reconocer cuando Él habla.</p>
+    <p>"Clama a mí, y yo te responderé, y te enseñaré cosas grandes y ocultas." — Jeremías 33:3</p>
+  </div>
+</section>
+
+<!-- CAP 9 -->
+<section class="chapter" id="cap9">
+  <div class="ch-num">Capítulo Nueve</div>
+  <h2 class="ch-title">El precio de la fe</h2>
+  <div class="ch-sub">frente al confort de atraer</div>
+  <div class="ch-divider"></div>
+  <div class="compare">
+    <div class="compare-box bad">
+      <h4>Atracción</h4>
+      <ul><li>Rápida, sin compromiso</li><li>No necesitas cambiar tu carácter</li><li>Solo desear, visualizar, vibrar</li></ul>
+    </div>
+    <div class="compare-box good">
+      <h4>Fe</h4>
+      <ul><li>Lenta, profunda, transformadora</li><li>Te llama a morir a ti mismo</li><li>No siempre obtienes lo que pides</li></ul>
+    </div>
+  </div>
+  <div class="quote">
+    <p>"Para que la prueba de vuestra fe, más preciosa que el oro, resulte en alabanza, gloria y honra cuando se manifieste Jesucristo."</p>
+    <cite>1 Pedro 1:6–7</cite>
+  </div>
+  <div class="personas">
+    <div class="persona"><div class="nombre">Abraham</div><div class="desc">Esperó 25 años para ver a Isaac</div></div>
+    <div class="persona"><div class="nombre">José</div><div class="desc">Vendido y olvidado antes de ser exaltado</div></div>
+    <div class="persona"><div class="nombre">Moisés</div><div class="desc">40 años en el desierto antes de liberar a Israel</div></div>
+    <div class="persona"><div class="nombre">Jesús</div><div class="desc">Crucificado… antes de resucitar</div></div>
+  </div>
+  <div class="frase">
+    <p>"La Ley de Atracción te promete evitar el dolor.<br>Dios te promete acompañarte en él."</p>
+  </div>
+</section>
+
+<!-- CAP 10 -->
+<section class="chapter" id="cap10">
+  <div class="ch-num">Capítulo Diez</div>
+  <h2 class="ch-title">Testimonio —</h2>
+  <div class="ch-sub">Cómo dejé de atraer y comencé a confiar</div>
+  <div class="ch-divider"></div>
+  <p>Durante mucho tiempo, fui de los que creían que la fe era como una llave mágica. Pensaba que si decía las palabras correctas, si tenía pensamientos positivos, si hablaba fuerte, Dios tenía que responder. Y cuando no pasaba… me frustraba. Me culpaba. Dudaba de mí mismo.</p>
+  <p>Había momentos en que declaraba con autoridad. Al principio, eso me daba una especie de euforia espiritual. Pero pasaban los días… y no pasaba nada. Y en mi silencio, me sentía más solo. Más confundido. Más débil.</p>
+  <div class="frase">
+    <p>"Dios… ya no sé cómo pedir. Solo sé que te necesito."</p>
+  </div>
+  <p>En ese momento, no sentí fuego, ni ángeles, ni milagros. Solo paz. Silencio. Presencia. Fue la primera vez que no sentí presión por lograr nada.</p>
+  <div class="compare">
+    <div class="compare-box bad"><h4>Dejé de</h4><ul><li>Perseguir resultados</li><li>Repetir afirmaciones</li><li>Decretar</li></ul></div>
+    <div class="compare-box good"><h4>Empecé a</h4><ul><li>Buscar su rostro</li><li>Recordar promesas</li><li>Orar con corazón quebrantado</li></ul></div>
+  </div>
+  <div class="quote">
+    <p>"Estad quietos, y conoced que yo soy Dios."</p>
+    <cite>Salmo 46:10</cite>
+  </div>
+</section>
+
+<!-- CAP 11 -->
+<section class="chapter" id="cap11">
+  <div class="ch-num">Capítulo Once</div>
+  <h2 class="ch-title">¿Pueden coexistir</h2>
+  <div class="ch-sub">ambas ideas?</div>
+  <div class="ch-divider"></div>
+  <p>A muchos les parece una buena idea unir lo mejor de ambos mundos: <em>"Tengo fe, pero también visualizo."</em> Pero Jesus fue claro:</p>
+  <div class="quote">
+    <p>"Nadie puede servir a dos señores; porque aborrecerá a uno y amará al otro…"</p>
+    <cite>Mateo 6:24</cite>
+  </div>
+  <div class="compare">
+    <div class="compare-box bad">
+      <h4>Ley de Atracción</h4>
+      <ul><li>Nace del humanismo y misticismo</li><li>Glorifica al creador de su realidad: tú</li><li>"Hágase la mía"</li></ul>
+    </div>
+    <div class="compare-box good">
+      <h4>Fe bíblica</h4>
+      <ul><li>Nace del Espíritu Santo</li><li>Glorifica al Creador</li><li>"Hágase tu voluntad"</li></ul>
+    </div>
+  </div>
+  <p>El error más peligroso no es el que suena extraño… sino <strong>el que suena casi verdadero</strong>.</p>
+  <div class="quote">
+    <p>"¿Qué comunión tiene la luz con las tinieblas?"</p>
+    <cite>2 Corintios 6:14</cite>
+  </div>
+  <div class="conclusion">
+    <p>¿Pueden coexistir la fe y la Ley de Atracción? No. No si quieres caminar en verdad. No si quieres conocer a Dios. No si quieres madurar.</p>
+    <p>"Y conoceréis la verdad, y la verdad os hará libres." — Juan 8:32</p>
+  </div>
+</section>
+
+<!-- CAP 12 CONCLUSIÓN -->
+<section class="chapter" id="cap12">
+  <div class="ch-num">Capítulo Doce · Conclusión</div>
+  <h2 class="ch-title">Elijo creer,</h2>
+  <div class="ch-sub">no atraer</div>
+  <div class="ch-divider"></div>
+  <p>He caminado por ideas bonitas. He repetido frases que sonaban espirituales. Y por un tiempo, eso me sostuvo… hasta que me falló.</p>
+  <p>Porque cuando llegó el dolor real, el silencio de Dios, la pérdida, la espera… ninguna afirmación me sanó. Ninguna manifestación me sostuvo.</p>
+  <p><strong>Solo la Palabra. Solo la Presencia. Solo su fidelidad. Solo su amor.</strong></p>
+  <div class="frase">
+    <p>No atraigo. Me someto.<br>No decreto el futuro. Camino con quien ya lo conoce.</p>
+  </div>
+  <div class="quote">
+    <p>"Por que por fe andamos, no por vista."</p>
+    <cite>2 Corintios 5:7</cite>
+  </div>
+  <div class="conclusion">
+    <p>No persigo resultados. Sigo a un Redentor. No manifiesto deseos. Me rindo a su diseño. No busco vibrar alto. Busco postrarme bajo su gloria.</p>
+    <p>No estoy aquí para manifestar cosas. Estoy aquí para reflejar a Cristo.</p>
+  </div>
+</section>
+
+</main>
+
+<!-- EPÍLOGO -->
+<section class="epilogo">
+  <span class="big-word">JESÚS</span>
+  <h2>Un llamado, una oración</h2>
+  <p>Amado lector, si algo de este libro tocó tu alma… no te quedes en la emoción. Camina en verdad. Ríndete. Cree. Espera.</p>
+  <p>Porque lo que el mundo no entiende… es que la fe en Cristo no siempre da lo que queremos, pero siempre nos da lo que más necesitamos.</p>
+  <div class="quote" style="max-width:480px;margin:32px auto;">
+    <p>"El Señor es mi pastor, nada me faltará."</p>
+    <cite>Salmo 23:1</cite>
+  </div>
+  <p style="color:var(--texto);font-family:'Cinzel',serif;font-size:1.1em;margin-top:32px;">Lo mejor no era una técnica, ni una frase poderosa, ni una ley cósmica.<br><strong style="color:var(--oro);">Lo mejor… es una Persona. Jesús.</strong></p>
+  <div class="firma">Creer o Atraer · Osmar Lugo</div>
+</section>
+
+<script>
+// Scroll reveal
+const obs = new IntersectionObserver(e=>{
+  e.forEach(el=>{if(el.isIntersecting)el.target.classList.add('visible');});
+},{threshold:.1});
+document.querySelectorAll('.chapter').forEach(e=>obs.observe(e));
+
+// Nav toggle
+function toggleNav(){
+  document.getElementById('sidenav').classList.toggle('show');
+}
+
+// Nav links active + close on click
+document.querySelectorAll('nav a').forEach(a=>{
+  a.addEventListener('click',()=>{
+    document.getElementById('sidenav').classList.remove('show');
+    document.querySelectorAll('nav a').forEach(x=>x.classList.remove('active'));
+    a.classList.add('active');
+  });
+});
+
+// Close nav on outside click
+document.addEventListener('click',e=>{
+  const nav=document.getElementById('sidenav');
+  if(nav.classList.contains('show')&&!nav.contains(e.target)&&!e.target.closest('.nav-toggle')){
+    nav.classList.remove('show');
+  }
+});
+</script>
+</body>
+</html>

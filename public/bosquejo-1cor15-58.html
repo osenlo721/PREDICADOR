@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bosquejo — 1 Corintios 15:58</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Cinzel:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --gold: #C9A84C;
+    --gold-light: #E8C97A;
+    --dark: #0D0D0D;
+    --navy: #0A1628;
+    --navy2: #112040;
+    --cream: #F5EDD8;
+    --cream2: #EFE4C8;
+    --text: #1a1209;
+    --accent: #8B1A1A;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--cream);
+    color: var(--text);
+    font-family: 'EB Garamond', Georgia, serif;
+    min-height: 100vh;
+    position: relative;
+    overflow-x: hidden;
+  }
+
+  /* Fondo decorativo */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background:
+      radial-gradient(ellipse at 10% 20%, rgba(201,168,76,0.08) 0%, transparent 50%),
+      radial-gradient(ellipse at 90% 80%, rgba(139,26,26,0.06) 0%, transparent 50%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .page {
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 48px 32px 80px;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* ——— CABECERA ——— */
+  .header {
+    text-align: center;
+    margin-bottom: 52px;
+    animation: fadeDown 0.8s ease both;
+  }
+
+  .serie-label {
+    font-family: 'Cinzel', serif;
+    font-size: 10px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 20px;
+    display: block;
+  }
+
+  .cross-ornament {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+  .cross-ornament .line {
+    height: 1px;
+    width: 80px;
+    background: linear-gradient(to right, transparent, var(--gold));
+  }
+  .cross-ornament .line.right {
+    background: linear-gradient(to left, transparent, var(--gold));
+  }
+  .cross-ornament svg {
+    width: 28px;
+    height: 28px;
+    fill: var(--gold);
+  }
+
+  h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(26px, 5vw, 42px);
+    font-weight: 900;
+    line-height: 1.15;
+    color: var(--navy);
+    margin-bottom: 14px;
+    letter-spacing: -0.5px;
+  }
+
+  h1 em {
+    font-style: italic;
+    color: var(--accent);
+  }
+
+  .versiculo-ref {
+    font-family: 'Cinzel', serif;
+    font-size: 13px;
+    letter-spacing: 2px;
+    color: var(--gold);
+    margin-bottom: 28px;
+  }
+
+  .versiculo-texto {
+    font-size: 17px;
+    font-style: italic;
+    line-height: 1.75;
+    color: #3a2e1a;
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px 28px;
+    border-left: 3px solid var(--gold);
+    border-right: 3px solid var(--gold);
+    background: rgba(201,168,76,0.07);
+    border-radius: 2px;
+  }
+
+  /* ——— SECCIÓN INTRO ——— */
+  .intro-card {
+    background: var(--navy);
+    color: var(--cream);
+    border-radius: 4px;
+    padding: 32px 36px;
+    margin-bottom: 44px;
+    position: relative;
+    overflow: hidden;
+    animation: fadeUp 0.7s 0.2s ease both;
+  }
+  .intro-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--accent), var(--gold), var(--accent));
+  }
+  .intro-card h2 {
+    font-family: 'Cinzel', serif;
+    font-size: 11px;
+    letter-spacing: 3px;
+    color: var(--gold);
+    margin-bottom: 14px;
+    text-transform: uppercase;
+  }
+  .intro-card p {
+    font-size: 16px;
+    line-height: 1.8;
+    color: #d8ccb8;
+  }
+
+  /* ——— SECCIONES ——— */
+  .section {
+    margin-bottom: 40px;
+    animation: fadeUp 0.6s ease both;
+  }
+  .section:nth-child(2) { animation-delay: 0.1s; }
+  .section:nth-child(3) { animation-delay: 0.2s; }
+  .section:nth-child(4) { animation-delay: 0.3s; }
+  .section:nth-child(5) { animation-delay: 0.4s; }
+
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 20px;
+  }
+
+  .section-number {
+    font-family: 'Playfair Display', serif;
+    font-size: 38px;
+    font-weight: 900;
+    color: var(--gold-light);
+    opacity: 0.4;
+    line-height: 1;
+    min-width: 40px;
+  }
+
+  .section-title-wrap {}
+  .section-tag {
+    font-family: 'Cinzel', serif;
+    font-size: 9px;
+    letter-spacing: 3px;
+    color: var(--gold);
+    text-transform: uppercase;
+    display: block;
+    margin-bottom: 3px;
+  }
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--navy);
+    line-height: 1.2;
+  }
+
+  .divider {
+    height: 1px;
+    background: linear-gradient(to right, var(--gold), transparent);
+    margin-bottom: 18px;
+    opacity: 0.5;
+  }
+
+  /* puntos */
+  .punto {
+    display: flex;
+    gap: 14px;
+    margin-bottom: 14px;
+    align-items: flex-start;
+  }
+  .punto-bullet {
+    width: 20px;
+    height: 20px;
+    min-width: 20px;
+    border: 1.5px solid var(--gold);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 2px;
+  }
+  .punto-bullet span {
+    font-family: 'Cinzel', serif;
+    font-size: 8px;
+    color: var(--gold);
+    font-weight: 700;
+  }
+  .punto-texto {
+    font-size: 16px;
+    line-height: 1.7;
+    color: #2a200f;
+  }
+  .punto-texto strong {
+    font-weight: 700;
+    color: var(--navy);
+  }
+  .punto-texto em {
+    font-style: italic;
+    color: var(--accent);
+  }
+
+  /* sub-puntos */
+  .subpuntos {
+    margin-left: 34px;
+    margin-top: 8px;
+    margin-bottom: 4px;
+  }
+  .subpunto {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 8px;
+    align-items: flex-start;
+  }
+  .subpunto::before {
+    content: '—';
+    color: var(--gold);
+    font-size: 14px;
+    line-height: 1.7;
+    flex-shrink: 0;
+  }
+  .subpunto p {
+    font-size: 15px;
+    line-height: 1.65;
+    color: #3a2e1a;
+  }
+
+  /* refs bíblicas */
+  .ref {
+    display: inline-block;
+    font-family: 'Cinzel', serif;
+    font-size: 11px;
+    color: var(--accent);
+    background: rgba(139,26,26,0.07);
+    border: 1px solid rgba(139,26,26,0.2);
+    border-radius: 2px;
+    padding: 1px 6px;
+    margin-left: 4px;
+    letter-spacing: 0.5px;
+  }
+
+  /* ——— ILUSTRACIÓN ——— */
+  .ilustracion {
+    background: var(--cream2);
+    border: 1px solid rgba(201,168,76,0.3);
+    border-radius: 4px;
+    padding: 22px 28px;
+    margin: 14px 0;
+    font-style: italic;
+    font-size: 15px;
+    line-height: 1.75;
+    color: #4a3820;
+    position: relative;
+  }
+  .ilustracion::before {
+    content: '💡 Ilustración';
+    font-family: 'Cinzel', serif;
+    font-style: normal;
+    font-size: 9px;
+    letter-spacing: 2px;
+    color: var(--gold);
+    display: block;
+    margin-bottom: 8px;
+  }
+
+  /* ——— APLICACIÓN ——— */
+  .aplicacion-box {
+    background: linear-gradient(135deg, var(--navy) 0%, var(--navy2) 100%);
+    border-radius: 4px;
+    padding: 28px 32px;
+    margin-top: 20px;
+    position: relative;
+    overflow: hidden;
+  }
+  .aplicacion-box::after {
+    content: '';
+    position: absolute;
+    bottom: 0; right: 0;
+    width: 100px; height: 100px;
+    background: radial-gradient(circle, rgba(201,168,76,0.15), transparent 70%);
+  }
+  .aplicacion-box h3 {
+    font-family: 'Cinzel', serif;
+    font-size: 10px;
+    letter-spacing: 3px;
+    color: var(--gold);
+    margin-bottom: 14px;
+    text-transform: uppercase;
+  }
+  .aplicacion-box p {
+    font-size: 15.5px;
+    line-height: 1.75;
+    color: #d0c4aa;
+  }
+
+  /* ——— CIERRE ——— */
+  .cierre {
+    text-align: center;
+    margin-top: 56px;
+    padding-top: 36px;
+    border-top: 1px solid rgba(201,168,76,0.3);
+    animation: fadeUp 0.6s 0.5s ease both;
+  }
+  .cierre .ornamento {
+    font-size: 28px;
+    margin-bottom: 16px;
+    display: block;
+  }
+  .cierre h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--navy);
+    font-style: italic;
+    margin-bottom: 12px;
+  }
+  .cierre p {
+    font-size: 15px;
+    line-height: 1.7;
+    color: #5a4a30;
+    max-width: 500px;
+    margin: 0 auto 20px;
+  }
+  .decision-box {
+    display: inline-block;
+    background: var(--accent);
+    color: var(--cream);
+    padding: 14px 32px;
+    border-radius: 2px;
+    font-family: 'Cinzel', serif;
+    font-size: 12px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+
+  /* ——— FOOTER ——— */
+  .footer {
+    text-align: center;
+    margin-top: 52px;
+    font-family: 'Cinzel', serif;
+    font-size: 10px;
+    letter-spacing: 3px;
+    color: rgba(201,168,76,0.5);
+  }
+
+  @keyframes fadeDown {
+    from { opacity: 0; transform: translateY(-20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  @media print {
+    body { background: white; }
+    .page { padding: 20px; }
+    * { animation: none !important; }
+  }
+
+  @media (max-width: 600px) {
+    .page { padding: 28px 18px 60px; }
+    .intro-card { padding: 22px 20px; }
+    .versiculo-texto { padding: 14px 16px; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- CABECERA -->
+  <header class="header">
+    <span class="serie-label">Bosquejo de Predicación · 1 Corintios 15:58</span>
+    <div class="cross-ornament">
+      <div class="line"></div>
+      <svg viewBox="0 0 24 24"><path d="M11 2h2v7h7v2h-7v11h-2V11H4V9h7z"/></svg>
+      <div class="line right"></div>
+    </div>
+    <h1>Creciendo en la <em>Obra del Señor</em></h1>
+    <p class="versiculo-ref">1 Corintios 15 : 58</p>
+    <p class="versiculo-texto">
+      "Así que, hermanos míos amados, estad firmes y constantes, creciendo en la obra del Señor siempre, sabiendo que vuestro trabajo en el Señor no es en vano."
+    </p>
+  </header>
+
+  <!-- INTRODUCCIÓN -->
+  <div class="intro-card">
+    <h2>Introducción</h2>
+    <p>
+      El capítulo 15 de 1 Corintios es el gran capítulo de la resurrección. Pablo, tras demostrar la certeza de que Cristo resucitó y que nosotros también resucitaremos, no termina con un tratado teológico abstracto — termina con un llamado práctico a la acción. <strong style="color:var(--gold-light)">La doctrina de la resurrección es el fundamento que da sentido eterno a todo lo que hacemos para Dios.</strong> Este versículo es la conclusión motivadora de todo el argumento: porque hay resurrección, ¡vale la pena trabajar!
+    </p>
+  </div>
+
+  <!-- PUNTO I -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-number">I</div>
+      <div class="section-title-wrap">
+        <span class="section-tag">Primer punto</span>
+        <div class="section-title">La Base de Todo: Estar Firmes</div>
+      </div>
+    </div>
+    <div class="divider"></div>
+
+    <div class="punto">
+      <div class="punto-bullet"><span>A</span></div>
+      <div class="punto-texto">
+        <strong>"Estad firmes"</strong> — La palabra griega <em>hedraios</em> habla de estar bien cimentado, establecido, sin moverse.
+        <span class="ref">v. 58a</span>
+        <div class="subpuntos">
+          <div class="subpunto"><p>Firmeza en la fe en Cristo resucitado — no hay duda que pueda sacudir al que conoce al Señor vivo.</p></div>
+          <div class="subpunto"><p>En tiempos de persecución, burla o prueba, el creyente no abandona su posición.</p></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="punto">
+      <div class="punto-bullet"><span>B</span></div>
+      <div class="punto-texto">
+        <strong>"Constantes"</strong> — <em>ametakinetos</em>: inamovibles. No es rigidez, es <em>estabilidad espiritual</em>.
+        <div class="subpuntos">
+          <div class="subpunto"><p>No se dejan llevar por todo viento de doctrina. <span class="ref">Ef 4:14</span></p></div>
+          <div class="subpunto"><p>La resurrección de Cristo es ancla que nos mantiene seguros. <span class="ref">He 6:19</span></p></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="ilustracion">
+      Un árbol con raíces profundas no cae aunque el viento sea fuerte. La firmeza del creyente no viene de su propia fuerza, sino de cuán hondo están sus raíces en Cristo resucitado.
+    </div>
+
+    <div class="aplicacion-box">
+      <h3>Aplicación</h3>
+      <p>¿En qué área de tu vida te has estado moviendo cuando deberías estar firme? Identifica hoy ese punto y decide anclar tu fe en la certeza de la resurrección.</p>
+    </div>
+  </div>
+
+  <!-- PUNTO II -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-number">II</div>
+      <div class="section-title-wrap">
+        <span class="section-tag">Segundo punto</span>
+        <div class="section-title">El Llamado Urgente: Crecer en la Obra</div>
+      </div>
+    </div>
+    <div class="divider"></div>
+
+    <div class="punto">
+      <div class="punto-bullet"><span>A</span></div>
+      <div class="punto-texto">
+        <strong>"Creciendo en la obra del Señor siempre"</strong> — no es un estado estático sino un movimiento continuo y progresivo.
+        <div class="subpuntos">
+          <div class="subpunto"><p>La obra del Señor incluye: evangelización, discipulado, servicio, oración, adoración, misericordia.</p></div>
+          <div class="subpunto"><p>La palabra <em>"siempre"</em> no da espacio a temporadas de inactividad espiritual.</p></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="punto">
+      <div class="punto-bullet"><span>B</span></div>
+      <div class="punto-texto">
+        <strong>¿Qué es la "obra del Señor"?</strong>
+        <div class="subpuntos">
+          <div class="subpunto"><p>Todo lo que hacemos en Su nombre y para Su gloria, por fe. <span class="ref">Col 3:23-24</span></p></div>
+          <div class="subpunto"><p>No es solo la labor del pastor — cada miembro del cuerpo tiene una parte. <span class="ref">1 Co 12:7</span></p></div>
+          <div class="subpunto"><p>Incluye las cosas pequeñas y cotidianas cuando se hacen con corazón consagrado.</p></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="punto">
+      <div class="punto-bullet"><span>C</span></div>
+      <div class="punto-texto">
+        <strong>Crecer implica esfuerzo deliberado</strong> — nadie crece en la obra durmiendo.
+        <div class="subpuntos">
+          <div class="subpunto"><p>Tiempo en la Palabra y la oración como combustible del crecimiento. <span class="ref">Hch 6:4</span></p></div>
+          <div class="subpunto"><p>Comunión activa con el cuerpo de Cristo. <span class="ref">He 10:24-25</span></p></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="ilustracion">
+      Un jardinero no puede plantar una semilla y olvidarse de ella. El crecimiento requiere constancia: regar, podar, cuidar. Así es el crecer en la obra del Señor — no es un evento puntual sino un estilo de vida.
+    </div>
+
+    <div class="aplicacion-box">
+      <h3>Aplicación</h3>
+      <p>¿En qué aspecto de la obra de Dios debes crecer este año? Sé específico: un ministerio, un hábito espiritual, una persona a discipular. Haz un compromiso concreto hoy.</p>
+    </div>
+  </div>
+
+  <!-- PUNTO III -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-number">III</div>
+      <div class="section-title-wrap">
+        <span class="section-tag">Tercer punto</span>
+        <div class="section-title">La Gran Certeza: Nuestro Trabajo No Es en Vano</div>
+      </div>
+    </div>
+    <div class="divider"></div>
+
+    <div class="punto">
+      <div class="punto-bullet"><span>A</span></div>
+      <div class="punto-texto">
+        <strong>"Sabiendo que vuestro trabajo en el Señor no es en vano"</strong> — esta certeza es el motor que sostiene todo lo anterior.
+        <div class="subpuntos">
+          <div class="subpunto"><p>La resurrección garantiza que nada hecho para Cristo se pierde — ni el sacrificio, ni la lágrima, ni el esfuerzo.</p></div>
+          <div class="subpunto"><p>En contraste con lo que dijo Pablo antes: <em>"si Cristo no resucitó, vana es vuestra fe"</em> <span class="ref">v. 17</span> — pero ¡Cristo sí resucitó!</p></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="punto">
+      <div class="punto-bullet"><span>B</span></div>
+      <div class="punto-texto">
+        <strong>¿Por qué parece "en vano" a veces?</strong>
+        <div class="subpuntos">
+          <div class="subpunto"><p>Cuando no vemos resultados inmediatos: la semilla parece muerta antes de germinar.</p></div>
+          <div class="subpunto"><p>Cuando somos ignorados, rechazados o malentendidos por servir a Dios.</p></div>
+          <div class="subpunto"><p>Cuando el cansancio nos hace dudar. <span class="ref">Gá 6:9</span> — "a su tiempo segaremos si no desmayamos".</p></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="punto">
+      <div class="punto-bullet"><span>C</span></div>
+      <div class="punto-texto">
+        <strong>La recompensa es real y eterna</strong>
+        <div class="subpuntos">
+          <div class="subpunto"><p>El Señor mismo será nuestra recompensa. <span class="ref">Ap 22:12</span></p></div>
+          <div class="subpunto"><p>Cada alma ganada, cada vida transformada, cada acto de amor tiene peso eterno.</p></div>
+          <div class="subpunto"><p>El trabajo hecho <em>en el Señor</em> no depende de que los hombres lo vean — Dios lo ve. <span class="ref">Mt 6:4</span></p></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="ilustracion">
+      Un misionero que trabajó 40 años sin ver muchas conversiones llegó al cielo y encontró una multitud que lo esperaba: personas alcanzadas generación tras generación por la semilla que él plantó. Lo que parece "en vano" aquí, en la eternidad tiene nombre y rostro.
+    </div>
+
+    <div class="aplicacion-box">
+      <h3>Aplicación</h3>
+      <p>Si te has cansado de servir porque no ves frutos, hoy el Señor te recuerda: <strong style="color:var(--gold-light)">no es en vano.</strong> Ese niño que enseñas en escuela dominical, ese enfermo que visitas, esa oración que elevas — Dios lo registra todo. ¡No te rindas!</p>
+    </div>
+  </div>
+
+  <!-- CIERRE -->
+  <div class="cierre">
+    <span class="ornamento">✦</span>
+    <h2>Conclusión y Llamado</h2>
+    <p>
+      La resurrección de Cristo no es solo una doctrina para defender — es la razón más poderosa para vivir con entrega total. Porque Él vive, nuestras vidas, nuestro servicio y nuestro sacrificio tienen sentido eterno. ¡Seamos firmes, constantes y abundantes en Su obra!
+    </p>
+    <br>
+    <p style="font-size:14px; color:#6b5530;">
+      <strong>Versículos de apoyo:</strong>
+      <span class="ref">Gá 6:9</span> <span class="ref">He 12:1-3</span> <span class="ref">Col 3:23-24</span> <span class="ref">Ap 14:13</span>
+    </p>
+    <br><br>
+    <div class="decision-box">Llamado a Consagración</div>
+    <br><br>
+    <p style="font-style:italic; font-size:15px;">
+      "¿Estás listo para comprometerte hoy a crecer en la obra del Señor, confiando que tu trabajo en Él jamás será en vano?"
+    </p>
+  </div>
+
+  <div class="footer">IPUC · Bosquejo de Predicación · 1 Corintios 15:58</div>
+
+</div>
+</body>
+</html>

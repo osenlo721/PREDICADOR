@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>El Nuevo Nacimiento — Agua y Espíritu</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Raleway:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--azul:#009FDA;--marino:#003B6F;--oro:#F0AB00;--oro-claro:#FFD166;--fondo:#040e1c;--fondo2:#071628;--texto:#e8e0d0;--texto-suave:#a89f90;--linea:rgba(240,171,0,.2);}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{background:var(--fondo);color:var(--texto);font-family:'Crimson Pro',Georgia,serif;font-size:18px;line-height:1.85;overflow-x:hidden;}
+::-webkit-scrollbar{width:4px;}::-webkit-scrollbar-track{background:var(--fondo);}::-webkit-scrollbar-thumb{background:var(--azul);border-radius:2px;}
+.nav-toggle{position:fixed;top:16px;left:16px;z-index:200;background:var(--marino);border:1px solid var(--linea);color:var(--oro);width:40px;height:40px;border-radius:8px;cursor:pointer;font-size:18px;display:flex;align-items:center;justify-content:center;transition:all .2s;}
+.nav-toggle:hover{background:var(--azul);color:#fff;}
+nav{position:fixed;left:0;top:0;bottom:0;width:250px;background:linear-gradient(180deg,var(--marino) 0%,#011529 100%);border-right:1px solid var(--linea);z-index:100;overflow-y:auto;transform:translateX(-100%);transition:transform .35s ease;padding:32px 0;}
+nav.show{transform:translateX(0);}
+nav .nav-title{font-family:'Cinzel',serif;font-size:10px;letter-spacing:4px;color:var(--oro);padding:0 20px 16px;border-bottom:1px solid var(--linea);margin-bottom:12px;}
+nav a{display:block;padding:7px 20px;font-family:'Raleway',sans-serif;font-size:11px;font-weight:500;letter-spacing:1px;color:var(--texto-suave);text-decoration:none;border-left:2px solid transparent;transition:all .2s;}
+nav a:hover,nav a.active{color:var(--oro);border-left-color:var(--oro);background:rgba(240,171,0,.06);}
+.cover{min-height:100vh;background:linear-gradient(160deg,#041830 0%,var(--fondo) 65%);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:80px 32px 60px;position:relative;overflow:hidden;}
+.cover::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 50% at 50% 10%,rgba(0,159,218,.2) 0%,transparent 70%),radial-gradient(ellipse 40% 40% at 80% 85%,rgba(240,171,0,.1) 0%,transparent 60%);pointer-events:none;}
+.cover-icon{font-size:64px;margin-bottom:24px;animation:fadeDown .8s ease both;}
+.cover-tag{font-family:'Cinzel',serif;font-size:10px;letter-spacing:5px;color:var(--azul);text-transform:uppercase;margin-bottom:20px;animation:fadeDown .9s ease .1s both;}
+.cover-title{font-family:'Cinzel',serif;font-size:clamp(36px,8vw,80px);font-weight:900;line-height:1.05;margin-bottom:8px;animation:fadeDown 1s ease .2s both;}
+.cover-title span{color:var(--oro);}
+.cover-sub{font-family:'Cinzel',serif;font-size:clamp(13px,2vw,17px);color:var(--azul);letter-spacing:2px;margin-bottom:32px;animation:fadeDown 1s ease .25s both;}
+.cover-line{width:60px;height:1px;background:linear-gradient(to right,transparent,var(--oro),transparent);margin:0 auto 24px;animation:fadeIn 1.1s ease .35s both;}
+.cover-author{font-family:'Raleway',sans-serif;font-size:13px;letter-spacing:4px;color:var(--texto-suave);text-transform:uppercase;animation:fadeDown 1.1s ease .4s both;}
+.cover-verse{position:absolute;bottom:40px;font-family:'Crimson Pro',serif;font-style:italic;font-size:14px;color:var(--texto-suave);max-width:440px;text-align:center;line-height:1.6;}
+main{max-width:740px;margin:0 auto;padding:0 24px;}
+.chapter{padding:80px 0 60px;border-bottom:1px solid rgba(240,171,0,.1);opacity:0;transform:translateY(30px);transition:opacity .7s ease,transform .7s ease;}
+.chapter.visible{opacity:1;transform:none;}
+.ch-num{font-family:'Cinzel',serif;font-size:11px;letter-spacing:4px;color:var(--azul);text-transform:uppercase;margin-bottom:12px;}
+.ch-title{font-family:'Cinzel',serif;font-size:clamp(22px,4vw,36px);font-weight:700;color:var(--oro);line-height:1.2;margin-bottom:8px;}
+.ch-sub{font-family:'Cinzel',serif;font-size:clamp(14px,2.5vw,20px);color:var(--azul);margin-bottom:28px;}
+.ch-divider{width:40px;height:2px;background:linear-gradient(to right,var(--oro),var(--azul));margin-bottom:32px;border-radius:2px;}
+p{margin-bottom:20px;}
+strong{color:var(--oro);font-weight:600;}
+em{color:var(--azul);font-style:italic;}
+.quote{border-left:3px solid var(--oro);padding:16px 24px;margin:28px 0;background:rgba(240,171,0,.05);border-radius:0 8px 8px 0;}
+.quote p{font-family:'Crimson Pro',serif;font-style:italic;font-size:1.05em;color:var(--oro-claro);margin-bottom:6px;}
+.quote cite{font-family:'Raleway',sans-serif;font-size:12px;letter-spacing:2px;color:var(--texto-suave);}
+.section-label{font-family:'Cinzel',serif;font-size:11px;letter-spacing:3px;color:var(--azul);text-transform:uppercase;margin:36px 0 12px;}
+.list-yes,.list-no{list-style:none;margin:16px 0 24px;padding:0;}
+.list-yes li,.list-no li{padding:6px 0 6px 28px;position:relative;font-size:.97em;color:var(--texto-suave);border-bottom:1px solid rgba(255,255,255,.05);}
+.list-yes li::before{content:'✅';position:absolute;left:0;top:6px;font-size:14px;}
+.list-no li::before{content:'❌';position:absolute;left:0;top:6px;font-size:14px;}
+.compare{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:28px 0;}
+.compare-box{padding:20px;border-radius:8px;border:1px solid;}
+.compare-box.a{border-color:rgba(0,159,218,.3);background:rgba(0,159,218,.05);}
+.compare-box.b{border-color:rgba(240,171,0,.3);background:rgba(240,171,0,.05);}
+.compare-box h4{font-family:'Cinzel',serif;font-size:10px;letter-spacing:3px;margin-bottom:12px;text-transform:uppercase;}
+.compare-box.a h4{color:var(--azul);}
+.compare-box.b h4{color:var(--oro);}
+.compare-box ul{list-style:none;}
+.compare-box ul li{font-size:14px;padding:4px 0;color:var(--texto-suave);border-bottom:1px solid rgba(255,255,255,.06);}
+.frase{text-align:center;padding:40px 24px;margin:32px 0;position:relative;}
+.frase::before{content:'"';font-family:'Cinzel',serif;font-size:100px;color:rgba(240,171,0,.07);position:absolute;top:-10px;left:16px;line-height:1;}
+.frase p{font-family:'Cinzel',serif;font-size:clamp(15px,2.2vw,20px);color:var(--texto);line-height:1.5;position:relative;z-index:1;margin:0;}
+.tip-box{background:linear-gradient(135deg,rgba(0,59,111,.4) 0%,rgba(4,14,28,.8) 100%);border:1px solid rgba(0,159,218,.25);border-radius:12px;padding:24px;margin:28px 0;}
+.tip-box h4{font-family:'Cinzel',serif;font-size:11px;letter-spacing:4px;color:var(--azul);text-transform:uppercase;margin-bottom:14px;}
+.tip-box p,.tip-box li{color:var(--texto-suave);font-size:.95em;margin-bottom:8px;}
+.tip-box ol,.tip-box ul{padding-left:20px;}
+.tip-box li{margin-bottom:8px;}
+.gold-box{background:rgba(240,171,0,.06);border:1px solid rgba(240,171,0,.2);border-radius:12px;padding:24px;margin:28px 0;}
+.gold-box h4{font-family:'Cinzel',serif;font-size:11px;letter-spacing:4px;color:var(--oro);text-transform:uppercase;margin-bottom:14px;}
+.gold-box p{color:var(--texto-suave);font-size:.95em;margin-bottom:8px;}
+.pasos{counter-reset:paso;list-style:none;padding:0;margin:24px 0;}
+.pasos li{counter-increment:paso;display:flex;gap:16px;margin-bottom:20px;align-items:flex-start;}
+.pasos li::before{content:counter(paso);font-family:'Cinzel',serif;font-size:20px;font-weight:700;color:var(--oro);min-width:32px;line-height:1.4;}
+.pasos li .paso-content h5{font-family:'Cinzel',serif;font-size:14px;color:var(--azul);margin-bottom:4px;letter-spacing:1px;}
+.pasos li .paso-content p{color:var(--texto-suave);font-size:.95em;margin:0;}
+.epilogo{text-align:center;padding:80px 32px 120px;}
+.epilogo .big{font-family:'Cinzel',serif;font-size:clamp(36px,8vw,72px);font-weight:900;color:transparent;-webkit-text-stroke:1px rgba(240,171,0,.35);letter-spacing:6px;display:block;margin-bottom:40px;}
+.epilogo h2{font-family:'Cinzel',serif;font-size:clamp(18px,3vw,28px);color:var(--oro);margin-bottom:24px;}
+.epilogo p{max-width:540px;margin:0 auto 16px;color:var(--texto-suave);}
+.epilogo .firma{margin-top:48px;font-family:'Cinzel',serif;font-size:13px;letter-spacing:4px;color:var(--azul);}
+@keyframes fadeDown{from{opacity:0;transform:translateY(-20px);}to{opacity:1;transform:none;}}
+@keyframes fadeIn{from{opacity:0;}to{opacity:1;}}
+@media(max-width:600px){.compare{grid-template-columns:1fr;}nav{width:210px;}.pasos li{flex-direction:column;gap:8px;}}
+</style>
+</head>
+<body>
+<button class="nav-toggle" onclick="toggleNav()">☰</button>
+<nav id="sidenav">
+  <div class="nav-title">Contenido</div>
+  <a href="#portada">Portada</a>
+  <a href="#intro">1. La conversación que lo inició</a>
+  <a href="#cap2">2. Nacer de nuevo — ¿qué significa?</a>
+  <a href="#cap3">3. Nacer de agua</a>
+  <a href="#cap4">4. Nacer del Espíritu</a>
+  <a href="#cap5">5. El bautismo en el NT</a>
+  <a href="#cap6">6. El Espíritu en Hechos</a>
+  <a href="#cap7">7. Objeciones y respuestas</a>
+  <a href="#cap8">8. Conclusión y llamado</a>
+</nav>
+
+<section class="cover" id="portada">
+  <div class="cover-icon">💧</div>
+  <div class="cover-tag">Estudio Doctrinal · Serie Salvación</div>
+  <h1 class="cover-title">El Nuevo<br><span>Nacimiento</span></h1>
+  <div class="cover-sub">Agua y Espíritu — Juan 3:5</div>
+  <div class="cover-line"></div>
+  <div class="cover-author">Predicador IPUC</div>
+  <div class="cover-verse">"El que no naciere de agua y del Espíritu, no puede entrar en el reino de Dios." — Juan 3:5</div>
+</section>
+
+<main>
+
+<!-- CAP 1 -->
+<section class="chapter" id="intro">
+  <div class="ch-num">Lección 1</div>
+  <h2 class="ch-title">La conversación que lo cambió todo</h2>
+  <div class="ch-sub">Nicodemo y Jesús — Juan 3:1-8</div>
+  <div class="ch-divider"></div>
+  <p>Era de noche. Un hombre importante, respetado, educado en la más alta tradición religiosa de Israel, buscó a Jesús en secreto. Su nombre era Nicodemo — fariseo, maestro de Israel, miembro del Sanedrín. No era un ignorante espiritual. Era de los más instruidos de su generación.</p>
+  <p>Y Jesús, antes de que Nicodemo terminara su saludo, le dijo algo que destruyó toda su estructura religiosa:</p>
+  <div class="quote">
+    <p>"De cierto, de cierto te digo, que el que no naciere de nuevo, no puede ver el reino de Dios."</p>
+    <cite>Juan 3:3</cite>
+  </div>
+  <p>Nicodemo no entendió. Y su confusión es completamente honesta: <em>"¿Cómo puede un hombre nacer siendo viejo? ¿Puede acaso entrar por segunda vez en el vientre de su madre, y nacer?"</em> (v.4). Pensó en un nacimiento físico. Jesús hablaba de algo completamente diferente.</p>
+  <div class="section-label">¿Por qué "de nuevo"?</div>
+  <p>La palabra griega es <strong>ἄνωθεν (ánōthen)</strong> y tiene dos significados simultáneos: "de nuevo" y "desde arriba". Jesús usa deliberadamente esa ambigüedad. El nuevo nacimiento no es una segunda repetición de lo mismo — es un nacimiento que viene <em>desde arriba</em>, desde Dios mismo.</p>
+  <p>Nicodemo, con todo su conocimiento religioso, con sus años de estudio, con su posición en Israel, necesitaba nacer de nuevo. No mejorar. No avanzar un nivel. Nacer.</p>
+  <div class="frase"><p>"La religión te enseña a mejorar al hombre viejo. El evangelio lo mata y crea uno nuevo."</p></div>
+</section>
+
+<!-- CAP 2 -->
+<section class="chapter" id="cap2">
+  <div class="ch-num">Lección 2</div>
+  <h2 class="ch-title">¿Qué significa nacer de nuevo?</h2>
+  <div class="ch-sub">Una transformación radical, no una reforma</div>
+  <div class="ch-divider"></div>
+  <p>El nuevo nacimiento no es una mejora moral. No es una decisión de ser mejor persona. No es comenzar a ir a la iglesia o dejar de hacer cosas malas. Es una <strong>transformación de naturaleza</strong> — un cambio en lo más profundo del ser.</p>
+  <div class="quote">
+    <p>"De modo que si alguno está en Cristo, nueva criatura es; las cosas viejas pasaron; he aquí todas son hechas nuevas."</p>
+    <cite>2 Corintios 5:17</cite>
+  </div>
+  <div class="section-label">Lo que el nuevo nacimiento NO es</div>
+  <ul class="list-no">
+    <li>No es simplemente creer que Jesús existió</li>
+    <li>No es repetir una oración de salvación</li>
+    <li>No es ser bautizado sin arrepentimiento</li>
+    <li>No es una experiencia emocional en un culto</li>
+    <li>No es ser hijo de padres cristianos</li>
+    <li>No es mejorar la conducta por esfuerzo propio</li>
+  </ul>
+  <div class="section-label">Lo que el nuevo nacimiento SÍ es</div>
+  <ul class="list-yes">
+    <li>Una obra sobrenatural de Dios en el interior del ser humano</li>
+    <li>Un cambio de naturaleza — de muerte espiritual a vida</li>
+    <li>El paso de ser hijo de Adán a ser hijo de Dios</li>
+    <li>La entrada del Espíritu Santo a habitar en el creyente</li>
+    <li>El comienzo de una nueva identidad en Cristo</li>
+  </ul>
+  <div class="quote">
+    <p>"Lo que es nacido de la carne, carne es; y lo que es nacido del Espíritu, espíritu es."</p>
+    <cite>Juan 3:6 — Jesús distingue dos naturalezas: la carnal y la espiritual.</cite>
+  </div>
+  <p>El ser humano nace espiritualmente muerto por la naturaleza adámica (Romanos 5:12). El nuevo nacimiento es la resurrección espiritual — el Espíritu de Dios dando vida donde había muerte.</p>
+</section>
+
+<!-- CAP 3 -->
+<section class="chapter" id="cap3">
+  <div class="ch-num">Lección 3</div>
+  <h2 class="ch-title">Nacer de agua</h2>
+  <div class="ch-sub">El bautismo como parte del nuevo nacimiento</div>
+  <div class="ch-divider"></div>
+  <div class="quote">
+    <p>"El que no naciere de agua y del Espíritu, no puede entrar en el reino de Dios."</p>
+    <cite>Juan 3:5 — Jesús a Nicodemo</cite>
+  </div>
+  <p>Jesús menciona dos elementos: <strong>agua y Espíritu</strong>. Algunos dicen que el agua se refiere al nacimiento físico (el líquido amniótico). Otros dicen que es solo metáfora de la Palabra de Dios. Pero el contexto bíblico completo apunta con claridad hacia el <strong>bautismo en agua</strong>.</p>
+  <div class="section-label">¿Por qué el agua es el bautismo?</div>
+  <div class="tip-box">
+    <h4>4 razones bíblicas</h4>
+    <ol>
+      <li>Juan el Bautista ya bautizaba en agua cuando esta conversación ocurrió — era el contexto natural del oyente</li>
+      <li>Pedro conecta directamente el bautismo con la salvación en Hechos 2:38</li>
+      <li>Pablo dice que en el bautismo "somos sepultados con Cristo" — es un acto de muerte y resurrección (Romanos 6:3-4)</li>
+      <li>Pedro dice explícitamente: "el bautismo que corresponde a esto ahora nos salva" (1 Pedro 3:21)</li>
+    </ol>
+  </div>
+  <div class="section-label">El bautismo en la Biblia no es un símbolo vacío</div>
+  <p>La teología que reduce el bautismo a un "testimonio público de lo que ya ocurrió" no tiene base en el Nuevo Testamento. El lenguaje bíblico es mucho más fuerte:</p>
+  <div class="compare">
+    <div class="compare-box a">
+      <h4>Lo que el NT dice del bautismo</h4>
+      <ul>
+        <li>"Para perdón de pecados" — Hch 2:38</li>
+        <li>"Nos salva" — 1 Pe 3:21</li>
+        <li>"Fuisteis lavados" — 1 Co 6:11</li>
+        <li>"Sepultados con Cristo" — Ro 6:4</li>
+        <li>"Revestidos de Cristo" — Gá 3:27</li>
+      </ul>
+    </div>
+    <div class="compare-box b">
+      <h4>Lo que el bautismo NO hace</h4>
+      <ul>
+        <li>No salva sin arrepentimiento</li>
+        <li>No reemplaza la fe</li>
+        <li>No funciona sin el Espíritu</li>
+        <li>No es mérito propio</li>
+      </ul>
+    </div>
+  </div>
+  <div class="section-label">¿En qué nombre se bautiza?</div>
+  <p>Esta es la pregunta clave para la fe apostólica. La Gran Comisión de Mateo 28:19 dice "en el nombre del Padre, del Hijo y del Espíritu Santo". Pero en el libro de Hechos, cada bautismo registrado se realizó <strong>"en el nombre de Jesucristo"</strong>.</p>
+  <div class="gold-box">
+    <h4>Los bautismos registrados en Hechos</h4>
+    <p><strong>Hechos 2:38:</strong> "Bautícese cada uno de vosotros en el nombre de Jesucristo."</p>
+    <p><strong>Hechos 8:16:</strong> "Solo habían sido bautizados en el nombre de Jesús."</p>
+    <p><strong>Hechos 10:48:</strong> "Mandó bautizarlos en el nombre del Señor Jesús."</p>
+    <p><strong>Hechos 19:5:</strong> "Fueron bautizados en el nombre del Señor Jesús."</p>
+    <p>La conclusión apostólica: Jesús es el nombre del Padre, del Hijo y del Espíritu Santo (Juan 5:43; Colosenses 2:9).</p>
+  </div>
+  <div class="frase"><p>"El bautismo no es la entrada a una religión — es la sepultura del hombre viejo y el nacimiento del nuevo."</p></div>
+</section>
+
+<!-- CAP 4 -->
+<section class="chapter" id="cap4">
+  <div class="ch-num">Lección 4</div>
+  <h2 class="ch-title">Nacer del Espíritu</h2>
+  <div class="ch-sub">El don del Espíritu Santo como evidencia</div>
+  <div class="ch-divider"></div>
+  <p>El segundo elemento del nuevo nacimiento es el Espíritu. No basta el agua sola — Jesús dijo <em>agua Y Espíritu</em>. El bautismo sin la experiencia del Espíritu Santo es una forma sin vida.</p>
+  <div class="quote">
+    <p>"Y yo rogaré al Padre, y os dará otro Consolador, para que esté con vosotros para siempre: el Espíritu de verdad."</p>
+    <cite>Juan 14:16-17</cite>
+  </div>
+  <div class="section-label">La promesa del Padre</div>
+  <p>Antes de ascender, Jesús dio una instrucción que define todo: <em>"esperad la promesa del Padre"</em> (Hechos 1:4). Esta promesa no era opcional ni secundaria. Era la razón por la que debían quedarse en Jerusalén. Era la habilitación para la vida cristiana genuina.</p>
+  <div class="section-label">¿Cómo se manifiesta el nuevo nacimiento del Espíritu?</div>
+  <p>En el libro de Hechos, cada vez que el Espíritu Santo fue derramado sobre personas, hubo una <strong>evidencia audible e identificable</strong>. No fue una sensación interna que solo el individuo percibía. Fue algo que los que estaban alrededor podían ver y escuchar.</p>
+  <div class="quote">
+    <p>"Y fueron todos llenos del Espíritu Santo, y comenzaron a hablar en otras lenguas, según el Espíritu les daba que hablasen."</p>
+    <cite>Hechos 2:4 — El Día de Pentecostés</cite>
+  </div>
+  <div class="tip-box">
+    <h4>Los casos del Espíritu en Hechos</h4>
+    <ol>
+      <li><strong>Hechos 2:4</strong> — Pentecostés: 120 discípulos hablan en lenguas</li>
+      <li><strong>Hechos 8:17-18</strong> — Samaritanos: Simón el mago ve algo tan visible que quiere comprarlo</li>
+      <li><strong>Hechos 10:44-46</strong> — Casa de Cornelio: los gentiles hablan en lenguas y magnifican a Dios</li>
+      <li><strong>Hechos 19:6</strong> — Éfeso: los discípulos hablan en lenguas y profetizan</li>
+    </ol>
+  </div>
+  <div class="section-label">¿Por qué las lenguas como evidencia inicial?</div>
+  <p>Las lenguas no son el único don del Espíritu, pero sí son la <strong>evidencia inicial física</strong> del bautismo del Espíritu Santo. Son la señal que acompaña la entrada del Espíritu de la misma manera que la fiebre acompaña una infección — no es la infección en sí, pero confirma su presencia.</p>
+  <p>Pedro lo entendió así. En casa de Cornelio dijo: <em>"¿Puede acaso alguno impedir el agua, para que no sean bautizados estos que han recibido el Espíritu Santo también como nosotros?"</em> (Hechos 10:47). El "también como nosotros" de Pentecostés era el estándar.</p>
+  <div class="frase"><p>"No basta con saber que el Espíritu existe — necesitas que el Espíritu viva en ti."</p></div>
+</section>
+
+<!-- CAP 5 -->
+<section class="chapter" id="cap5">
+  <div class="ch-num">Lección 5</div>
+  <h2 class="ch-title">El bautismo en el Nuevo Testamento</h2>
+  <div class="ch-sub">Hechos 2:38 — el sermón que definió todo</div>
+  <div class="ch-divider"></div>
+  <p>El día más importante en la historia de la iglesia primitiva fue Pentecostés. Y en ese día, la primera pregunta que la multitud le hizo a Pedro fue exactamente la pregunta que necesitamos responder hoy:</p>
+  <div class="quote">
+    <p>"¿Qué haremos?"</p>
+    <cite>Hechos 2:37 — La multitud convencida por el Espíritu</cite>
+  </div>
+  <p>Y Pedro, lleno del Espíritu, bajo la unción directa de ese momento, respondió con la instrucción apostólica más completa y clara de todo el Nuevo Testamento:</p>
+  <div class="gold-box">
+    <h4>Hechos 2:38 — La respuesta apostólica</h4>
+    <p><strong>"Arrepentíos"</strong> — una transformación de mente y corazón, un giro de 180°</p>
+    <p><strong>"y bautícese cada uno de vosotros en el nombre de Jesucristo"</strong> — acción externa, sepultura del hombre viejo</p>
+    <p><strong>"para perdón de los pecados"</strong> — propósito del bautismo, no solo testimonio</p>
+    <p><strong>"y recibiréis el don del Espíritu Santo"</strong> — la promesa del Padre cumplida</p>
+  </div>
+  <div class="section-label">Los tres elementos inseparables</div>
+  <ul class="pasos">
+    <li>
+      <div class="paso-content">
+        <h5>Arrepentimiento</h5>
+        <p>Sin arrepentimiento genuino, el bautismo es vacío y el Espíritu no llega. El arrepentimiento es la condición del corazón que hace posible todo lo demás. No es solo tristeza por el pecado — es un cambio de dirección total.</p>
+      </div>
+    </li>
+    <li>
+      <div class="paso-content">
+        <h5>Bautismo en el nombre de Jesús</h5>
+        <p>El acto externo que corresponde a la muerte y resurrección de Cristo. En el bautismo, el creyente muere con Cristo y resucita con Él. No es un rito vacío — es una participación real en el evento central de la historia.</p>
+      </div>
+    </li>
+    <li>
+      <div class="paso-content">
+        <h5>Don del Espíritu Santo</h5>
+        <p>La promesa del Padre. La entrada del Espíritu que da vida al ser interior. Sin el Espíritu, el creyente tiene la forma de la piedad pero carece de su poder. Con el Espíritu, tiene la presencia del propio Dios habitando en él.</p>
+      </div>
+    </li>
+  </ul>
+  <div class="quote">
+    <p>"Porque para vosotros es la promesa, y para vuestros hijos, y para todos los que están lejos; para cuantos el Señor nuestro Dios llamare."</p>
+    <cite>Hechos 2:39 — Esta promesa no tiene fecha de expiración.</cite>
+  </div>
+</section>
+
+<!-- CAP 6 -->
+<section class="chapter" id="cap6">
+  <div class="ch-num">Lección 6</div>
+  <h2 class="ch-title">El Espíritu en el libro de Hechos</h2>
+  <div class="ch-sub">El patrón apostólico como estándar</div>
+  <div class="ch-divider"></div>
+  <p>El libro de Hechos no es solo historia — es el manual de operaciones de la iglesia primitiva. Lo que los apóstoles enseñaron y practicaron establece el patrón que toda generación debe seguir.</p>
+  <div class="section-label">El patrón se repite</div>
+  <p>A lo largo del libro de Hechos, cuando personas reciben el evangelio, ocurre un patrón consistente: arrepentimiento, bautismo en agua en el nombre de Jesús, y recepción del Espíritu Santo. No es accidente — es el modelo apostólico.</p>
+  <div class="compare">
+    <div class="compare-box a">
+      <h4>Hechos 2 — Judíos</h4>
+      <ul>
+        <li>Arrepentimiento al escuchar a Pedro</li>
+        <li>Bautizados en nombre de Jesús</li>
+        <li>Reciben el Espíritu Santo</li>
+        <li>~3,000 personas ese día</li>
+      </ul>
+    </div>
+    <div class="compare-box b">
+      <h4>Hechos 10 — Gentiles</h4>
+      <ul>
+        <li>Espíritu cae mientras Pedro predica</li>
+        <li>Hablan en lenguas</li>
+        <li>Pedro manda bautizarlos en agua</li>
+        <li>Primer caso de gentiles salvos</li>
+      </ul>
+    </div>
+  </div>
+  <div class="section-label">El caso de Hechos 8 — los samaritanos</div>
+  <p>En Hechos 8, Felipe predicó en Samaria y muchos creyeron y fueron bautizados. Pero el texto dice que "todavía no había descendido sobre ninguno de ellos, porque solamente habían sido bautizados en el nombre del Señor Jesús" (v.16). Pedro y Juan descendieron de Jerusalén específicamente para imponerles las manos y recibiesen el Espíritu.</p>
+  <p>Este pasaje enseña algo importante: el bautismo en agua y el bautismo del Espíritu son dos experiencias distintas que deben ocurrir. El agua sola no completa el nuevo nacimiento.</p>
+  <div class="section-label">El caso de Hechos 19 — los discípulos incompletos</div>
+  <p>Pablo encontró en Éfeso a unos "discípulos" que no habían recibido el Espíritu Santo. Su bautismo era el de Juan — arrepentimiento, pero sin el nombre de Jesús ni el don del Espíritu. Pablo los bautizó de nuevo — en el nombre del Señor Jesús — y les impuso las manos: <em>"y vino sobre ellos el Espíritu Santo; y hablaban en lenguas, y profetizaban"</em> (v.6).</p>
+  <div class="frase"><p>"El patrón apostólico no cambió con las generaciones. La promesa sigue siendo para todos."</p></div>
+</section>
+
+<!-- CAP 7 -->
+<section class="chapter" id="cap7">
+  <div class="ch-num">Lección 7</div>
+  <h2 class="ch-title">Objeciones y respuestas</h2>
+  <div class="ch-sub">Las preguntas más comunes</div>
+  <div class="ch-divider"></div>
+  <p>Esta doctrina genera preguntas. Aquí están las más frecuentes, respondidas desde la Escritura.</p>
+
+  <div class="section-label">¿El ladrón en la cruz no se salvó sin bautismo?</div>
+  <div class="tip-box">
+    <h4>Respuesta</h4>
+    <p>El ladrón murió antes del Día de Pentecostés, antes de que el nuevo pacto entrara en vigencia con la muerte y resurrección de Cristo. Jesús aún no había ordenado el bautismo (Mateo 28:19). El ladrón vivió y murió bajo el antiguo pacto.</p>
+    <p>Además, Jesús tenía autoridad para perdonar pecados en su ministerio terrenal (Marcos 2:10). El ladrón recibió ese perdón directo de labios de Cristo. Eso no establece el patrón para la iglesia post-Pentecostés.</p>
+  </div>
+
+  <div class="section-label">¿El bautismo no es "obra" y la salvación no es por fe?</div>
+  <div class="tip-box">
+    <h4>Respuesta</h4>
+    <p>El bautismo no es una obra de mérito — es una obra de obediencia. La diferencia es crucial. La circuncisión era también una "obra", pero Abraham fue justificado mediante ella en obediencia a Dios (Génesis 17). El bautismo es el momento donde la fe se hace obediente.</p>
+    <p>Además, Pablo en Colosenses 2:12 dice que en el bautismo somos "sepultados con él en el bautismo, en el cual fuisteis también resucitados con él, mediante la fe en el poder de Dios". Fe y bautismo no son opuestos — son inseparables.</p>
+  </div>
+
+  <div class="section-label">¿No es suficiente con "recibir a Cristo en el corazón"?</div>
+  <div class="tip-box">
+    <h4>Respuesta</h4>
+    <p>La expresión "recibir a Cristo en el corazón" no aparece en el Nuevo Testamento. Es una fórmula del siglo XX que no tiene base bíblica directa. El Nuevo Testamento describe la conversión en términos de arrepentimiento, bautismo y recepción del Espíritu Santo — no de una oración específica.</p>
+    <p>Apocalipsis 3:20 — "He aquí, yo estoy a la puerta y llamo" — fue escrito a una iglesia cristiana, no como evangelismo a inconversos. Usarlo como "oración del pecador" es sacarlo de contexto.</p>
+  </div>
+
+  <div class="section-label">¿Qué pasa con los que murieron sin el bautismo completo?</div>
+  <div class="tip-box">
+    <h4>Respuesta</h4>
+    <p>Dios es justo y misericordioso. Juzgará a cada persona según la luz que tuvo. Nuestra responsabilidad no es especular sobre los casos límite — es proclamar el evangelio completo y dejar que cada persona responda. Lo que sí sabemos es que Dios prometió el Espíritu "para cuantos el Señor nuestro Dios llamare" (Hechos 2:39).</p>
+  </div>
+</section>
+
+<!-- CAP 8 -->
+<section class="chapter" id="cap8">
+  <div class="ch-num">Lección 8</div>
+  <h2 class="ch-title">Conclusión y llamado</h2>
+  <div class="ch-sub">La puerta está abierta</div>
+  <div class="ch-divider"></div>
+  <p>Hemos recorrido el texto más importante sobre el nuevo nacimiento y su contexto apostólico. La conclusión es clara y poderosa: <strong>el nuevo nacimiento es real, es necesario, y está disponible para todo el que responda al llamado de Dios.</strong></p>
+  <div class="gold-box">
+    <h4>El nuevo nacimiento completo según Hechos 2:38</h4>
+    <p><strong>1. Arrepentimiento:</strong> un cambio genuino de mente y corazón, un giro hacia Dios</p>
+    <p><strong>2. Bautismo en agua en el nombre de Jesús:</strong> sepultura del hombre viejo, inicio de la nueva vida</p>
+    <p><strong>3. Don del Espíritu Santo:</strong> la promesa del Padre, la presencia de Dios habitando en el creyente</p>
+  </div>
+  <div class="quote">
+    <p>"Porque para vosotros es la promesa, y para vuestros hijos, y para todos los que están lejos; para cuantos el Señor nuestro Dios llamare."</p>
+    <cite>Hechos 2:39</cite>
+  </div>
+  <p>Esta promesa no tiene restricción de época ni de lugar. No fue solo para el primer siglo. No fue solo para los judíos de Pentecostés. Es para <strong>todos los que el Señor llame</strong> — incluyendo a quien está leyendo estas palabras ahora mismo.</p>
+  <p>Si aún no has nacido de agua y del Espíritu, la puerta está abierta. El Dios que llenó a 120 discípulos en Pentecostés, que llenó a la casa de Cornelio, que llenó a los discípulos de Éfeso — sigue derramando su Espíritu hoy.</p>
+  <div class="frase"><p>"Jesús no dijo 'si puedes nacer de nuevo' — dijo 'es necesario nacer de nuevo'. Lo que Él hace necesario, Él lo hace posible."</p></div>
+</section>
+
+</main>
+
+<section class="epilogo">
+  <span class="big">NACER</span>
+  <h2>La promesa sigue vigente</h2>
+  <p>El nuevo nacimiento no es una doctrina del pasado ni un privilegio de unos pocos. Es la experiencia fundamental de todo creyente genuino.</p>
+  <p>Agua y Espíritu. Muerte y resurrección. El hombre viejo sepultado, el nuevo creado. Eso es el evangelio en acción.</p>
+  <div class="quote" style="max-width:480px;margin:32px auto;">
+    <p>"El que no naciere de agua y del Espíritu, no puede entrar en el reino de Dios."</p>
+    <cite>Juan 3:5 — Jesús</cite>
+  </div>
+  <div class="firma">El Nuevo Nacimiento · Serie Doctrinal · Predicador IPUC</div>
+</section>
+
+<script>
+const obs=new IntersectionObserver(e=>{e.forEach(el=>{if(el.isIntersecting)el.target.classList.add('visible');});},{threshold:.1});
+document.querySelectorAll('.chapter').forEach(e=>obs.observe(e));
+function toggleNav(){document.getElementById('sidenav').classList.toggle('show');}
+document.querySelectorAll('nav a').forEach(a=>{a.addEventListener('click',()=>{document.getElementById('sidenav').classList.remove('show');document.querySelectorAll('nav a').forEach(x=>x.classList.remove('active'));a.classList.add('active');});});
+document.addEventListener('click',e=>{const nav=document.getElementById('sidenav');if(nav.classList.contains('show')&&!nav.contains(e.target)&&!e.target.closest('.nav-toggle')){nav.classList.remove('show');}});
+</script>
+</body>
+</html>

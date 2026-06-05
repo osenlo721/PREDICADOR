@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>La Justificación — Estudio Exegético Profundo</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Raleway:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--azul:#009FDA;--marino:#003B6F;--oro:#F0AB00;--oro-claro:#FFD166;--fondo:#040e1c;--texto:#e8e0d0;--texto-suave:#a89f90;--linea:rgba(240,171,0,.2);}
+*{margin:0;padding:0;box-sizing:border-box;}html{scroll-behavior:smooth;}
+body{background:var(--fondo);color:var(--texto);font-family:'Crimson Pro',Georgia,serif;font-size:18px;line-height:1.85;overflow-x:hidden;}
+::-webkit-scrollbar{width:4px;}::-webkit-scrollbar-track{background:var(--fondo);}::-webkit-scrollbar-thumb{background:var(--azul);border-radius:2px;}
+.nav-toggle{position:fixed;top:16px;left:16px;z-index:300;background:var(--marino);border:1px solid var(--linea);color:var(--oro);width:44px;height:44px;border-radius:8px;cursor:pointer;font-size:20px;display:flex;align-items:center;justify-content:center;transition:all .2s;box-shadow:0 2px 12px rgba(0,0,0,.4);}
+.nav-toggle:hover{background:var(--azul);color:#fff;}
+nav{position:fixed;left:0;top:0;bottom:0;width:265px;background:linear-gradient(180deg,var(--marino) 0%,#011529 100%);border-right:1px solid var(--linea);z-index:200;overflow-y:auto;transform:translateX(0);transition:transform .35s ease;padding:32px 0;}
+nav.hidden{transform:translateX(-100%);}
+nav .nav-brand{font-family:'Cinzel',serif;font-size:13px;font-weight:700;color:var(--oro);padding:0 20px 20px;border-bottom:1px solid var(--linea);margin-bottom:8px;letter-spacing:1px;line-height:1.5;}
+nav .nav-section{font-family:'Cinzel',serif;font-size:9px;letter-spacing:3px;color:var(--azul);padding:14px 20px 4px;text-transform:uppercase;opacity:.8;}
+nav a{display:flex;align-items:center;gap:10px;padding:7px 20px;font-family:'Raleway',sans-serif;font-size:11px;font-weight:500;letter-spacing:.5px;color:var(--texto-suave);text-decoration:none;border-left:2px solid transparent;transition:all .2s;}
+nav a:hover,nav a.active{color:var(--oro);border-left-color:var(--oro);background:rgba(240,171,0,.06);}
+nav a .nav-num{font-family:'Cinzel',serif;font-size:10px;color:var(--azul);min-width:20px;}
+.page-wrap{margin-left:265px;transition:margin .35s ease;}
+.page-wrap.full{margin-left:0;}
+
+.cover{min-height:100vh;background:linear-gradient(160deg,#041830 0%,var(--fondo) 65%);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:80px 32px 60px;position:relative;overflow:hidden;}
+.cover::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 50% at 50% 10%,rgba(0,159,218,.18) 0%,transparent 70%),radial-gradient(ellipse 40% 40% at 80% 85%,rgba(240,171,0,.1) 0%,transparent 60%);pointer-events:none;}
+.cover-icon{font-size:60px;margin-bottom:24px;animation:fadeDown .8s ease both;}
+.cover-tag{font-family:'Cinzel',serif;font-size:10px;letter-spacing:5px;color:var(--azul);text-transform:uppercase;margin-bottom:20px;animation:fadeDown .9s ease .1s both;}
+.cover-title{font-family:'Cinzel',serif;font-size:clamp(44px,10vw,100px);font-weight:900;line-height:1;margin-bottom:8px;animation:fadeDown 1s ease .2s both;color:var(--oro);}
+.cover-sub{font-family:'Cinzel',serif;font-size:clamp(13px,2vw,17px);color:var(--azul);letter-spacing:2px;margin-bottom:32px;animation:fadeDown 1s ease .25s both;}
+.cover-line{width:60px;height:1px;background:linear-gradient(to right,transparent,var(--oro),transparent);margin:0 auto 24px;}
+.cover-author{font-family:'Raleway',sans-serif;font-size:13px;letter-spacing:4px;color:var(--texto-suave);text-transform:uppercase;}
+.cover-verse{position:absolute;bottom:40px;font-family:'Crimson Pro',serif;font-style:italic;font-size:14px;color:var(--texto-suave);max-width:440px;text-align:center;line-height:1.6;}
+
+main{max-width:740px;margin:0 auto;padding:0 24px;}
+.chapter{padding:72px 0 56px;border-bottom:1px solid rgba(240,171,0,.1);opacity:0;transform:translateY(30px);transition:opacity .7s ease,transform .7s ease;}
+.chapter.visible{opacity:1;transform:none;}
+.ch-num{font-family:'Cinzel',serif;font-size:11px;letter-spacing:4px;color:var(--azul);text-transform:uppercase;margin-bottom:12px;}
+.ch-title{font-family:'Cinzel',serif;font-size:clamp(22px,4vw,36px);font-weight:700;color:var(--oro);line-height:1.2;margin-bottom:8px;}
+.ch-sub{font-family:'Cinzel',serif;font-size:clamp(14px,2vw,19px);color:var(--azul);margin-bottom:28px;}
+.ch-divider{width:40px;height:2px;background:linear-gradient(to right,var(--oro),var(--azul));margin-bottom:32px;border-radius:2px;}
+p{margin-bottom:20px;}
+strong{color:var(--oro);font-weight:600;}
+em{color:var(--azul);font-style:italic;}
+
+.quote{border-left:3px solid var(--oro);padding:16px 24px;margin:28px 0;background:rgba(240,171,0,.05);border-radius:0 8px 8px 0;}
+.quote p{font-family:'Crimson Pro',serif;font-style:italic;font-size:1.05em;color:var(--oro-claro);margin-bottom:6px;}
+.quote cite{font-family:'Raleway',sans-serif;font-size:12px;letter-spacing:2px;color:var(--texto-suave);}
+
+.section-label{font-family:'Cinzel',serif;font-size:11px;letter-spacing:3px;color:var(--azul);text-transform:uppercase;margin:36px 0 12px;}
+
+.list-yes,.list-no{list-style:none;margin:16px 0 24px;padding:0;}
+.list-yes li,.list-no li{padding:6px 0 6px 28px;position:relative;font-size:.97em;color:var(--texto-suave);border-bottom:1px solid rgba(255,255,255,.05);}
+.list-yes li::before{content:'✅';position:absolute;left:0;top:6px;font-size:14px;}
+.list-no li::before{content:'❌';position:absolute;left:0;top:6px;font-size:14px;}
+
+.compare{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:28px 0;}
+.compare-box{padding:20px;border-radius:8px;border:1px solid;}
+.compare-box.a{border-color:rgba(0,159,218,.3);background:rgba(0,159,218,.05);}
+.compare-box.b{border-color:rgba(240,171,0,.3);background:rgba(240,171,0,.05);}
+.compare-box h4{font-family:'Cinzel',serif;font-size:10px;letter-spacing:3px;margin-bottom:12px;text-transform:uppercase;}
+.compare-box.a h4{color:var(--azul);}
+.compare-box.b h4{color:var(--oro);}
+.compare-box ul{list-style:none;}
+.compare-box ul li{font-size:14px;padding:4px 0;color:var(--texto-suave);border-bottom:1px solid rgba(255,255,255,.06);}
+
+.frase{text-align:center;padding:40px 24px;margin:32px 0;position:relative;}
+.frase::before{content:'"';font-family:'Cinzel',serif;font-size:100px;color:rgba(240,171,0,.07);position:absolute;top:-10px;left:16px;line-height:1;}
+.frase p{font-family:'Cinzel',serif;font-size:clamp(15px,2.2vw,20px);color:var(--texto);line-height:1.5;position:relative;z-index:1;margin:0;}
+
+.tip-box{background:linear-gradient(135deg,rgba(0,59,111,.4) 0%,rgba(4,14,28,.8) 100%);border:1px solid rgba(0,159,218,.25);border-radius:12px;padding:24px;margin:28px 0;}
+.tip-box h4{font-family:'Cinzel',serif;font-size:11px;letter-spacing:4px;color:var(--azul);text-transform:uppercase;margin-bottom:14px;}
+.tip-box p,.tip-box li{color:var(--texto-suave);font-size:.95em;margin-bottom:8px;}
+.tip-box ol,.tip-box ul{padding-left:20px;}
+.tip-box li{margin-bottom:8px;}
+
+.gold-box{background:rgba(240,171,0,.06);border:1px solid rgba(240,171,0,.2);border-radius:12px;padding:24px;margin:28px 0;}
+.gold-box h4{font-family:'Cinzel',serif;font-size:11px;letter-spacing:4px;color:var(--oro);text-transform:uppercase;margin-bottom:14px;}
+.gold-box p{color:var(--texto-suave);font-size:.95em;margin-bottom:10px;}
+.gold-box strong{color:var(--oro);}
+
+.etimo{background:rgba(240,171,0,.04);border:1px solid rgba(240,171,0,.15);border-radius:8px;padding:20px 24px;margin:20px 0;}
+.etimo .e-palabra{font-family:'Cinzel',serif;font-size:22px;color:var(--oro);margin-bottom:4px;}
+.etimo .e-origen{font-family:'Raleway',sans-serif;font-size:12px;color:var(--azul);letter-spacing:2px;margin-bottom:8px;}
+.etimo p{color:var(--texto-suave);font-size:.95em;margin:0;}
+
+.pasos{counter-reset:paso;list-style:none;padding:0;margin:24px 0;}
+.pasos li{counter-increment:paso;display:flex;gap:16px;margin-bottom:22px;align-items:flex-start;}
+.pasos li::before{content:counter(paso);font-family:'Cinzel',serif;font-size:20px;font-weight:700;color:var(--oro);min-width:32px;line-height:1.3;}
+.pasos li .paso-content h5{font-family:'Cinzel',serif;font-size:14px;color:var(--azul);margin-bottom:5px;letter-spacing:1px;}
+.pasos li .paso-content p{color:var(--texto-suave);font-size:.95em;margin:0;}
+
+.intercambio{display:grid;grid-template-columns:1fr 40px 1fr;gap:0;margin:28px 0;align-items:center;}
+.int-box{padding:20px;border-radius:8px;}
+.int-box.izq{background:rgba(139,20,20,.15);border:1px solid rgba(200,50,50,.3);}
+.int-box.der{background:rgba(0,100,60,.15);border:1px solid rgba(0,180,100,.3);}
+.int-flecha{text-align:center;font-size:24px;color:var(--oro);}
+.int-box h4{font-family:'Cinzel',serif;font-size:10px;letter-spacing:3px;text-transform:uppercase;margin-bottom:12px;}
+.int-box.izq h4{color:#e06060;}
+.int-box.der h4{color:#60e0a0;}
+.int-box ul{list-style:none;}
+.int-box ul li{font-size:14px;padding:4px 0;color:var(--texto-suave);border-bottom:1px solid rgba(255,255,255,.06);}
+
+.epilogo{text-align:center;padding:80px 32px 120px;}
+.epilogo .big{font-family:'Cinzel',serif;font-size:clamp(32px,7vw,68px);font-weight:900;color:transparent;-webkit-text-stroke:1px rgba(240,171,0,.35);letter-spacing:6px;display:block;margin-bottom:40px;}
+.epilogo h2{font-family:'Cinzel',serif;font-size:clamp(18px,3vw,28px);color:var(--oro);margin-bottom:24px;}
+.epilogo p{max-width:540px;margin:0 auto 16px;color:var(--texto-suave);}
+.epilogo .firma{margin-top:48px;font-family:'Cinzel',serif;font-size:13px;letter-spacing:4px;color:var(--azul);}
+
+@keyframes fadeDown{from{opacity:0;transform:translateY(-20px);}to{opacity:1;transform:none;}}
+@keyframes fadeIn{from{opacity:0;}to{opacity:1;}}
+@media(max-width:768px){nav{transform:translateX(-100%);}nav.show{transform:translateX(0);}.page-wrap{margin-left:0!important;}}
+@media(max-width:600px){.compare{grid-template-columns:1fr;}nav{width:220px;}.pasos li{flex-direction:column;gap:8px;}.intercambio{grid-template-columns:1fr;}.int-flecha{transform:rotate(90deg);}}
+</style>
+</head>
+<body>
+<button class="nav-toggle" id="navToggle" onclick="toggleNav()">☰</button>
+<nav id="sidenav">
+  <div class="nav-brand">⚖️ La Justificación<br>Estudio Profundo</div>
+  <div class="nav-section">Índice</div>
+  <a href="#portada"><span class="nav-num">·</span>Portada</a>
+  <div class="nav-section">Lecciones</div>
+  <a href="#cap1"><span class="nav-num">01</span>Etimología — Dikaióō</a>
+  <a href="#cap2"><span class="nav-num">02</span>El problema que resuelve</a>
+  <a href="#cap3"><span class="nav-num">03</span>Naturaleza forense</a>
+  <a href="#cap4"><span class="nav-num">04</span>El gran intercambio</a>
+  <a href="#cap5"><span class="nav-num">05</span>Romanos 3 — exégesis</a>
+  <a href="#cap6"><span class="nav-num">06</span>Abraham — el caso bíblico</a>
+  <a href="#cap7"><span class="nav-num">07</span>Justificación y santificación</a>
+  <a href="#cap8"><span class="nav-num">08</span>Pablo y Santiago resueltos</a>
+  <a href="#cap9"><span class="nav-num">09</span>La justificación en Hechos 2:38</a>
+  <a href="#cap10"><span class="nav-num">10</span>Consecuencias y vida práctica</a>
+</nav>
+
+<div class="page-wrap" id="pageWrap">
+
+<section class="cover" id="portada">
+  <div class="cover-icon">⚖️</div>
+  <div class="cover-tag">Estudio Exegético · Serie Salvación</div>
+  <h1 class="cover-title">La Justificación</h1>
+  <div class="cover-sub">El veredicto eterno que cambia todo</div>
+  <div class="cover-line"></div>
+  <div class="cover-author">Predicador IPUC</div>
+  <div class="cover-verse">"Justificados, pues, por la fe, tenemos paz para con Dios por medio de nuestro Señor Jesucristo." — Romanos 5:1</div>
+</section>
+
+<main>
+
+<!-- CAP 1 — ETIMOLOGÍA -->
+<section class="chapter" id="cap1">
+  <div class="ch-num">Lección 1</div>
+  <h2 class="ch-title">Etimología</h2>
+  <div class="ch-sub">Dikaióō — la palabra que lo dice todo</div>
+  <div class="ch-divider"></div>
+
+  <p>La justificación es considerada por muchos teólogos la doctrina central de todo el evangelio. Martín Lutero la llamó <em>"el artículo sobre el que la iglesia se mantiene o cae"</em>. Para entenderla hay que comenzar con el idioma — porque la traducción no captura la profundidad que el griego contiene.</p>
+
+  <div class="etimo">
+    <div class="e-palabra">Dikaióō — δικαιόω</div>
+    <div class="e-origen">Griego del NT · verbo forense legal</div>
+    <p>Viene de la raíz <em>díkaios</em> — justo, recto. El verbo <em>dikaióō</em> es un término del sistema judicial griego que significa: <strong>declarar justo, pronunciar el veredicto de inocencia, absolver en el tribunal</strong>. Es fundamentalmente un término <em>forense</em> — no describe un proceso de transformación moral sino un <strong>acto judicial declarativo</strong>. El juez no hace justo al acusado — lo <em>declara</em> justo. Esa distinción lo cambia absolutamente todo.</p>
+  </div>
+
+  <div class="etimo">
+    <div class="e-palabra">Dikaiosýnē — δικαιοσύνη</div>
+    <div class="e-origen">Sustantivo · "justicia" o "justificación"</div>
+    <p>Es la <strong>justicia como estado o condición</strong> — el resultado del veredicto. Cuando Dios justifica al creyente, le imputa <em>dikaiosýnē</em> — le confiere el estado de justo. No porque lo sea por naturaleza propia, sino porque la justicia perfecta de Cristo es acreditada a su cuenta.</p>
+  </div>
+
+  <div class="etimo">
+    <div class="e-palabra">Tsaddiq — צַדִּיק / Tsedaqah — צְדָקָה</div>
+    <div class="e-origen">Hebreo del AT · raíz de la misma idea</div>
+    <p>En el Antiguo Testamento, <em>tsaddiq</em> describe al justo — no el que es moralmente perfecto sino el que está en correcta relación con Dios y con el pacto. <em>Tsedaqah</em> (justicia) en muchos contextos describe la fidelidad de Dios al pacto — su compromiso de actuar con rectitud hacia su pueblo. La justificación tiene raíces profundas en la teología del pacto del AT.</p>
+  </div>
+
+  <div class="section-label">La distinción que Lutero redescubrió</div>
+  <p>Durante siglos, la iglesia confundió <em>dikaióō</em> con <em>hacer justo</em> — un proceso de transformación interna. Lutero, estudiando Romanos en griego, descubrió que el término es forense: <strong>declarar justo</strong>. Esa distinción desencadenó la Reforma Protestante y devolvió al evangelio su poder liberador.</p>
+
+  <div class="frase"><p>"Justificar no es hacer justo — es declarar justo. La diferencia entre esas dos palabras es toda la diferencia entre el evangelio y la religión."</p></div>
+</section>
+
+<!-- CAP 2 — EL PROBLEMA QUE RESUELVE -->
+<section class="chapter" id="cap2">
+  <div class="ch-num">Lección 2</div>
+  <h2 class="ch-title">El problema que resuelve</h2>
+  <div class="ch-sub">¿Por qué el ser humano necesita ser justificado?</div>
+  <div class="ch-divider"></div>
+
+  <p>Para entender la solución hay que entender el problema. La justificación no es una doctrina abstracta — es la respuesta a la crisis más profunda del ser humano: su estado de culpa e injusticia ante un Dios perfectamente santo.</p>
+
+  <div class="section-label">El dilema de la santidad divina y la culpa humana</div>
+  <div class="quote">
+    <p>"Por cuanto todos pecaron, y están destituidos de la gloria de Dios."</p>
+    <cite>Romanos 3:23 — El diagnóstico universal</cite>
+  </div>
+
+  <p>El problema no es simplemente que el hombre haya hecho cosas malas. El problema es que el hombre, por su naturaleza adámica, está en una condición de <strong>injusticia fundamental ante Dios</strong>. No cumple el estándar de la perfecta justicia que la santidad de Dios exige.</p>
+
+  <div class="tip-box">
+    <h4>El dilema irresoluble sin la justificación</h4>
+    <p><strong>Dios es perfectamente justo:</strong> no puede simplemente ignorar el pecado. Un Dios que pasa por alto la injusticia no sería completamente bueno. La justicia exige que el pecado sea tratado.</p>
+    <p><strong>Dios es perfectamente misericordioso:</strong> quiere perdonar y restaurar al ser humano. No desea la muerte del pecador sino que se arrepienta.</p>
+    <p><strong>El dilema:</strong> ¿Cómo puede Dios ser justo (castigar el pecado) y a la vez justificador (declarar justo al pecador)?</p>
+    <p><strong>La respuesta:</strong> Romanos 3:26 — "para demostrar en este tiempo su justicia, a fin de que él sea el justo, y el que justifica al que es de la fe de Jesús." La cruz resuelve el dilema.</p>
+  </div>
+
+  <div class="section-label">La ira de Dios — el contexto que no se puede omitir</div>
+  <div class="quote">
+    <p>"Porque la ira de Dios se revela desde el cielo contra toda impiedad e injusticia de los hombres."</p>
+    <cite>Romanos 1:18 — El punto de partida de toda la soteriología paulina</cite>
+  </div>
+  <p>Pablo no comienza Romanos con el evangelio — comienza con la ira. Porque el evangelio solo tiene sentido en el contexto del problema que resuelve. La justificación no es un bonus espiritual para personas razonablemente buenas. Es el rescate de personas que estaban bajo <strong>condenación justa</strong>.</p>
+
+  <div class="compare">
+    <div class="compare-box a">
+      <h4>El hombre sin justificación</h4>
+      <ul>
+        <li>Culpable ante el tribunal divino</li>
+        <li>Bajo la ira justa de Dios</li>
+        <li>Sin acceso al Padre</li>
+        <li>Condenado por la ley</li>
+        <li>Deudor sin capacidad de pago</li>
+      </ul>
+    </div>
+    <div class="compare-box b">
+      <h4>El hombre justificado</h4>
+      <ul>
+        <li>Declarado inocente</li>
+        <li>Bajo la gracia de Dios</li>
+        <li>Acceso al Padre por Cristo</li>
+        <li>Libre de la condenación</li>
+        <li>Deuda cancelada — tetelestai</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- CAP 3 — NATURALEZA FORENSE -->
+<section class="chapter" id="cap3">
+  <div class="ch-num">Lección 3</div>
+  <h2 class="ch-title">La naturaleza forense de la justificación</h2>
+  <div class="ch-sub">Un veredicto, no un proceso</div>
+  <div class="ch-divider"></div>
+
+  <p>Este es el punto más importante y más frecuentemente malentendido de toda la doctrina. La justificación no es un proceso gradual de mejora moral — es un <strong>acto declarativo instantáneo</strong>. Un veredicto pronunciado desde el tribunal de Dios.</p>
+
+  <div class="section-label">La metáfora del tribunal</div>
+  <p>Imagina un tribunal. El acusado está frente al juez. El juez tiene toda la evidencia. La ley ha sido violada. El veredicto está a punto de ser pronunciado.</p>
+  <p>En ese momento, alguien entra al tribunal y paga la deuda completa — no solo promete pagarla, la paga. El juez golpea el mazo y dice: <strong>inocente</strong>. No porque el acusado sea inocente por su propia conducta — sino porque la deuda fue satisfecha.</p>
+  <p>Eso es la justificación. Dios como juez, el creyente como acusado, Cristo como el que pagó la deuda. El veredicto no depende de la conducta del acusado — depende del pago del fiador.</p>
+
+  <div class="section-label">Declarar, no hacer</div>
+  <div class="tip-box">
+    <h4>La diferencia entre declarar y hacer</h4>
+    <p><strong>Si dikaióō significara "hacer justo":</strong> la justificación sería un proceso que se completa gradualmente a medida que el creyente mejora moralmente. Nunca habría certeza de salvación — siempre dependería del estado actual del proceso.</p>
+    <p><strong>Como dikaióō significa "declarar justo":</strong> la justificación es un acto completo, en un momento, con certeza plena. El creyente en Cristo está completamente justificado ahora — no en proceso de estarlo.</p>
+    <p><strong>La confirmación textual:</strong> Romanos 5:1 dice "habiendo sido justificados" — tiempo aoristo pasivo en griego. Un evento pasado con efecto permanente en el presente.</p>
+  </div>
+
+  <div class="section-label">¿Dónde ocurre la justificación?</div>
+  <p>La justificación ocurre en el tribunal de Dios — no en el interior del creyente. El creyente no <em>siente</em> que lo justifican — <em>le es declarado</em>. La santificación ocurre dentro del creyente (transformación interna). La justificación ocurre fuera del creyente (veredicto externo). Las dos son necesarias — pero son eventos distintos que no deben confundirse.</p>
+
+  <div class="quote">
+    <p>"Ahora, pues, ninguna condenación hay para los que están en Cristo Jesús."</p>
+    <cite>Romanos 8:1 — El resultado del veredicto de justificación: ninguna condenación</cite>
+  </div>
+
+  <div class="frase"><p>"La justificación no te hace perfecto en tu conducta — te declara perfecto en tu posición. Esa posición no cambia aunque tu conducta falle."</p></div>
+</section>
+
+<!-- CAP 4 — EL GRAN INTERCAMBIO -->
+<section class="chapter" id="cap4">
+  <div class="ch-num">Lección 4</div>
+  <h2 class="ch-title">El gran intercambio</h2>
+  <div class="ch-sub">2 Corintios 5:21 — la transacción más extraordinaria de la historia</div>
+  <div class="ch-divider"></div>
+
+  <div class="quote">
+    <p>"Al que no conoció pecado, por nosotros lo hizo pecado, para que nosotros fuésemos hechos justicia de Dios en él."</p>
+    <cite>2 Corintios 5:21 — El versículo más denso de toda la soteriología paulina</cite>
+  </div>
+
+  <p>Este versículo contiene la mecánica completa de la justificación. Es tan denso teológicamente que requiere disección cuidadosa. Cada frase lleva el peso de la eternidad.</p>
+
+  <div class="section-label">Primera parte — lo que Cristo tomó</div>
+  <p>"Al que no conoció pecado" — afirmación de la impecabilidad absoluta de Cristo. No simplemente que no pecó — que no conoció el pecado desde adentro, nunca tuvo experiencia interna de pecado. Esta es la base de por qué su sacrificio tiene valor infinito: la ofrenda sin mancha.</p>
+  <p>"Por nosotros lo hizo pecado" — el Padre trató a Cristo <em>como si fuera pecado</em>. No que Cristo se convirtiera en pecador — sino que Dios descargó sobre Él la culpa, la condena y el castigo del pecado humano. La ira que merecíamos cayó sobre Él.</p>
+
+  <div class="section-label">Segunda parte — lo que nosotros recibimos</div>
+  <p>"Para que nosotros fuésemos hechos justicia de Dios en él" — aquí la palabra es <em>dikaiosýnē</em>. No simplemente que recibiéramos el perdón — sino que recibiéramos la <strong>justicia misma de Dios</strong>. La justicia perfecta de Cristo es acreditada al creyente como si fuera suya.</p>
+
+  <div class="intercambio">
+    <div class="int-box izq">
+      <h4>Cristo tomó nuestro</h4>
+      <ul>
+        <li>Pecado</li>
+        <li>Culpa</li>
+        <li>Condenación</li>
+        <li>Maldición de la ley</li>
+        <li>Muerte</li>
+        <li>Abandono del Padre</li>
+      </ul>
+    </div>
+    <div class="int-flecha">⇄</div>
+    <div class="int-box der">
+      <h4>Nosotros recibimos su</h4>
+      <ul>
+        <li>Justicia perfecta</li>
+        <li>Inocencia</li>
+        <li>Aprobación divina</li>
+        <li>Bendición del pacto</li>
+        <li>Vida eterna</li>
+        <li>Adopción como hijos</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="section-label">La imputación — el mecanismo del intercambio</div>
+  <div class="etimo">
+    <div class="e-palabra">Logizomai — λογίζομαι</div>
+    <div class="e-origen">Griego · "imputar", "acreditar", "contar como"</div>
+    <p>Aparece 11 veces en Romanos 4 solo. Es un término contable — <strong>acreditar en la cuenta de alguien lo que no es originalmente suyo</strong>. Como cuando un banco deposita fondos en tu cuenta — el dinero no salió de ti, pero ahora es legalmente tuyo. Dios acredita la justicia de Cristo en la cuenta del creyente. Y acredita el pecado del creyente en la cuenta de Cristo. Ese es el intercambio.</p>
+  </div>
+
+  <div class="quote">
+    <p>"Abraham creyó a Dios, y le fue contado por justicia."</p>
+    <cite>Génesis 15:6 citado en Romanos 4:3 — La imputación en acción</cite>
+  </div>
+
+  <div class="frase"><p>"Cristo no murió para que Dios nos tolerara. Murió para que Dios pudiera recibirnos como si fuéramos tan justos como su propio Hijo."</p></div>
+</section>
+
+<!-- CAP 5 — ROMANOS 3 -->
+<section class="chapter" id="cap5">
+  <div class="ch-num">Lección 5</div>
+  <h2 class="ch-title">Romanos 3:21-26 — Exégesis</h2>
+  <div class="ch-sub">El corazón del evangelio en seis versículos</div>
+  <div class="ch-divider"></div>
+
+  <p>Romanos 3:21-26 es considerado por muchos teólogos el pasaje más importante de toda la Biblia en materia de justificación. Contiene más vocabulario teológico concentrado que cualquier otro texto del Nuevo Testamento. Hay que estudiarlo lentamente.</p>
+
+  <div class="quote">
+    <p>"Pero ahora, aparte de la ley, se ha manifestado la justicia de Dios, testificada por la ley y por los profetas; la justicia de Dios por medio de la fe en Jesucristo, para todos los que creen en él. Porque no hay diferencia, por cuanto todos pecaron, y están destituidos de la gloria de Dios, siendo justificados gratuitamente por su gracia, mediante la redención que es en Cristo Jesús, a quien Dios puso como propiciación por medio de la fe en su sangre, para manifestar su justicia, a causa de haber pasado por alto, en su paciencia, los pecados pasados, con la mira de manifestar en este tiempo su justicia, a fin de que él sea el justo, y el que justifica al que es de la fe de Jesús."</p>
+    <cite>Romanos 3:21-26</cite>
+  </div>
+
+  <div class="section-label">Versículo a versículo</div>
+
+  <ul class="pasos">
+    <li>
+      <div class="paso-content">
+        <h5>v.21 — "Aparte de la ley, se ha manifestado la justicia de Dios"</h5>
+        <p>Después de dos capítulos y medio estableciendo la culpa universal, Pablo da el giro con "pero ahora." La justicia de Dios no es una lista de requisitos que el hombre debe cumplir — es algo que Dios mismo <em>manifestó</em>. No es lograda — es revelada. Y ocurre <em>aparte de la ley</em> — fuera del sistema de méritos.</p>
+      </div>
+    </li>
+    <li>
+      <div class="paso-content">
+        <h5>v.22 — "La justicia de Dios por medio de la fe en Jesucristo, para todos"</h5>
+        <p>El instrumento es la fe. El objeto de la fe es Jesucristo. El alcance es universal — "para todos los que creen." No hay restricción étnica, social ni histórica. La justificación está disponible para todo ser humano que confíe en Cristo.</p>
+      </div>
+    </li>
+    <li>
+      <div class="paso-content">
+        <h5>v.23 — "Todos pecaron y están destituidos de la gloria de Dios"</h5>
+        <p>"Destituidos" es <em>hysteroúntai</em> — presente continuo. No solo pecaron en el pasado — continúan en ese estado de déficit frente a la gloria de Dios. La "gloria de Dios" aquí es el estándar perfecto de lo que el ser humano debería ser — la imagen de Dios en su plenitud.</p>
+      </div>
+    </li>
+    <li>
+      <div class="paso-content">
+        <h5>v.24 — "Justificados gratuitamente por su gracia"</h5>
+        <p><em>Dōreán</em> — gratuitamente, sin pago, sin mérito. <em>Cháris</em> — gracia, favor inmerecido. Estas dos palabras juntas hacen imposible cualquier forma de mérito humano en la justificación. No es que sea barata — es que el precio ya fue pagado por otro.</p>
+      </div>
+    </li>
+    <li>
+      <div class="paso-content">
+        <h5>v.25 — "A quien Dios puso como propiciación"</h5>
+        <p><em>Hilastḗrion</em> — propiciatorio. La misma palabra usada en la LXX para la tapa del Arca del Pacto donde se rociaba la sangre. Cristo es el nuevo propiciatorio — el lugar donde la ira de Dios es satisfecha por la sangre. No fue accidente — "Dios puso" — fue plan soberano eterno.</p>
+      </div>
+    </li>
+    <li>
+      <div class="paso-content">
+        <h5>v.26 — "Para que él sea el justo, y el que justifica"</h5>
+        <p>El versículo que resuelve el dilema del v.2 de la lección anterior. Dios es <em>díkaios</em> (justo) porque el pecado fue tratado con toda seriedad en la cruz. Y es <em>dikaión</em> (justificador) porque puede ahora declarar justo al que cree, sin comprometer su justicia. <strong>La cruz satisface ambas exigencias simultáneamente.</strong></p>
+      </div>
+    </li>
+  </ul>
+
+  <div class="gold-box">
+    <h4>Los 5 términos soteriológicos en 6 versículos</h4>
+    <p><strong>Justicia (dikaiosýnē):</strong> el estándar perfecto que Dios cumple y concede</p>
+    <p><strong>Justificación (dikaióō):</strong> el veredicto declarativo de inocencia</p>
+    <p><strong>Gracia (cháris):</strong> el favor inmerecido que hace posible todo</p>
+    <p><strong>Redención (apolýtrōsis):</strong> el precio de rescate pagado en Cristo</p>
+    <p><strong>Propiciación (hilastḗrion):</strong> la satisfacción de la ira divina</p>
+  </div>
+</section>
+
+<!-- CAP 6 — ABRAHAM -->
+<section class="chapter" id="cap6">
+  <div class="ch-num">Lección 6</div>
+  <h2 class="ch-title">Abraham — el caso bíblico de la justificación</h2>
+  <div class="ch-sub">Romanos 4 — la prueba histórica del evangelio</div>
+  <div class="ch-divider"></div>
+
+  <p>Pablo necesitaba demostrar que la justificación por fe no era una innovación de Jesucristo — era el patrón de Dios desde el principio. Y usa a Abraham como su caso de prueba definitivo.</p>
+
+  <div class="quote">
+    <p>"¿Qué, pues, diremos que halló Abraham, nuestro padre según la carne? Porque si Abraham fue justificado por las obras, tiene de qué gloriarse, pero no para con Dios."</p>
+    <cite>Romanos 4:1-2</cite>
+  </div>
+
+  <div class="section-label">El argumento de Pablo en Romanos 4</div>
+
+  <ul class="pasos">
+    <li>
+      <div class="paso-content">
+        <h5>Abraham fue justificado por fe — Génesis 15:6</h5>
+        <p>"Y creyó Abraham a Dios, y le fue contado por justicia." Pablo cita este texto como la prueba definitiva. Abraham no fue justificado por sus obras — fue justificado cuando creyó la promesa de Dios sobre una descendencia imposible. La fe fue lo que Dios contó como justicia.</p>
+      </div>
+    </li>
+    <li>
+      <div class="paso-content">
+        <h5>Fue justificado ANTES de la circuncisión</h5>
+        <p>Argumento devastador contra el ritual como base de justificación. Génesis 15 (la justificación de Abraham) ocurrió años antes que Génesis 17 (la circuncisión de Abraham). La circuncisión fue el <em>sello</em> de una justicia que ya existía — no el medio para obtenerla. "La señal... de la justicia de la fe que tuvo estando aún incircunciso" — Romanos 4:11.</p>
+      </div>
+    </li>
+    <li>
+      <div class="paso-content">
+        <h5>Fue justificado ANTES de la ley mosaica</h5>
+        <p>Abraham vivió 430 años antes de Moisés. Si la justificación requiriera cumplir la ley, Abraham no podría estar justificado. Pero lo está — lo que prueba que la ley nunca fue el fundamento de la justificación sino su revelación provisional.</p>
+      </div>
+    </li>
+    <li>
+      <div class="paso-content">
+        <h5>La naturaleza de la fe de Abraham</h5>
+        <p>"El creyó en esperanza contra esperanza" — Romanos 4:18. A los 99 años, con Sara estéril, Abraham creyó que tendría un hijo. "No consideró su cuerpo ya muerto" — no ignoró la realidad, la evaluó honestamente y aun así confió en la promesa de Dios por encima de la evidencia física. Esa es la fe que Dios conta como justicia.</p>
+      </div>
+    </li>
+  </ul>
+
+  <div class="quote">
+    <p>"Y no sólo con respecto a él se escribió que le fue contada, sino también con respecto a nosotros a quienes ha de ser contada, esto es, a los que creemos en el que levantó de los muertos a Jesús, Señor nuestro."</p>
+    <cite>Romanos 4:23-24 — La justificación de Abraham es el patrón para todos los creyentes</cite>
+  </div>
+
+  <div class="section-label">David — el segundo caso</div>
+  <div class="quote">
+    <p>"Bienaventurado aquel cuyas iniquidades son perdonadas, y cuyos pecados son cubiertos. Bienaventurado el varón a quien el Señor no inculpa de pecado."</p>
+    <cite>Salmo 32:1-2 citado en Romanos 4:7-8 — La bienaventuranza de la justificación</cite>
+  </div>
+  <p>Pablo usa a David — un hombre que cometió adulterio y homicidio — como ejemplo de la bienaventuranza de la justificación. Dios no imputa el pecado a David. No porque David no pecara — sino porque Dios contó su fe como justicia. La justificación opera a favor de personas reales con pecados reales.</p>
+</section>
+
+<!-- CAP 7 — JUSTIFICACIÓN Y SANTIFICACIÓN -->
+<section class="chapter" id="cap7">
+  <div class="ch-num">Lección 7</div>
+  <h2 class="ch-title">Justificación y santificación</h2>
+  <div class="ch-sub">Distintas, inseparables, en ese orden</div>
+  <div class="ch-divider"></div>
+
+  <p>Una de las confusiones más comunes en la teología popular es mezclar la justificación con la santificación. Son dos obras de Dios distintas, ambas necesarias, pero no intercambiables. Confundirlas distorsiona el evangelio en dos direcciones opuestas.</p>
+
+  <div class="compare">
+    <div class="compare-box a">
+      <h4>Justificación</h4>
+      <ul>
+        <li>Declaración externa de Dios</li>
+        <li>Ocurre en el tribunal divino</li>
+        <li>Instantánea — un acto</li>
+        <li>Completa — no puede aumentar</li>
+        <li>Cambia la posición legal</li>
+        <li>Basada en la obra de Cristo</li>
+        <li>Recibida por fe</li>
+      </ul>
+    </div>
+    <div class="compare-box b">
+      <h4>Santificación</h4>
+      <ul>
+        <li>Transformación interna del creyente</li>
+        <li>Ocurre en la vida del creyente</li>
+        <li>Progresiva — un proceso</li>
+        <li>Incompleta hasta la gloria</li>
+        <li>Cambia la condición práctica</li>
+        <li>Obra del Espíritu Santo</li>
+        <li>Requiere cooperación activa</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="section-label">Los dos errores que nacen de confundirlas</div>
+
+  <div class="tip-box">
+    <h4>Error 1 — Legalismo</h4>
+    <p>Cuando se mezcla la santificación con la justificación, el creyente cree que su condición ante Dios depende de su nivel de santidad práctica. Cada pecado cometido lo hace temer perder su justificación. Vive bajo condena continua en lugar de bajo gracia. Este error produce <strong>esclavitud religiosa</strong>.</p>
+  </div>
+
+  <div class="tip-box">
+    <h4>Error 2 — Antinomismo</h4>
+    <p>El error opuesto: si estoy completamente justificado, la santificación no importa. "Puedo pecar porque Dios ya me declaró justo." Pablo responde esto en Romanos 6:1-2: "¿Continuaremos en el pecado para que la gracia abunde? En ninguna manera." La justificación no cancela la exigencia de santidad — la motiva correctamente.</p>
+  </div>
+
+  <div class="section-label">La secuencia correcta</div>
+  <p>La justificación es la <strong>base</strong> sobre la que opera la santificación. El creyente no se santifica para ser justificado — es justificado y por eso se santifica. La motivación cambia completamente: ya no busca la santidad por miedo al juicio (el juicio ya fue resuelto en la cruz) sino por <strong>amor y gratitud</strong> al Dios que lo declaró justo gratuitamente.</p>
+
+  <div class="quote">
+    <p>"¿O no sabéis que todos los que hemos sido bautizados en Cristo Jesús, hemos sido bautizados en su muerte? Porque somos sepultados juntamente con él para muerte por el bautismo, a fin de que como Cristo resucitó de los muertos por la gloria del Padre, así también nosotros andemos en vida nueva."</p>
+    <cite>Romanos 6:3-4 — El bautismo es el punto donde justificación y santificación se conectan</cite>
+  </div>
+
+  <div class="frase"><p>"La justificación te dice quién eres ante Dios. La santificación te transforma para que vivas como lo que eres."</p></div>
+</section>
+
+<!-- CAP 8 — PABLO Y SANTIAGO -->
+<section class="chapter" id="cap8">
+  <div class="ch-num">Lección 8</div>
+  <h2 class="ch-title">Pablo y Santiago — la tensión resuelta</h2>
+  <div class="ch-sub">No contradicción — complemento exegético</div>
+  <div class="ch-divider"></div>
+
+  <p>Ya lo abordamos en el estudio de la fe, pero la justificación requiere que lo profundicemos con mayor rigor exegético. Es la aparente contradicción más grande del Nuevo Testamento y requiere un análisis cuidadoso.</p>
+
+  <div class="quote">
+    <p>"Concluimos, pues, que el hombre es justificado por fe sin las obras de la ley."</p>
+    <cite>Romanos 3:28 — Pablo</cite>
+  </div>
+
+  <div class="quote">
+    <p>"Vosotros veis, pues, que el hombre es justificado por las obras, y no solamente por la fe."</p>
+    <cite>Santiago 2:24 — Santiago</cite>
+  </div>
+
+  <div class="section-label">Análisis exegético de los 4 puntos de diferencia</div>
+
+  <ul class="pasos">
+    <li>
+      <div class="paso-content">
+        <h5>Diferentes audiencias y problemas</h5>
+        <p>Pablo combate el <em>fariseísmo</em> — la idea de que las obras de la ley merecen la salvación. Su audiencia cree poder justificarse por cumplimiento religioso. Santiago combate el <em>antinomismo</em> — la idea de que creer es suficiente sin ningún cambio de vida. Su audiencia dice "creo" pero no actúa. Respuestas diferentes a problemas opuestos.</p>
+      </div>
+    </li>
+    <li>
+      <div class="paso-content">
+        <h5>Diferente significado de "obras"</h5>
+        <p>Las <em>obras</em> de Pablo son obras de mérito ritual — circuncisión, días sagrados, cumplimiento legal para ganar favor divino. Las <em>obras</em> de Santiago son frutos visibles de una fe genuina — dar de comer al hambriento, misericordia activa. Son categorías diferentes que comparten la misma palabra.</p>
+      </div>
+    </li>
+    <li>
+      <div class="paso-content">
+        <h5>Diferente sentido de "justificado"</h5>
+        <p>Pablo usa <em>dikaióō</em> en sentido forense — declarado justo ante Dios en el tribunal divino. Santiago usa <em>dikaióō</em> en sentido demostrativo — demostrado como justo ante los hombres por la evidencia de la conducta. Abraham fue "justificado" (declarado, Pablo) en Génesis 15 y "justificado" (demostrado, Santiago) en Génesis 22 — décadas después.</p>
+      </div>
+    </li>
+    <li>
+      <div class="paso-content">
+        <h5>Diferente tipo de fe en discusión</h5>
+        <p>Pablo habla de la fe genuina que salva — confianza personal activa en Cristo. Santiago habla de la "fe" muerta que sus lectores afirman tener — mero asentimiento intelectual sin transformación. "Los demonios también creen, y tiemblan" (Santiago 2:19) — tienen notitia y assensus pero no fiducia.</p>
+      </div>
+    </li>
+  </ul>
+
+  <div class="gold-box">
+    <h4>La síntesis teológica definitiva</h4>
+    <p><strong>Pablo:</strong> la justificación es solo por fe — sin obras de mérito que la produzcan</p>
+    <p><strong>Santiago:</strong> la fe genuina que justifica siempre produce obras visibles — sin excepción</p>
+    <p><strong>Unificados:</strong> <em>"Somos justificados por fe sola — pero esa fe nunca está sola"</em></p>
+    <p>No son dos evangelios distintos. Son dos ángulos del mismo evangelio viendo el mismo cristal desde lados diferentes. Necesitas a Pablo para no caer en el legalismo. Necesitas a Santiago para no caer en el antinomismo.</p>
+  </div>
+</section>
+
+<!-- CAP 9 — HECHOS 2:38 -->
+<section class="chapter" id="cap9">
+  <div class="ch-num">Lección 9</div>
+  <h2 class="ch-title">La justificación en Hechos 2:38</h2>
+  <div class="ch-sub">Dónde se recibe el veredicto</div>
+  <div class="ch-divider"></div>
+
+  <p>La doctrina de la justificación no puede quedarse en el nivel teórico. Debe conectarse con la experiencia concreta de salvación que los apóstoles predicaron. ¿Cómo se recibe el veredicto de justificación?</p>
+
+  <div class="quote">
+    <p>"Arrepentíos, y bautícese cada uno de vosotros en el nombre de Jesucristo para perdón de los pecados; y recibiréis el don del Espíritu Santo."</p>
+    <cite>Hechos 2:38</cite>
+  </div>
+
+  <div class="section-label">El perdón de pecados — la justificación aplicada</div>
+  <p>"Para perdón de los pecados" — la frase griega es <em>eis áfesin tōn hamartiōn</em>. <em>Áfesis</em> significa: <strong>remisión, liberación, cancelación de la deuda</strong>. Es el lenguaje de la justificación aplicada al individuo. El bautismo en el nombre de Jesucristo es el momento donde el veredicto divino de justificación se aplica específicamente al creyente arrepentido.</p>
+
+  <div class="tip-box">
+    <h4>Los tres elementos de Hechos 2:38 y su relación con la justificación</h4>
+    <p><strong>Arrepentimiento:</strong> el corazón que reconoce su estado de injusticia ante Dios y se vuelve a Él. Sin arrepentimiento, el veredicto de justificación no puede aplicarse — el corazón no lo recibe.</p>
+    <p><strong>Bautismo en el nombre de Jesucristo:</strong> el momento donde la muerte y resurrección de Cristo — que son la base de la justificación (Romanos 4:25) — se aplican personalmente al creyente. "Fuisteis lavados, fuisteis santificados, fuisteis justificados en el nombre del Señor Jesús" — 1 Corintios 6:11.</p>
+    <p><strong>Don del Espíritu Santo:</strong> el sello de la justificación recibida. "Habiendo creído en él, fuisteis sellados con el Espíritu Santo de la promesa, que es las arras de nuestra herencia" — Efesios 1:13-14.</p>
+  </div>
+
+  <div class="quote">
+    <p>"Y esto erais algunos; mas ya habéis sido lavados, ya habéis sido santificados, ya habéis sido justificados en el nombre del Señor Jesús, y por el Espíritu de nuestro Dios."</p>
+    <cite>1 Corintios 6:11 — Los tres en tiempo pasado perfecto: lavados, santificados, justificados</cite>
+  </div>
+
+  <p>Este versículo es definitivo. Pablo escribe a ex-fornicarios, ex-idólatras, ex-ladrones y les dice: <strong>ya fuisteis justificados</strong>. Tiempo aoristo — un evento pasado completado. El veredicto fue pronunciado. No está en proceso. Está hecho.</p>
+
+  <div class="section-label">Romanos 4:25 — La base cristológica</div>
+  <div class="quote">
+    <p>"El cual fue entregado por nuestras transgresiones, y resucitado para nuestra justificación."</p>
+    <cite>Romanos 4:25 — La muerte Y la resurrección son necesarias para la justificación</cite>
+  </div>
+  <p>La muerte de Cristo pagó la deuda del pecado. Pero la <strong>resurrección</strong> es la declaración del Padre de que el pago fue aceptado — que la justicia fue satisfecha. Un Cristo muerto y no resucitado no podría justificar a nadie. La resurrección es el recibo del pago.</p>
+
+  <div class="frase"><p>"La cruz pagó la deuda. La resurrección es el recibo que confirma que el pago fue aceptado. Ambas son necesarias para tu justificación."</p></div>
+</section>
+
+<!-- CAP 10 — CONSECUENCIAS -->
+<section class="chapter" id="cap10">
+  <div class="ch-num">Lección 10</div>
+  <h2 class="ch-title">Consecuencias y vida práctica</h2>
+  <div class="ch-sub">Lo que cambia cuando entiendes que estás justificado</div>
+  <div class="ch-divider"></div>
+
+  <p>La justificación no es una doctrina para debates teológicos. Es una verdad que, cuando se entiende y se recibe, transforma radicalmente cómo el creyente vive, ora, falla, se levanta y se relaciona con Dios.</p>
+
+  <div class="section-label">Consecuencia 1 — Paz con Dios</div>
+  <div class="quote">
+    <p>"Justificados, pues, por la fe, tenemos paz para con Dios por medio de nuestro Señor Jesucristo."</p>
+    <cite>Romanos 5:1 — La primera consecuencia mencionada por Pablo</cite>
+  </div>
+  <p>La justificación produce <strong>paz con Dios</strong> — no simplemente la paz de Dios (que es la tranquilidad interior) sino paz con Dios (el fin del estado de enemistad). El creyente justificado no está en guerra con Dios. La hostilidad fue resuelta en la cruz. Esto cambia fundamentalmente la postura del creyente en la oración: no se acerca a Dios como sospechoso ante un juez sino como hijo ante un Padre.</p>
+
+  <div class="section-label">Consecuencia 2 — Ninguna condenación</div>
+  <div class="quote">
+    <p>"Ahora, pues, ninguna condenación hay para los que están en Cristo Jesús."</p>
+    <cite>Romanos 8:1</cite>
+  </div>
+  <p>El creyente justificado vive libre de la condenación. No de la convicción del Espíritu que lo lleva al arrepentimiento — sino de la condenación como veredicto de culpabilidad que produce la muerte espiritual. Cuando Satanás acusa, cuando el pasado regresa, cuando la consciencia señala el pecado — el creyente puede pararse sobre Romanos 8:1. <strong>Ninguna condenación.</strong></p>
+
+  <div class="section-label">Consecuencia 3 — Acceso libre al Padre</div>
+  <div class="quote">
+    <p>"Por quien también tenemos entrada por la fe a esta gracia en la cual estamos firmes."</p>
+    <cite>Romanos 5:2 — La entrada al trono de gracia</cite>
+  </div>
+  <p>La palabra <em>prosagōgḗ</em> — acceso, entrada — describe en la cultura griega el acceso que se concedía a dignatarios para presentarse ante el rey. El justificado tiene ese acceso garantizado ante el Padre. No acceso en ciertos momentos o bajo ciertas condiciones — acceso permanente y libre.</p>
+
+  <div class="section-label">Consecuencia 4 — Liberación del perfeccionismo religioso</div>
+  <p>Muchos creyentes viven en un ciclo destructivo: pecan, se sienten condenados, se esfuerzan más, fallan de nuevo, más condenación. Este ciclo nace de no entender la justificación. El creyente que entiende que su posición ante Dios no depende de su nivel de santidad actual puede <strong>fallar sin desesperar y levantarse sin fingir</strong>. El arrepentimiento fluye de la gracia, no del miedo.</p>
+
+  <div class="section-label">Consecuencia 5 — Motivación correcta para la obediencia</div>
+  <p>La justificación no elimina la obediencia — la motiva correctamente. El creyente que sabe que ya es declarado justo no obedece para <em>ganarse</em> esa posición — obedece <em>desde</em> esa posición por amor y gratitud. Es la diferencia entre el hijo que trabaja para ganar el amor del padre y el hijo que trabaja porque ya tiene ese amor asegurado.</p>
+
+  <div class="gold-box">
+    <h4>La justificación en resumen</h4>
+    <p><strong>En el idioma:</strong> dikaióō — declarar justo (forense, no moral)</p>
+    <p><strong>En la naturaleza:</strong> veredicto instantáneo, no proceso gradual</p>
+    <p><strong>En el mecanismo:</strong> imputación — la justicia de Cristo acreditada al creyente</p>
+    <p><strong>En el texto central:</strong> Romanos 3:21-26 — el corazón del evangelio</p>
+    <p><strong>En la historia:</strong> Abraham justificado por fe antes de la circuncisión y la ley</p>
+    <p><strong>En la relación con la santificación:</strong> distintas, inseparables, en ese orden</p>
+    <p><strong>En la experiencia:</strong> recibida en Hechos 2:38 — arrepentimiento, bautismo en Jesús, Espíritu Santo</p>
+    <p><strong>En la vida:</strong> paz con Dios, ninguna condenación, acceso libre, libertad del perfeccionismo, obediencia motivada por amor</p>
+  </div>
+
+  <div class="frase"><p>"Entender la justificación no te hace descuidado — te hace libre. Libre para amar a Dios sin miedo y obedecer sin esclavitud."</p></div>
+</section>
+
+</main>
+
+<section class="epilogo">
+  <span class="big">JUSTO</span>
+  <h2>El veredicto que no cambia</h2>
+  <p>El veredicto de justificación fue pronunciado en la eternidad, pagado en la cruz, aplicado en el bautismo y sellado por el Espíritu. No depende de cómo amaneciste hoy. No cambia cuando fallas. Es tan firme como el carácter del Juez que lo pronunció.</p>
+  <p>Eso no es licencia para pecar — es libertad para amar. Y el que entiende esa diferencia ha entendido el corazón del evangelio.</p>
+  <div class="quote" style="max-width:480px;margin:32px auto;">
+    <p>"El cual fue entregado por nuestras transgresiones, y resucitado para nuestra justificación."</p>
+    <cite>Romanos 4:25 — La muerte pagó. La resurrección confirmó.</cite>
+  </div>
+  <div class="firma">La Justificación · Estudio Exegético · Predicador IPUC</div>
+</section>
+
+</div>
+
+<script>
+const obs=new IntersectionObserver(e=>{e.forEach(el=>{if(el.isIntersecting)el.target.classList.add('visible');});},{threshold:.08});
+document.querySelectorAll('.chapter').forEach(e=>obs.observe(e));
+const nav=document.getElementById('sidenav');
+const wrap=document.getElementById('pageWrap');
+const isMobile=()=>window.innerWidth<=768;
+function toggleNav(){
+  if(isMobile()){nav.classList.toggle('show');}
+  else{nav.classList.toggle('hidden');wrap.classList.toggle('full');}
+}
+const secs=document.querySelectorAll('section[id]');
+const links=document.querySelectorAll('nav a');
+window.addEventListener('scroll',()=>{
+  let cur='';
+  secs.forEach(s=>{if(window.scrollY>=s.offsetTop-200)cur=s.id;});
+  links.forEach(a=>{a.classList.remove('active');if(a.getAttribute('href')==='#'+cur)a.classList.add('active');});
+});
+links.forEach(a=>{a.addEventListener('click',()=>{if(isMobile())nav.classList.remove('show');});});
+document.addEventListener('click',e=>{
+  if(isMobile()&&nav.classList.contains('show')&&!nav.contains(e.target)&&!e.target.closest('.nav-toggle')){nav.classList.remove('show');}
+});
+</script>
+</body>
+</html>

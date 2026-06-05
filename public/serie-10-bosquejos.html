@@ -1,0 +1,798 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Serie de 10 Bosquejos — Predicador IPUC</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Raleway:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--azul:#009FDA;--marino:#003B6F;--oro:#F0AB00;--oro-claro:#FFD166;--fondo:#040e1c;--texto:#e8e0d0;--texto-suave:#a89f90;--linea:rgba(240,171,0,.2);}
+*{margin:0;padding:0;box-sizing:border-box;}html{scroll-behavior:smooth;}
+body{background:var(--fondo);color:var(--texto);font-family:'Crimson Pro',Georgia,serif;font-size:17px;line-height:1.8;overflow-x:hidden;}
+::-webkit-scrollbar{width:4px;}::-webkit-scrollbar-track{background:var(--fondo);}::-webkit-scrollbar-thumb{background:var(--azul);border-radius:2px;}
+
+.nav-toggle{position:fixed;top:16px;left:16px;z-index:300;background:var(--marino);border:1px solid var(--linea);color:var(--oro);width:44px;height:44px;border-radius:8px;cursor:pointer;font-size:20px;display:flex;align-items:center;justify-content:center;transition:all .2s;box-shadow:0 2px 12px rgba(0,0,0,.4);}
+.nav-toggle:hover{background:var(--azul);color:#fff;}
+nav{position:fixed;left:0;top:0;bottom:0;width:265px;background:linear-gradient(180deg,var(--marino) 0%,#011529 100%);border-right:1px solid var(--linea);z-index:200;overflow-y:auto;transform:translateX(0);transition:transform .35s ease;padding:32px 0;}
+nav.hidden{transform:translateX(-100%);}
+nav .nav-brand{font-family:'Cinzel',serif;font-size:12px;font-weight:700;color:var(--oro);padding:0 20px 20px;border-bottom:1px solid var(--linea);margin-bottom:8px;letter-spacing:1px;line-height:1.5;}
+nav .nav-section{font-family:'Cinzel',serif;font-size:9px;letter-spacing:3px;color:var(--azul);padding:12px 20px 4px;text-transform:uppercase;opacity:.8;}
+nav a{display:flex;align-items:center;gap:10px;padding:7px 20px;font-family:'Raleway',sans-serif;font-size:11px;font-weight:500;letter-spacing:.5px;color:var(--texto-suave);text-decoration:none;border-left:2px solid transparent;transition:all .2s;}
+nav a:hover,nav a.active{color:var(--oro);border-left-color:var(--oro);background:rgba(240,171,0,.06);}
+nav a .nav-num{font-family:'Cinzel',serif;font-size:11px;color:var(--azul);min-width:22px;font-weight:700;}
+.page-wrap{margin-left:265px;transition:margin .35s ease;}
+.page-wrap.full{margin-left:0;}
+
+/* PORTADA */
+.cover{min-height:100vh;background:linear-gradient(160deg,#041830 0%,var(--fondo) 65%);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:80px 32px 60px;position:relative;overflow:hidden;}
+.cover::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 50% at 50% 10%,rgba(0,159,218,.15) 0%,transparent 70%),radial-gradient(ellipse 40% 40% at 80% 85%,rgba(240,171,0,.1) 0%,transparent 60%);pointer-events:none;}
+.cover-icon{font-size:60px;margin-bottom:24px;animation:fadeDown .8s ease both;}
+.cover-tag{font-family:'Cinzel',serif;font-size:10px;letter-spacing:5px;color:var(--azul);text-transform:uppercase;margin-bottom:20px;animation:fadeDown .9s ease .1s both;}
+.cover-title{font-family:'Cinzel',serif;font-size:clamp(36px,7vw,76px);font-weight:900;line-height:1;margin-bottom:8px;animation:fadeDown 1s ease .2s both;color:var(--texto);}
+.cover-title span{color:var(--oro);}
+.cover-sub{font-family:'Cinzel',serif;font-size:clamp(13px,2vw,17px);color:var(--azul);letter-spacing:2px;margin-bottom:32px;animation:fadeDown 1s ease .25s both;}
+.cover-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;max-width:600px;margin:0 auto 32px;animation:fadeDown 1.1s ease .3s both;}
+.cover-num{font-family:'Cinzel',serif;font-size:11px;padding:8px;border:1px solid var(--linea);border-radius:6px;color:var(--texto-suave);letter-spacing:1px;text-align:center;}
+.cover-line{width:60px;height:1px;background:linear-gradient(to right,transparent,var(--oro),transparent);margin:0 auto 24px;animation:fadeIn 1.1s ease .4s both;}
+.cover-author{font-family:'Raleway',sans-serif;font-size:13px;letter-spacing:4px;color:var(--texto-suave);text-transform:uppercase;}
+
+/* BOSQUEJO */
+main{max-width:760px;margin:0 auto;padding:0 24px;}
+
+.bosquejo{padding:70px 0 56px;border-bottom:1px solid rgba(240,171,0,.12);opacity:0;transform:translateY(30px);transition:opacity .7s ease,transform .7s ease;}
+.bosquejo.visible{opacity:1;transform:none;}
+
+/* NÚMERO GRANDE */
+.b-header{display:flex;align-items:flex-start;gap:20px;margin-bottom:28px;}
+.b-bignum{font-family:'Cinzel',serif;font-size:clamp(56px,8vw,80px);font-weight:900;color:transparent;-webkit-text-stroke:1px rgba(240,171,0,.3);line-height:1;min-width:80px;}
+.b-meta{}
+.b-serie{font-family:'Cinzel',serif;font-size:10px;letter-spacing:4px;color:var(--azul);text-transform:uppercase;margin-bottom:6px;}
+.b-titulo{font-family:'Cinzel',serif;font-size:clamp(18px,3.5vw,28px);font-weight:700;color:var(--oro);line-height:1.2;margin-bottom:6px;}
+.b-texto{font-family:'Cinzel',serif;font-size:clamp(13px,2vw,16px);color:var(--azul);letter-spacing:1px;}
+
+.b-divider{width:40px;height:2px;background:linear-gradient(to right,var(--oro),var(--azul));margin-bottom:24px;border-radius:2px;}
+
+/* ENCABEZADO */
+.enc{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:20px;}
+.enc-item{background:rgba(0,59,111,.2);border:1px solid rgba(0,159,218,.15);border-radius:6px;padding:10px 14px;}
+.enc-item .ei-l{font-family:'Cinzel',serif;font-size:9px;letter-spacing:3px;color:var(--azul);text-transform:uppercase;margin-bottom:4px;}
+.enc-item .ei-v{font-family:'Crimson Pro',serif;font-size:14px;color:var(--texto-suave);}
+.proposicion{background:rgba(240,171,0,.05);border:1px solid rgba(240,171,0,.2);border-radius:8px;padding:14px 18px;margin-bottom:8px;}
+.proposicion .p-l{font-family:'Cinzel',serif;font-size:9px;letter-spacing:3px;color:var(--oro);text-transform:uppercase;margin-bottom:6px;}
+.proposicion .p-v{font-family:'Crimson Pro',serif;font-size:16px;color:var(--texto);font-style:italic;line-height:1.5;}
+.proposicion.proposito .p-l{color:var(--azul);}
+.proposicion.proposito .p-v{font-size:14px;color:var(--texto-suave);}
+
+/* DIVISIONES */
+.divisiones{margin-top:20px;}
+.div-item{margin-bottom:28px;}
+.div-row{display:flex;align-items:flex-start;gap:14px;margin-bottom:10px;}
+.div-letra{font-family:'Cinzel',serif;font-size:28px;font-weight:900;color:var(--oro);line-height:1;min-width:36px;}
+.div-content{}
+.div-titulo{font-family:'Cinzel',serif;font-size:clamp(14px,2.5vw,18px);color:var(--oro);font-weight:700;line-height:1.2;margin-bottom:3px;}
+.div-sub{font-family:'Cinzel',serif;font-size:clamp(11px,1.8vw,13px);color:var(--azul);letter-spacing:1px;}
+
+.subdivisiones{list-style:none;margin:8px 0 0 50px;padding:0;}
+.subdivisiones li{display:flex;gap:10px;padding:5px 0;border-bottom:1px solid rgba(255,255,255,.04);align-items:flex-start;}
+.subdivisiones li .sn{font-family:'Cinzel',serif;font-size:12px;color:var(--azul);min-width:18px;font-weight:600;}
+.subdivisiones li .st{font-family:'Crimson Pro',serif;font-size:15px;color:var(--texto-suave);line-height:1.5;}
+.subdivisiones li .st strong{color:var(--oro);}
+.subdivisiones li .st em{color:var(--azul);}
+
+.ilustracion{margin:8px 0 0 50px;background:rgba(0,59,111,.2);border-left:2px solid var(--azul);border-radius:0 6px 6px 0;padding:10px 14px;}
+.ilustracion .il{font-family:'Cinzel',serif;font-size:9px;letter-spacing:3px;color:var(--azul);text-transform:uppercase;margin-bottom:5px;}
+.ilustracion p{font-family:'Crimson Pro',serif;font-size:14px;color:var(--texto-suave);font-style:italic;margin:0;}
+
+.aplicacion{margin:6px 0 0 50px;background:rgba(240,171,0,.04);border-left:2px solid var(--oro);border-radius:0 6px 6px 0;padding:10px 14px;}
+.aplicacion .al{font-family:'Cinzel',serif;font-size:9px;letter-spacing:3px;color:var(--oro);text-transform:uppercase;margin-bottom:5px;}
+.aplicacion p{font-family:'Crimson Pro',serif;font-size:14px;color:var(--texto-suave);margin:0;}
+
+.transicion{margin:6px 0 10px 50px;font-family:'Raleway',sans-serif;font-size:12px;color:var(--texto-suave);font-style:italic;padding:8px 12px;border-radius:5px;background:rgba(255,255,255,.02);border:1px dashed rgba(240,171,0,.12);}
+.transicion::before{content:'→ ';color:var(--oro);}
+
+.conclusion-box{background:linear-gradient(135deg,rgba(0,59,111,.35) 0%,rgba(4,14,28,.9) 100%);border:1px solid rgba(240,171,0,.18);border-radius:10px;padding:22px;margin-top:24px;}
+.conclusion-box .cb-l{font-family:'Cinzel',serif;font-size:9px;letter-spacing:4px;color:var(--oro);text-transform:uppercase;margin-bottom:10px;}
+.conclusion-box p{color:var(--texto-suave);font-size:.93em;margin-bottom:8px;}
+.conclusion-box p:last-child{margin:0;color:var(--oro);font-weight:600;}
+
+.quote{border-left:2px solid var(--oro);padding:12px 18px;margin:16px 0;background:rgba(240,171,0,.04);border-radius:0 6px 6px 0;}
+.quote p{font-family:'Crimson Pro',serif;font-style:italic;font-size:.97em;color:var(--oro-claro);margin-bottom:4px;}
+.quote cite{font-family:'Raleway',sans-serif;font-size:11px;letter-spacing:1px;color:var(--texto-suave);}
+
+p{margin-bottom:14px;}
+strong{color:var(--oro);}
+em{color:var(--azul);}
+
+.epilogo{text-align:center;padding:80px 32px 120px;}
+.epilogo .big{font-family:'Cinzel',serif;font-size:clamp(32px,7vw,64px);font-weight:900;color:transparent;-webkit-text-stroke:1px rgba(240,171,0,.3);letter-spacing:6px;display:block;margin-bottom:32px;}
+.epilogo h2{font-family:'Cinzel',serif;font-size:clamp(16px,3vw,26px);color:var(--oro);margin-bottom:20px;}
+.epilogo p{max-width:520px;margin:0 auto 14px;color:var(--texto-suave);}
+.epilogo .firma{margin-top:40px;font-family:'Cinzel',serif;font-size:12px;letter-spacing:4px;color:var(--azul);}
+
+@keyframes fadeDown{from{opacity:0;transform:translateY(-20px);}to{opacity:1;transform:none;}}
+@keyframes fadeIn{from{opacity:0;}to{opacity:1;}}
+@media(max-width:768px){nav{transform:translateX(-100%);}nav.show{transform:translateX(0);}.page-wrap{margin-left:0!important;}}
+@media(max-width:600px){.enc{grid-template-columns:1fr;}nav{width:220px;}.subdivisiones{margin-left:20px;}.ilustracion,.aplicacion,.transicion{margin-left:20px;}.b-header{flex-direction:column;gap:8px;}.cover-grid{grid-template-columns:repeat(5,1fr);}}
+</style>
+</head>
+<body>
+<button class="nav-toggle" id="navToggle" onclick="toggleNav()">☰</button>
+<nav id="sidenav">
+  <div class="nav-brand">📖 Serie de Bosquejos<br>10 Temas · Predicador IPUC</div>
+  <div class="nav-section">Índice</div>
+  <a href="#portada"><span class="nav-num">·</span>Portada</a>
+  <div class="nav-section">Bosquejos</div>
+  <a href="#b1"><span class="nav-num">01</span>El costo del discipulado</a>
+  <a href="#b2"><span class="nav-num">02</span>La oración que mueve cielos</a>
+  <a href="#b3"><span class="nav-num">03</span>Cuando Dios tarda</a>
+  <a href="#b4"><span class="nav-num">04</span>El poder de la lengua</a>
+  <a href="#b5"><span class="nav-num">05</span>La tentación — cómo vencerla</a>
+  <a href="#b6"><span class="nav-num">06</span>El Espíritu Santo hoy</a>
+  <a href="#b7"><span class="nav-num">07</span>Nadie puede servir a dos señores</a>
+  <a href="#b8"><span class="nav-num">08</span>La gracia que enseña</a>
+  <a href="#b9"><span class="nav-num">09</span>El que comenzó la obra</a>
+  <a href="#b10"><span class="nav-num">10</span>Maranatha — ven, Señor Jesús</a>
+</nav>
+
+<div class="page-wrap" id="pageWrap">
+
+<!-- PORTADA -->
+<section class="cover" id="portada">
+  <div class="cover-icon">📖</div>
+  <div class="cover-tag">Serie Completa · Predicador IPUC</div>
+  <h1 class="cover-title">10 <span>Bosquejos</span></h1>
+  <div class="cover-sub">Serie de predicación expositiva</div>
+  <div class="cover-grid">
+    <div class="cover-num">01</div><div class="cover-num">02</div><div class="cover-num">03</div><div class="cover-num">04</div><div class="cover-num">05</div>
+    <div class="cover-num">06</div><div class="cover-num">07</div><div class="cover-num">08</div><div class="cover-num">09</div><div class="cover-num">10</div>
+  </div>
+  <div class="cover-line"></div>
+  <div class="cover-author">Predicador IPUC · Biblioteca Digital</div>
+</section>
+
+<main>
+
+<!-- ═══ BOSQUEJO 1 ═══ -->
+<section class="bosquejo" id="b1">
+  <div class="b-header">
+    <span class="b-bignum">01</span>
+    <div class="b-meta">
+      <div class="b-serie">Bosquejo · Discipulado</div>
+      <div class="b-titulo">El Costo del Discipulado</div>
+      <div class="b-texto">Lucas 14:25-33</div>
+    </div>
+  </div>
+  <div class="b-divider"></div>
+
+  <div class="enc">
+    <div class="enc-item"><div class="ei-l">Texto base</div><div class="ei-v">Lucas 14:25-33</div></div>
+    <div class="enc-item"><div class="ei-l">Tipo</div><div class="ei-v">Expositivo narrativo</div></div>
+    <div class="enc-item"><div class="ei-l">Tema general</div><div class="ei-v">El discipulado verdadero</div></div>
+    <div class="enc-item"><div class="ei-l">Palabra clave</div><div class="ei-v">Condiciones</div></div>
+  </div>
+  <div class="proposicion"><div class="p-l">Proposición</div><div class="p-v">"Seguir a Cristo no es una decisión emocional sino un compromiso deliberado que lo cuesta todo."</div></div>
+  <div class="proposicion proposito"><div class="p-l">Propósito</div><div class="p-v">Que el oyente evalúe la calidad de su compromiso con Cristo y tome una decisión informada y consciente.</div></div>
+
+  <div class="divisiones">
+    <div class="div-item">
+      <div class="div-row"><span class="div-letra">A</span><div class="div-content"><div class="div-titulo">La multitud y la invitación mal entendida</div><div class="div-sub">El problema del seguidor superficial</div></div></div>
+      <ul class="subdivisiones">
+        <li><span class="sn">1.</span><span class="st"><strong>Grandes multitudes le seguían</strong> — v.25. El éxito numérico no es señal de discipulado genuino. Jesús no celebró la multitud — la confrontó.</span></li>
+        <li><span class="sn">2.</span><span class="st">El seguimiento emocional: <em>seguían</em> en griego es imperfecto continuo — venían, pero sin compromiso definido. Seguidores de clima, no de cruz.</span></li>
+        <li><span class="sn">3.</span><span class="st">Jesús no suavizó el mensaje para retenerlos — lo hizo más exigente. <strong>El pastor que solo dice lo que la gente quiere oír no es fiel.</strong></span></li>
+      </ul>
+      <div class="ilustracion"><div class="il">Ilustración</div><p>Un hombre ve un anuncio de trabajo con salario excelente, firma el contrato sin leer las condiciones. Cuando descubre las responsabilidades, se retira. El discipulado sin costo mal entendido funciona igual.</p></div>
+    </div>
+    <div class="transicion">La multitud escuchó al maestro popular. Pero Jesús era más que popular — era exigente.</div>
+
+    <div class="div-item">
+      <div class="div-row"><span class="div-letra">B</span><div class="div-content"><div class="div-titulo">Tres condiciones del verdadero discipulado</div><div class="div-sub">Lo que Jesús exige sin negociar</div></div></div>
+      <ul class="subdivisiones">
+        <li><span class="sn">1.</span><span class="st"><strong>Condición 1 — Anteponer a Cristo sobre todo vínculo:</strong> v.26 — "Si alguno viene a mí y no aborrece a su padre... no puede ser mi discípulo." El "aborrecer" es hebraísmo comparativo: amarme a mí incomparablemente más. No odio literal — prioridad absoluta.</span></li>
+        <li><span class="sn">2.</span><span class="st"><strong>Condición 2 — Llevar su cruz cada día:</strong> v.27 — No la cruz como sufrimiento genérico sino como <em>instrumento de ejecución del yo</em>. Cada día una muerte deliberada al ego, a los derechos propios, a la agenda personal.</span></li>
+        <li><span class="sn">3.</span><span class="st"><strong>Condición 3 — Renunciar a todo lo que posee:</strong> v.33 — No necesariamente vender todo, sino <em>soltar el control</em>. Lo que tengo no me define ni me dirige — Cristo sí.</span></li>
+      </ul>
+      <div class="aplicacion"><div class="al">Aplicación</div><p>¿Hay alguna relación, posesión o ambición que actualmente está por encima de Cristo en tus decisiones diarias? Eso es precisamente lo que Jesús está señalando aquí.</p></div>
+    </div>
+    <div class="transicion">Jesús ilustra con dos parábolas por qué evaluar el costo antes de comprometerse.</div>
+
+    <div class="div-item">
+      <div class="div-row"><span class="div-letra">C</span><div class="div-content"><div class="div-titulo">Las dos parábolas — el cálculo que Jesús pide</div><div class="div-sub">El constructor y el rey en guerra</div></div></div>
+      <ul class="subdivisiones">
+        <li><span class="sn">1.</span><span class="st"><strong>El constructor:</strong> v.28-30 — Nadie comienza una torre sin calcular si puede terminarla. El seguidor que no evalúa el costo terminará a medias. La torre sin terminar es <em>testimonio de fracaso, no de intento.</em></span></li>
+        <li><span class="sn">2.</span><span class="st"><strong>El rey en guerra:</strong> v.31-32 — Antes de la batalla, el rey evalúa si puede ganar. Si no puede, busca condiciones de paz. Jesús no pide un seguimiento ciego sino una <strong>entrega consciente e informada.</strong></span></li>
+        <li><span class="sn">3.</span><span class="st">La paradoja: Jesús no está desanimando al seguidor — está <em>invitando al seguimiento real</em> en lugar del emocional. Prefiere diez discípulos comprometidos que diez mil multitudes superficiales.</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="conclusion-box">
+    <div class="cb-l">Conclusión</div>
+    <p>Jesús no ofrece una vida fácil — ofrece una vida con propósito eterno. El costo es real: prioridad absoluta, muerte al yo, rendición total. Pero lo que se recibe es incomparablemente mayor que lo que se entrega.</p>
+    <p>"El que pierda su vida por causa de mí, la hallará." — Mateo 16:25</p>
+  </div>
+</section>
+
+<!-- ═══ BOSQUEJO 2 ═══ -->
+<section class="bosquejo" id="b2">
+  <div class="b-header">
+    <span class="b-bignum">02</span>
+    <div class="b-meta">
+      <div class="b-serie">Bosquejo · Oración</div>
+      <div class="b-titulo">La Oración que Mueve Cielos</div>
+      <div class="b-texto">Mateo 6:5-15 · Santiago 5:16-18</div>
+    </div>
+  </div>
+  <div class="b-divider"></div>
+
+  <div class="enc">
+    <div class="enc-item"><div class="ei-l">Texto base</div><div class="ei-v">Mateo 6:5-15</div></div>
+    <div class="enc-item"><div class="ei-l">Tipo</div><div class="ei-v">Expositivo temático</div></div>
+    <div class="enc-item"><div class="ei-l">Tema general</div><div class="ei-v">La vida de oración</div></div>
+    <div class="enc-item"><div class="ei-l">Palabra clave</div><div class="ei-v">Características</div></div>
+  </div>
+  <div class="proposicion"><div class="p-l">Proposición</div><div class="p-v">"La oración que Dios responde no es la más larga ni la más elocuente — es la más honesta y la más dependiente."</div></div>
+  <div class="proposicion proposito"><div class="p-l">Propósito</div><div class="p-v">Que el oyente corrija su concepto de oración y establezca una vida de comunión real con Dios.</div></div>
+
+  <div class="divisiones">
+    <div class="div-item">
+      <div class="div-row"><span class="div-letra">A</span><div class="div-content"><div class="div-titulo">La oración que Dios no escucha</div><div class="div-sub">Tres errores que Jesús corrige</div></div></div>
+      <ul class="subdivisiones">
+        <li><span class="sn">1.</span><span class="st"><strong>La oración exhibicionista:</strong> v.5 — "para ser vistos de los hombres." Cuando la oración es para impresionar, su único receptor es el auditorio humano. <em>Ya tienen su recompensa.</em></span></li>
+        <li><span class="sn">2.</span><span class="st"><strong>La oración mecánica:</strong> v.7 — "vanas repeticiones." No es el número de palabras — es la ausencia de corazón. Los ritos religiosos sin comunión real son ruido espiritual.</span></li>
+        <li><span class="sn">3.</span><span class="st"><strong>La oración que no perdona:</strong> v.14-15 — El que no perdona cierra el cielo sobre su propia oración. La amargura es una antena rota.</span></li>
+      </ul>
+    </div>
+    <div class="transicion">Después de mostrar qué no hacer, Jesús enseña el modelo.</div>
+
+    <div class="div-item">
+      <div class="div-row"><span class="div-letra">B</span><div class="div-content"><div class="div-titulo">El modelo del Padre Nuestro</div><div class="div-sub">La estructura que Jesús dejó</div></div></div>
+      <ul class="subdivisiones">
+        <li><span class="sn">1.</span><span class="st"><strong>Empieza en Dios, no en la necesidad:</strong> "Padre nuestro... santificado sea tu nombre." La adoración antes que la petición reordena la perspectiva del que ora.</span></li>
+        <li><span class="sn">2.</span><span class="st"><strong>Alinea la voluntad, no la impone:</strong> "hágase tu voluntad." La fe más alta no es la que convence a Dios — es la que se somete a Él.</span></li>
+        <li><span class="sn">3.</span><span class="st"><strong>Abarca todo el ser:</strong> necesidad diaria (pan), condición espiritual (perdón), protección sobrenatural (no nos metas en tentación). La oración que Jesús enseña es integral.</span></li>
+      </ul>
+      <div class="ilustracion"><div class="il">Ilustración</div><p>Elías oró una sola oración de 63 palabras y el fuego cayó del cielo. Luego oró siete veces inclinado hasta la tierra y la lluvia vino. No fue la elocuencia — fue la dependencia radical.</p></div>
+    </div>
+    <div class="transicion">El Padre Nuestro es estructura — pero la oración ferviente de Santiago 5 es el motor.</div>
+
+    <div class="div-item">
+      <div class="div-row"><span class="div-letra">C</span><div class="div-content"><div class="div-titulo">La oración eficaz del justo</div><div class="div-sub">Santiago 5:16-18 — el secreto de Elías</div></div></div>
+      <ul class="subdivisiones">
+        <li><span class="sn">1.</span><span class="st"><strong>"Mucho puede la oración eficaz del justo":</strong> <em>Ischuei</em> — tiene poder, fuerza, es efectiva. No toda oración tiene el mismo peso. La del justo — el que vive alineado con Dios — tiene poder particular.</span></li>
+        <li><span class="sn">2.</span><span class="st"><strong>Elías era hombre semejante a nosotros:</strong> no fue un superhombre espiritual — fue alguien que oró con fervor real desde su humanidad real. Eso democratiza el poder de la oración.</span></li>
+        <li><span class="sn">3.</span><span class="st"><strong>Oró, y oró de nuevo:</strong> Siete veces a la tierra. La oración persistente no es incredulidad — es fe que no desiste mientras espera.</span></li>
+      </ul>
+      <div class="aplicacion"><div class="al">Aplicación</div><p>¿Hay una petición que dejaste de hacer porque "no llegó la respuesta"? La persistencia de Elías no fue terquedad — fue fe. ¿Qué necesitas llevar de nuevo al Padre hoy?</p></div>
+    </div>
+  </div>
+
+  <div class="conclusion-box">
+    <div class="cb-l">Conclusión</div>
+    <p>Dios no responde a la elocuencia — responde al corazón. No a la duración — a la sinceridad. No a la postura — a la dependencia. La oración que mueve cielos no es la más impresionante sino la más honesta.</p>
+    <p>"Clama a mí, y yo te responderé." — Jeremías 33:3</p>
+  </div>
+</section>
+
+<!-- ═══ BOSQUEJO 3 ═══ -->
+<section class="bosquejo" id="b3">
+  <div class="b-header">
+    <span class="b-bignum">03</span>
+    <div class="b-meta">
+      <div class="b-serie">Bosquejo · Fe y Espera</div>
+      <div class="b-titulo">Cuando Dios Tarda</div>
+      <div class="b-texto">Juan 11:1-45</div>
+    </div>
+  </div>
+  <div class="b-divider"></div>
+
+  <div class="enc">
+    <div class="enc-item"><div class="ei-l">Texto base</div><div class="ei-v">Juan 11:1-45</div></div>
+    <div class="enc-item"><div class="ei-l">Tipo</div><div class="ei-v">Narrativo expositivo</div></div>
+    <div class="enc-item"><div class="ei-l">Tema general</div><div class="ei-v">La soberanía de Dios en el tiempo</div></div>
+    <div class="enc-item"><div class="ei-l">Palabra clave</div><div class="ei-v">Propósitos</div></div>
+  </div>
+  <div class="proposicion"><div class="p-l">Proposición</div><div class="p-v">"Lo que parece silencio de Dios frecuentemente es preparación para un milagro mayor del que pediste."</div></div>
+  <div class="proposicion proposito"><div class="p-l">Propósito</div><div class="p-v">Que el oyente que atraviesa una espera difícil encuentre perspectiva y esperanza en la soberanía de Dios.</div></div>
+
+  <div class="divisiones">
+    <div class="div-item">
+      <div class="div-row"><span class="div-letra">A</span><div class="div-content"><div class="div-titulo">Jesús amaba y no vino — la paradoja del silencio</div><div class="div-sub">v.5-6 — El texto más desconcertante del relato</div></div></div>
+      <ul class="subdivisiones">
+        <li><span class="sn">1.</span><span class="st">v.5: <strong>"Amaba Jesús a Marta, a su hermana y a Lázaro."</strong> La declaración de amor está justo antes de la tardanza. El silencio de Dios no es ausencia de amor — puede ser expresión de él.</span></li>
+        <li><span class="sn">2.</span><span class="st">v.6: <em>"Cuando oyó que estaba enfermo, se quedó dos días más."</em> En griego la conjunción es <em>oun</em> — "por lo tanto se quedó." El amor fue la razón de la tardanza, no el obstáculo.</span></li>
+        <li><span class="sn">3.</span><span class="st">v.4: "Esta enfermedad no es para muerte, sino para la gloria de Dios." Jesús sabía el final antes de que la historia comenzara. La perspectiva de Dios no cabe en nuestra urgencia.</span></li>
+      </ul>
+      <div class="ilustracion"><div class="il">Ilustración</div><p>El cirujano que espera que el tumor madure antes de operar no es indiferente — es sabio. La espera del médico es parte del tratamiento, no negligencia.</p></div>
+    </div>
+    <div class="transicion">Lázaro murió. María y Marta lloraron. Pero Jesús ya estaba en camino con algo diferente a lo que pedían.</div>
+
+    <div class="div-item">
+      <div class="div-row"><span class="div-letra">B</span><div class="div-content"><div class="div-titulo">Las dos reacciones ante la tardanza</div><div class="div-sub">Marta y María — dos maneras de esperar</div></div></div>
+      <ul class="subdivisiones">
+        <li><span class="sn">1.</span><span class="st"><strong>Marta fue al encuentro:</strong> "Si hubieras estado aquí..." — dolor honesto mezclado con fe: "Mas también sé ahora que todo lo que pidas a Dios, Dios te lo dará." La fe que llora y aún confía.</span></li>
+        <li><span class="sn">2.</span><span class="st"><strong>María cayó a sus pies:</strong> mismas palabras que Marta pero diferente postura. El mismo dolor, diferente lugar — a sus pies. <em>La espera que dobla las rodillas es la que más recibe.</em></span></li>
+        <li><span class="sn">3.</span><span class="st"><strong>Jesús lloró:</strong> v.35 — el versículo más corto de la Biblia y el más profundo. Dios llora con los que lloran aunque ya sabe que en minutos todo cambiará. El Señor de la resurrección también conoce el dolor de la espera.</span></li>
+      </ul>
+    </div>
+    <div class="transicion">El propósito del silencio se revela cuando Jesús llega a la tumba.</div>
+
+    <div class="div-item">
+      <div class="div-row"><span class="div-letra">C</span><div class="div-content"><div class="div-titulo">Por qué esperó — el propósito que nadie vio venir</div><div class="div-sub">La gloria que solo es posible después del entierro</div></div></div>
+      <ul class="subdivisiones">
+        <li><span class="sn">1.</span><span class="st">Si Jesús hubiera llegado antes, <strong>habría sanado a un enfermo</strong>. Llegando tarde, resucitó a un muerto. La tardanza transformó el milagro en algo incomparablemente mayor.</span></li>
+        <li><span class="sn">2.</span><span class="st">v.40: "¿No te dije que si creyeres, verías la gloria de Dios?" La gloria que Dios preparaba requería que primero creyeran antes de ver. No ver para creer — creer para ver.</span></li>
+        <li><span class="sn">3.</span><span class="st">v.45: "Muchos de los judíos... creyeron en él." La tardanza de cuatro días produjo una cosecha de almas que una sanidad inmediata nunca habría generado.</span></li>
+      </ul>
+      <div class="aplicacion"><div class="al">Aplicación</div><p>¿Cuántos días lleva "muerta" tu situación? ¿Cuatro días como Lázaro? ¿Cuatro años? El mismo Señor que llegó tarde a Betania está en camino hacia tu situación con algo mejor de lo que pediste.</p></div>
+    </div>
+  </div>
+
+  <div class="conclusion-box">
+    <div class="cb-l">Conclusión</div>
+    <p>Dios no es tarde. Dios tiene propósitos que solo se manifiestan en el tiempo correcto. Lo que parece un fracaso puede ser el escenario perfecto para la gloria de Dios. La espera no es abandono — es preparación.</p>
+    <p>"¡Lázaro, ven fuera!" — Juan 11:43. Jesús todavía habla a las tumbas.</p>
+  </div>
+</section>
+
+<!-- ═══ BOSQUEJO 4 ═══ -->
+<section class="bosquejo" id="b4">
+  <div class="b-header">
+    <span class="b-bignum">04</span>
+    <div class="b-meta">
+      <div class="b-serie">Bosquejo · Vida Cristiana</div>
+      <div class="b-titulo">El Poder de la Lengua</div>
+      <div class="b-texto">Santiago 3:1-12 · Proverbios 18:21</div>
+    </div>
+  </div>
+  <div class="b-divider"></div>
+
+  <div class="enc">
+    <div class="enc-item"><div class="ei-l">Texto base</div><div class="ei-v">Santiago 3:1-12</div></div>
+    <div class="enc-item"><div class="ei-l">Tipo</div><div class="ei-v">Expositivo práctico</div></div>
+    <div class="enc-item"><div class="ei-l">Tema general</div><div class="ei-v">El uso de las palabras</div></div>
+    <div class="enc-item"><div class="ei-l">Palabra clave</div><div class="ei-v">Imágenes</div></div>
+  </div>
+  <div class="proposicion"><div class="p-l">Proposición</div><div class="p-v">"La lengua revela el estado del corazón y determina el rumbo de la vida — por eso quien la controla se controla a sí mismo."</div></div>
+  <div class="proposicion proposito"><div class="p-l">Propósito</div><div class="p-v">Que el oyente tome conciencia del poder de sus palabras y siembre vida con intención.</div></div>
+
+  <div class="divisiones">
+    <div class="div-item">
+      <div class="div-row"><span class="div-letra">A</span><div class="div-content"><div class="div-titulo">La lengua — pequeña pero decisiva</div><div class="div-sub">Tres imágenes de Santiago</div></div></div>
+      <ul class="subdivisiones">
+        <li><span class="sn">1.</span><span class="st"><strong>El freno del caballo:</strong> v.3 — Un pequeño freno dirige un animal poderoso. Quien controla la lengua controla toda su vida. La lengua no es el problema más pequeño — es el más estratégico.</span></li>
+        <li><span class="sn">2.</span><span class="st"><strong>El timón del barco:</strong> v.4 — Pequeño comparado al casco, pero determina el destino. <em>Las palabras que pronuncias hoy están trazando el rumbo de tu mañana.</em></span></li>
+        <li><span class="sn">3.</span><span class="st"><strong>La chispa del fuego:</strong> v.5-6 — Un pequeño fuego puede quemar un bosque entero. Una palabra dicha sin control puede destruir relaciones, familias y ministerios que tomaron años construir.</span></li>
+      </ul>
+    </div>
+    <div class="transicion">Si la lengua tiene tanto poder destructivo, ¿puede también tener poder constructivo?</div>
+
+    <div class="div-item">
+      <div class="div-row"><span class="div-letra">B</span><div class="div-content"><div class="div-titulo">La contradicción que nos condena</div><div class="div-sub">v.9-12 — La fuente que no puede dar dos aguas</div></div></div>
+      <ul class="subdivisiones">
+        <li><span class="sn">1.</span><span class="st">v.9-10: <strong>"Con ella bendecimos a Dios... y con ella maldecimos a los hombres."</strong> La misma boca que dice amén en el culto y destruye en casa. Santiago dice: "Esto no debe ser así."</span></li>
+        <li><span class="sn">2.</span><span class="st">v.11-12: La naturaleza es coherente — la fuente de agua dulce no da agua amarga. La higuera no da aceitunas. <em>La inconsistencia de la lengua revela una inconsistencia del corazón.</em></span></li>
+        <li><span class="sn">3.</span><span class="st">Mateo 12:34: "De la abundancia del corazón habla la boca." El problema no está en la lengua — está en lo que la alimenta.</span></li>
+      </ul>
+      <div class="ilustracion"><div class="il">Ilustración</div><p>Una ciudad tiene un río que pasa por el centro. Si la fuente en las montañas está contaminada, no importa cuánto se trate el agua en la ciudad — el problema está arriba. Así es el corazón con la lengua.</p></div>
+    </div>
+    <div class="transicion">El diagnóstico es el corazón. Pero hay una solución.</div>
+
+    <div class="div-item">
+      <div class="div-row"><span class="div-letra">C</span><div class="div-content"><div class="div-titulo">La lengua redimida — muerte y vida</div><div class="div-sub">Proverbios 18:21 · Efesios 4:29</div></div></div>
+      <ul class="subdivisiones">
+        <li><span class="sn">1.</span><span class="st"><strong>"La muerte y la vida están en poder de la lengua":</strong> Proverbios 18:21. No es metáfora exagerada — es descripción exacta. Cada conversación es una elección entre construir o destruir.</span></li>
+        <li><span class="sn">2.</span><span class="st">Efesios 4:29: "Ninguna palabra corrompida salga de vuestra boca, sino la que sea buena para la necesaria edificación, a fin de dar gracia a los oyentes." El estándar no es "no decir cosas malas" sino <strong>dar gracia activamente.</strong></span></li>
+        <li><span class="sn">3.</span><span class="st">El Espíritu Santo como guardián de la lengua: Gálatas 5:22-23 — el fruto del Espíritu incluye templanza. La lengua santificada no es resultado del esfuerzo propio sino de la vida en el Espíritu.</span></li>
+      </ul>
+      <div class="aplicacion"><div class="al">Aplicación</div><p>Piensa en las últimas cinco conversaciones que tuviste. ¿Hubo más vida o más muerte en tus palabras? ¿Qué cambiaría si antes de hablar preguntaras: ¿esto edifica o destruye?</p></div>
+    </div>
+  </div>
+
+  <div class="conclusion-box">
+    <div class="cb-l">Conclusión</div>
+    <p>Tu lengua es una herramienta soberana. Puede ser el instrumento de la gracia de Dios en la vida de alguien o el arma que destruye lo que Dios construyó. Pide al Espíritu que ponga guardas en tu boca.</p>
+    <p>"Sean gratos los dichos de mi boca y la meditación de mi corazón delante de ti." — Salmo 19:14</p>
+  </div>
+</section>
+
+<!-- ═══ BOSQUEJO 5 ═══ -->
+<section class="bosquejo" id="b5">
+  <div class="b-header">
+    <span class="b-bignum">05</span>
+    <div class="b-meta">
+      <div class="b-serie">Bosquejo · Guerra Espiritual</div>
+      <div class="b-titulo">La Tentación — Cómo Vencerla</div>
+      <div class="b-texto">1 Corintios 10:13 · Mateo 4:1-11</div>
+    </div>
+  </div>
+  <div class="b-divider"></div>
+
+  <div class="enc">
+    <div class="enc-item"><div class="ei-l">Texto base</div><div class="ei-v">1 Corintios 10:13</div></div>
+    <div class="enc-item"><div class="ei-l">Tipo</div><div class="ei-v">Temático expositivo</div></div>
+    <div class="enc-item"><div class="ei-l">Tema general</div><div class="ei-v">Victoria sobre la tentación</div></div>
+    <div class="enc-item"><div class="ei-l">Palabra clave</div><div class="ei-v">Verdades</div></div>
+  </div>
+  <div class="proposicion"><div class="p-l">Proposición</div><div class="p-v">"Ninguna tentación tiene poder suficiente para obligarte a pecar — siempre hay una salida que Dios ya preparó."</div></div>
+  <div class="proposicion proposito"><div class="p-l">Propósito</div><div class="p-v">Que el oyente deje de excusarse en la tentación y tome la salida que Dios prometió.</div></div>
+
+  <div class="divisiones">
+    <div class="div-item">
+      <div class="div-row"><span class="div-letra">A</span><div class="div-content"><div class="div-titulo">Las tres verdades de 1 Corintios 10:13</div><div class="div-sub">Lo que Dios garantiza sobre cada tentación</div></div></div>
+      <ul class="subdivisiones">
+        <li><span class="sn">1.</span><span class="st"><strong>Tu tentación no es única:</strong> "No os ha sobrevenido ninguna tentación que no sea humana." Nadie es tentado de una manera que otros no hayan enfrentado y vencido. Eso significa que se puede vencer.</span></li>
+        <li><span class="sn">2.</span><span class="st"><strong>Dios pone un límite:</strong> "fiel es Dios, que no os dejará ser tentados más de lo que podéis resistir." La tentación tiene techo. Dios no permite más de lo que su gracia puede sostener.</span></li>
+        <li><span class="sn">3.</span><span class="st"><strong>Siempre hay salida:</strong> "también dará juntamente con la tentación la salida." No hay tentación sin salida. La pregunta no es si hay salida — es si la estás buscando.</span></li>
+      </ul>
+    </div>
+    <div class="transicion">El modelo perfecto de victoria sobre la tentación es Jesús en el desierto.</div>
+
+    <div class="div-item">
+      <div class="div-row"><span class="div-letra">B</span><div class="div-content"><div class="div-titulo">Las tres tentaciones de Jesús — el patrón de victoria</div><div class="div-sub">Mateo 4:1-11</div></div></div>
+      <ul class="subdivisiones">
+        <li><span class="sn">1.</span><span class="st"><strong>Tentación del apetito:</strong> "Di que estas piedras sean pan." Cuarenta días de hambre — la necesidad real usada como trampa. Respuesta: "No solo de pan vivirá el hombre sino de toda palabra." <em>La Palabra es superior a la necesidad.</em></span></li>
+        <li><span class="sn">2.</span><span class="st"><strong>Tentación del espectáculo:</strong> "Échate abajo, que ángeles te sostendrán." La oferta de un milagro sin obediencia, un resultado sin proceso. Respuesta: "No tentarás al Señor tu Dios." La fe verdadera no exige prueba.</span></li>
+        <li><span class="sn">3.</span><span class="st"><strong>Tentación del poder:</strong> "Todo esto te daré si postrado me adorares." El atajo más antiguo — lo que es correcto por el camino equivocado. Respuesta: "Vete, Satanás." A veces la victoria es tan simple como negarse a negociar.</span></li>
+      </ul>
+      <div class="ilustracion"><div class="il">Ilustración</div><p>Las tres tentaciones atacaron en el momento más vulnerable: hambre física extrema. Jesús no esperó a estar en plena fortaleza para resistir — resistió en debilidad con la Palabra. La victoria no depende de la condición — depende del arma.</p></div>
+    </div>
+    <div class="transicion">Jesús venció por la Palabra. El creyente tiene las mismas armas.</div>
+
+    <div class="div-item">
+      <div class="div-row"><span class="div-letra">C</span><div class="div-content"><div class="div-titulo">El sumo sacerdote que nos entiende</div><div class="div-sub">Hebreos 4:15-16 — el fundamento de la victoria</div></div></div>
+      <ul class="subdivisiones">
+        <li><span class="sn">1.</span><span class="st"><strong>Jesús fue tentado en todo según nuestra semejanza:</strong> No fingió la tentación — la experimentó realmente. Tiene experiencia interna del campo de batalla donde nosotros luchamos.</span></li>
+        <li><span class="sn">2.</span><span class="st"><strong>Sin pecado:</strong> Su tentación fue real — su victoria también. No es un modelo inalcanzable — es la garantía de que se puede. "El que vence al pecado puede ayudar a los que son tentados" — Hebreos 2:18.</span></li>
+        <li><span class="sn">3.</span><span class="st"><strong>El trono de gracia:</strong> v.16 — "Acerquémonos, pues, confiadamente al trono de la gracia, para alcanzar misericordia y hallar gracia para el oportuno socorro." La oración en el momento de la tentación es el acceso a la salida.</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="conclusion-box">
+    <div class="cb-l">Conclusión</div>
+    <p>La próxima vez que la tentación llegue — y llegará — recuerda: hay una salida. Dios la preparó antes de que la tentación llegara. Tu trabajo no es generar fuerza de voluntad — es encontrar la salida que Él ya dejó abierta.</p>
+    <p>"Escrito está." — La respuesta de Jesús. La Palabra sigue siendo el arma más efectiva.</p>
+  </div>
+</section>
+
+<!-- ═══ BOSQUEJO 6 ═══ -->
+<section class="bosquejo" id="b6">
+  <div class="b-header">
+    <span class="b-bignum">06</span>
+    <div class="b-meta">
+      <div class="b-serie">Bosquejo · Doctrina Apostólica</div>
+      <div class="b-titulo">El Espíritu Santo Hoy</div>
+      <div class="b-texto">Hechos 2:1-4 · Joel 2:28-29</div>
+    </div>
+  </div>
+  <div class="b-divider"></div>
+
+  <div class="enc">
+    <div class="enc-item"><div class="ei-l">Texto base</div><div class="ei-v">Hechos 2:1-4</div></div>
+    <div class="enc-item"><div class="ei-l">Tipo</div><div class="ei-v">Expositivo doctrinal</div></div>
+    <div class="enc-item"><div class="ei-l">Tema general</div><div class="ei-v">El don del Espíritu Santo</div></div>
+    <div class="enc-item"><div class="ei-l">Palabra clave</div><div class="ei-v">Realidades</div></div>
+  </div>
+  <div class="proposicion"><div class="p-l">Proposición</div><div class="p-v">"El mismo Espíritu derramado en Pentecostés sigue siendo derramado hoy porque la promesa de Dios no tiene fecha de expiración."</div></div>
+  <div class="proposicion proposito"><div class="p-l">Propósito</div><div class="p-v">Que el oyente reciba o renueve la experiencia del Espíritu Santo como realidad viva, no como doctrina histórica.</div></div>
+
+  <div class="divisiones">
+    <div class="div-item">
+      <div class="div-row"><span class="div-letra">A</span><div class="div-content"><div class="div-titulo">La promesa que precedió al evento</div><div class="div-sub">Joel 2:28-29 — 800 años antes de Pentecostés</div></div></div>
+      <ul class="subdivisiones">
+        <li><span class="sn">1.</span><span class="st"><strong>"Después de esto derramaré mi Espíritu sobre toda carne":</strong> no sobre los sacerdotes solamente, no sobre los profetas solamente — <em>toda carne.</em> El derramamiento del Espíritu democratiza la experiencia de Dios.</span></li>
+        <li><span class="sn">2.</span><span class="st">Pedro citó exactamente este texto en Pentecostés (Hechos 2:16-17): "Esto es lo dicho por el profeta Joel." No fue improvisación — fue cumplimiento de una promesa de 800 años.</span></li>
+        <li><span class="sn">3.</span><span class="st">Hechos 2:39: <strong>"Para vosotros es la promesa, y para vuestros hijos, y para todos los que están lejos."</strong> La promesa incluye geográfica y temporalmente a todo creyente que Dios llame.</span></li>
+      </ul>
+    </div>
+    <div class="transicion">La promesa fue dada. El evento llegó. ¿Qué ocurrió exactamente en Pentecostés?</div>
+
+    <div class="div-item">
+      <div class="div-row"><span class="div-letra">B</span><div class="div-content"><div class="div-titulo">El evento de Pentecostés — lo que ocurrió</div><div class="div-sub">Hechos 2:1-4 — las señales y la sustancia</div></div></div>
+      <ul class="subdivisiones">
+        <li><span class="sn">1.</span><span class="st"><strong>Viento recio:</strong> <em>Pnoḗ biaía</em> — viento fuerte, violento. La misma palabra del aliento de Dios en Génesis 2:7. El Espíritu que dio vida al primer hombre da nueva vida a la iglesia.</span></li>
+        <li><span class="sn">2.</span><span class="st"><strong>Lenguas de fuego:</strong> El fuego en la Biblia simboliza presencia divina (zarza ardiente), purificación (Malaquías 3:2) y juicio. El Espíritu vino como fuego — para purificar y empoderar.</span></li>
+        <li><span class="sn">3.</span><span class="st"><strong>Hablar en otras lenguas:</strong> La evidencia audible e irrefutable. No fue solo una experiencia interior — fue algo que los 120 y los 3,000 pudieron verificar. El Espíritu Santo produce evidencia observable.</span></li>
+      </ul>
+      <div class="ilustracion"><div class="il">Ilustración</div><p>En todos los casos del libro de Hechos donde se registra la recepción del Espíritu, hay una señal externa que los testigos pueden identificar. Hechos 2:4, 8:17-18, 10:44-46, 19:6. El patrón no cambia.</p></div>
+    </div>
+    <div class="transicion">Pentecostés no fue el final — fue el comienzo. La experiencia continúa.</div>
+
+    <div class="div-item">
+      <div class="div-row"><span class="div-letra">C</span><div class="div-content"><div class="div-titulo">El Espíritu Santo hoy — la misma experiencia</div><div class="div-sub">Por qué no terminó en el primer siglo</div></div></div>
+      <ul class="subdivisiones">
+        <li><span class="sn">1.</span><span class="st"><strong>La promesa no tiene cláusula de expiración:</strong> Hechos 2:39 — "para todos los que están lejos; para cuantos el Señor nuestro Dios llamare." El alcance es universal en el tiempo y la geografía.</span></li>
+        <li><span class="sn">2.</span><span class="st"><strong>El cesacionismo no tiene base bíblica:</strong> Ningún texto del Nuevo Testamento enseña que los dones del Espíritu cesaron. 1 Corintios 13:8-10 dice que cesarán <em>cuando lo perfecto venga</em> — evento futuro.</span></li>
+        <li><span class="sn">3.</span><span class="st"><strong>Millones de testimonios contemporáneos:</strong> El Espíritu Santo se sigue derramando en cada continente. La experiencia de Pentecostés no es reliquia histórica — es realidad viva hoy.</span></li>
+      </ul>
+      <div class="aplicacion"><div class="al">Aplicación</div><p>Si no has recibido el Espíritu Santo con la evidencia del hablar en lenguas, esa promesa es tuya. No es para una generación pasada — es para cuantos el Señor llame. ¿Estás dispuesto a recibirlo?</p></div>
+    </div>
+  </div>
+
+  <div class="conclusion-box">
+    <div class="cb-l">Conclusión</div>
+    <p>El Espíritu Santo no es un recuerdo del primer siglo ni un privilegio de unos pocos. Es la promesa del Padre para todo creyente que lo pide. La misma experiencia de Pentecostés está disponible hoy.</p>
+    <p>"Pues si vosotros, siendo malos, sabéis dar buenas dádivas a vuestros hijos, ¿cuánto más vuestro Padre celestial dará el Espíritu Santo a los que se lo pidan?" — Lucas 11:13</p>
+  </div>
+</section>
+
+<!-- ═══ BOSQUEJO 7 ═══ -->
+<section class="bosquejo" id="b7">
+  <div class="b-header">
+    <span class="b-bignum">07</span>
+    <div class="b-meta">
+      <div class="b-serie">Bosquejo · Consagración</div>
+      <div class="b-titulo">Nadie Puede Servir a Dos Señores</div>
+      <div class="b-texto">Mateo 6:24 · Josué 24:15</div>
+    </div>
+  </div>
+  <div class="b-divider"></div>
+
+  <div class="enc">
+    <div class="enc-item"><div class="ei-l">Texto base</div><div class="ei-v">Mateo 6:24</div></div>
+    <div class="enc-item"><div class="ei-l">Tipo</div><div class="ei-v">Textual aplicado</div></div>
+    <div class="enc-item"><div class="ei-l">Tema general</div><div class="ei-v">La lealtad indivisa a Dios</div></div>
+    <div class="enc-item"><div class="ei-l">Palabra clave</div><div class="ei-v">Señoríos</div></div>
+  </div>
+  <div class="proposicion"><div class="p-l">Proposición</div><div class="p-v">"La neutralidad espiritual no existe — cada persona sirve a un señor, lo reconozca o no."</div></div>
+  <div class="proposicion proposito"><div class="p-l">Propósito</div><div class="p-v">Que el oyente identifique quién es realmente el señor de su vida y tome una decisión deliberada de consagración total.</div></div>
+
+  <div class="divisiones">
+    <div class="div-item">
+      <div class="div-row"><span class="div-letra">A</span><div class="div-content"><div class="div-titulo">La imposibilidad del doble señorío</div><div class="div-sub">Mateo 6:24 — la declaración más directa de Jesús</div></div></div>
+      <ul class="subdivisiones">
+        <li><span class="sn">1.</span><span class="st">Jesús no dice "es difícil servir a dos señores" — dice <strong>"no podéis."</strong> Imposibilidad categórica. No es una recomendación — es una ley espiritual de la realidad.</span></li>
+        <li><span class="sn">2.</span><span class="st">El contexto es el dinero — <em>Mamón</em>. Pero el principio trasciende al dinero: cualquier cosa que compite con Dios por el señorío de tu vida es un segundo señor.</span></li>
+        <li><span class="sn">3.</span><span class="st"><strong>"O aborrecerá al uno y amará al otro, o se allegará al uno y menospreciará al otro."</strong> El resultado inevitable de intentar servir a dos: uno siempre gana. La pregunta no es si hay un ganador — sino cuál.</span></li>
+      </ul>
+    </div>
+    <div class="transicion">El doble señorío es imposible. Pero la elección es real e ineludible.</div>
+
+    <div class="div-item">
+      <div class="div-row"><span class="div-letra">B</span><div class="div-content"><div class="div-titulo">Los señores que compiten con Dios</div><div class="div-sub">Más que el dinero — los señores modernos</div></div></div>
+      <ul class="subdivisiones">
+        <li><span class="sn">1.</span><span class="st"><strong>La opinión de los demás:</strong> Juan 12:43 — "Amaban más la gloria de los hombres que la gloria de Dios." Cuando la aprobación humana dicta las decisiones, la opinión ajena es el señor real.</span></li>
+        <li><span class="sn">2.</span><span class="st"><strong>El yo — la ambición personal:</strong> Gálatas 2:20 — "ya no vivo yo." El ego entronizado como centro de decisión es el señor más antiguo y más resistente.</span></li>
+        <li><span class="sn">3.</span><span class="st"><strong>El pasado — la culpa y el resentimiento:</strong> Cuando el pasado tiene más peso que las promesas de Dios, el pasado es el señor. Filipenses 3:13 — "olvidando lo que queda atrás."</span></li>
+      </ul>
+      <div class="ilustracion"><div class="il">Ilustración</div><p>Un hombre con dos empleos que exigen horario completo simultáneamente. Es físicamente imposible ser completamente leal a ambos. Siempre uno recibirá lo mejor y el otro las sobras. Así es el señorío dividido.</p></div>
+    </div>
+    <div class="transicion">La elección es inevitable. La pregunta de Josué sigue vigente.</div>
+
+    <div class="div-item">
+      <div class="div-row"><span class="div-letra">C</span><div class="div-content"><div class="div-titulo">La decisión que define todo</div><div class="div-sub">Josué 24:15 — la elección más importante de la vida</div></div></div>
+      <ul class="subdivisiones">
+        <li><span class="sn">1.</span><span class="st"><strong>"Escogeos hoy a quién sirváis":</strong> Josué no da una tercera opción. No hay neutralidad posible. La negativa a elegir es en sí misma una elección — por defecto se elige al señor del mundo.</span></li>
+        <li><span class="sn">2.</span><span class="st"><strong>"Pero yo y mi casa serviremos a Jehová":</strong> La consagración que comienza en el individuo y abarca el hogar. El señorío de Cristo no es solo personal — transforma la familia.</span></li>
+        <li><span class="sn">3.</span><span class="st">La decisión de Josué no fue emotiva — fue racional y deliberada. "Por todo lo que Dios ha hecho, yo elijo." La consagración real nace de la gratitud, no del miedo.</span></li>
+      </ul>
+      <div class="aplicacion"><div class="al">Aplicación</div><p>Hoy, en este momento, ¿quién es el señor real de tu agenda, de tu dinero, de tus decisiones relacionales? No el señor que dices que tienes — el señor que tus acciones revelan que tienes.</p></div>
+    </div>
+  </div>
+
+  <div class="conclusion-box">
+    <div class="cb-l">Conclusión</div>
+    <p>No existe la zona neutral. Cada día que vives es un voto para algún señor. La pregunta no es si sirves a alguien — es a quién. Y la respuesta más honesta no está en lo que confiesas, sino en cómo vives.</p>
+    <p>"Escogeos hoy a quién sirváis." — Josué 24:15. La pregunta sigue abierta.</p>
+  </div>
+</section>
+
+<!-- ═══ BOSQUEJO 8 ═══ -->
+<section class="bosquejo" id="b8">
+  <div class="b-header">
+    <span class="b-bignum">08</span>
+    <div class="b-meta">
+      <div class="b-serie">Bosquejo · Gracia y Santidad</div>
+      <div class="b-titulo">La Gracia que Enseña</div>
+      <div class="b-texto">Tito 2:11-14</div>
+    </div>
+  </div>
+  <div class="b-divider"></div>
+
+  <div class="enc">
+    <div class="enc-item"><div class="ei-l">Texto base</div><div class="ei-v">Tito 2:11-14</div></div>
+    <div class="enc-item"><div class="ei-l">Tipo</div><div class="ei-v">Textual expositivo</div></div>
+    <div class="enc-item"><div class="ei-l">Tema general</div><div class="ei-v">La gracia como maestra de vida</div></div>
+    <div class="enc-item"><div class="ei-l">Palabra clave</div><div class="ei-v">Lecciones</div></div>
+  </div>
+  <div class="proposicion"><div class="p-l">Proposición</div><div class="p-v">"La gracia de Dios no es solo el medio de la salvación — es la maestra de la vida santa."</div></div>
+  <div class="proposicion proposito"><div class="p-l">Propósito</div><div class="p-v">Que el oyente entienda que la gracia no es permiso para pecar sino poder para no pecar.</div></div>
+
+  <div class="divisiones">
+    <div class="div-item">
+      <div class="div-row"><span class="div-letra">A</span><div class="div-content"><div class="div-titulo">La gracia se manifestó para todos</div><div class="div-sub">v.11 — El alcance universal</div></div></div>
+      <ul class="subdivisiones">
+        <li><span class="sn">1.</span><span class="st"><strong>"La gracia de Dios se ha manifestado para salvación a todos los hombres":</strong> No para una élite espiritual — para todos. La gracia es la iniciativa soberana de Dios hacia una humanidad que no la merece.</span></li>
+        <li><span class="sn">2.</span><span class="st">"Se ha manifestado" — griego aorist pasivo: apareció en un momento histórico específico. La encarnación, muerte y resurrección de Cristo es la gracia de Dios tomando forma visible.</span></li>
+        <li><span class="sn">3.</span><span class="st">La gracia no es solo perdón del pasado — es <em>poder para el presente</em>. Este versículo es el puente entre la salvación recibida y la vida que sigue.</span></li>
+      </ul>
+    </div>
+    <div class="transicion">La gracia salvó — pero también instruye. Ese es el giro radical del versículo 12.</div>
+
+    <div class="div-item">
+      <div class="div-row"><span class="div-letra">B</span><div class="div-content"><div class="div-titulo">Las tres lecciones de la gracia</div><div class="div-sub">v.12 — Lo que la gracia enseña a renunciar y a abrazar</div></div></div>
+      <ul class="subdivisiones">
+        <li><span class="sn">1.</span><span class="st"><strong>Lección 1 — renunciar a la impiedad:</strong> <em>Asébeia</em> — actitud de indiferencia o hostilidad hacia Dios. La gracia enseña a abandonar no solo los pecados visibles sino la orientación del corazón que los produce.</span></li>
+        <li><span class="sn">2.</span><span class="st"><strong>Lección 2 — vivir sobria, justa y piadosamente:</strong> Tres dimensiones: <em>sōfrónōs</em> (sobriedad — relación con uno mismo), <em>dikaíōs</em> (justicia — relación con los demás), <em>eusebōs</em> (piedad — relación con Dios). La gracia cubre toda la vida.</span></li>
+        <li><span class="sn">3.</span><span class="st"><strong>Lección 3 — aguardar la esperanza bienaventurada:</strong> v.13. La gracia orienta la vida hacia el regreso de Cristo. La santidad presente es inseparable de la esperanza futura.</span></li>
+      </ul>
+      <div class="ilustracion"><div class="il">Ilustración</div><p>Un maestro no solo imparte información — transforma a sus alumnos. La gracia de Dios no solo imparte perdón — transforma al perdonado. El alumno de la gracia no vive igual que antes de ingresar a su clase.</p></div>
+    </div>
+    <div class="transicion">La gracia tiene un propósito claro para la vida del creyente.</div>
+
+    <div class="div-item">
+      <div class="div-row"><span class="div-letra">C</span><div class="div-content"><div class="div-titulo">El propósito de la gracia</div><div class="div-sub">v.14 — Para qué nos rescató</div></div></div>
+      <ul class="subdivisiones">
+        <li><span class="sn">1.</span><span class="st"><strong>"Para redimirnos de toda iniquidad":</strong> La gracia no tolera el pecado — lo destruye. No es permiso para continuar — es poder para abandonar. El que usa la gracia como excusa para pecar no entendió la gracia.</span></li>
+        <li><span class="sn">2.</span><span class="st"><strong>"Y purificar para sí un pueblo propio":</strong> La gracia no solo salva individuos — construye una comunidad de pertenencia y propósito. Somos de Dios y somos de los unos para los otros.</span></li>
+        <li><span class="sn">3.</span><span class="st"><strong>"Celoso de buenas obras":</strong> El resultado de la gracia recibida es un creyente que ama hacer el bien — no por obligación sino por transformación. La motivación cambió de adentro hacia afuera.</span></li>
+      </ul>
+      <div class="aplicacion"><div class="al">Aplicación</div><p>¿Estás usando la gracia de Dios como trampolín hacia la santidad o como almohada para el pecado? La respuesta a esa pregunta revela si entendiste realmente lo que la gracia es.</p></div>
+    </div>
+  </div>
+
+  <div class="conclusion-box">
+    <div class="cb-l">Conclusión</div>
+    <p>La gracia que no cambia nada no es la gracia de Dios. La gracia bíblica salva, instruye, transforma y motiva. No es debilidad de Dios frente al pecado — es el poder de Dios para destruirlo.</p>
+    <p>"La gracia reina por la justicia para vida eterna." — Romanos 5:21</p>
+  </div>
+</section>
+
+<!-- ═══ BOSQUEJO 9 ═══ -->
+<section class="bosquejo" id="b9">
+  <div class="b-header">
+    <span class="b-bignum">09</span>
+    <div class="b-meta">
+      <div class="b-serie">Bosquejo · Perseverancia</div>
+      <div class="b-titulo">El que Comenzó la Obra</div>
+      <div class="b-texto">Filipenses 1:6 · 1 Tesalonicenses 5:24</div>
+    </div>
+  </div>
+  <div class="b-divider"></div>
+
+  <div class="enc">
+    <div class="enc-item"><div class="ei-l">Texto base</div><div class="ei-v">Filipenses 1:6</div></div>
+    <div class="enc-item"><div class="ei-l">Tipo</div><div class="ei-v">Textual expositivo</div></div>
+    <div class="enc-item"><div class="ei-l">Tema general</div><div class="ei-v">La fidelidad de Dios en la salvación</div></div>
+    <div class="enc-item"><div class="ei-l">Palabra clave</div><div class="ei-v">Garantías</div></div>
+  </div>
+  <div class="proposicion"><div class="p-l">Proposición</div><div class="p-v">"La seguridad del creyente no descansa en la constancia humana sino en la fidelidad del Dios que comenzó la obra."</div></div>
+  <div class="proposicion proposito"><div class="p-l">Propósito</div><div class="p-v">Que el creyente que atraviesa dudas sobre su perseverancia encuentre su seguridad en el carácter de Dios.</div></div>
+
+  <div class="divisiones">
+    <div class="div-item">
+      <div class="div-row"><span class="div-letra">A</span><div class="div-content"><div class="div-titulo">Dios fue quien comenzó — no tú</div><div class="div-sub">El origen de la obra determina su garantía</div></div></div>
+      <ul class="subdivisiones">
+        <li><span class="sn">1.</span><span class="st"><strong>"Estando persuadido de esto":</strong> Pablo no dice "espero" ni "creo que probablemente." Dice <em>persuadido</em> — convencido con certeza. La seguridad del creyente no es presunción — es confianza en el carácter de Dios.</span></li>
+        <li><span class="sn">2.</span><span class="st"><strong>"El que comenzó en vosotros la buena obra":</strong> El sujeto es Dios, no el creyente. La salvación comenzó por iniciativa divina — elección, llamado, gracia. Lo que Dios inicia, Dios completa.</span></li>
+        <li><span class="sn">3.</span><span class="st">Juan 6:37-40: "Todo lo que el Padre me da, vendrá a mí... y no lo echaré fuera." La seguridad del creyente no es su propio agarre de Dios — es el agarre de Dios sobre el creyente.</span></li>
+      </ul>
+    </div>
+    <div class="transicion">Dios comenzó. Y la promesa es que Él terminará lo que empezó.</div>
+
+    <div class="div-item">
+      <div class="div-row"><span class="div-letra">B</span><div class="div-content"><div class="div-titulo">La perfectará — la promesa del proceso</div><div class="div-sub">Santificación progresiva hacia la gloria</div></div></div>
+      <ul class="subdivisiones">
+        <li><span class="sn">1.</span><span class="st"><strong>"La perfectará hasta el día de Jesucristo":</strong> <em>Epiteleō</em> — completar, llevar a la meta. No una mejora opcional sino una obra que Dios mismo se comprometió a terminar.</span></li>
+        <li><span class="sn">2.</span><span class="st">La santificación no es el creyente esforzándose solo — es Dios trabajando en el creyente. "Es Dios el que en vosotros produce así el querer como el hacer, por su buena voluntad." — Filipenses 2:13.</span></li>
+        <li><span class="sn">3.</span><span class="st"><strong>1 Tesalonicenses 5:24:</strong> "Fiel es el que os llama, el cual también lo hará." El que llama es el que hace. La responsabilidad de completar la obra es de Dios, no del creyente.</span></li>
+      </ul>
+      <div class="ilustracion"><div class="il">Ilustración</div><p>Un arquitecto que diseña y contrata un proyecto de construcción no abandona la obra a mitad. Su reputación está en juego. Dios comenzó la obra de la salvación — su carácter garantiza que la terminará.</p></div>
+    </div>
+    <div class="transicion">La seguridad no es presunción — tiene bases bíblicas sólidas. Pero también tiene condiciones.</div>
+
+    <div class="div-item">
+      <div class="div-row"><span class="div-letra">C</span><div class="div-content"><div class="div-titulo">La responsabilidad que no desaparece</div><div class="div-sub">Filipenses 2:12 — la tensión correcta</div></div></div>
+      <ul class="subdivisiones">
+        <li><span class="sn">1.</span><span class="st"><strong>"Ocupaos en vuestra salvación con temor y temblor":</strong> La seguridad en Dios no elimina la responsabilidad del creyente. Ambas verdades coexisten sin contradicción.</span></li>
+        <li><span class="sn">2.</span><span class="st">Hebreos 3:14: "Somos hechos participantes de Cristo, con tal que retengamos firme hasta el fin nuestra confianza inicial." La perseverancia es real — y el creyente participa activamente en ella.</span></li>
+        <li><span class="sn">3.</span><span class="st">La seguridad bíblica no es "ya estoy salvo, haga lo que haga." Es "Dios que comenzó la obra coopera conmigo para llevarla a término mientras yo camino con fidelidad."</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="conclusion-box">
+    <div class="cb-l">Conclusión</div>
+    <p>Si alguna vez sientes que tu fe es demasiado débil para sostenerte, recuerda: tú no te sostienes — Él te sostiene. El que comenzó la obra en ti tiene toda la intención y el poder para terminarla. Tu parte es no abandonar lo que Él no ha abandonado.</p>
+    <p>"El que persevere hasta el fin, este será salvo." — Mateo 24:13. Él persevera contigo.</p>
+  </div>
+</section>
+
+<!-- ═══ BOSQUEJO 10 ═══ -->
+<section class="bosquejo" id="b10">
+  <div class="b-header">
+    <span class="b-bignum">10</span>
+    <div class="b-meta">
+      <div class="b-serie">Bosquejo · Escatología</div>
+      <div class="b-titulo">Maranatha — Ven, Señor Jesús</div>
+      <div class="b-texto">Apocalipsis 22:12-21 · 1 Corintios 16:22</div>
+    </div>
+  </div>
+  <div class="b-divider"></div>
+
+  <div class="enc">
+    <div class="enc-item"><div class="ei-l">Texto base</div><div class="ei-l">Apocalipsis 22:12-21</div></div>
+    <div class="enc-item"><div class="ei-l">Tipo</div><div class="ei-v">Expositivo escatológico</div></div>
+    <div class="enc-item"><div class="ei-l">Tema general</div><div class="ei-v">La segunda venida de Cristo</div></div>
+    <div class="enc-item"><div class="ei-l">Palabra clave</div><div class="ei-v">Respuestas</div></div>
+  </div>
+  <div class="proposicion"><div class="p-l">Proposición</div><div class="p-v">"La certeza del regreso de Cristo no es amenaza para el creyente — es la esperanza que hace soportable todo lo demás."</div></div>
+  <div class="proposicion proposito"><div class="p-l">Propósito</div><div class="p-v">Que el oyente viva con la urgencia y la esperanza que produce saber que Cristo viene pronto.</div></div>
+
+  <div class="divisiones">
+    <div class="div-item">
+      <div class="div-row"><span class="div-letra">A</span><div class="div-content"><div class="div-titulo">La promesa repetida tres veces</div><div class="div-sub">Apocalipsis 22:7,12,20 — "He aquí, vengo pronto"</div></div></div>
+      <ul class="subdivisiones">
+        <li><span class="sn">1.</span><span class="st">En el capítulo final de toda la Biblia, Jesús repite la misma promesa tres veces: <strong>"He aquí, vengo pronto."</strong> La repetición no es redundancia — es énfasis divino. Lo que Dios dice tres veces es lo que más quiere que recordemos.</span></li>
+        <li><span class="sn">2.</span><span class="st"><em>Taxý</em> — "pronto" en griego significa: súbitamente, sin previo aviso, de manera inesperada. No necesariamente "en poco tiempo" sino "cuando venga, será de repente."</span></li>
+        <li><span class="sn">3.</span><span class="st">Jesús también dice: <strong>"Yo soy el Alfa y la Omega, el principio y el fin."</strong> El que tiene la historia en sus manos desde el principio hasta el fin es el que viene. Su regreso no es improvisación — es conclusión.</span></li>
+      </ul>
+    </div>
+    <div class="transicion">Cristo anunció su regreso. La pregunta es: ¿cómo debemos responder a esa promesa?</div>
+
+    <div class="div-item">
+      <div class="div-row"><span class="div-letra">B</span><div class="div-content"><div class="div-titulo">Dos respuestas ante el regreso</div><div class="div-sub">Apocalipsis 22:11 — la división que el regreso produce</div></div></div>
+      <ul class="subdivisiones">
+        <li><span class="sn">1.</span><span class="st">v.11: <strong>"El que es injusto, sea injusto todavía... el que es justo, practique la justicia todavía."</strong> El regreso de Cristo no cambia el corazón — lo revela. Cada persona llegará al día de Cristo siendo lo que eligió ser.</span></li>
+        <li><span class="sn">2.</span><span class="st">v.14-15: Los que lavan sus ropas entran — los que no, quedan fuera. El regreso de Cristo es simultaneamente salvación para los preparados y juicio para los que no lo están. La misma venida, dos experiencias completamente opuestas.</span></li>
+        <li><span class="sn">3.</span><span class="st"><strong>Maranatha — 1 Corintios 16:22:</strong> En arameo: "Ven, Señor." La iglesia primitiva vivía con esta oración en los labios. No era desesperación — era anhelo. La diferencia entre temer el regreso y anhelarlo revela el estado del corazón.</span></li>
+      </ul>
+      <div class="ilustracion"><div class="il">Ilustración</div><p>Dos empleados esperan al dueño de la empresa que lleva meses de viaje. El que trabajó fiel está ansioso por mostrar los resultados. El que perdió el tiempo está nervioso por las consecuencias. El mismo regreso — dos experiencias radicalmente diferentes.</p></div>
+    </div>
+    <div class="transicion">La iglesia fiel no teme el regreso — lo pide. Esa es la última palabra de la Biblia.</div>
+
+    <div class="div-item">
+      <div class="div-row"><span class="div-letra">C</span><div class="div-content"><div class="div-titulo">La última oración de la Biblia</div><div class="div-sub">Apocalipsis 22:20 — "Ven, Señor Jesús"</div></div></div>
+      <ul class="subdivisiones">
+        <li><span class="sn">1.</span><span class="st"><strong>"El que da testimonio de estas cosas dice: Ciertamente vengo en breve."</strong> Cristo cierra la Biblia con una promesa. No con una amenaza, no con una advertencia — con una promesa personal y directa.</span></li>
+        <li><span class="sn">2.</span><span class="st"><strong>"Amén; sí, ven, Señor Jesús."</strong> La respuesta de Juan — y de toda la iglesia — es: <em>Amén. Que así sea. Te esperamos.</em> La última palabra de la Biblia es una oración por el regreso de Cristo.</span></li>
+        <li><span class="sn">3.</span><span class="st">La vida cristiana vivida correctamente termina en ese anhelo. No en miedo al juicio — en esperanza del encuentro. <strong>El que ama al Señor desea verlo. El que lo conoce no puede esperar que venga.</strong></span></li>
+      </ul>
+      <div class="aplicacion"><div class="al">Aplicación</div><p>¿Con qué emoción piensas en el regreso de Cristo? ¿Con miedo o con anhelo? La respuesta honesta te dice más sobre tu estado espiritual que cualquier lista de comportamientos.</p></div>
+    </div>
+  </div>
+
+  <div class="conclusion-box">
+    <div class="cb-l">Conclusión</div>
+    <p>La Biblia termina con una promesa y una oración. La promesa es de Dios: "Vengo pronto." La oración es de la iglesia: "Ven, Señor Jesús." Entre esa promesa y esa oración vivimos nosotros — con urgencia, con esperanza, con fidelidad.</p>
+    <p>"La gracia del Señor Jesucristo sea con todos vosotros. Amén." — Apocalipsis 22:21. Las últimas palabras de Dios a su iglesia son gracia.</p>
+  </div>
+</section>
+
+</main>
+
+<section class="epilogo">
+  <span class="big">PREDICAR</span>
+  <h2>10 mensajes, una misión</h2>
+  <p>Cada bosquejo es una semilla. La misma verdad eterna en diez formas diferentes, lista para ser plantada en corazones diferentes, en momentos diferentes, con el mismo poder del Espíritu Santo.</p>
+  <p>La Palabra de Dios no volverá vacía.</p>
+  <div class="firma">Serie 10 Bosquejos · Predicador IPUC · Biblioteca Digital</div>
+</section>
+
+</div>
+
+<script>
+const obs=new IntersectionObserver(e=>{e.forEach(el=>{if(el.isIntersecting)el.target.classList.add('visible');});},{threshold:.05});
+document.querySelectorAll('.bosquejo').forEach(e=>obs.observe(e));
+const nav=document.getElementById('sidenav');
+const wrap=document.getElementById('pageWrap');
+const isMobile=()=>window.innerWidth<=768;
+function toggleNav(){
+  if(isMobile()){nav.classList.toggle('show');}
+  else{nav.classList.toggle('hidden');wrap.classList.toggle('full');}
+}
+const secs=document.querySelectorAll('section[id]');
+const links=document.querySelectorAll('nav a');
+window.addEventListener('scroll',()=>{
+  let cur='';
+  secs.forEach(s=>{if(window.scrollY>=s.offsetTop-200)cur=s.id;});
+  links.forEach(a=>{a.classList.remove('active');if(a.getAttribute('href')==='#'+cur)a.classList.add('active');});
+});
+links.forEach(a=>{a.addEventListener('click',()=>{if(isMobile())nav.classList.remove('show');});});
+document.addEventListener('click',e=>{
+  if(isMobile()&&nav.classList.contains('show')&&!nav.contains(e.target)&&!e.target.closest('.nav-toggle')){nav.classList.remove('show');}
+});
+</script>
+</body>
+</html>

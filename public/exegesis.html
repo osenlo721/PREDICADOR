@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Exégesis Bíblica — Manual del Predicador</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Raleway:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--azul:#009FDA;--marino:#003B6F;--oro:#F0AB00;--oro-claro:#FFD166;--fondo:#040e1c;--fondo2:#071628;--texto:#e8e0d0;--texto-suave:#a89f90;--linea:rgba(240,171,0,.2);}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{background:var(--fondo);color:var(--texto);font-family:'Crimson Pro',Georgia,serif;font-size:18px;line-height:1.85;overflow-x:hidden;}
+::-webkit-scrollbar{width:4px;}
+::-webkit-scrollbar-track{background:var(--fondo);}
+::-webkit-scrollbar-thumb{background:var(--azul);border-radius:2px;}
+
+.nav-toggle{position:fixed;top:16px;left:16px;z-index:200;background:var(--marino);border:1px solid var(--linea);color:var(--oro);width:40px;height:40px;border-radius:8px;cursor:pointer;font-size:18px;display:flex;align-items:center;justify-content:center;transition:all .2s;}
+.nav-toggle:hover{background:var(--azul);color:#fff;}
+nav{position:fixed;left:0;top:0;bottom:0;width:250px;background:linear-gradient(180deg,var(--marino) 0%,#011529 100%);border-right:1px solid var(--linea);z-index:100;overflow-y:auto;transform:translateX(-100%);transition:transform .35s ease;padding:32px 0;}
+nav.show{transform:translateX(0);}
+nav .nav-title{font-family:'Cinzel',serif;font-size:10px;letter-spacing:4px;color:var(--oro);padding:0 20px 16px;border-bottom:1px solid var(--linea);margin-bottom:12px;}
+nav a{display:block;padding:7px 20px;font-family:'Raleway',sans-serif;font-size:11px;font-weight:500;letter-spacing:1px;color:var(--texto-suave);text-decoration:none;border-left:2px solid transparent;transition:all .2s;}
+nav a:hover,nav a.active{color:var(--oro);border-left-color:var(--oro);background:rgba(240,171,0,.06);}
+
+.cover{min-height:100vh;background:linear-gradient(160deg,#041830 0%,var(--fondo) 65%);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:80px 32px 60px;position:relative;overflow:hidden;}
+.cover::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 50% at 50% 10%,rgba(0,159,218,.18) 0%,transparent 70%),radial-gradient(ellipse 40% 40% at 80% 85%,rgba(240,171,0,.1) 0%,transparent 60%);pointer-events:none;}
+.cover-icon{font-size:64px;margin-bottom:24px;animation:fadeDown .8s ease both;}
+.cover-tag{font-family:'Cinzel',serif;font-size:10px;letter-spacing:5px;color:var(--azul);text-transform:uppercase;margin-bottom:20px;animation:fadeDown .9s ease .1s both;}
+.cover-title{font-family:'Cinzel',serif;font-size:clamp(44px,10vw,96px);font-weight:900;line-height:1;margin-bottom:8px;animation:fadeDown 1s ease .2s both;}
+.cover-title span{color:var(--oro);}
+.cover-sub{font-family:'Cinzel',serif;font-size:clamp(13px,2vw,17px);color:var(--azul);letter-spacing:2px;margin-bottom:32px;animation:fadeDown 1s ease .25s both;}
+.cover-line{width:60px;height:1px;background:linear-gradient(to right,transparent,var(--oro),transparent);margin:0 auto 24px;animation:fadeIn 1.1s ease .35s both;}
+.cover-author{font-family:'Raleway',sans-serif;font-size:13px;letter-spacing:4px;color:var(--texto-suave);text-transform:uppercase;animation:fadeDown 1.1s ease .4s both;}
+.cover-verse{position:absolute;bottom:40px;font-family:'Crimson Pro',serif;font-style:italic;font-size:14px;color:var(--texto-suave);max-width:440px;text-align:center;line-height:1.6;}
+
+main{max-width:740px;margin:0 auto;padding:0 24px;}
+
+.chapter{padding:80px 0 60px;border-bottom:1px solid rgba(240,171,0,.1);opacity:0;transform:translateY(30px);transition:opacity .7s ease,transform .7s ease;}
+.chapter.visible{opacity:1;transform:none;}
+.ch-num{font-family:'Cinzel',serif;font-size:11px;letter-spacing:4px;color:var(--azul);text-transform:uppercase;margin-bottom:12px;}
+.ch-title{font-family:'Cinzel',serif;font-size:clamp(22px,4vw,36px);font-weight:700;color:var(--oro);line-height:1.2;margin-bottom:8px;}
+.ch-sub{font-family:'Cinzel',serif;font-size:clamp(14px,2.5vw,20px);color:var(--azul);margin-bottom:28px;}
+.ch-divider{width:40px;height:2px;background:linear-gradient(to right,var(--oro),var(--azul));margin-bottom:32px;border-radius:2px;}
+p{margin-bottom:20px;}
+strong{color:var(--oro);font-weight:600;}
+em{color:var(--azul);font-style:italic;}
+
+.quote{border-left:3px solid var(--oro);padding:16px 24px;margin:28px 0;background:rgba(240,171,0,.05);border-radius:0 8px 8px 0;}
+.quote p{font-family:'Crimson Pro',serif;font-style:italic;font-size:1.05em;color:var(--oro-claro);margin-bottom:6px;}
+.quote cite{font-family:'Raleway',sans-serif;font-size:12px;letter-spacing:2px;color:var(--texto-suave);}
+
+.section-label{font-family:'Cinzel',serif;font-size:11px;letter-spacing:3px;color:var(--azul);text-transform:uppercase;margin:36px 0 12px;}
+
+.list-yes,.list-no{list-style:none;margin:16px 0 24px;padding:0;}
+.list-yes li,.list-no li{padding:6px 0 6px 28px;position:relative;font-size:.97em;color:var(--texto-suave);border-bottom:1px solid rgba(255,255,255,.05);}
+.list-yes li::before{content:'✅';position:absolute;left:0;top:6px;font-size:14px;}
+.list-no li::before{content:'❌';position:absolute;left:0;top:6px;font-size:14px;}
+
+.compare{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:28px 0;}
+.compare-box{padding:20px;border-radius:8px;border:1px solid;}
+.compare-box.a{border-color:rgba(0,159,218,.3);background:rgba(0,159,218,.05);}
+.compare-box.b{border-color:rgba(240,171,0,.3);background:rgba(240,171,0,.05);}
+.compare-box h4{font-family:'Cinzel',serif;font-size:10px;letter-spacing:3px;margin-bottom:12px;text-transform:uppercase;}
+.compare-box.a h4{color:var(--azul);}
+.compare-box.b h4{color:var(--oro);}
+.compare-box ul{list-style:none;}
+.compare-box ul li{font-size:14px;padding:4px 0;color:var(--texto-suave);border-bottom:1px solid rgba(255,255,255,.06);}
+
+.frase{text-align:center;padding:40px 24px;margin:32px 0;position:relative;}
+.frase::before{content:'"';font-family:'Cinzel',serif;font-size:100px;color:rgba(240,171,0,.07);position:absolute;top:-10px;left:16px;line-height:1;}
+.frase p{font-family:'Cinzel',serif;font-size:clamp(15px,2.2vw,20px);color:var(--texto);line-height:1.5;position:relative;z-index:1;margin:0;}
+
+.tip-box{background:linear-gradient(135deg,rgba(0,59,111,.4) 0%,rgba(4,14,28,.8) 100%);border:1px solid rgba(0,159,218,.25);border-radius:12px;padding:24px;margin:28px 0;}
+.tip-box h4{font-family:'Cinzel',serif;font-size:11px;letter-spacing:4px;color:var(--azul);text-transform:uppercase;margin-bottom:14px;}
+.tip-box p,.tip-box li{color:var(--texto-suave);font-size:.95em;margin-bottom:8px;}
+.tip-box ol,.tip-box ul{padding-left:20px;}
+.tip-box li{margin-bottom:8px;}
+
+.gold-box{background:rgba(240,171,0,.06);border:1px solid rgba(240,171,0,.2);border-radius:12px;padding:24px;margin:28px 0;}
+.gold-box h4{font-family:'Cinzel',serif;font-size:11px;letter-spacing:4px;color:var(--oro);text-transform:uppercase;margin-bottom:14px;}
+.gold-box p{color:var(--texto-suave);font-size:.95em;margin-bottom:8px;}
+
+.ejemplo{background:rgba(4,14,28,.9);border:1px solid rgba(240,171,0,.15);border-radius:8px;padding:24px;margin:24px 0;font-family:'Raleway',sans-serif;font-size:14px;}
+.ejemplo .ej-label{font-family:'Cinzel',serif;font-size:10px;letter-spacing:3px;color:var(--oro);text-transform:uppercase;margin-bottom:12px;}
+.ejemplo .ej-texto{color:var(--azul);font-style:italic;font-size:16px;margin-bottom:16px;font-family:'Crimson Pro',serif;}
+.ejemplo p{color:var(--texto-suave);margin-bottom:8px;}
+.ejemplo strong{color:var(--oro);}
+
+.pasos{counter-reset:paso;list-style:none;padding:0;margin:24px 0;}
+.pasos li{counter-increment:paso;display:flex;gap:16px;margin-bottom:20px;align-items:flex-start;}
+.pasos li::before{content:counter(paso);font-family:'Cinzel',serif;font-size:20px;font-weight:700;color:var(--oro);min-width:32px;line-height:1.4;}
+.pasos li .paso-content h5{font-family:'Cinzel',serif;font-size:14px;color:var(--azul);margin-bottom:4px;letter-spacing:1px;}
+.pasos li .paso-content p{color:var(--texto-suave);font-size:.95em;margin:0;}
+
+.epilogo{text-align:center;padding:80px 32px 120px;}
+.epilogo .big{font-family:'Cinzel',serif;font-size:clamp(36px,8vw,72px);font-weight:900;color:transparent;-webkit-text-stroke:1px rgba(240,171,0,.35);letter-spacing:6px;display:block;margin-bottom:40px;}
+.epilogo h2{font-family:'Cinzel',serif;font-size:clamp(18px,3vw,28px);color:var(--oro);margin-bottom:24px;}
+.epilogo p{max-width:540px;margin:0 auto 16px;color:var(--texto-suave);}
+.epilogo .firma{margin-top:48px;font-family:'Cinzel',serif;font-size:13px;letter-spacing:4px;color:var(--azul);}
+
+@keyframes fadeDown{from{opacity:0;transform:translateY(-20px);}to{opacity:1;transform:none;}}
+@keyframes fadeIn{from{opacity:0;}to{opacity:1;}}
+@media(max-width:600px){.compare{grid-template-columns:1fr;}nav{width:210px;}.pasos li{flex-direction:column;gap:8px;}}
+</style>
+</head>
+<body>
+
+<button class="nav-toggle" onclick="toggleNav()">☰</button>
+
+<nav id="sidenav">
+  <div class="nav-title">Contenido</div>
+  <a href="#portada">Portada</a>
+  <a href="#etimologia">1. Etimología</a>
+  <a href="#que-es">2. ¿Qué es la exégesis?</a>
+  <a href="#vs">3. Exégesis vs Eiségesis</a>
+  <a href="#contexto">4. El contexto</a>
+  <a href="#desarrollo">5. Pasos del análisis</a>
+  <a href="#herramientas">6. Herramientas</a>
+  <a href="#aplicacion">7. Del texto al sermón</a>
+  <a href="#ejemplo">8. Ejemplo práctico</a>
+</nav>
+
+<!-- PORTADA -->
+<section class="cover" id="portada">
+  <div class="cover-icon">📜</div>
+  <div class="cover-tag">Estudio · Serie Predicador</div>
+  <h1 class="cover-title"><span>Exégesis</span><br>Bíblica</h1>
+  <div class="cover-sub">Cómo leer la Biblia antes de predicarla</div>
+  <div class="cover-line"></div>
+  <div class="cover-author">Manual del Predicador · IPUC</div>
+  <div class="cover-verse">"Procura con diligencia presentarte a Dios aprobado, como obrero que no tiene de qué avergonzarse, que usa bien la palabra de verdad." — 2 Timoteo 2:15</div>
+</section>
+
+<main>
+
+<!-- CAP 1 ETIMOLOGÍA -->
+<section class="chapter" id="etimologia">
+  <div class="ch-num">Lección 1</div>
+  <h2 class="ch-title">Etimología</h2>
+  <div class="ch-sub">El origen de la palabra</div>
+  <div class="ch-divider"></div>
+
+  <p>Antes de enseñar qué es la exégesis, hay que entender de dónde viene la palabra. Porque en las Escrituras, cada palabra tiene peso, historia y profundidad — y lo mismo pasa con las herramientas que usamos para estudiarlas.</p>
+
+  <div class="gold-box">
+    <h4>La palabra Exégesis</h4>
+    <p>Viene del griego <strong>ἐξήγησις</strong> (exḗgēsis), formada por dos partes:</p>
+    <p><strong>ἐξ (ex)</strong> = "fuera de", "desde adentro hacia afuera"</p>
+    <p><strong>ἡγέομαι (hēgéomai)</strong> = "guiar", "liderar", "sacar"</p>
+    <p>Su significado literal es: <strong>"sacar hacia afuera"</strong> — extraer el significado que ya está dentro del texto.</p>
+  </div>
+
+  <p>Esta etimología no es un dato académico sin importancia. Es la clave de todo. La exégesis te dice que tu trabajo como predicador <strong>no es poner ideas en el texto</strong> — es sacar las ideas que Dios ya puso ahí.</p>
+
+  <p>El Evangelio de Juan usa esta misma raíz griega cuando dice:</p>
+  <div class="quote">
+    <p>"A Dios nadie le vio jamás; el unigénito Hijo, que está en el seno del Padre, él le ha dado a conocer."</p>
+    <cite>Juan 1:18 — "dado a conocer" en griego es exēgḗsato — Jesús fue el exégeta perfecto del Padre.</cite>
+  </div>
+
+  <p>Jesús mismo fue un exégeta. Él sacó hacia afuera al Padre invisible y lo hizo visible. Así también tú, como predicador, debes sacar hacia afuera la verdad que está dentro del texto y hacerla visible a tu congregación.</p>
+
+  <div class="frase"><p>"La exégesis no inventa — descubre. No impone — libera."</p></div>
+</section>
+
+<!-- CAP 2 QUÉ ES -->
+<section class="chapter" id="que-es">
+  <div class="ch-num">Lección 2</div>
+  <h2 class="ch-title">¿Qué es la exégesis?</h2>
+  <div class="ch-sub">La ciencia de entender el texto</div>
+  <div class="ch-divider"></div>
+
+  <p>La exégesis es el <strong>estudio profundo y metódico de un texto bíblico</strong> para descubrir su significado original — lo que el autor humano quiso decir, en su tiempo, a sus lectores, bajo la inspiración del Espíritu Santo.</p>
+
+  <p>No se trata de leer rápido y predicar lo primero que se te ocurra. Se trata de hacer las preguntas correctas al texto y esperar sus respuestas con paciencia y rigor.</p>
+
+  <div class="section-label">Las preguntas de la exégesis</div>
+  <div class="tip-box">
+    <h4>Las 5 preguntas fundamentales</h4>
+    <ol>
+      <li><strong>¿Quién escribió esto?</strong> — el autor, su historia, su contexto personal</li>
+      <li><strong>¿A quién se lo escribió?</strong> — los receptores originales, su situación</li>
+      <li><strong>¿Cuándo y dónde fue escrito?</strong> — el contexto histórico</li>
+      <li><strong>¿Por qué lo escribió?</strong> — el propósito del texto</li>
+      <li><strong>¿Qué quiso decir exactamente?</strong> — el significado palabra por palabra</li>
+    </ol>
+  </div>
+
+  <p>Cuando respondes estas preguntas, tienes la base sólida para construir un sermón que sea fiel a la Biblia — no a tus opiniones, no a tu denominación, no a lo que te conviene decir, sino a lo que Dios realmente dijo.</p>
+
+  <div class="quote">
+    <p>"Procura con diligencia presentarte a Dios aprobado, como obrero que no tiene de qué avergonzarse, que usa bien la palabra de verdad."</p>
+    <cite>2 Timoteo 2:15 — "usa bien" viene del griego orthotoméō: cortar derecho, trazar con precisión.</cite>
+  </div>
+
+  <div class="frase"><p>"El predicador que no hace exégesis no predica la Biblia — predica sus propias ideas con versículos prestados."</p></div>
+</section>
+
+<!-- CAP 3 VS EISÉGESIS -->
+<section class="chapter" id="vs">
+  <div class="ch-num">Lección 3</div>
+  <h2 class="ch-title">Exégesis vs Eiségesis</h2>
+  <div class="ch-sub">La diferencia que cambia todo</div>
+  <div class="ch-divider"></div>
+
+  <p>Aquí está el contraste más importante que todo predicador debe entender. Dos palabras que suenan parecido pero van en direcciones opuestas.</p>
+
+  <div class="gold-box">
+    <h4>Eiségesis — el error peligroso</h4>
+    <p>Del griego <strong>εἰς (eis)</strong> = "hacia adentro"</p>
+    <p>La eiségesis es meter hacia adentro del texto lo que tú ya quieres encontrar. Es llegar a la Biblia con una conclusión y buscar versículos que la respalden.</p>
+  </div>
+
+  <div class="compare">
+    <div class="compare-box a">
+      <h4>Exégesis ✅</h4>
+      <ul>
+        <li>Sale del texto</li>
+        <li>"¿Qué dice Dios aquí?"</li>
+        <li>El texto gobierna al predicador</li>
+        <li>Fiel al autor original</li>
+        <li>Produce doctrina sana</li>
+      </ul>
+    </div>
+    <div class="compare-box b">
+      <h4>Eiségesis ❌</h4>
+      <ul>
+        <li>Entra al texto con ideas previas</li>
+        <li>"¿Cómo hago que esto diga lo que quiero?"</li>
+        <li>El predicador gobierna al texto</li>
+        <li>Distorsiona al autor original</li>
+        <li>Produce herejía o confusión</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="section-label">Ejemplos de eiségesis</div>
+  <div class="ejemplo">
+    <div class="ej-label">Ejemplo de eiségesis — error clásico</div>
+    <div class="ej-texto">"Todo lo puedo en Cristo que me fortalece." — Filipenses 4:13</div>
+    <p><strong>Eiségesis:</strong> "Esto significa que puedo ganar cualquier competencia, tener éxito en todos mis negocios y lograr todo lo que me proponga."</p>
+    <p><strong>Exégesis:</strong> Pablo escribió esto desde la prisión, hablando de contentamiento en toda circunstancia — tanto en abundancia como en necesidad. El "todo lo puedo" es la capacidad de estar contento en cualquier situación, no una promesa de éxito universal.</p>
+  </div>
+
+  <p>¿Ves la diferencia? La eiségesis toma las palabras y les da un significado que el autor nunca tuvo en mente. La exégesis se sienta con humildad ante el texto y deja que Dios hable.</p>
+
+  <div class="frase"><p>"Cuando tú le dices al texto lo que significa, hablas tú. Cuando el texto te dice a ti lo que significa, habla Dios."</p></div>
+</section>
+
+<!-- CAP 4 CONTEXTO -->
+<section class="chapter" id="contexto">
+  <div class="ch-num">Lección 4</div>
+  <h2 class="ch-title">El contexto</h2>
+  <div class="ch-sub">La regla de oro de la interpretación</div>
+  <div class="ch-divider"></div>
+
+  <p>Existe una regla en hermenéutica que todo predicador debe tatuar en su mente: <strong>"Un texto sin contexto es un pretexto."</strong> El contexto no es opcional — es la base de toda interpretación honesta.</p>
+
+  <div class="section-label">Los 4 niveles de contexto</div>
+
+  <ul class="pasos">
+    <li>
+      <div class="paso-content">
+        <h5>Contexto inmediato</h5>
+        <p>Los versículos que están justo antes y después del texto. Siempre lee al menos 5 versículos antes y 5 después de tu texto principal. El significado de una frase depende de lo que viene antes y lo que viene después.</p>
+      </div>
+    </li>
+    <li>
+      <div class="paso-content">
+        <h5>Contexto del capítulo</h5>
+        <p>El tema central del capítulo completo. ¿De qué está hablando el autor en todo este capítulo? Tu texto debe interpretarse dentro de esa conversación mayor.</p>
+      </div>
+    </li>
+    <li>
+      <div class="paso-content">
+        <h5>Contexto del libro</h5>
+        <p>El propósito general del libro bíblico. Juan escribe diferente a Pablo. Isaías escribe diferente a Amós. Cada libro tiene un propósito, una audiencia y un tono que afecta cómo se leen sus textos.</p>
+      </div>
+    </li>
+    <li>
+      <div class="paso-content">
+        <h5>Contexto histórico-cultural</h5>
+        <p>El mundo en que vivió el autor. ¿Quiénes eran los receptores? ¿Qué problema enfrentaban? ¿Cuáles eran las costumbres de esa época? Sin este contexto, muchos textos parecen extraños o contradictorios.</p>
+      </div>
+    </li>
+  </ul>
+
+  <div class="ejemplo">
+    <div class="ej-label">El contexto cambia todo — Filipenses 4:13</div>
+    <div class="ej-texto">Contexto: Pablo está en prisión. Acaba de hablar de aprender a contentarse en toda situación (v.11-12). Luego dice "todo lo puedo en Cristo..."</div>
+    <p>Con este contexto, "todo lo puedo" no es una promesa de prosperidad — es una declaración de <strong>resistencia espiritual</strong>. Pablo puede soportar cualquier circunstancia porque Cristo le da fuerzas para ello.</p>
+    <p>El contexto transforma completamente la predicación.</p>
+  </div>
+
+  <div class="quote">
+    <p>"La Biblia nunca dice algo en un versículo que contradiga lo que dice en el resto. Cuando hay aparente contradicción, el contexto la resuelve."</p>
+    <cite>Principio hermenéutico fundamental</cite>
+  </div>
+</section>
+
+<!-- CAP 5 DESARROLLO -->
+<section class="chapter" id="desarrollo">
+  <div class="ch-num">Lección 5</div>
+  <h2 class="ch-title">Pasos del análisis</h2>
+  <div class="ch-sub">Cómo hacer exégesis paso a paso</div>
+  <div class="ch-divider"></div>
+
+  <p>La exégesis no es un proceso mágico ni complicado. Es un método que cualquier predicador puede aprender y aplicar con disciplina. Aquí están los pasos probados.</p>
+
+  <ul class="pasos">
+    <li>
+      <div class="paso-content">
+        <h5>Paso 1 — Ora antes de estudiar</h5>
+        <p>El Espíritu Santo es el autor principal de la Biblia. Sin su iluminación, el estudio académico más brillante puede producir interpretaciones muertas. Pide entendimiento antes de abrir el texto.</p>
+      </div>
+    </li>
+    <li>
+      <div class="paso-content">
+        <h5>Paso 2 — Lee el texto varias veces</h5>
+        <p>Léelo en voz alta. Léelo en varias traducciones (RV1960, NVI, LBLA, DHH). Lee el pasaje completo, no solo el versículo que quieres predicar. Deja que el texto hable antes de que tú hables sobre él.</p>
+      </div>
+    </li>
+    <li>
+      <div class="paso-content">
+        <h5>Paso 3 — Identifica las palabras clave</h5>
+        <p>¿Cuáles son las palabras más importantes del texto? Busca su significado en el idioma original (hebreo o griego). Herramientas como la Concordancia de Strong te ayudan a hacer esto sin saber los idiomas.</p>
+      </div>
+    </li>
+    <li>
+      <div class="paso-content">
+        <h5>Paso 4 — Analiza el contexto histórico</h5>
+        <p>¿Quién escribió? ¿A quién? ¿En qué situación? ¿Cuál era el problema que el autor intentaba resolver? Un buen comentario bíblico te da esta información.</p>
+      </div>
+    </li>
+    <li>
+      <div class="paso-content">
+        <h5>Paso 5 — Observa la estructura gramatical</h5>
+        <p>¿Hay mandatos, promesas, condiciones, advertencias? Las palabras de conexión como "por tanto", "porque", "pero", "sin embargo" revelan la lógica del argumento del autor.</p>
+      </div>
+    </li>
+    <li>
+      <div class="paso-content">
+        <h5>Paso 6 — Formula la idea central</h5>
+        <p>¿Cuál es la única verdad principal que este texto enseña? Exprésala en una sola oración clara. Esta se convertirá en la proposición de tu sermón.</p>
+      </div>
+    </li>
+    <li>
+      <div class="paso-content">
+        <h5>Paso 7 — Conecta con el resto de la Biblia</h5>
+        <p>¿Otros textos confirman o complementan esta verdad? La Biblia se interpreta con la Biblia. Busca pasajes paralelos que iluminen tu texto principal.</p>
+      </div>
+    </li>
+    <li>
+      <div class="paso-content">
+        <h5>Paso 8 — Pregunta por la aplicación</h5>
+        <p>¿Qué quería que cambiara en la vida de los receptores originales? Y luego: ¿qué quiere Dios que cambie en la vida de mi congregación hoy? Esta es la puerta entre la exégesis y el sermón.</p>
+      </div>
+    </li>
+  </ul>
+</section>
+
+<!-- CAP 6 HERRAMIENTAS -->
+<section class="chapter" id="herramientas">
+  <div class="ch-num">Lección 6</div>
+  <h2 class="ch-title">Herramientas</h2>
+  <div class="ch-sub">Los instrumentos del exégeta</div>
+  <div class="ch-divider"></div>
+
+  <p>No necesitas una biblioteca universitaria para hacer exégesis. Hay herramientas accesibles que todo predicador debería tener y usar.</p>
+
+  <div class="section-label">Herramientas esenciales</div>
+
+  <ul class="pasos">
+    <li>
+      <div class="paso-content">
+        <h5>La Biblia en múltiples versiones</h5>
+        <p>Compara el texto en RV1960, NVI, LBLA y Reina Valera Contemporánea. Las diferencias entre traducciones revelan tensiones en el texto original que enriquecen tu estudio.</p>
+      </div>
+    </li>
+    <li>
+      <div class="paso-content">
+        <h5>Concordancia de Strong</h5>
+        <p>Te permite ver el número del término griego o hebreo de cada palabra y su significado original. Disponible gratis en apps como Blue Letter Bible o e-Sword.</p>
+      </div>
+    </li>
+    <li>
+      <div class="paso-content">
+        <h5>Comentarios bíblicos</h5>
+        <p>Autores como Matthew Henry, William Barclay, John MacArthur y Adam Clarke han dedicado décadas a explicar cada texto. No los uses para reemplazar tu estudio — úsalos para confirmarlo o corregirlo.</p>
+      </div>
+    </li>
+    <li>
+      <div class="paso-content">
+        <h5>Diccionario bíblico</h5>
+        <p>Te explica el significado de lugares, personajes, costumbres y términos teológicos que aparecen en el texto. Esencial para el contexto histórico-cultural.</p>
+      </div>
+    </li>
+    <li>
+      <div class="paso-content">
+        <h5>Atlas bíblico</h5>
+        <p>Los lugares importan. Saber dónde estaba Pablo cuando escribió, qué clima tenía esa región, qué rutas usaban los viajeros — todo esto ilumina el texto.</p>
+      </div>
+    </li>
+  </ul>
+
+  <div class="tip-box">
+    <h4>Apps gratuitas recomendadas</h4>
+    <ul>
+      <li><strong>YouVersion Bible:</strong> múltiples versiones en español e inglés</li>
+      <li><strong>Blue Letter Bible:</strong> concordancia Strong, comentarios, griego y hebreo</li>
+      <li><strong>e-Sword:</strong> biblioteca bíblica completa para PC</li>
+      <li><strong>MySword:</strong> versión móvil de e-Sword para Android</li>
+    </ul>
+  </div>
+</section>
+
+<!-- CAP 7 APLICACIÓN -->
+<section class="chapter" id="aplicacion">
+  <div class="ch-num">Lección 7</div>
+  <h2 class="ch-title">Del texto al sermón</h2>
+  <div class="ch-sub">Cómo la exégesis alimenta la predicación</div>
+  <div class="ch-divider"></div>
+
+  <p>La exégesis no termina en el estudio. Termina en el púlpito. Todo lo que descubres en el texto debe fluir naturalmente hacia el sermón. Aquí está el puente.</p>
+
+  <div class="compare">
+    <div class="compare-box a">
+      <h4>Exégesis</h4>
+      <ul>
+        <li>¿Qué dijo Dios entonces?</li>
+        <li>Trabajo en el estudio</li>
+        <li>Para el predicador</li>
+        <li>Proceso privado</li>
+      </ul>
+    </div>
+    <div class="compare-box b">
+      <h4>Sermón</h4>
+      <ul>
+        <li>¿Qué dice Dios hoy?</li>
+        <li>Trabajo en el púlpito</li>
+        <li>Para la congregación</li>
+        <li>Proceso público</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="section-label">Los 3 pasos del puente</div>
+
+  <ul class="pasos">
+    <li>
+      <div class="paso-content">
+        <h5>Del texto a la proposición</h5>
+        <p>La idea central que encontraste en la exégesis se convierte en la proposición del sermón. Si tu exégesis dijo: "Pablo enseña que la fe genuina actúa aun en la oscuridad", esa es tu proposición.</p>
+      </div>
+    </li>
+    <li>
+      <div class="paso-content">
+        <h5>De los elementos del texto a las divisiones</h5>
+        <p>Los componentes que encontraste en el texto — mandatos, promesas, ejemplos, advertencias — se convierten en los puntos principales del sermón. No los inventas, los extraes.</p>
+      </div>
+    </li>
+    <li>
+      <div class="paso-content">
+        <h5>Del significado original a la aplicación actual</h5>
+        <p>Pregunta: "Si esto era verdad para ellos entonces, ¿cómo es verdad para nosotros hoy?" El principio bíblico es eterno, pero la aplicación se adapta a tu contexto y congregación.</p>
+      </div>
+    </li>
+  </ul>
+
+  <div class="gold-box">
+    <h4>La regla de oro</h4>
+    <p>Un sermón fiel es aquel donde puedes decirle a tu congregación: <strong>"Lo que voy a predicar hoy no es mi opinión ni mi idea — es lo que este texto dice."</strong></p>
+    <p>Cuando la exégesis precede al sermón, predicas con autoridad. No la autoridad del predicador elocuente — la autoridad de la Palabra de Dios.</p>
+  </div>
+
+  <div class="frase"><p>"El mejor predicador no es el que más sabe — es el que más fielmente transmite lo que Dios ya dijo."</p></div>
+</section>
+
+<!-- CAP 8 EJEMPLO PRÁCTICO -->
+<section class="chapter" id="ejemplo">
+  <div class="ch-num">Lección 8</div>
+  <h2 class="ch-title">Ejemplo práctico</h2>
+  <div class="ch-sub">Exégesis completa de Juan 3:16</div>
+  <div class="ch-divider"></div>
+
+  <p>Apliquemos todo lo aprendido al versículo más conocido de la Biblia. Verás que incluso el texto más familiar tiene profundidades que la eiségesis nunca descubre.</p>
+
+  <div class="quote">
+    <p>"Porque de tal manera amó Dios al mundo, que ha dado a su Hijo unigénito, para que todo aquel que en él cree, no se pierda, mas tenga vida eterna."</p>
+    <cite>Juan 3:16 — RV1960</cite>
+  </div>
+
+  <div class="section-label">Paso 1 — Contexto</div>
+  <div class="ejemplo">
+    <div class="ej-label">Contexto histórico y literario</div>
+    <p><strong>Autor:</strong> Juan el apóstol, escribiendo ~90 d.C. a creyentes de Asia Menor y al mundo greco-romano.</p>
+    <p><strong>Propósito del libro:</strong> "Para que creáis que Jesús es el Cristo, el Hijo de Dios" (Juan 20:31).</p>
+    <p><strong>Contexto inmediato:</strong> Jesús habla de noche con Nicodemo, un fariseo que busca entender el nuevo nacimiento. Juan 3:16 es la cumbre de esa conversación.</p>
+    <p><strong>Contexto del versículo:</strong> Jesús acaba de hablar del nuevo nacimiento (v.3-8) y de la serpiente en el desierto como tipo de su muerte (v.14-15). Juan 3:16 es la explicación de por qué.</p>
+  </div>
+
+  <div class="section-label">Paso 2 — Palabras clave</div>
+  <div class="ejemplo">
+    <div class="ej-label">Análisis del vocabulario griego</div>
+    <p><strong>"De tal manera amó"</strong> — griego: <em>ēgápēsen</em> (ágape). No es amor emocional o romántico. Es el amor que da sin esperar nada a cambio. El verbo está en aoristo — un amor que sucedió en un momento específico de la historia.</p>
+    <p><strong>"Al mundo"</strong> — griego: <em>kósmon</em>. No solo a Israel. No solo a los buenos. Al kósmos — la humanidad entera en su estado caído y rebelde.</p>
+    <p><strong>"Unigénito"</strong> — griego: <em>monogenḗ</em>. Único en su clase. Sin igual. No es simplemente "único hijo" — es el Hijo que nadie más podría ser.</p>
+    <p><strong>"No se pierda"</strong> — griego: <em>apólētai</em>. Destrucción, ruina eterna. No es solo una tristeza — es la pérdida total de todo lo que el ser humano fue creado para ser.</p>
+    <p><strong>"Vida eterna"</strong> — griego: <em>zoēn aiōnion</em>. No es solo duración infinita — es la calidad de vida que pertenece a la era venidera, la vida de Dios mismo.</p>
+  </div>
+
+  <div class="section-label">Paso 3 — Idea central</div>
+  <div class="gold-box">
+    <h4>La proposición exegética</h4>
+    <p>El amor soberano y eterno de Dios hacia una humanidad perdida lo llevó a dar lo más valioso que tenía — su propio Hijo — para que todo ser humano, sin excepción, que deposite su confianza en Él, escape de la destrucción eterna y reciba la vida de Dios mismo.</p>
+  </div>
+
+  <div class="section-label">Paso 4 — Aplicación al sermón</div>
+  <div class="tip-box">
+    <h4>Del análisis al bosquejo</h4>
+    <ol>
+      <li><strong>El amor que mueve:</strong> Dios amó primero — antes de que cambiáramos, antes de que lo buscáramos</li>
+      <li><strong>El don que cuesta:</strong> dio a su Hijo — el amor verdadero siempre sacrifica algo</li>
+      <li><strong>La condición que salva:</strong> todo aquel que cree — la fe como respuesta, no como mérito</li>
+      <li><strong>La promesa que transforma:</strong> no se pierda, mas tenga vida eterna — dos destinos, una decisión</li>
+    </ol>
+  </div>
+
+  <div class="frase"><p>"Juan 3:16 no es el versículo más simple de la Biblia — es el más profundo expresado con la mayor sencillez."</p></div>
+</section>
+
+</main>
+
+<section class="epilogo">
+  <span class="big">TEXTO</span>
+  <h2>El texto siempre tiene la última palabra</h2>
+  <p>La exégesis no es un lujo académico para teólogos con doctorado. Es la responsabilidad de todo hombre que sube a un púlpito a hablar en nombre de Dios.</p>
+  <p>Cuando estudias bien, predicas con confianza. Cuando predicas con confianza, la Palabra de Dios hace su obra.</p>
+  <div class="quote" style="max-width:480px;margin:32px auto;">
+    <p>"Así será mi palabra que sale de mi boca; no volverá a mí vacía, sino que hará lo que yo quiero."</p>
+    <cite>Isaías 55:11</cite>
+  </div>
+  <div class="firma">Exégesis Bíblica · Serie Predicador · IPUC</div>
+</section>
+
+<script>
+const obs=new IntersectionObserver(e=>{e.forEach(el=>{if(el.isIntersecting)el.target.classList.add('visible');});},{threshold:.1});
+document.querySelectorAll('.chapter').forEach(e=>obs.observe(e));
+function toggleNav(){document.getElementById('sidenav').classList.toggle('show');}
+document.querySelectorAll('nav a').forEach(a=>{a.addEventListener('click',()=>{document.getElementById('sidenav').classList.remove('show');document.querySelectorAll('nav a').forEach(x=>x.classList.remove('active'));a.classList.add('active');});});
+document.addEventListener('click',e=>{const nav=document.getElementById('sidenav');if(nav.classList.contains('show')&&!nav.contains(e.target)&&!e.target.closest('.nav-toggle')){nav.classList.remove('show');}});
+</script>
+</body>
+</html>

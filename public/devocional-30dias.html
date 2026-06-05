@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Devocional 30 Días — Predicador IPUC</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Raleway:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--azul:#009FDA;--marino:#003B6F;--oro:#F0AB00;--oro-claro:#FFD166;--fondo:#040e1c;--fondo2:#071628;--texto:#e8e0d0;--texto-suave:#a89f90;--linea:rgba(240,171,0,.2);}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{background:var(--fondo);color:var(--texto);font-family:'Crimson Pro',Georgia,serif;font-size:18px;line-height:1.85;overflow-x:hidden;}
+::-webkit-scrollbar{width:4px;}::-webkit-scrollbar-track{background:var(--fondo);}::-webkit-scrollbar-thumb{background:var(--azul);border-radius:2px;}
+
+.nav-toggle{position:fixed;top:16px;left:16px;z-index:200;background:var(--marino);border:1px solid var(--linea);color:var(--oro);width:40px;height:40px;border-radius:8px;cursor:pointer;font-size:18px;display:flex;align-items:center;justify-content:center;transition:all .2s;}
+.nav-toggle:hover{background:var(--azul);color:#fff;}
+nav{position:fixed;left:0;top:0;bottom:0;width:250px;background:linear-gradient(180deg,var(--marino) 0%,#011529 100%);border-right:1px solid var(--linea);z-index:100;overflow-y:auto;transform:translateX(-100%);transition:transform .35s ease;padding:32px 0;}
+nav.show{transform:translateX(0);}
+nav .nav-title{font-family:'Cinzel',serif;font-size:10px;letter-spacing:4px;color:var(--oro);padding:0 20px 16px;border-bottom:1px solid var(--linea);margin-bottom:8px;}
+nav a{display:block;padding:5px 20px;font-family:'Raleway',sans-serif;font-size:11px;font-weight:500;letter-spacing:1px;color:var(--texto-suave);text-decoration:none;border-left:2px solid transparent;transition:all .2s;}
+nav a:hover,nav a.active{color:var(--oro);border-left-color:var(--oro);background:rgba(240,171,0,.06);}
+
+.cover{min-height:100vh;background:linear-gradient(160deg,#041830 0%,var(--fondo) 65%);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:80px 32px 60px;position:relative;overflow:hidden;}
+.cover::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 50% at 50% 10%,rgba(0,159,218,.18) 0%,transparent 70%),radial-gradient(ellipse 40% 40% at 80% 85%,rgba(240,171,0,.1) 0%,transparent 60%);pointer-events:none;}
+.cover-icon{font-size:64px;margin-bottom:24px;animation:fadeDown .8s ease both;}
+.cover-tag{font-family:'Cinzel',serif;font-size:10px;letter-spacing:5px;color:var(--azul);text-transform:uppercase;margin-bottom:20px;animation:fadeDown .9s ease .1s both;}
+.cover-title{font-family:'Cinzel',serif;font-size:clamp(40px,9vw,88px);font-weight:900;line-height:1;margin-bottom:8px;animation:fadeDown 1s ease .2s both;}
+.cover-title span{color:var(--oro);}
+.cover-sub{font-family:'Cinzel',serif;font-size:clamp(13px,2vw,17px);color:var(--azul);letter-spacing:2px;margin-bottom:32px;animation:fadeDown 1s ease .25s both;}
+.cover-line{width:60px;height:1px;background:linear-gradient(to right,transparent,var(--oro),transparent);margin:0 auto 24px;animation:fadeIn 1.1s ease .35s both;}
+.cover-author{font-family:'Raleway',sans-serif;font-size:13px;letter-spacing:4px;color:var(--texto-suave);text-transform:uppercase;animation:fadeDown 1.1s ease .4s both;}
+.cover-verse{position:absolute;bottom:40px;font-family:'Crimson Pro',serif;font-style:italic;font-size:14px;color:var(--texto-suave);max-width:440px;text-align:center;line-height:1.6;}
+
+main{max-width:680px;margin:0 auto;padding:0 24px;}
+
+.day{padding:72px 0 56px;border-bottom:1px solid rgba(240,171,0,.1);opacity:0;transform:translateY(30px);transition:opacity .7s ease,transform .7s ease;}
+.day.visible{opacity:1;transform:none;}
+
+.day-num{display:flex;align-items:center;gap:16px;margin-bottom:24px;}
+.day-num .num{font-family:'Cinzel',serif;font-size:clamp(48px,8vw,72px);font-weight:900;color:transparent;-webkit-text-stroke:1px rgba(240,171,0,.3);line-height:1;}
+.day-num .label{font-family:'Cinzel',serif;font-size:10px;letter-spacing:4px;color:var(--azul);text-transform:uppercase;}
+
+.day-title{font-family:'Cinzel',serif;font-size:clamp(18px,3.5vw,28px);font-weight:700;color:var(--oro);line-height:1.2;margin-bottom:16px;}
+.day-verse{border-left:3px solid var(--oro);padding:14px 20px;margin-bottom:24px;background:rgba(240,171,0,.05);border-radius:0 8px 8px 0;}
+.day-verse p{font-family:'Crimson Pro',serif;font-style:italic;font-size:1.05em;color:var(--oro-claro);margin-bottom:4px;}
+.day-verse cite{font-family:'Raleway',sans-serif;font-size:12px;letter-spacing:2px;color:var(--texto-suave);}
+
+.day-body p{margin-bottom:16px;color:var(--texto);font-size:1em;}
+.day-body strong{color:var(--oro);}
+.day-body em{color:var(--azul);}
+
+.day-reflection{margin-top:24px;padding:20px;background:rgba(0,59,111,.2);border:1px solid rgba(0,159,218,.2);border-radius:8px;}
+.day-reflection h4{font-family:'Cinzel',serif;font-size:10px;letter-spacing:3px;color:var(--azul);text-transform:uppercase;margin-bottom:10px;}
+.day-reflection p{color:var(--texto-suave);font-size:.95em;font-style:italic;margin:0;}
+
+.day-prayer{margin-top:16px;padding:20px;background:rgba(240,171,0,.05);border:1px solid rgba(240,171,0,.15);border-radius:8px;}
+.day-prayer h4{font-family:'Cinzel',serif;font-size:10px;letter-spacing:3px;color:var(--oro);text-transform:uppercase;margin-bottom:10px;}
+.day-prayer p{color:var(--texto-suave);font-size:.95em;font-style:italic;margin:0;}
+
+.epilogo{text-align:center;padding:80px 32px 120px;}
+.epilogo .big{font-family:'Cinzel',serif;font-size:clamp(36px,8vw,72px);font-weight:900;color:transparent;-webkit-text-stroke:1px rgba(240,171,0,.35);letter-spacing:6px;display:block;margin-bottom:40px;}
+.epilogo h2{font-family:'Cinzel',serif;font-size:clamp(18px,3vw,28px);color:var(--oro);margin-bottom:24px;}
+.epilogo p{max-width:540px;margin:0 auto 16px;color:var(--texto-suave);}
+.epilogo .firma{margin-top:48px;font-family:'Cinzel',serif;font-size:13px;letter-spacing:4px;color:var(--azul);}
+
+@keyframes fadeDown{from{opacity:0;transform:translateY(-20px);}to{opacity:1;transform:none;}}
+@keyframes fadeIn{from{opacity:0;}to{opacity:1;}}
+@media(max-width:600px){nav{width:210px;}}
+</style>
+</head>
+<body>
+<button class="nav-toggle" onclick="toggleNav()">☰</button>
+<nav id="sidenav">
+  <div class="nav-title">30 Días</div>
+  <a href="#portada">Portada</a>
+  <a href="#d1">Día 1 — En el principio</a>
+  <a href="#d2">Día 2 — Él te conoce</a>
+  <a href="#d3">Día 3 — No temas</a>
+  <a href="#d4">Día 4 — El pastor</a>
+  <a href="#d5">Día 5 — Confía</a>
+  <a href="#d6">Día 6 — Su gracia basta</a>
+  <a href="#d7">Día 7 — Descanso</a>
+  <a href="#d8">Día 8 — Nuevo cada mañana</a>
+  <a href="#d9">Día 9 — Fortaleza</a>
+  <a href="#d10">Día 10 — La oración</a>
+  <a href="#d11">Día 11 — Perdón</a>
+  <a href="#d12">Día 12 — Luz en la oscuridad</a>
+  <a href="#d13">Día 13 — Su presencia</a>
+  <a href="#d14">Día 14 — El amor de Dios</a>
+  <a href="#d15">Día 15 — Fe genuina</a>
+  <a href="#d16">Día 16 — Obediencia</a>
+  <a href="#d17">Día 17 — Humildad</a>
+  <a href="#d18">Día 18 — Perseverancia</a>
+  <a href="#d19">Día 19 — La Palabra</a>
+  <a href="#d20">Día 20 — Gratitud</a>
+  <a href="#d21">Día 21 — El Espíritu Santo</a>
+  <a href="#d22">Día 22 — Identidad en Cristo</a>
+  <a href="#d23">Día 23 — Servicio</a>
+  <a href="#d24">Día 24 — Santidad</a>
+  <a href="#d25">Día 25 — La cruz</a>
+  <a href="#d26">Día 26 — Resurrección</a>
+  <a href="#d27">Día 27 — Esperanza</a>
+  <a href="#d28">Día 28 — Comunidad</a>
+  <a href="#d29">Día 29 — Misión</a>
+  <a href="#d30">Día 30 — Hasta el fin</a>
+</nav>
+
+<section class="cover" id="portada">
+  <div class="cover-icon">🕯️</div>
+  <div class="cover-tag">Devocional · 30 Días</div>
+  <h1 class="cover-title">Cada <span>Día</span><br>con Él</h1>
+  <div class="cover-sub">Un mes en la presencia de Dios</div>
+  <div class="cover-line"></div>
+  <div class="cover-author">Predicador IPUC</div>
+  <div class="cover-verse">"Las misericordias de Jehová nunca decaen; son nuevas cada mañana." — Lamentaciones 3:22-23</div>
+</section>
+
+<main>
+
+<section class="day" id="d1">
+  <div class="day-num"><span class="num">01</span><span class="label">Día Uno</span></div>
+  <h2 class="day-title">En el principio, Dios</h2>
+  <div class="day-verse"><p>"En el principio creó Dios los cielos y la tierra."</p><cite>Génesis 1:1</cite></div>
+  <div class="day-body">
+    <p>Antes de que existiera el tiempo, antes de que hubiera materia o espacio, antes de que cualquier cosa fuera — <strong>Dios era</strong>. El primer versículo de la Biblia no argumenta la existencia de Dios, la declara. No pide permiso, no busca aprobación. Simplemente afirma la realidad más fundamental del universo.</p>
+    <p>Comenzar este devocional aquí no es un accidente. Porque antes de hablar de lo que Dios hace por ti, necesitas pararte frente a lo que Dios es. Él es el origen de todo. El que existía antes del inicio. El que no tiene principio ni fin.</p>
+    <p>¿Qué cambia en tu vida cuando empiezas el día recordando que el Dios que creó los cielos y la tierra es tu Padre? Todo. Cambia todo.</p>
+  </div>
+  <div class="day-reflection"><h4>Reflexión</h4><p>¿Cómo empiezas normalmente tu día? ¿Con el celular, con preocupaciones, con planes? Hoy intenta comenzar con estas cuatro palabras: "En el principio, Dios."</p></div>
+  <div class="day-prayer"><h4>Oración</h4><p>Señor, antes de mis planes, antes de mis preocupaciones, antes de todo — Tú eres. Ayúdame hoy a vivir reconociendo que soy tuyo y que estoy en tus manos. Amén.</p></div>
+</section>
+
+<section class="day" id="d2">
+  <div class="day-num"><span class="num">02</span><span class="label">Día Dos</span></div>
+  <h2 class="day-title">Él te conoce por nombre</h2>
+  <div class="day-verse"><p>"Mas ahora, así dice Jehová, Creador tuyo... No temas, porque yo te redimí; te puse nombre, mío eres tú."</p><cite>Isaías 43:1</cite></div>
+  <div class="day-body">
+    <p>En un mundo de millones de personas, es fácil sentirse invisible. Insignificante. Un número más. Pero Dios dice algo que desafía esa sensación: <strong>te puse nombre</strong>. No eres anónimo ante el cielo. Dios no te confunde con nadie. Te conoce con una intimidad que ningún ser humano puede igualar.</p>
+    <p>Esta palabra fue dicha a Israel en un momento de crisis — estaban a punto de ir al exilio. En su peor momento, Dios no les habla de distancia, les habla de nombre. El mismo principio aplica hoy a ti: en tu peor momento, Dios no se aleja. Se acerca y dice tu nombre.</p>
+    <p><em>Mío eres tú.</em> Tres palabras que cambian la identidad de una persona para siempre.</p>
+  </div>
+  <div class="day-reflection"><h4>Reflexión</h4><p>¿Hay algún área de tu vida donde te sientes invisible o insignificante? Lleva ese lugar específicamente ante Dios hoy.</p></div>
+  <div class="day-prayer"><h4>Oración</h4><p>Padre, gracias porque no soy un número para ti. Gracias porque me conoces, me redimiste y me pusiste nombre. Ayúdame a vivir con esa certeza hoy. Amén.</p></div>
+</section>
+
+<section class="day" id="d3">
+  <div class="day-num"><span class="num">03</span><span class="label">Día Tres</span></div>
+  <h2 class="day-title">No temas</h2>
+  <div class="day-verse"><p>"No temas, porque yo estoy contigo; no desmayes, porque yo soy tu Dios que te esfuerzo."</p><cite>Isaías 41:10</cite></div>
+  <div class="day-body">
+    <p>"No temas" es el mandato más repetido en toda la Biblia. Más de 365 veces en diferentes formas. Como si Dios supiera que cada día trae su propio miedo, y cada día necesitas escucharlo de nuevo: <strong>no temas</strong>.</p>
+    <p>La razón que Dios da para no temer no es que la situación sea fácil, ni que el problema no sea real. La razón es su presencia: <em>"porque yo estoy contigo"</em>. El problema puede seguir siendo grande. La incertidumbre puede seguir ahí. Pero si Él está contigo, el miedo pierde su poder.</p>
+    <p>No estás solo en lo que estás enfrentando hoy. El Dios que sostiene el universo también te sostiene a ti.</p>
+  </div>
+  <div class="day-reflection"><h4>Reflexión</h4><p>¿Qué es lo que más te genera miedo en este momento? Nómbralo. Luego lee el versículo de hoy en voz alta, poniendo tu situación específica en mente.</p></div>
+  <div class="day-prayer"><h4>Oración</h4><p>Señor, hoy traigo ante ti mis miedos. No pretendo que no existen. Te pido que tu presencia sea más real para mí que mis temores. Tú eres mi fuerza. Amén.</p></div>
+</section>
+
+<section class="day" id="d4">
+  <div class="day-num"><span class="num">04</span><span class="label">Día Cuatro</span></div>
+  <h2 class="day-title">El Señor es mi pastor</h2>
+  <div class="day-verse"><p>"Jehová es mi pastor; nada me faltará."</p><cite>Salmo 23:1</cite></div>
+  <div class="day-body">
+    <p>David no escribió "Jehová es un pastor" — escribió <strong>"mi pastor"</strong>. Esa diferencia lo cambia todo. No habla de una verdad teológica distante. Habla de una relación personal, cercana, cotidiana.</p>
+    <p>Un pastor conoce a cada oveja. Sabe cuál está débil, cuál tiende a perderse, cuál necesita más cuidado. Y Jesús mismo se identificó como el Buen Pastor — el que no abandona cuando llega el lobo, el que da su vida por las ovejas.</p>
+    <p>"Nada me faltará" no es una promesa de riqueza. Es la certeza de que bajo su cuidado, lo que realmente necesitas siempre estará provisto. No siempre lo que quieres — lo que <em>necesitas</em>.</p>
+  </div>
+  <div class="day-reflection"><h4>Reflexión</h4><p>¿En qué área de tu vida sientes que "algo te falta"? ¿Es una necesidad real o un deseo? Llévala al Pastor y confía en su provisión.</p></div>
+  <div class="day-prayer"><h4>Oración</h4><p>Señor Jesús, buen Pastor, confío hoy en tu cuidado. Tú conoces lo que necesito mejor que yo mismo. Guíame, cuídame, provee. Nada me faltará porque Tú eres mi pastor. Amén.</p></div>
+</section>
+
+<section class="day" id="d5">
+  <div class="day-num"><span class="num">05</span><span class="label">Día Cinco</span></div>
+  <h2 class="day-title">Confía en Él con todo</h2>
+  <div class="day-verse"><p>"Fíate de Jehová de todo tu corazón, y no te apoyes en tu propia prudencia."</p><cite>Proverbios 3:5</cite></div>
+  <div class="day-body">
+    <p>El versículo dice <em>todo tu corazón</em>. No la mayor parte. No el 80%. Todo. Porque la naturaleza humana tiende a confiar en Dios con las áreas donde ya no podemos hacer nada, pero aferrarse a las riendas en las áreas donde creemos tener control.</p>
+    <p>La frase "no te apoyes en tu propia prudencia" no dice que dejes de pensar o de planear. Dice que tus planes no deben ser el ancla de tu seguridad. La inteligencia humana tiene límites que Dios no tiene.</p>
+    <p>Confiar completamente no es pasividad — es libertad. Es soltar la carga de tener que controlar todo y descansar en que Él ya lo sabe.</p>
+  </div>
+  <div class="day-reflection"><h4>Reflexión</h4><p>¿Hay alguna decisión o situación donde estás confiando más en tu análisis que en la dirección de Dios? ¿Qué necesitas soltar hoy?</p></div>
+  <div class="day-prayer"><h4>Oración</h4><p>Señor, reconozco que mi entendimiento tiene límites. Hoy elijo confiar en ti con todo, incluso con lo que no entiendo. Endereza mis caminos. Amén.</p></div>
+</section>
+
+<section class="day" id="d6">
+  <div class="day-num"><span class="num">06</span><span class="label">Día Seis</span></div>
+  <h2 class="day-title">Su gracia basta</h2>
+  <div class="day-verse"><p>"Bástate mi gracia; porque mi poder se perfecciona en la debilidad."</p><cite>2 Corintios 12:9</cite></div>
+  <div class="day-body">
+    <p>Pablo había pedido que Dios quitara su "aguijón en la carne" tres veces. Tres veces. Y la respuesta de Dios no fue quitar el problema — fue revelar algo más profundo: <strong>mi gracia te basta</strong>.</p>
+    <p>Vivimos en una cultura que celebra la fortaleza y esconde la debilidad. Pero Dios trabaja de manera opuesta. El lugar donde tú eres más débil es exactamente donde el poder de Dios tiene más espacio para manifestarse.</p>
+    <p>Tu limitación no es un obstáculo para Dios. Es el lienzo donde Él pinta su poder. No tienes que fingir que estás bien. Puedes llegar roto y descubrir que su gracia es suficiente para cada grieta.</p>
+  </div>
+  <div class="day-reflection"><h4>Reflexión</h4><p>¿Cuál es el "aguijón" que más te agobia en este momento? ¿Puedes creer hoy que la gracia de Dios es suficiente incluso para eso?</p></div>
+  <div class="day-prayer"><h4>Oración</h4><p>Señor, hoy no finjo que soy fuerte. Traigo mi debilidad ante ti. Sé glorificado en ella. Tu gracia me basta. Amén.</p></div>
+</section>
+
+<section class="day" id="d7">
+  <div class="day-num"><span class="num">07</span><span class="label">Día Siete</span></div>
+  <h2 class="day-title">El descanso de Dios</h2>
+  <div class="day-verse"><p>"Venid a mí todos los que estáis trabajados y cargados, y yo os haré descansar."</p><cite>Mateo 11:28</cite></div>
+  <div class="day-body">
+    <p>Jesús no invita a los que tienen todo resuelto. Invita a los <strong>trabajados y cargados</strong>. Cansados. Agotados. A los que llevan demasiado. Y la invitación es simple y radical: venid a mí.</p>
+    <p>El descanso que Jesús ofrece no es ausencia de actividad — es paz en medio de la tormenta. Es el alma que deja de luchar sola y encuentra apoyo en Él. Es el corazón que suelta la carga porque descubrió que no tiene que cargarla solo.</p>
+    <p>Al final de esta primera semana, tómate un momento real. Cierra los ojos. Lleva lo que pesa. Y escucha su voz: <em>yo os haré descansar</em>.</p>
+  </div>
+  <div class="day-reflection"><h4>Reflexión</h4><p>¿Qué carga específica necesitas depositar hoy a los pies de Jesús? Nómbrala y suéltala conscientemente en oración.</p></div>
+  <div class="day-prayer"><h4>Oración</h4><p>Jesús, vengo a ti cargado. Tú conoces el peso que llevo. Recibo tu descanso hoy. Gracias porque no tengo que cargar solo. Amén.</p></div>
+</section>
+
+<section class="day" id="d8">
+  <div class="day-num"><span class="num">08</span><span class="label">Día Ocho</span></div>
+  <h2 class="day-title">Nuevo cada mañana</h2>
+  <div class="day-verse"><p>"Las misericordias de Jehová nunca decaen; son nuevas cada mañana; grande es tu fidelidad."</p><cite>Lamentaciones 3:22-23</cite></div>
+  <div class="day-body">
+    <p>Jeremías escribió Lamentaciones en medio de la destrucción de Jerusalén. Todo lo que conocía había sido arrasado. Y en ese contexto de ruina total, escribe una de las declaraciones más hermosas sobre la fidelidad de Dios.</p>
+    <p>Las misericordias son <strong>nuevas cada mañana</strong>. No las del ayer. No las acumuladas de la semana pasada. Nuevas. Frescas. Como el rocío que aparece cada amanecer sin importar lo árido que fue el día anterior.</p>
+    <p>Ayer puede haber sido difícil. Puede haber traído fracasos, lágrimas, errores. Pero este amanecer trae misericordias que no existían antes. Dios no te da las sobras — te da lo nuevo.</p>
+  </div>
+  <div class="day-reflection"><h4>Reflexión</h4><p>¿Qué del ayer te pesa hoy? ¿Puedes recibir las misericordias nuevas de esta mañana en lugar de vivir bajo el peso de lo que ya pasó?</p></div>
+  <div class="day-prayer"><h4>Oración</h4><p>Señor, gracias porque tu misericordia no se agota. Este amanecer es nuevo. Recibo tu gracia fresca para este día. Grande es tu fidelidad. Amén.</p></div>
+</section>
+
+<section class="day" id="d9">
+  <div class="day-num"><span class="num">09</span><span class="label">Día Nueve</span></div>
+  <h2 class="day-title">Fortaleza en la espera</h2>
+  <div class="day-verse"><p>"Los que esperan en Jehová tendrán nuevas fuerzas; levantarán alas como las águilas."</p><cite>Isaías 40:31</cite></div>
+  <div class="day-body">
+    <p>Esperar es difícil. En una cultura de lo inmediato, donde todo debe suceder ahora, la espera se siente como fracaso. Pero Dios tiene una perspectiva diferente: <strong>los que esperan en Jehová</strong> no se debilitan — se fortalecen.</p>
+    <p>La imagen del águila no es casualidad. El águila no agita las alas frenéticamente para elevarse — despliega sus alas y usa las corrientes de aire. Deja que el viento la lleve hacia arriba. Así es la espera en Dios: no luchar contra las circunstancias con fuerza propia, sino posicionarse en su presencia y dejar que Él te eleve.</p>
+    <p>Lo que está tardando en tu vida no es señal de abandono. Puede ser señal de que Dios está preparando algo que requiere alas, no pies.</p>
+  </div>
+  <div class="day-reflection"><h4>Reflexión</h4><p>¿Qué estás esperando que todavía no ha llegado? ¿Cómo estás esperando — con ansiedad o con confianza?</p></div>
+  <div class="day-prayer"><h4>Oración</h4><p>Señor, en la espera elijo confiar. Renueva mis fuerzas. Que como el águila, me eleve sobre las circunstancias en tu fuerza, no en la mía. Amén.</p></div>
+</section>
+
+<section class="day" id="d10">
+  <div class="day-num"><span class="num">10</span><span class="label">Día Diez</span></div>
+  <h2 class="day-title">La oración que mueve cielos</h2>
+  <div class="day-verse"><p>"Clama a mí, y yo te responderé, y te enseñaré cosas grandes y ocultas que tú no conoces."</p><cite>Jeremías 33:3</cite></div>
+  <div class="day-body">
+    <p>Dios le da a Jeremías una invitación que parece demasiado simple para ser verdad: <strong>clama a mí</strong>. No hay un protocolo complicado. No hay requisitos especiales de elocuencia. Solo clama.</p>
+    <p>Y la promesa tiene dos partes: una respuesta y una revelación. Dios no solo responde — enseña. No solo resuelve el problema externo — abre los ojos del que ora para ver cosas que antes eran invisibles. La oración no cambia solo las circunstancias. Cambia al que ora.</p>
+    <p>"Cosas grandes y ocultas que tú no conoces." Hay dimensiones de la voluntad de Dios para tu vida que solo se revelan en la intimidad de la oración.</p>
+  </div>
+  <div class="day-reflection"><h4>Reflexión</h4><p>¿Cuánto tiempo dedicaste ayer a la oración? ¿La oración es un hábito en tu vida o una emergencia cuando todo falla?</p></div>
+  <div class="day-prayer"><h4>Oración</h4><p>Señor, quiero conocer las cosas grandes y ocultas que tienes para mí. Enséñame a orar y a escuchar tu respuesta. Que la oración sea mi primer recurso, no el último. Amén.</p></div>
+</section>
+
+<section class="day" id="d11">
+  <div class="day-num"><span class="num">11</span><span class="label">Día Once</span></div>
+  <h2 class="day-title">El poder del perdón</h2>
+  <div class="day-verse"><p>"Antes sed benignos unos con otros, misericordiosos, perdonándoos unos a otros, como Dios también os perdonó a vosotros en Cristo."</p><cite>Efesios 4:32</cite></div>
+  <div class="day-body">
+    <p>El perdón es uno de los actos más sobrehumanos que un ser humano puede realizar. No viene naturalmente — va en contra de todo instinto de justicia y autoprotección. Por eso Pablo no dice "intenten perdonar si pueden". Dice que el modelo es Dios mismo.</p>
+    <p>Dios nos perdonó en Cristo cuando no lo merecíamos, cuando todavía éramos enemigos, cuando no habíamos cambiado. Ese es el estándar. Alto, sí. Imposible en nuestras fuerzas, también. Pero disponible a través de su gracia.</p>
+    <p>El perdón no es para el que te hirió — es para ti. El resentimiento es una cárcel donde tú eres el prisionero y la persona que te dañó tiene la llave. Perdonar es abrir esa puerta.</p>
+  </div>
+  <div class="day-reflection"><h4>Reflexión</h4><p>¿Hay alguien a quien todavía no has perdonado completamente? ¿Qué te impide soltar ese resentimiento?</p></div>
+  <div class="day-prayer"><h4>Oración</h4><p>Señor, como tú me perdonaste, ayúdame a perdonar. Dame la gracia sobrenatural de soltar el resentimiento y vivir libre. Amén.</p></div>
+</section>
+
+<section class="day" id="d12">
+  <div class="day-num"><span class="num">12</span><span class="label">Día Doce</span></div>
+  <h2 class="day-title">Luz en la oscuridad</h2>
+  <div class="day-verse"><p>"Lámpara es a mis pies tu palabra, y lumbrera a mi camino."</p><cite>Salmo 119:105</cite></div>
+  <div class="day-body">
+    <p>Una lámpara a los pies solo alumbra el siguiente paso, no todo el camino. Esa imagen es intencional. Dios generalmente no nos muestra el destino completo — nos da luz suficiente para el paso que debemos dar ahora.</p>
+    <p>En la oscuridad, la tentación es paralizarse porque no ves todo. Pero la Palabra de Dios no promete visión total — promete luz suficiente. Suficiente para avanzar. Suficiente para no caer. Suficiente para llegar.</p>
+    <p>¿Estás en oscuridad hoy? La Palabra no elimina la noche — la ilumina. Y en la noche, incluso una pequeña luz cambia todo.</p>
+  </div>
+  <div class="day-reflection"><h4>Reflexión</h4><p>¿Estás esperando que Dios te muestre todo el camino antes de dar el siguiente paso? ¿Qué dice su Palabra sobre el paso que debes dar hoy?</p></div>
+  <div class="day-prayer"><h4>Oración</h4><p>Señor, en la oscuridad de este momento, tu Palabra es mi luz. Dame valentía para dar el siguiente paso, aunque no vea el camino completo. Amén.</p></div>
+</section>
+
+<section class="day" id="d13">
+  <div class="day-num"><span class="num">13</span><span class="label">Día Trece</span></div>
+  <h2 class="day-title">Su presencia lo cambia todo</h2>
+  <div class="day-verse"><p>"No te desampararé, ni te dejaré."</p><cite>Hebreos 13:5</cite></div>
+  <div class="day-body">
+    <p>En el original griego, esta promesa usa una doble negación que es imposible de replicar en español: literalmente dice "no no te dejaré jamás jamás". Es como si Dios, para que no quedara ninguna duda, duplicara la negación. <strong>No hay circunstancia posible en la que Él te abandone.</strong></p>
+    <p>El abandono es uno de los miedos más profundos del ser humano. Desde la infancia, el miedo a quedarse solo marca el alma. Pero la promesa de Dios ataca ese miedo en su raíz: Él no abandona. Nunca. No cuando pecas, no cuando dudas, no cuando fallas, no cuando te sientes indigno.</p>
+    <p>Su presencia no depende de tu perfección. Depende de su carácter. Y su carácter es fiel.</p>
+  </div>
+  <div class="day-reflection"><h4>Reflexión</h4><p>¿Hay un momento en tu vida donde sentiste que Dios te había abandonado? ¿Cómo ves ese momento ahora a la luz de esta promesa?</p></div>
+  <div class="day-prayer"><h4>Oración</h4><p>Señor, gracias porque tu presencia no depende de lo que yo haga. Gracias porque nunca me dejarás. Que esa certeza sea mi ancla hoy. Amén.</p></div>
+</section>
+
+<section class="day" id="d14">
+  <div class="day-num"><span class="num">14</span><span class="label">Día Catorce</span></div>
+  <h2 class="day-title">El amor que no cambia</h2>
+  <div class="day-verse"><p>"Porque de tal manera amó Dios al mundo, que ha dado a su Hijo unigénito."</p><cite>Juan 3:16</cite></div>
+  <div class="day-body">
+    <p>El verbo "amó" en el original griego es pasado — sucedió en un momento específico de la historia, en la cruz. Pero sus efectos son eternos. Dios no ama al mundo con un amor condicional que varía según el comportamiento. <strong>Amó de tal manera que dio lo más valioso que tenía.</strong></p>
+    <p>Hay amores que se desgastan. Amores que se enfrían cuando el otro decepciona. Amores que tienen límites y condiciones. El amor de Dios no funciona así. Él amó cuando éramos enemigos. Amó cuando no lo merecíamos. Amó sin garantías de que responderíamos.</p>
+    <p>En el punto medio de estos 30 días, detente aquí. Que el amor de Dios no sea para ti una doctrina — que sea una experiencia viva que transforma cómo vives.</p>
+  </div>
+  <div class="day-reflection"><h4>Reflexión</h4><p>¿Sientes realmente el amor de Dios en tu vida cotidiana, o es solo una verdad que conoces de memoria? ¿Qué necesitas para que pase de la cabeza al corazón?</p></div>
+  <div class="day-prayer"><h4>Oración</h4><p>Padre, que tu amor no sea solo teología para mí. Que lo sienta, que lo viva, que me transforme. Gracias por dar a tu Hijo por mí. Amén.</p></div>
+</section>
+
+<section class="day" id="d15">
+  <div class="day-num"><span class="num">15</span><span class="label">Día Quince</span></div>
+  <h2 class="day-title">Fe que actúa</h2>
+  <div class="day-verse"><p>"La fe sin obras está muerta."</p><cite>Santiago 2:26</cite></div>
+  <div class="day-body">
+    <p>Santiago no está contradiciendo a Pablo cuando habla de la fe y las obras. Pablo dice que no nos salvamos por obras. Santiago dice que la fe genuina produce obras. Son dos ángulos de la misma verdad: <strong>la fe real siempre se ve.</strong></p>
+    <p>Una fe que no cambia cómo vives, cómo tratas a los demás, cómo usas tu dinero y tu tiempo — no es fe viva. Es un conjunto de creencias religiosas sin poder. El árbol se conoce por el fruto, no por el letrero.</p>
+    <p>No se trata de hacer obras para ganar el favor de Dios. Se trata de que el que realmente ha sido transformado por Dios, naturalmente vive de manera diferente. La obediencia no es el camino a la gracia — es la evidencia de que la gracia ya llegó.</p>
+  </div>
+  <div class="day-reflection"><h4>Reflexión</h4><p>Si alguien observara tu vida durante una semana sin saber que eres creyente, ¿notaría algo diferente? ¿Qué fruto está dando tu fe?</p></div>
+  <div class="day-prayer"><h4>Oración</h4><p>Señor, que mi fe sea real y visible. No para impresionar a otros, sino porque genuinamente has transformado mi vida. Que mi obediencia refleje tu gracia. Amén.</p></div>
+</section>
+
+<section class="day" id="d16">
+  <div class="day-num"><span class="num">16</span><span class="label">Día Dieciséis</span></div>
+  <h2 class="day-title">El costo de obedecer</h2>
+  <div class="day-verse"><p>"Si me amáis, guardad mis mandamientos."</p><cite>Juan 14:15</cite></div>
+  <div class="day-body">
+    <p>Jesús conecta el amor con la obediencia de una manera que incomoda al corazón moderno. No dice "si me amas, siéntelo profundamente". Dice "si me amas, guarda mis mandamientos". El amor verdadero siempre busca agradar al amado, no solo sentirse bien.</p>
+    <p>La obediencia no es una carga impuesta — es la expresión natural del amor. Un hijo que ama a sus padres obedece no por miedo al castigo, sino porque no quiere herirlos. Así es la obediencia al Señor.</p>
+    <p>¿Hay algún mandamiento de Cristo que estás postergando obedecer? El amor se demuestra no en las palabras que decimos en el culto, sino en las decisiones que tomamos en lo cotidiano.</p>
+  </div>
+  <div class="day-reflection"><h4>Reflexión</h4><p>¿Hay algo que Dios te ha pedido hacer o dejar de hacer que todavía no has obedecido? ¿Qué te detiene?</p></div>
+  <div class="day-prayer"><h4>Oración</h4><p>Señor, quiero amarte con obediencia, no solo con palabras. Muéstrame qué necesita cambiar en mi vida y dame la gracia para hacerlo. Amén.</p></div>
+</section>
+
+<section class="day" id="d17">
+  <div class="day-num"><span class="num">17</span><span class="label">Día Diecisiete</span></div>
+  <h2 class="day-title">La fuerza de la humildad</h2>
+  <div class="day-verse"><p>"Dios resiste a los soberbios, y da gracia a los humildes."</p><cite>1 Pedro 5:5</cite></div>
+  <div class="day-body">
+    <p>Este versículo contiene una de las verdades más contraculturales de la Biblia. El mundo premia la confianza en uno mismo, la autopromoción, el "tú puedes". Dios trabaja en sentido opuesto: <strong>se opone al orgulloso, da gracia al humilde.</strong></p>
+    <p>La humildad no es baja autoestima. No es creer que no vales nada. Es tener una evaluación correcta de ti mismo — ni más ni menos de lo que eres. Es reconocer que todo lo bueno en ti viene de Dios y que dependes de Él para todo.</p>
+    <p>El orgulloso carga solo con todo porque no cree necesitar ayuda. El humilde extiende la mano y recibe la gracia que el orgulloso nunca conocerá. ¿Cuál quieres ser tú?</p>
+  </div>
+  <div class="day-reflection"><h4>Reflexión</h4><p>¿En qué área de tu vida tiendes a depender más de ti mismo que de Dios? ¿Qué sería diferente si te acercaras a esa área con humildad?</p></div>
+  <div class="day-prayer"><h4>Oración</h4><p>Señor, guárdame del orgullo. Enséñame a humillarme bajo tu mano poderosa. Quiero vivir en la gracia que solo los humildes reciben. Amén.</p></div>
+</section>
+
+<section class="day" id="d18">
+  <div class="day-num"><span class="num">18</span><span class="label">Día Dieciocho</span></div>
+  <h2 class="day-title">No te rindas</h2>
+  <div class="day-verse"><p>"No nos cansemos, pues, de hacer bien; porque a su tiempo segaremos, si no desmayamos."</p><cite>Gálatas 6:9</cite></div>
+  <div class="day-body">
+    <p>Pablo reconoce que hay momentos donde cansarse es tentador. No dice "si te cansas" — dice "no nos cansemos", asumiendo que la fatiga es real y la tentación de abandonar es genuina. <strong>La perseverancia no es para los que no sienten el cansancio. Es para los que lo sienten y avanzan de todas formas.</strong></p>
+    <p>La frase "a su tiempo" es crucial. La cosecha tiene su tiempo. No tu tiempo. No el tiempo que esperabas. Pero llegará. El problema con el cansancio es que frecuentemente ataca justo antes del avance, justo antes de que las cosas cambien.</p>
+    <p>Lo que estás haciendo bien, aunque no veas resultados, aunque nadie lo note, aunque cueste — no lo abandones. La siembra invisible también produce cosecha.</p>
+  </div>
+  <div class="day-reflection"><h4>Reflexión</h4><p>¿Hay algo bueno que estás a punto de abandonar por el cansancio? ¿Puedes creer que la cosecha viene aunque no la veas todavía?</p></div>
+  <div class="day-prayer"><h4>Oración</h4><p>Señor, cuando el cansancio me ataque, dame fuerzas para seguir. Creo que la cosecha viene. No me dejaré vencer por el desánimo. Amén.</p></div>
+</section>
+
+<section class="day" id="d19">
+  <div class="day-num"><span class="num">19</span><span class="label">Día Diecinueve</span></div>
+  <h2 class="day-title">El poder de la Palabra</h2>
+  <div class="day-verse"><p>"Así será mi palabra que sale de mi boca; no volverá a mí vacía, sino que hará lo que yo quiero."</p><cite>Isaías 55:11</cite></div>
+  <div class="day-body">
+    <p>Las palabras humanas se dicen y se disuelven en el aire. La mayoría de lo que se habla hoy se olvida mañana. Pero la Palabra de Dios funciona de manera completamente diferente: <strong>no vuelve vacía</strong>. Cumple el propósito para el que fue enviada, siempre.</p>
+    <p>Esta promesa tiene implicaciones enormes para el creyente. Cuando memorizas un versículo, cuando proclamas una promesa, cuando predicas la Biblia — esa Palabra está activa, viva, trabajando. No depende de que tú la veas funcionar. Funciona.</p>
+    <p>Llena tu mente de la Palabra de Dios. No como un ejercicio religioso, sino como quien alimenta su alma con el único alimento que produce vida eterna.</p>
+  </div>
+  <div class="day-reflection"><h4>Reflexión</h4><p>¿Cuánto tiempo dedicas a leer la Biblia regularmente? ¿Hay promesas específicas de Dios que necesitas proclamar sobre tu situación actual?</p></div>
+  <div class="day-prayer"><h4>Oración</h4><p>Señor, que tu Palabra sea la que guíe mi mente y mi corazón. Que no vuelva vacía sobre mi vida sino que cumpla tu propósito. Amén.</p></div>
+</section>
+
+<section class="day" id="d20">
+  <div class="day-num"><span class="num">20</span><span class="label">Día Veinte</span></div>
+  <h2 class="day-title">El sacrificio de la gratitud</h2>
+  <div class="day-verse"><p>"Dad gracias en todo, porque esta es la voluntad de Dios para con vosotros en Cristo Jesús."</p><cite>1 Tesalonicenses 5:18</cite></div>
+  <div class="day-body">
+    <p>El versículo no dice "dad gracias por todo" — dice <em>"en todo"</em>. La diferencia es enorme. No tienes que agradecer el dolor, la pérdida o el sufrimiento como si fueran buenos en sí mismos. Pero en medio de ellos, puedes encontrar razones para agradecer. <strong>La gratitud no ignora la realidad — la transforma.</strong></p>
+    <p>Los estudios psicológicos y la experiencia espiritual coinciden: la gratitud es uno de los actos más poderosos que un ser humano puede practicar. Cambia la química del cerebro. Cambia la perspectiva. Y en el contexto bíblico, abre la puerta a la presencia de Dios.</p>
+    <p>En tus veinte días de devocional, ¿qué tienes para agradecer hoy? Haz una lista. Sé específico. Verás el día diferente.</p>
+  </div>
+  <div class="day-reflection"><h4>Reflexión</h4><p>Hoy escribe 5 cosas concretas por las que estás genuinamente agradecido a Dios. No las que debería decir un cristiano — las que realmente sientes.</p></div>
+  <div class="day-prayer"><h4>Oración</h4><p>Señor, elijo la gratitud. Gracias por... [llena este espacio con tus propias palabras específicas]. Que un corazón agradecido sea mi ofrenda de hoy. Amén.</p></div>
+</section>
+
+<section class="day" id="d21">
+  <div class="day-num"><span class="num">21</span><span class="label">Día Veintiuno</span></div>
+  <h2 class="day-title">El Espíritu que mora en ti</h2>
+  <div class="day-verse"><p>"¿O ignoráis que vuestro cuerpo es templo del Espíritu Santo, el cual está en vosotros?"</p><cite>1 Corintios 6:19</cite></div>
+  <div class="day-body">
+    <p>Pablo hace una pregunta que asume que el creyente debería saber la respuesta: <em>¿acaso no sabes?</em> Como si dijera: esto debería cambiar absolutamente todo en tu vida. Tu cuerpo, tu mente, tus decisiones, tus palabras — todo habitado por el Espíritu Santo.</p>
+    <p>El Espíritu Santo no es una fuerza abstracta ni una experiencia emocional del culto. Es una Persona que vive en ti. Intercede por ti cuando no sabes orar. Te convence cuando te desvías. Te da dones para servir. Te da fruto para vivir.</p>
+    <p>Vivir consciente de su presencia cambia cómo hablas, cómo tratas tu cuerpo, cómo tomas decisiones. Hoy camina con esta conciencia: el Espíritu de Dios está en ti ahora mismo.</p>
+  </div>
+  <div class="day-reflection"><h4>Reflexión</h4><p>¿Cómo cambiaría tu día si vivieras conscientemente como templo del Espíritu Santo? ¿Hay algo que necesitas cambiar con esta realidad en mente?</p></div>
+  <div class="day-prayer"><h4>Oración</h4><p>Espíritu Santo, reconozco tu presencia en mí. Ayúdame a honrarte en cada decisión de este día. Guíame, corrígeme, úsame. Amén.</p></div>
+</section>
+
+<section class="day" id="d22">
+  <div class="day-num"><span class="num">22</span><span class="label">Día Veintidós</span></div>
+  <h2 class="day-title">Quién eres en Cristo</h2>
+  <div class="day-verse"><p>"De modo que si alguno está en Cristo, nueva criatura es; las cosas viejas pasaron; he aquí todas son hechas nuevas."</p><cite>2 Corintios 5:17</cite></div>
+  <div class="day-body">
+    <p>Una de las batallas más duras del creyente no es contra el pecado externo — es contra la vieja identidad que sigue queriendo definirlo. El pasado, los errores, las etiquetas que otros pusieron, lo que uno mismo cree de sí mismo.</p>
+    <p>Pero Pablo dice algo radical: <strong>en Cristo, eres una nueva criatura</strong>. No una criatura mejorada. No la versión 2.0 del mismo ser. Una nueva creación. Las cosas viejas pasaron — esa es una declaración definitiva sobre tu historia. Todas son hechas nuevas — esa es una declaración sobre tu futuro.</p>
+    <p>Tu identidad no está en tu pasado. No está en tus fracasos ni en tus logros. Está en Cristo. Y en Él, eres exactamente lo que Dios dice que eres.</p>
+  </div>
+  <div class="day-reflection"><h4>Reflexión</h4><p>¿Qué "cosa vieja" sigues dejando que te defina? ¿Qué diría Dios de ti si le preguntaras quién eres en Cristo?</p></div>
+  <div class="day-prayer"><h4>Oración</h4><p>Señor, recibo mi identidad en Cristo. Soy nueva criatura. Lo viejo pasó. Ayúdame a vivir hoy desde esa realidad y no desde mi pasado. Amén.</p></div>
+</section>
+
+<section class="day" id="d23">
+  <div class="day-num"><span class="num">23</span><span class="label">Día Veintitrés</span></div>
+  <h2 class="day-title">Servir es grandeza</h2>
+  <div class="day-verse"><p>"El que quiera hacerse grande entre vosotros será vuestro servidor."</p><cite>Mateo 20:26</cite></div>
+  <div class="day-body">
+    <p>Los discípulos estaban discutiendo quién sería el más grande en el reino. Una discusión muy humana, muy comprensible. Y Jesús no los regaña — les da una nueva definición de grandeza: <strong>el que sirve</strong>.</p>
+    <p>En el reino de Dios todo está al revés del reino del mundo. El primero será último. El que se humilla será exaltado. El que sirve es el grande. No porque Dios quiera que nos esforcemos más, sino porque el servicio es el lenguaje del amor.</p>
+    <p>Jesús mismo fue el ejemplo: "el Hijo del Hombre no vino para ser servido, sino para servir, y para dar su vida en rescate por muchos." ¿Qué cambia en tu día cuando lo ves como una oportunidad de servir?</p>
+  </div>
+  <div class="day-reflection"><h4>Reflexión</h4><p>¿A quién puedes servir hoy de manera concreta? No en el culto — en lo cotidiano. Una persona específica, una acción específica.</p></div>
+  <div class="day-prayer"><h4>Oración</h4><p>Señor Jesús, tú que siendo Dios te hiciste siervo, enséñame a servir. Que hoy encuentre una manera de amar a alguien con acciones, no solo palabras. Amén.</p></div>
+</section>
+
+<section class="day" id="d24">
+  <div class="day-num"><span class="num">24</span><span class="label">Día Veinticuatro</span></div>
+  <h2 class="day-title">El llamado a la santidad</h2>
+  <div class="day-verse"><p>"Sed santos, porque yo soy santo."</p><cite>1 Pedro 1:16</cite></div>
+  <div class="day-body">
+    <p>La santidad es quizás la palabra más malentendida en el vocabulario cristiano. Muchos la asocian con religiosidad extrema, con una lista de prohibiciones, con un semblante serio y sin alegría. Pero la santidad bíblica es algo completamente diferente: <strong>ser apartado para Dios</strong>.</p>
+    <p>Santo no significa perfecto — significa consagrado. Dedicado. Perteneciente a Dios. El modelo es el carácter de Dios mismo: "sed santos porque yo soy santo". La santidad no es una religión — es un reflejo.</p>
+    <p>La santidad no te hace menos humano — te hace más de lo que Dios diseñó que fueras. No es restricción — es restauración. El camino de la santidad es el camino de regreso a la imagen original de Dios en el ser humano.</p>
+  </div>
+  <div class="day-reflection"><h4>Reflexión</h4><p>¿Qué significa para ti la santidad en lo práctico? No en teoría — en las decisiones de esta semana, ¿cómo se ve el llamado a la santidad?</p></div>
+  <div class="day-prayer"><h4>Oración</h4><p>Señor, quiero ser santo no por religión sino por amor a ti. Apártame para tu propósito. Que mi vida refleje tu carácter. Amén.</p></div>
+</section>
+
+<section class="day" id="d25">
+  <div class="day-num"><span class="num">25</span><span class="label">Día Veinticinco</span></div>
+  <h2 class="day-title">En la sombra de la cruz</h2>
+  <div class="day-verse"><p>"Con Cristo estoy juntamente crucificado, y ya no vivo yo, mas vive Cristo en mí."</p><cite>Gálatas 2:20</cite></div>
+  <div class="day-body">
+    <p>La cruz no es solo el evento histórico de la muerte de Jesús. Es la invitación permanente a morir a uno mismo. Pablo lo vivió tan profundamente que pudo decir: <em>ya no vivo yo</em>. El yo — sus ambiciones, su reputación, sus derechos — había sido clavado en la cruz con Cristo.</p>
+    <p>Esta es la paradoja del evangelio: la vida más plena no se encuentra protegiéndose a uno mismo sino entregándose. El grano de trigo que no muere queda solo — el que muere da mucho fruto.</p>
+    <p>Vivir en la sombra de la cruz no es tristeza ni derrota. Es libertad. Libertad de no tener que defender el yo, de no tener que ganar cada discusión, de no tener que ser el primero. Cristo vive en ti — eso es suficiente.</p>
+  </div>
+  <div class="day-reflection"><h4>Reflexión</h4><p>¿Qué parte de tu "yo" todavía no has entregado a la cruz? ¿Qué sería diferente en tus relaciones si Cristo viviera más plenamente en ti?</p></div>
+  <div class="day-prayer"><h4>Oración</h4><p>Señor, clavo en tu cruz lo que todavía llevo por mi cuenta. Ya no vivo yo — vive Cristo en mí. Que esa sea la realidad de este día. Amén.</p></div>
+</section>
+
+<section class="day" id="d26">
+  <div class="day-num"><span class="num">26</span><span class="label">Día Veintiséis</span></div>
+  <h2 class="day-title">La resurrección lo cambia todo</h2>
+  <div class="day-verse"><p>"Yo soy la resurrección y la vida; el que cree en mí, aunque esté muerto, vivirá."</p><cite>Juan 11:25</cite></div>
+  <div class="day-body">
+    <p>Jesús no dijo "yo doy vida" ni "yo resucito a los muertos". Dijo <strong>yo soy la resurrección</strong>. No una función, una identidad. La vida no viene de Él — Él es la vida. La resurrección no es algo que hace — es algo que Él es.</p>
+    <p>Habló estas palabras frente a la tumba de Lázaro, a una familia destrozada por el dolor. Y demostró que las palabras que habló eran verdad: Lázaro salió.</p>
+    <p>¿Qué hay muerto en tu vida hoy? ¿Una esperanza? ¿Un sueño? ¿Una relación? ¿Un área que parece sin salida? El que habla estas palabras no ha cambiado. Él sigue siendo la resurrección. Y lo que está muerto en tu historia aún puede vivir.</p>
+  </div>
+  <div class="day-reflection"><h4>Reflexión</h4><p>¿Hay algo que has declarado "muerto" en tu vida que Dios podría estar queriendo resucitar? ¿Estás dispuesto a creerlo?</p></div>
+  <div class="day-prayer"><h4>Oración</h4><p>Señor Jesús, tú eres la resurrección y la vida. Habla vida sobre lo que en mí parece muerto. Creo que lo imposible es posible para ti. Amén.</p></div>
+</section>
+
+<section class="day" id="d27">
+  <div class="day-num"><span class="num">27</span><span class="label">Día Veintisiete</span></div>
+  <h2 class="day-title">La esperanza que no avergüenza</h2>
+  <div class="day-verse"><p>"Y la esperanza no avergüenza; porque el amor de Dios ha sido derramado en nuestros corazones por el Espíritu Santo que nos fue dado."</p><cite>Romanos 5:5</cite></div>
+  <div class="day-body">
+    <p>El contexto de Romanos 5 habla de tribulaciones. Pablo no dice que la esperanza viene cuando todo va bien — dice que viene a través del sufrimiento. Tribulación → paciencia → experiencia → esperanza. El camino a la esperanza firme pasa por el valle.</p>
+    <p>La esperanza cristiana no es optimismo — es certeza basada en el carácter de Dios. No espera porque las cosas parecen mejorar. Espera porque Dios es fiel. Y esa esperanza, a diferencia de la esperanza humana, <strong>no avergüenza</strong>. No decepciona. No deja varado al que confió en ella.</p>
+    <p>En los últimos días de este devocional, recibe esta palabra: lo que estás esperando de Dios no es en vano. La esperanza anclada en Él nunca termina en vergüenza.</p>
+  </div>
+  <div class="day-reflection"><h4>Reflexión</h4><p>¿Tu esperanza está puesta en las circunstancias o en el carácter de Dios? ¿Cuál de las dos resiste cuando las circunstancias cambian?</p></div>
+  <div class="day-prayer"><h4>Oración</h4><p>Señor, anclo mi esperanza en ti, no en lo que veo. Sé que no me avergonzará porque tú eres fiel. Derrama más de tu amor en mi corazón hoy. Amén.</p></div>
+</section>
+
+<section class="day" id="d28">
+  <div class="day-num"><span class="num">28</span><span class="label">Día Veintiocho</span></div>
+  <h2 class="day-title">La iglesia — su cuerpo</h2>
+  <div class="day-verse"><p>"No dejando de congregarnos, como algunos tienen por costumbre, sino exhortándonos; y tanto más, cuanto veis que aquel día se acerca."</p><cite>Hebreos 10:25</cite></div>
+  <div class="day-body">
+    <p>El cristianismo no es una fe privada. Es una fe comunitaria. Dios no diseñó al creyente para vivir solo su fe — lo diseñó para ser parte de un cuerpo. La iglesia no es opcional para el cristiano maduro: es parte de su naturaleza como hijo de Dios.</p>
+    <p>La brasa que se separa del fuego se apaga. El creyente que se aísla de la comunidad pierde calor espiritual, perspectiva, cobertura y la riqueza de los dones que otros tienen y él no.</p>
+    <p>La iglesia perfecta no existe porque está hecha de personas imperfectas, incluyéndote a ti. Pero esa es exactamente la razón para estar: necesitas a los demás tanto como ellos te necesitan a ti.</p>
+  </div>
+  <div class="day-reflection"><h4>Reflexión</h4><p>¿Estás participando activamente en una comunidad de fe? Si no, ¿qué te lo impide? Si sí, ¿estás contribuyendo o solo consumiendo?</p></div>
+  <div class="day-prayer"><h4>Oración</h4><p>Señor, gracias por la iglesia. Perdóname cuando la he visto como opcional. Ayúdame a ser parte activa de tu cuerpo, dando y recibiendo en comunidad. Amén.</p></div>
+</section>
+
+<section class="day" id="d29">
+  <div class="day-num"><span class="num">29</span><span class="label">Día Veintinueve</span></div>
+  <h2 class="day-title">Enviado al mundo</h2>
+  <div class="day-verse"><p>"Por tanto, id, y haced discípulos a todas las naciones."</p><cite>Mateo 28:19</cite></div>
+  <div class="day-body">
+    <p>Las últimas palabras de Jesús antes de ascender no fueron una invitación a la comodidad espiritual. Fueron una comisión: <strong>id</strong>. No "esperen que vengan a ustedes". No "quédense seguros dentro de la iglesia". Id. Vayan. Salgan.</p>
+    <p>La misión no es exclusiva de los misioneros o los pastores. Es el llamado de todo discípulo. Tu vecino, tu compañero de trabajo, tu familiar que todavía no conoce a Cristo — ellos son parte de la razón por la que Dios te dejó en la tierra después de salvarte.</p>
+    <p>No tienes que cruzar el océano para ser misionero. Tu misión empieza en el círculo más cercano. Un testimonio auténtico, una palabra de verdad, una vida que refleja el evangelio — eso es hacer discípulos.</p>
+  </div>
+  <div class="day-reflection"><h4>Reflexión</h4><p>¿Hay alguien en tu vida que todavía no conoce a Cristo con quien puedas compartir tu fe esta semana? Pon un nombre y ora específicamente por esa persona.</p></div>
+  <div class="day-prayer"><h4>Oración</h4><p>Señor, que no viva el evangelio solo para mí. Úsame para llevar tu luz a las personas que me rodean. Dame valentía para ir. Amén.</p></div>
+</section>
+
+<section class="day" id="d30">
+  <div class="day-num"><span class="num">30</span><span class="label">Día Treinta</span></div>
+  <h2 class="day-title">Hasta el fin</h2>
+  <div class="day-verse"><p>"Y he aquí yo estoy con vosotros todos los días, hasta el fin del mundo."</p><cite>Mateo 28:20</cite></div>
+  <div class="day-body">
+    <p>El devocional termina donde debe terminar: con la promesa que lo sostiene todo. Después de la gran comisión, Jesús no cierra con una lista de instrucciones ni con un recordatorio de responsabilidades. Cierra con una promesa: <strong>yo estoy con vosotros todos los días</strong>.</p>
+    <p>Todos los días. No los días fáciles. No los días de culto. Todos. Los días de dolor, los días grises, los días de duda, los días de victoria, los días ordinarios donde nada parece espiritual. Todos los días, hasta el fin.</p>
+    <p>Han pasado treinta días de buscar a Dios en su Palabra. Pero este devocional no termina — termina la guía. La presencia de Dios que encontraste aquí no tiene fecha de expiración. Él estará mañana también. Y el día siguiente. Hasta el fin.</p>
+    <p><strong>No termines aquí. Sigue buscándole.</strong></p>
+  </div>
+  <div class="day-reflection"><h4>Reflexión</h4><p>Mirando estos 30 días, ¿qué verdad de Dios se volvió más real para ti? ¿Qué hábito espiritual quieres llevar más allá de este devocional?</p></div>
+  <div class="day-prayer"><h4>Oración</h4><p>Señor, gracias por estos 30 días. Gracias por cada mañana de misericordia nueva. Gracias porque estarás conmigo mañana también. No termino aquí — esto es solo el comienzo. Amén.</p></div>
+</section>
+
+</main>
+
+<section class="epilogo">
+  <span class="big">SEGUIR</span>
+  <h2>Treinta días, un comienzo</h2>
+  <p>Este devocional no era el destino — era el camino hacia un hábito más profundo con Dios. La meta no era terminar los 30 días. Era conocerle más.</p>
+  <p>Sigue buscándole. Sigue leyendo su Palabra. Sigue orando. Sigue viviendo lo que aprendiste.</p>
+  <div class="quote" style="max-width:480px;margin:32px auto;">
+    <p>"Las misericordias de Jehová nunca decaen; son nuevas cada mañana."</p>
+    <cite>Lamentaciones 3:22-23</cite>
+  </div>
+  <div class="firma">Devocional 30 Días · Cada Día con Él · IPUC</div>
+</section>
+
+<script>
+const obs=new IntersectionObserver(e=>{e.forEach(el=>{if(el.isIntersecting)el.target.classList.add('visible');});},{threshold:.1});
+document.querySelectorAll('.day').forEach(e=>obs.observe(e));
+function toggleNav(){document.getElementById('sidenav').classList.toggle('show');}
+document.querySelectorAll('nav a').forEach(a=>{a.addEventListener('click',()=>{document.getElementById('sidenav').classList.remove('show');document.querySelectorAll('nav a').forEach(x=>x.classList.remove('active'));a.classList.add('active');});});
+document.addEventListener('click',e=>{const nav=document.getElementById('sidenav');if(nav.classList.contains('show')&&!nav.contains(e.target)&&!e.target.closest('.nav-toggle')){nav.classList.remove('show');}});
+</script>
+</body>
+</html>

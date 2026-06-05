@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>La Fe — Estudio Exegético Profundo</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Raleway:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--azul:#009FDA;--marino:#003B6F;--oro:#F0AB00;--oro-claro:#FFD166;--fondo:#040e1c;--texto:#e8e0d0;--texto-suave:#a89f90;--linea:rgba(240,171,0,.2);}
+*{margin:0;padding:0;box-sizing:border-box;}html{scroll-behavior:smooth;}
+body{background:var(--fondo);color:var(--texto);font-family:'Crimson Pro',Georgia,serif;font-size:18px;line-height:1.85;overflow-x:hidden;}
+::-webkit-scrollbar{width:4px;}::-webkit-scrollbar-track{background:var(--fondo);}::-webkit-scrollbar-thumb{background:var(--azul);border-radius:2px;}
+.nav-toggle{position:fixed;top:16px;left:16px;z-index:300;background:var(--marino);border:1px solid var(--linea);color:var(--oro);width:44px;height:44px;border-radius:8px;cursor:pointer;font-size:20px;display:flex;align-items:center;justify-content:center;transition:all .2s;box-shadow:0 2px 12px rgba(0,0,0,.4);}
+.nav-toggle:hover{background:var(--azul);color:#fff;}
+nav{position:fixed;left:0;top:0;bottom:0;width:265px;background:linear-gradient(180deg,var(--marino) 0%,#011529 100%);border-right:1px solid var(--linea);z-index:200;overflow-y:auto;transform:translateX(0);transition:transform .35s ease;padding:32px 0;}
+nav.hidden{transform:translateX(-100%);}
+nav .nav-brand{font-family:'Cinzel',serif;font-size:13px;font-weight:700;color:var(--oro);padding:0 20px 20px;border-bottom:1px solid var(--linea);margin-bottom:8px;letter-spacing:2px;}
+nav .nav-section{font-family:'Cinzel',serif;font-size:9px;letter-spacing:3px;color:var(--azul);padding:14px 20px 4px;text-transform:uppercase;opacity:.8;}
+nav a{display:flex;align-items:center;gap:10px;padding:7px 20px;font-family:'Raleway',sans-serif;font-size:11px;font-weight:500;letter-spacing:.5px;color:var(--texto-suave);text-decoration:none;border-left:2px solid transparent;transition:all .2s;}
+nav a:hover,nav a.active{color:var(--oro);border-left-color:var(--oro);background:rgba(240,171,0,.06);}
+nav a .nav-num{font-family:'Cinzel',serif;font-size:10px;color:var(--azul);min-width:20px;}
+.page-wrap{margin-left:265px;transition:margin .35s ease;}
+.page-wrap.full{margin-left:0;}
+
+.cover{min-height:100vh;background:linear-gradient(160deg,#041830 0%,var(--fondo) 65%);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:80px 32px 60px;position:relative;overflow:hidden;}
+.cover::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 50% at 50% 10%,rgba(0,159,218,.18) 0%,transparent 70%),radial-gradient(ellipse 40% 40% at 80% 85%,rgba(240,171,0,.1) 0%,transparent 60%);pointer-events:none;}
+.cover-icon{font-size:64px;margin-bottom:24px;animation:fadeDown .8s ease both;}
+.cover-tag{font-family:'Cinzel',serif;font-size:10px;letter-spacing:5px;color:var(--azul);text-transform:uppercase;margin-bottom:20px;animation:fadeDown .9s ease .1s both;}
+.cover-title{font-family:'Cinzel',serif;font-size:clamp(72px,14vw,140px);font-weight:900;line-height:.9;margin-bottom:16px;animation:fadeDown 1s ease .2s both;color:var(--oro);}
+.cover-sub{font-family:'Cinzel',serif;font-size:clamp(13px,2vw,17px);color:var(--azul);letter-spacing:3px;margin-bottom:32px;animation:fadeDown 1s ease .25s both;}
+.cover-line{width:60px;height:1px;background:linear-gradient(to right,transparent,var(--oro),transparent);margin:0 auto 24px;animation:fadeIn 1.1s ease .35s both;}
+.cover-author{font-family:'Raleway',sans-serif;font-size:13px;letter-spacing:4px;color:var(--texto-suave);text-transform:uppercase;animation:fadeDown 1.1s ease .4s both;}
+.cover-verse{position:absolute;bottom:40px;font-family:'Crimson Pro',serif;font-style:italic;font-size:14px;color:var(--texto-suave);max-width:440px;text-align:center;line-height:1.6;}
+
+main{max-width:740px;margin:0 auto;padding:0 24px;}
+.chapter{padding:72px 0 56px;border-bottom:1px solid rgba(240,171,0,.1);opacity:0;transform:translateY(30px);transition:opacity .7s ease,transform .7s ease;}
+.chapter.visible{opacity:1;transform:none;}
+.ch-num{font-family:'Cinzel',serif;font-size:11px;letter-spacing:4px;color:var(--azul);text-transform:uppercase;margin-bottom:12px;}
+.ch-title{font-family:'Cinzel',serif;font-size:clamp(22px,4vw,36px);font-weight:700;color:var(--oro);line-height:1.2;margin-bottom:8px;}
+.ch-sub{font-family:'Cinzel',serif;font-size:clamp(14px,2vw,19px);color:var(--azul);margin-bottom:28px;}
+.ch-divider{width:40px;height:2px;background:linear-gradient(to right,var(--oro),var(--azul));margin-bottom:32px;border-radius:2px;}
+p{margin-bottom:20px;}
+strong{color:var(--oro);font-weight:600;}
+em{color:var(--azul);font-style:italic;}
+
+.quote{border-left:3px solid var(--oro);padding:16px 24px;margin:28px 0;background:rgba(240,171,0,.05);border-radius:0 8px 8px 0;}
+.quote p{font-family:'Crimson Pro',serif;font-style:italic;font-size:1.05em;color:var(--oro-claro);margin-bottom:6px;}
+.quote cite{font-family:'Raleway',sans-serif;font-size:12px;letter-spacing:2px;color:var(--texto-suave);}
+
+.section-label{font-family:'Cinzel',serif;font-size:11px;letter-spacing:3px;color:var(--azul);text-transform:uppercase;margin:36px 0 12px;}
+
+.list-yes,.list-no{list-style:none;margin:16px 0 24px;padding:0;}
+.list-yes li,.list-no li{padding:6px 0 6px 28px;position:relative;font-size:.97em;color:var(--texto-suave);border-bottom:1px solid rgba(255,255,255,.05);}
+.list-yes li::before{content:'✅';position:absolute;left:0;top:6px;font-size:14px;}
+.list-no li::before{content:'❌';position:absolute;left:0;top:6px;font-size:14px;}
+
+.compare{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:28px 0;}
+.compare-box{padding:20px;border-radius:8px;border:1px solid;}
+.compare-box.a{border-color:rgba(0,159,218,.3);background:rgba(0,159,218,.05);}
+.compare-box.b{border-color:rgba(240,171,0,.3);background:rgba(240,171,0,.05);}
+.compare-box h4{font-family:'Cinzel',serif;font-size:10px;letter-spacing:3px;margin-bottom:12px;text-transform:uppercase;}
+.compare-box.a h4{color:var(--azul);}
+.compare-box.b h4{color:var(--oro);}
+.compare-box ul{list-style:none;}
+.compare-box ul li{font-size:14px;padding:4px 0;color:var(--texto-suave);border-bottom:1px solid rgba(255,255,255,.06);}
+
+.frase{text-align:center;padding:40px 24px;margin:32px 0;position:relative;}
+.frase::before{content:'"';font-family:'Cinzel',serif;font-size:100px;color:rgba(240,171,0,.07);position:absolute;top:-10px;left:16px;line-height:1;}
+.frase p{font-family:'Cinzel',serif;font-size:clamp(15px,2.2vw,20px);color:var(--texto);line-height:1.5;position:relative;z-index:1;margin:0;}
+
+.tip-box{background:linear-gradient(135deg,rgba(0,59,111,.4) 0%,rgba(4,14,28,.8) 100%);border:1px solid rgba(0,159,218,.25);border-radius:12px;padding:24px;margin:28px 0;}
+.tip-box h4{font-family:'Cinzel',serif;font-size:11px;letter-spacing:4px;color:var(--azul);text-transform:uppercase;margin-bottom:14px;}
+.tip-box p,.tip-box li{color:var(--texto-suave);font-size:.95em;margin-bottom:8px;}
+.tip-box ol,.tip-box ul{padding-left:20px;}
+.tip-box li{margin-bottom:8px;}
+
+.gold-box{background:rgba(240,171,0,.06);border:1px solid rgba(240,171,0,.2);border-radius:12px;padding:24px;margin:28px 0;}
+.gold-box h4{font-family:'Cinzel',serif;font-size:11px;letter-spacing:4px;color:var(--oro);text-transform:uppercase;margin-bottom:14px;}
+.gold-box p{color:var(--texto-suave);font-size:.95em;margin-bottom:10px;}
+.gold-box strong{color:var(--oro);}
+
+.etimo{background:rgba(240,171,0,.04);border:1px solid rgba(240,171,0,.15);border-radius:8px;padding:20px 24px;margin:20px 0;}
+.etimo .e-palabra{font-family:'Cinzel',serif;font-size:22px;color:var(--oro);margin-bottom:4px;}
+.etimo .e-origen{font-family:'Raleway',sans-serif;font-size:12px;color:var(--azul);letter-spacing:2px;margin-bottom:8px;}
+.etimo p{color:var(--texto-suave);font-size:.95em;margin:0;}
+
+.personaje{background:rgba(0,59,111,.2);border:1px solid rgba(0,159,218,.2);border-radius:10px;padding:20px 24px;margin:16px 0;}
+.personaje .p-nombre{font-family:'Cinzel',serif;font-size:16px;color:var(--oro);margin-bottom:4px;letter-spacing:1px;}
+.personaje .p-ref{font-family:'Raleway',sans-serif;font-size:11px;color:var(--azul);letter-spacing:2px;margin-bottom:10px;text-transform:uppercase;}
+.personaje p{color:var(--texto-suave);font-size:.95em;margin:0;}
+
+.pasos{counter-reset:paso;list-style:none;padding:0;margin:24px 0;}
+.pasos li{counter-increment:paso;display:flex;gap:16px;margin-bottom:22px;align-items:flex-start;}
+.pasos li::before{content:counter(paso);font-family:'Cinzel',serif;font-size:20px;font-weight:700;color:var(--oro);min-width:32px;line-height:1.3;}
+.pasos li .paso-content h5{font-family:'Cinzel',serif;font-size:14px;color:var(--azul);margin-bottom:5px;letter-spacing:1px;}
+.pasos li .paso-content p{color:var(--texto-suave);font-size:.95em;margin:0;}
+
+.hebreos-11{background:rgba(4,14,28,.8);border:1px solid rgba(240,171,0,.15);border-radius:10px;overflow:hidden;margin:24px 0;}
+.h11-header{background:rgba(240,171,0,.08);padding:16px 20px;font-family:'Cinzel',serif;font-size:11px;letter-spacing:3px;color:var(--oro);text-transform:uppercase;}
+.h11-item{display:flex;gap:16px;padding:14px 20px;border-bottom:1px solid rgba(255,255,255,.05);align-items:flex-start;}
+.h11-item:last-child{border-bottom:none;}
+.h11-nombre{font-family:'Cinzel',serif;font-size:13px;color:var(--azul);min-width:80px;padding-top:2px;}
+.h11-acto{font-family:'Crimson Pro',serif;font-size:15px;color:var(--texto-suave);flex:1;}
+.h11-acto strong{color:var(--oro);}
+
+.epilogo{text-align:center;padding:80px 32px 120px;}
+.epilogo .big{font-family:'Cinzel',serif;font-size:clamp(36px,8vw,72px);font-weight:900;color:transparent;-webkit-text-stroke:1px rgba(240,171,0,.35);letter-spacing:6px;display:block;margin-bottom:40px;}
+.epilogo h2{font-family:'Cinzel',serif;font-size:clamp(18px,3vw,28px);color:var(--oro);margin-bottom:24px;}
+.epilogo p{max-width:540px;margin:0 auto 16px;color:var(--texto-suave);}
+.epilogo .firma{margin-top:48px;font-family:'Cinzel',serif;font-size:13px;letter-spacing:4px;color:var(--azul);}
+
+@keyframes fadeDown{from{opacity:0;transform:translateY(-20px);}to{opacity:1;transform:none;}}
+@keyframes fadeIn{from{opacity:0;}to{opacity:1;}}
+@media(max-width:768px){nav{transform:translateX(-100%);}nav.show{transform:translateX(0);}.page-wrap{margin-left:0!important;}}
+@media(max-width:600px){.compare{grid-template-columns:1fr;}nav{width:220px;}.pasos li{flex-direction:column;gap:8px;}.h11-item{flex-direction:column;gap:4px;}}
+</style>
+</head>
+<body>
+<button class="nav-toggle" id="navToggle" onclick="toggleNav()">☰</button>
+<nav id="sidenav">
+  <div class="nav-brand">⚓ La Fe</div>
+  <div class="nav-section">Índice</div>
+  <a href="#portada"><span class="nav-num">·</span>Portada</a>
+  <div class="nav-section">Lecciones</div>
+  <a href="#cap1"><span class="nav-num">01</span>Etimología — Emunáh y Pistis</a>
+  <a href="#cap2"><span class="nav-num">02</span>Hebreos 11:1 — exégesis</a>
+  <a href="#cap3"><span class="nav-num">03</span>Lo que la fe NO es</a>
+  <a href="#cap4"><span class="nav-num">04</span>Los 3 componentes</a>
+  <a href="#cap5"><span class="nav-num">05</span>Fe y obras — Pablo vs Santiago</a>
+  <a href="#cap6"><span class="nav-num">06</span>El capítulo de los héroes</a>
+  <a href="#cap7"><span class="nav-num">07</span>Fe que opera en la oscuridad</a>
+  <a href="#cap8"><span class="nav-num">08</span>La fe y el Espíritu Santo</a>
+  <a href="#cap9"><span class="nav-num">09</span>Cómo crece la fe</a>
+  <a href="#cap10"><span class="nav-num">10</span>La fe aplicada hoy</a>
+</nav>
+
+<div class="page-wrap" id="pageWrap">
+
+<section class="cover" id="portada">
+  <div class="cover-icon">⚓</div>
+  <div class="cover-tag">Estudio Exegético · Serie Doctrinal</div>
+  <h1 class="cover-title">FE</h1>
+  <div class="cover-sub">Más profunda de lo que parece — más exigente de lo que creemos</div>
+  <div class="cover-line"></div>
+  <div class="cover-author">Predicador IPUC</div>
+  <div class="cover-verse">"Es, pues, la fe la certeza de lo que se espera, la convicción de lo que no se ve." — Hebreos 11:1</div>
+</section>
+
+<main>
+
+<!-- CAP 1 — ETIMOLOGÍA -->
+<section class="chapter" id="cap1">
+  <div class="ch-num">Lección 1</div>
+  <h2 class="ch-title">Etimología</h2>
+  <div class="ch-sub">Emunáh y Pistis — dos idiomas, una misma profundidad</div>
+  <div class="ch-divider"></div>
+
+  <p>La fe es quizás la palabra más usada en el vocabulario cristiano — y posiblemente la menos entendida en su profundidad real. Para conocerla de verdad hay que ir al idioma original. Porque la traducción "fe" en español no captura todo lo que la Biblia contiene en esa palabra.</p>
+
+  <div class="etimo">
+    <div class="e-palabra">Emunáh — אֱמוּנָה</div>
+    <div class="e-origen">Hebreo del AT · raíz aman אָמַן</div>
+    <p>La raíz <em>aman</em> significa: <strong>ser firme, sólido, confiable, estable</strong>. De ella vienen dos palabras conocidas: <em>Amén</em> — "así es, es sólido, es verdad" — y <em>Emunáh</em> — fe, fidelidad, firmeza. La fe en hebreo no es principalmente un estado mental o emocional. Es una <strong>postura de firmeza, constancia y lealtad hacia alguien en quien se confía</strong>. La emunáh describe tanto la fidelidad de Dios hacia el hombre como la fidelidad del hombre hacia Dios. Es bilateral.</p>
+  </div>
+
+  <div class="etimo">
+    <div class="e-palabra">Pistis — πίστις</div>
+    <div class="e-origen">Griego del NT · verbo pisteúō πιστεύω</div>
+    <p>Significa: <strong>confianza, convicción, fidelidad, lealtad a alguien considerado digno de confianza</strong>. En el mundo griego, pistis describía la confianza que existía en una relación de pacto — entre socios, entre ciudadanos y su ciudad, entre el creyente y su dios. No era una creencia abstracta — era una <strong>confianza relacional activa</strong>. El verbo <em>pisteúō</em> (creer, confiar) aparece más de 240 veces en el NT — más que cualquier otro verbo teológico.</p>
+  </div>
+
+  <div class="section-label">La diferencia que cambia todo</div>
+  <div class="compare">
+    <div class="compare-box a">
+      <h4>Fe como opinión (error común)</h4>
+      <ul>
+        <li>Creer que algo es verdad</li>
+        <li>Asentimiento intelectual</li>
+        <li>Convicción sin compromiso</li>
+        <li>Pasiva, sin acción</li>
+        <li>"Creo que Dios existe"</li>
+      </ul>
+    </div>
+    <div class="compare-box b">
+      <h4>Fe bíblica — Emunáh / Pistis</h4>
+      <ul>
+        <li>Confianza en una Persona</li>
+        <li>Relación de lealtad activa</li>
+        <li>Firmeza que sostiene en la oscuridad</li>
+        <li>Se expresa en acciones concretas</li>
+        <li>"Confío en Dios y vivo en consecuencia"</li>
+      </ul>
+    </div>
+  </div>
+
+  <p>La palabra hebrea <em>emunáh</em> se usa en Éxodo 17:12 para describir las <strong>manos firmes de Moisés</strong> mientras Israel batallaba — no su estado mental. La fe bíblica es esa postura: manos firmes, posición mantenida, aunque el cuerpo tiemble.</p>
+
+  <div class="frase"><p>"La fe bíblica no dice 'creo que Dios puede' — dice 'confío en quién es Dios aunque no entienda lo que está haciendo'."</p></div>
+</section>
+
+<!-- CAP 2 — HEBREOS 11:1 -->
+<section class="chapter" id="cap2">
+  <div class="ch-num">Lección 2</div>
+  <h2 class="ch-title">Hebreos 11:1 — Exégesis completa</h2>
+  <div class="ch-sub">La definición más precisa de fe en toda la Biblia</div>
+  <div class="ch-divider"></div>
+
+  <div class="quote">
+    <p>"Es, pues, la fe la certeza de lo que se espera, la convicción de lo que no se ve."</p>
+    <cite>Hebreos 11:1 — RV1960</cite>
+  </div>
+
+  <p>Este versículo es la única definición formal de fe en el Nuevo Testamento. Pero su riqueza solo se revela cuando se estudia en el griego original.</p>
+
+  <div class="section-label">Palabra por palabra en griego</div>
+
+  <div class="etimo">
+    <div class="e-palabra">Hypostasis — ὑπόστασις</div>
+    <div class="e-origen">"Certeza" en la RV1960</div>
+    <p>Este es uno de los términos más ricos del NT. <em>Hypo</em> = debajo + <em>stasis</em> = lo que está de pie. Literalmente: <strong>lo que está debajo como fundamento, la esencia real de algo, el título de propiedad, la garantía legal</strong>. En el mundo legal greco-romano, <em>hypostasis</em> era el documento que probaba la posesión de una propiedad. La fe es el <em>título de propiedad</em> de las cosas que aún no vemos. No una esperanza vaga — una garantía real.</p>
+  </div>
+
+  <div class="etimo">
+    <div class="e-palabra">Pragmaton — πραγμάτων</div>
+    <div class="e-origen">"De lo que se espera"</div>
+    <p><em>Pragma</em> viene del verbo <em>prasso</em> — hacer, actuar. Son <strong>cosas reales, hechos concretos, realidades tangibles</strong>. No fantasías ni deseos subjetivos. Las cosas que se esperan en la fe son realidades objetivas — solo que aún no se ven.</p>
+  </div>
+
+  <div class="etimo">
+    <div class="e-palabra">Elegchos — ἔλεγχος</div>
+    <div class="e-origen">"Convicción" en la RV1960</div>
+    <p>Término jurídico forense. Significa: <strong>prueba que produce convicción, evidencia que refuta lo contrario, demostración irrefutable</strong>. En los tribunales griegos, el <em>elegchos</em> era la prueba que no podía ser contradicha. La fe es la <em>evidencia</em> de lo que no se ve — no la ausencia de evidencia, sino la evidencia de otro tipo de realidad.</p>
+  </div>
+
+  <div class="gold-box">
+    <h4>Hebreos 11:1 traducido literalmente</h4>
+    <p>"La fe es el título de propiedad de las realidades que se esperan, la prueba irrefutable de las realidades que no se ven."</p>
+    <p>La fe no es <strong>creer sin evidencia</strong> — es tener un tipo de evidencia diferente a la sensorial. No es ciega — tiene ojos que ven lo que los ojos físicos no pueden ver.</p>
+  </div>
+
+  <div class="section-label">El contexto de Hebreos 11</div>
+  <p>Este versículo no abre un capítulo de definiciones teológicas abstractas. Abre un capítulo de <strong>historias reales de personas reales</strong>. El autor no define la fe para que la entendamos intelectualmente — la define para mostrarnos cómo se ve cuando alguien la vive. La definición del versículo 1 se vuelve carne en los versículos 2 al 40.</p>
+
+  <div class="frase"><p>"La fe no es saltar al vacío sin ver el fondo. Es saltar porque conoces al que sostiene."</p></div>
+</section>
+
+<!-- CAP 3 — LO QUE NO ES -->
+<section class="chapter" id="cap3">
+  <div class="ch-num">Lección 3</div>
+  <h2 class="ch-title">Lo que la fe NO es</h2>
+  <div class="ch-sub">Falsas concepciones que debilitan al creyente</div>
+  <div class="ch-divider"></div>
+
+  <p>En la cultura cristiana contemporánea, la palabra "fe" ha sido distorsionada de maneras que traicionan su significado bíblico. Identificar estas distorsiones es tan importante como entender la fe verdadera.</p>
+
+  <ul class="list-no">
+    <li><strong>Fe no es optimismo espiritual:</strong> el pensamiento positivo busca crear realidad mediante la actitud mental. La fe bíblica no crea la realidad — responde a la realidad que Dios ya estableció. No "hablar cosas a la existencia" — confiar en el Dios que ya habló.</li>
+    <li><strong>Fe no es la ausencia de dudas:</strong> los grandes héroes de la fe dudaron. Juan el Bautista envió a preguntar "¿eres tú el que había de venir?" (Mateo 11:3) estando en prisión. Tomás dudó. La duda no cancela la fe — la lucha que supera la duda es precisamente donde la fe crece.</li>
+    <li><strong>Fe no es certeza emocional:</strong> Jesús en Getsemaní sudó gotas de sangre y pidió que pasara la copa — y aun así dijo "no se haga mi voluntad sino la tuya." Eso es fe máxima sin certeza emocional.</li>
+    <li><strong>Fe no es mérito:</strong> la fe no es una obra que gana la salvación. Es la mano vacía que recibe lo que Dios da gratuitamente. "Porque por gracia sois salvos por medio de la fe; y esto no de vosotros, pues es don de Dios" — Efesios 2:8.</li>
+    <li><strong>Fe no es un poder en sí misma:</strong> el valor de la fe no está en su intensidad sino en su objeto. Una fe pequeña en un Dios grande es infinitamente más poderosa que una fe grande en un objeto equivocado. Jesús dijo que con fe como grano de mostaza se mueven montañas — no porque el grano sea poderoso, sino porque Dios lo es.</li>
+    <li><strong>Fe no es sinónimo de éxito:</strong> Hebreos 11 celebra a personas que murieron sin recibir la promesa (v.13), que fueron aserrados por la mitad (v.37), que vivieron errantes en desiertos (v.38). La fe no garantiza resultados visibles en esta vida.</li>
+  </ul>
+
+  <div class="quote">
+    <p>"Y todos éstos, aunque alcanzaron buen testimonio mediante la fe, no recibieron lo prometido."</p>
+    <cite>Hebreos 11:39 — La fe que no recibe lo que espera, y aun así sigue siendo fe</cite>
+  </div>
+
+  <div class="frase"><p>"La fe que solo funciona cuando Dios responde como tú quieres no es fe — es negociación."</p></div>
+</section>
+
+<!-- CAP 4 — LOS 3 COMPONENTES -->
+<section class="chapter" id="cap4">
+  <div class="ch-num">Lección 4</div>
+  <h2 class="ch-title">Los 3 componentes de la fe</h2>
+  <div class="ch-sub">Notitia, Assensus, Fiducia — los tres son necesarios</div>
+  <div class="ch-divider"></div>
+
+  <p>La teología clásica identificó tres componentes inseparables de la fe genuina. Si falta uno, la fe queda incompleta — ya sea fría, superficial o desequilibrada.</p>
+
+  <ul class="pasos">
+    <li>
+      <div class="paso-content">
+        <h5>Notitia — Conocimiento</h5>
+        <p>El componente intelectual. La fe tiene un contenido — no es un salto en el vacío sino una confianza basada en quién es Dios y qué ha revelado. La fe no es irracional. Nace del conocimiento de Dios a través de su Palabra. "La fe es por el oír, y el oír, por la Palabra de Dios" — Romanos 10:17. Sin conocimiento, la fe no tiene objeto real. <em>No se puede confiar en alguien que no se conoce.</em></p>
+      </div>
+    </li>
+    <li>
+      <div class="paso-content">
+        <h5>Assensus — Asentimiento</h5>
+        <p>El componente evaluativo. No basta con conocer — hay que <strong>estar de acuerdo</strong> con que lo que Dios dice es verdad. Es el paso de "sé que Dios existe" a "creo que lo que Dios dice sobre mí, sobre el pecado y sobre Cristo es verdad." Santiago señala que los demonios también tienen <em>notitia</em> — "los demonios también creen, y tiemblan" (Santiago 2:19). Les falta el assensus y la fiducia.</p>
+      </div>
+    </li>
+    <li>
+      <div class="paso-content">
+        <h5>Fiducia — Confianza personal</h5>
+        <p>El componente que hace la fe salvadora. Es el <strong>compromiso personal, la entrega de uno mismo</strong> a Dios conocido y reconocido como verdadero. Va más allá del asentimiento — es poner el peso de la propia vida sobre lo que Dios ha dicho. La diferencia entre saber que el puente aguanta y caminar sobre él. <em>La fiducia es cuando caminas.</em> Esta es la fe que salva — no una convicción abstracta sino una confianza activa y personal.</p>
+      </div>
+    </li>
+  </ul>
+
+  <div class="tip-box">
+    <h4>Los tres sin excepción</h4>
+    <p><strong>Notitia sin assensus:</strong> conocimiento teológico frío — el teólogo que sabe todo sobre Dios pero no está de acuerdo con que necesita salvación</p>
+    <p><strong>Assensus sin fiducia:</strong> convicción sin compromiso — "sé que es verdad pero no cambio nada en mi vida"</p>
+    <p><strong>Fiducia sin notitia:</strong> entusiasmo religioso sin fundamento — fe en un Dios que uno mismo inventó, no el Dios revelado en la Escritura</p>
+    <p><strong>Los tres juntos:</strong> conozco a Dios, estoy de acuerdo con lo que dice, y pongo mi vida sobre esa verdad</p>
+  </div>
+</section>
+
+<!-- CAP 5 — FE Y OBRAS -->
+<section class="chapter" id="cap5">
+  <div class="ch-num">Lección 5</div>
+  <h2 class="ch-title">Fe y obras — Pablo vs Santiago</h2>
+  <div class="ch-sub">La tensión más mal entendida del Nuevo Testamento</div>
+  <div class="ch-divider"></div>
+
+  <p>Hay dos textos del Nuevo Testamento que parecen contradecirse directamente. Han generado debates teológicos durante siglos. Una lectura superficial los hace irreconciliables. Una lectura exegética los hace perfectamente complementarios.</p>
+
+  <div class="quote">
+    <p>"Concluimos, pues, que el hombre es justificado por fe sin las obras de la ley."</p>
+    <cite>Romanos 3:28 — Pablo</cite>
+  </div>
+
+  <div class="quote">
+    <p>"Vosotros veis, pues, que el hombre es justificado por las obras, y no solamente por la fe."</p>
+    <cite>Santiago 2:24 — Santiago</cite>
+  </div>
+
+  <p>¿Contradicción? No. Para resolverlo hay que hacer tres preguntas exegéticas fundamentales.</p>
+
+  <div class="section-label">Pregunta 1 — ¿A quién escriben?</div>
+  <p><strong>Pablo</strong> escribe a los Romanos para combatir el error del <em>fariseísmo</em> — la idea de que las obras de la ley merecen la salvación. Su audiencia cree que puede ganarse la justificación. Pablo les dice: nadie se justifica por obras de mérito.</p>
+  <p><strong>Santiago</strong> escribe a creyentes judíos que han caído en el error opuesto: <em>antinomismo</em> — creer que la fe es solo asentimiento intelectual sin consecuencias en la conducta. Su audiencia dice "creo" pero no actúa. Santiago les dice: esa "fe" sin obras está muerta.</p>
+
+  <div class="section-label">Pregunta 2 — ¿Qué significa "obras" en cada contexto?</div>
+  <div class="compare">
+    <div class="compare-box a">
+      <h4>Obras en Pablo</h4>
+      <ul>
+        <li>Obras de la ley mosaica</li>
+        <li>Rituales que se hacen para merecer</li>
+        <li>Circuncisión, días sagrados, sacrificios</li>
+        <li>Actos de mérito para ganar favor</li>
+      </ul>
+    </div>
+    <div class="compare-box b">
+      <h4>Obras en Santiago</h4>
+      <ul>
+        <li>Frutos visibles de una fe genuina</li>
+        <li>Obediencia que demuestra confianza real</li>
+        <li>Dar de comer al hambriento</li>
+        <li>Evidencia de transformación interior</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="section-label">Pregunta 3 — ¿Qué significa "justificado" en cada uno?</div>
+  <p><strong>Pablo</strong> usa "justificado" en sentido forense — declarado justo ante Dios en el tribunal divino. Esto ocurre por fe, no por obras.</p>
+  <p><strong>Santiago</strong> usa "justificado" en sentido demostrativo — demostrado como justo ante los hombres. Abraham fue "justificado" cuando ofreció a Isaac (años después de haber sido declarado justo por fe en Génesis 15).</p>
+
+  <div class="gold-box">
+    <h4>La síntesis que los une</h4>
+    <p><strong>Pablo:</strong> la fe genuina justifica — sin obras de mérito</p>
+    <p><strong>Santiago:</strong> la fe genuina siempre produce obras — sin excepción</p>
+    <p><strong>Conclusión:</strong> somos justificados por fe sola — pero esa fe nunca está sola. La fe que no cambia nada no es fe bíblica — es asentimiento intelectual vacío.</p>
+    <p>Lutero llamó a Santiago "una epístola de paja". Después reconoció que se equivocó — Santiago y Pablo se necesitan mutuamente para describir la fe completa.</p>
+  </div>
+
+  <div class="frase"><p>"La fe salva sola — pero la fe que salva nunca está sola."</p></div>
+</section>
+
+<!-- CAP 6 — HÉROES DE LA FE -->
+<section class="chapter" id="cap6">
+  <div class="ch-num">Lección 6</div>
+  <h2 class="ch-title">El capítulo de los héroes</h2>
+  <div class="ch-sub">Hebreos 11 — la fe que se puede ver</div>
+  <div class="ch-divider"></div>
+
+  <p>El autor de Hebreos no define la fe y la deja en el aire. Inmediatamente la ilustra con personas reales. Cada historia en Hebreos 11 muestra un aspecto diferente de cómo se ve la fe cuando se encarna en una vida.</p>
+
+  <div class="hebreos-11">
+    <div class="h11-header">Hebreos 11 — La galería de la fe</div>
+    <div class="h11-item">
+      <span class="h11-nombre">Abel</span>
+      <span class="h11-acto"><strong>Ofreció un sacrificio mejor</strong> — fe que se expresa en adoración costosa, no en lo que queda. La calidad de la ofrenda revela la calidad de la fe.</span>
+    </div>
+    <div class="h11-item">
+      <span class="h11-nombre">Enoc</span>
+      <span class="h11-acto"><strong>Anduvo con Dios y fue traspuesto</strong> — fe como estilo de vida cotidiano. No un acto heroico sino una comunión sostenida. "Le agradó a Dios" — la fe es lo que complace a Dios.</span>
+    </div>
+    <div class="h11-item">
+      <span class="h11-nombre">Noé</span>
+      <span class="h11-acto"><strong>Preparó el arca para cosas que aún no se veían</strong> — fe que actúa sobre la Palabra de Dios antes de ver la evidencia. 120 años de obediencia sin lluvia visible. La fe de Noé se midió en décadas, no en momentos.</span>
+    </div>
+    <div class="h11-item">
+      <span class="h11-nombre">Abraham</span>
+      <span class="h11-acto"><strong>Salió sin saber a dónde iba</strong> — fe que obedece antes de entender el destino. Y luego ofreció a Isaac — fe que confía cuando Dios pide lo más amado, confiando en que puede resucitar de los muertos (v.19).</span>
+    </div>
+    <div class="h11-item">
+      <span class="h11-nombre">Sara</span>
+      <span class="h11-acto"><strong>Recibió fuerza para concebir siendo estéril</strong> — fe que toma la promesa de Dios como más real que la biología. "Fiel es el que prometió" — la base de la fe de Sara no era su cuerpo sino el carácter de Dios.</span>
+    </div>
+    <div class="h11-item">
+      <span class="h11-nombre">Moisés</span>
+      <span class="h11-acto"><strong>Eligió ser maltratado con el pueblo de Dios</strong> antes que gozar de los placeres temporales del pecado. Fe que evalúa el costo eterno vs el placer temporal y escoge lo eterno.</span>
+    </div>
+    <div class="h11-item">
+      <span class="h11-nombre">Rahab</span>
+      <span class="h11-acto"><strong>Recibió a los espías en paz</strong> — la prostituta de Jericó que creyó las noticias sobre el Dios de Israel. La fe más inesperada del capítulo — en la persona más improbable, en el lugar más inhóspito. La fe no tiene requisitos de respetabilidad.</span>
+    </div>
+  </div>
+
+  <div class="section-label">El patrón de la fe en Hebreos 11</div>
+  <p>Cada historia tiene la misma estructura: <em>"Por la fe... hizo algo."</em> Nunca "por la fe... sintió algo" o "por la fe... creyó algo." La fe bíblica siempre termina en un verbo de acción. La fe que no mueve nada no aparece en este capítulo.</p>
+
+  <div class="quote">
+    <p>"Todos éstos murieron en fe, sin haber recibido lo prometido, sino mirándolo de lejos, y creyéndolo, y saludándolo."</p>
+    <cite>Hebreos 11:13 — La fe que muere esperando y aun así no pierde</cite>
+  </div>
+</section>
+
+<!-- CAP 7 — FE EN LA OSCURIDAD -->
+<section class="chapter" id="cap7">
+  <div class="ch-num">Lección 7</div>
+  <h2 class="ch-title">La fe que opera en la oscuridad</h2>
+  <div class="ch-sub">Cuando Dios calla y la fe sigue</div>
+  <div class="ch-divider"></div>
+
+  <p>Esta es la lección más difícil y más necesaria. Es fácil tener fe cuando todo funciona, cuando Dios responde rápido, cuando la oración produce resultados visibles. Pero la fe bíblica muestra su verdadero carácter cuando ninguna de esas cosas ocurre.</p>
+
+  <div class="section-label">Job — la fe que no entiende nada y aun así confía</div>
+  <div class="quote">
+    <p>"He aquí, aunque él me matare, en él esperaré."</p>
+    <cite>Job 13:15 — La declaración de fe más radical del Antiguo Testamento</cite>
+  </div>
+  <p>Job no tenía respuestas. No entendía por qué. Dios no le explicaba nada. Sus amigos le daban explicaciones falsas. Su esposa le decía que maldiijera a Dios. Y en medio de todo, Job declaró algo que desafía toda lógica humana: <strong>aunque Dios me mate, confío en Él</strong>. Eso es emunáh — firmeza que no depende de las circunstancias.</p>
+
+  <div class="section-label">Habacuc — la fe que pregunta y aun así adora</div>
+  <div class="quote">
+    <p>"Aunque la higuera no florezca, ni en las vides haya frutos... con todo, yo me alegraré en Jehová, y me gozaré en el Dios de mi salvación."</p>
+    <cite>Habacuc 3:17-18</cite>
+  </div>
+  <p>Habacuc comenzó el libro con preguntas difíciles: ¿por qué permites la injusticia? ¿Por qué usas a una nación malvada para castigar a Israel? Dios respondió — pero no con respuestas que Habacuc esperaba. Y sin embargo, el libro termina con uno de los cantos de fe más sublimes de toda la Escritura. <strong>La fe madura no necesita entender para adorar.</strong></p>
+
+  <div class="section-label">El patrón de la fe en la oscuridad</div>
+  <div class="tip-box">
+    <h4>Las 4 etapas de la fe probada</h4>
+    <ol>
+      <li><strong>La crisis:</strong> las circunstancias contradicen la promesa de Dios. Lo que se creía se tambalea.</li>
+      <li><strong>La lucha:</strong> el creyente no finge que todo está bien — lleva su angustia honestamente a Dios. Los Salmos de lamento son teología autorizada.</li>
+      <li><strong>La elección:</strong> el momento decisivo donde se elige confiar en el carácter de Dios por encima de las circunstancias. No basado en lo que se ve — basado en lo que se sabe de Él.</li>
+      <li><strong>La firmeza:</strong> la emunáh — las manos firmes aunque el cuerpo tiemble. La fe no desaparece — se profundiza.</li>
+    </ol>
+  </div>
+
+  <div class="personaje">
+    <div class="p-nombre">El padre del endemoniado — Marcos 9:24</div>
+    <div class="p-ref">La oración más honesta del Nuevo Testamento</div>
+    <p>"Creo; ayuda mi incredulidad." Este hombre no mintió. No fingió una fe que no tenía. Presentó ante Jesús exactamente lo que tenía — fe mezclada con duda — y Jesús lo recibió y sanó a su hijo. La fe que se entrega honesta es más valiosa que la que se presenta perfecta.</p>
+  </div>
+
+  <div class="frase"><p>"La fe que solo funciona cuando hay luz no es fe — es vista. La fe verdadera es lo que te sostiene cuando todo está oscuro."</p></div>
+</section>
+
+<!-- CAP 8 — FE Y ESPÍRITU SANTO -->
+<section class="chapter" id="cap8">
+  <div class="ch-num">Lección 8</div>
+  <h2 class="ch-title">La fe y el Espíritu Santo</h2>
+  <div class="ch-sub">La fe como don y como fruto</div>
+  <div class="ch-divider"></div>
+
+  <p>La fe bíblica no es un logro humano — es una obra del Espíritu Santo en el creyente. Esta verdad libera al creyente de la presión de "generar" fe por esfuerzo propio y lo dirige al lugar correcto: la dependencia del Espíritu.</p>
+
+  <div class="section-label">La fe como don del Espíritu</div>
+  <div class="quote">
+    <p>"Porque a éste es dada por el Espíritu palabra de sabiduría; a otro, palabra de ciencia según el mismo Espíritu; a otro, fe por el mismo Espíritu."</p>
+    <cite>1 Corintios 12:8-9 — La fe como don específico</cite>
+  </div>
+  <p>Pablo menciona la <strong>fe</strong> como uno de los dones del Espíritu. Esto no es la fe salvadora que todo creyente posee — es un don especial de fe sobrenatural para circunstancias específicas. La fe que mueve montañas, que ora con certeza absoluta, que actúa con autoridad en situaciones imposibles. Es un don que el Espíritu distribuye según su voluntad.</p>
+
+  <div class="section-label">La fe como fruto del Espíritu</div>
+  <div class="quote">
+    <p>"Mas el fruto del Espíritu es amor, gozo, paz, paciencia, benignidad, bondad, fe, mansedumbre, templanza."</p>
+    <cite>Gálatas 5:22 — "Fe" aquí es pistis: fidelidad, lealtad constante</cite>
+  </div>
+  <p>En Gálatas 5:22, <em>pistis</em> como fruto del Espíritu se traduce a veces como "fe" y otras como "fidelidad". Ambos significados son válidos — porque la fe bíblica y la fidelidad son dos caras de la misma moneda. El Espíritu produce en el creyente una <strong>lealtad constante a Dios</strong> que no depende de las emociones del momento.</p>
+
+  <div class="section-label">La fe viene por el oír</div>
+  <div class="quote">
+    <p>"Así que la fe es por el oír, y el oír, por la Palabra de Dios."</p>
+    <cite>Romanos 10:17</cite>
+  </div>
+  <p>El Espíritu Santo usa la Palabra de Dios como el instrumento principal para generar y fortalecer la fe. <em>Rhēma</em> — la palabra hablada, activa, proclamada. La fe no se produce por introspección ni por esfuerzo mental — se produce cuando la Palabra de Dios es escuchada, recibida y el Espíritu la vivifica en el corazón del oyente.</p>
+
+  <div class="compare">
+    <div class="compare-box a">
+      <h4>Fe generada por uno mismo</h4>
+      <ul>
+        <li>Depende del estado emocional</li>
+        <li>Se agota bajo presión</li>
+        <li>Se basa en la resolución personal</li>
+        <li>Varía según las circunstancias</li>
+      </ul>
+    </div>
+    <div class="compare-box b">
+      <h4>Fe producida por el Espíritu</h4>
+      <ul>
+        <li>Independiente del estado emocional</li>
+        <li>Se profundiza bajo presión</li>
+        <li>Se basa en el carácter de Dios</li>
+        <li>Es firme aunque las circunstancias cambien</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- CAP 9 — CÓMO CRECE -->
+<section class="chapter" id="cap9">
+  <div class="ch-num">Lección 9</div>
+  <h2 class="ch-title">Cómo crece la fe</h2>
+  <div class="ch-sub">El proceso que nadie enseña pero todos necesitan</div>
+  <div class="ch-divider"></div>
+
+  <p>Los discípulos le pidieron a Jesús: <em>"Auméntanos la fe"</em> (Lucas 17:5). La pregunta implica que la fe puede crecer. Y la Biblia muestra claramente cómo ocurre ese crecimiento — y no siempre es cómodo.</p>
+
+  <div class="section-label">La fe crece por la Palabra</div>
+  <p>Romanos 10:17 es el fundamento. La fe no crece por experiencias emocionales — crece por el conocimiento progresivo de Dios a través de su Palabra. Cada texto que se estudia en profundidad, cada promesa que se entiende en su contexto, cada atributo de Dios que se conoce — alimenta y fortalece la fe.</p>
+
+  <div class="section-label">La fe crece por la prueba</div>
+  <div class="quote">
+    <p>"Para que la prueba de vuestra fe, más preciosa que el oro, el cual aunque perecedero se prueba con fuego, sea hallada en alabanza, gloria y honra cuando sea manifestado Jesucristo."</p>
+    <cite>1 Pedro 1:7</cite>
+  </div>
+  <p>El fuego no destruye el oro — lo purifica. La prueba no destruye la fe verdadera — la refina y la fortalece. El creyente que nunca es probado tiene fe sin profundidad — fe de clima controlado que no sabe lo que puede cuando llega la tormenta.</p>
+
+  <div class="section-label">La fe crece por el testimonio de otros</div>
+  <p>Hebreos 11 no fue escrito para informar — fue escrito para fortalecer. Cuando el creyente agotado del siglo I leía sobre Abraham, Moisés y Rahab, su propia fe se fortalecía. Por eso el testimonio en la iglesia no es vanidad — es combustible para la fe de otros.</p>
+
+  <div class="section-label">La fe crece por la obediencia</div>
+  <p>Cada acto de obediencia a Dios — especialmente cuando es costoso o cuando no se entiende completamente — fortalece la fe para el próximo paso. Abraham creció en fe porque obedeció. La obediencia parcial produce fe parcial. La obediencia radical produce fe radical.</p>
+
+  <div class="tip-box">
+    <h4>Las 4 fuentes de crecimiento de la fe</h4>
+    <ol>
+      <li><strong>La Palabra:</strong> Romanos 10:17 — el fundamento del conocimiento de Dios</li>
+      <li><strong>La prueba:</strong> 1 Pedro 1:7 — el fuego que purifica y profundiza</li>
+      <li><strong>El testimonio:</strong> Hebreos 11 — la nube de testigos que inspira</li>
+      <li><strong>La obediencia:</strong> Juan 7:17 — "el que quiera hacer la voluntad de Dios, conocerá"</li>
+    </ol>
+  </div>
+</section>
+
+<!-- CAP 10 — APLICADA HOY -->
+<section class="chapter" id="cap10">
+  <div class="ch-num">Lección 10</div>
+  <h2 class="ch-title">La fe aplicada hoy</h2>
+  <div class="ch-sub">De la doctrina a la vida — cómo se ve en lo cotidiano</div>
+  <div class="ch-divider"></div>
+
+  <p>Toda esta profundidad exegética tiene un propósito: que la fe no sea un concepto que se estudia sino una realidad que se vive. La fe bíblica tiene implicaciones muy concretas en la vida diaria del creyente.</p>
+
+  <div class="section-label">La fe en la oración</div>
+  <p>La fe en la oración no significa estar seguro de que Dios hará exactamente lo que pediste. Significa estar seguro de que Dios escucha, que es bueno, y que su respuesta — sea cual sea — viene de su carácter perfecto. La oración de fe no es la que dicta a Dios el resultado — es la que se somete a Dios confiando en su sabiduría.</p>
+
+  <div class="quote">
+    <p>"Y esta es la confianza que tenemos en él, que si pedimos alguna cosa conforme a su voluntad, él nos oye."</p>
+    <cite>1 Juan 5:14 — La fe en la oración opera dentro de la voluntad de Dios, no por encima de ella</cite>
+  </div>
+
+  <div class="section-label">La fe en la espera</div>
+  <p>Una de las manifestaciones más difíciles y más bíblicas de la fe es <strong>esperar en Dios</strong>. Isaías 40:31 conecta directamente la renovación de fuerzas con los que esperan en Jehová. La espera no es pasividad — es fe activa que dice: "el tiempo de Dios es perfecto aunque no sea el mío."</p>
+
+  <div class="section-label">La fe en el sufrimiento</div>
+  <p>Romanos 8:28 dice que todas las cosas ayudan a bien a los que aman a Dios. La fe en el sufrimiento no es pretender que el dolor no duele — es confiar en que Dios está trabajando en lo que no se puede ver. Pablo aprendió a contentarse en toda situación — eso no fue instantáneo, fue un proceso de fe forjada.</p>
+
+  <div class="section-label">La fe en la obediencia diaria</div>
+  <p>Cada decisión de obedecer a Dios cuando es inconveniente, costoso o incomprendido es un acto de fe. Cada vez que se elige la integridad sobre el beneficio inmediato, la santidad sobre el placer fácil, el servicio sobre la comodidad — eso es fe. <strong>La fe no es solo lo que sucede en el altar — es lo que ocurre en la oficina, en el hogar y en lo privado.</strong></p>
+
+  <div class="gold-box">
+    <h4>La fe en resumen</h4>
+    <p><strong>En el idioma:</strong> emunáh — firmeza, lealtad, constancia · pistis — confianza relacional activa</p>
+    <p><strong>En Hebreos 11:1:</strong> título de propiedad de lo que se espera, prueba irrefutable de lo que no se ve</p>
+    <p><strong>En su estructura:</strong> conocimiento + asentimiento + confianza personal</p>
+    <p><strong>En su relación con obras:</strong> la fe que justifica siempre produce frutos visibles</p>
+    <p><strong>En la oscuridad:</strong> firmeza que no depende de circunstancias sino del carácter de Dios</p>
+    <p><strong>En su origen:</strong> don del Espíritu Santo, activado por la Palabra proclamada</p>
+    <p><strong>En su crecimiento:</strong> Palabra, prueba, testimonio y obediencia</p>
+  </div>
+
+  <div class="frase"><p>"La fe no es lo que sientes cuando estás en el altar. Es lo que te sostiene cuando sales de él."</p></div>
+</section>
+
+</main>
+
+<section class="epilogo">
+  <span class="big">CONFIAR</span>
+  <h2>La fe que lo sostiene todo</h2>
+  <p>Sin fe es imposible agradar a Dios — no como requisito arbitrario, sino porque la relación con Dios es por naturaleza una relación de confianza. Y esa confianza no se agota, no envejece y no decepciona.</p>
+  <p>Empieza con conocer a Dios. Avanza cuando se le cree. Madura cuando se le obedece en la oscuridad. Y termina en gloria.</p>
+  <div class="quote" style="max-width:480px;margin:32px auto;">
+    <p>"Mas el justo por la fe vivirá."</p>
+    <cite>Habacuc 2:4 · Romanos 1:17 · Gálatas 3:11 · Hebreos 10:38 — Citado 4 veces en la Biblia. Pocas verdades reciben ese honor.</cite>
+  </div>
+  <div class="firma">La Fe · Estudio Exegético · Predicador IPUC</div>
+</section>
+
+</div>
+
+<script>
+const obs=new IntersectionObserver(e=>{e.forEach(el=>{if(el.isIntersecting)el.target.classList.add('visible');});},{threshold:.08});
+document.querySelectorAll('.chapter').forEach(e=>obs.observe(e));
+const nav=document.getElementById('sidenav');
+const wrap=document.getElementById('pageWrap');
+const isMobile=()=>window.innerWidth<=768;
+function toggleNav(){
+  if(isMobile()){nav.classList.toggle('show');}
+  else{nav.classList.toggle('hidden');wrap.classList.toggle('full');}
+}
+const secs=document.querySelectorAll('section[id]');
+const links=document.querySelectorAll('nav a');
+window.addEventListener('scroll',()=>{
+  let cur='';
+  secs.forEach(s=>{if(window.scrollY>=s.offsetTop-200)cur=s.id;});
+  links.forEach(a=>{a.classList.remove('active');if(a.getAttribute('href')==='#'+cur)a.classList.add('active');});
+});
+links.forEach(a=>{a.addEventListener('click',()=>{if(isMobile())nav.classList.remove('show');});});
+document.addEventListener('click',e=>{
+  if(isMobile()&&nav.classList.contains('show')&&!nav.contains(e.target)&&!e.target.closest('.nav-toggle')){nav.classList.remove('show');}
+});
+</script>
+</body>
+</html>

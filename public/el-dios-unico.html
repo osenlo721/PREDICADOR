@@ -1,0 +1,1041 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>El Dios Único y Verdadero — Osmar Lugo</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Raleway:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --azul: #009FDA;
+    --marino: #003B6F;
+    --oro: #F0AB00;
+    --oro-claro: #FFD166;
+    --fondo: #040e1c;
+    --fondo2: #071628;
+    --fondo3: #0a1e38;
+    --texto: #e8e0d0;
+    --texto-suave: #a89f90;
+    --linea: rgba(240,171,0,0.25);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--fondo);
+    color: var(--texto);
+    font-family: 'Crimson Pro', Georgia, serif;
+    font-size: 18px;
+    line-height: 1.85;
+    overflow-x: hidden;
+  }
+
+  /* ── STARFIELD ── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      radial-gradient(1px 1px at 10% 15%, rgba(240,171,0,.35) 0%, transparent 100%),
+      radial-gradient(1px 1px at 25% 60%, rgba(0,159,218,.25) 0%, transparent 100%),
+      radial-gradient(1px 1px at 55% 30%, rgba(255,255,255,.15) 0%, transparent 100%),
+      radial-gradient(1px 1px at 75% 80%, rgba(240,171,0,.2) 0%, transparent 100%),
+      radial-gradient(1px 1px at 88% 20%, rgba(255,255,255,.1) 0%, transparent 100%),
+      radial-gradient(1px 1px at 40% 90%, rgba(0,159,218,.2) 0%, transparent 100%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* ── NAV LATERAL ── */
+  nav {
+    position: fixed;
+    left: 0; top: 0; bottom: 0;
+    width: 260px;
+    background: linear-gradient(180deg, var(--marino) 0%, #011529 100%);
+    border-right: 1px solid var(--linea);
+    z-index: 100;
+    overflow-y: auto;
+    padding: 32px 0 24px;
+    transition: transform .35s ease;
+  }
+  nav::-webkit-scrollbar { width: 4px; }
+  nav::-webkit-scrollbar-track { background: transparent; }
+  nav::-webkit-scrollbar-thumb { background: var(--linea); border-radius: 2px; }
+
+  .nav-logo {
+    padding: 0 24px 28px;
+    border-bottom: 1px solid var(--linea);
+    margin-bottom: 20px;
+  }
+  .nav-logo .cruz {
+    font-size: 28px;
+    color: var(--oro);
+    display: block;
+    margin-bottom: 6px;
+  }
+  .nav-logo h2 {
+    font-family: 'Cinzel', serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--azul);
+    line-height: 1.4;
+  }
+
+  nav ul { list-style: none; padding: 0 12px; }
+  nav ul li { margin-bottom: 2px; }
+  nav ul li a {
+    display: block;
+    padding: 8px 14px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-family: 'Raleway', sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: .04em;
+    color: var(--texto-suave);
+    transition: all .2s ease;
+    border-left: 2px solid transparent;
+  }
+  nav ul li a:hover,
+  nav ul li a.active {
+    background: rgba(0,159,218,.08);
+    color: var(--oro);
+    border-left-color: var(--oro);
+    padding-left: 18px;
+  }
+  .nav-section-title {
+    font-family: 'Raleway', sans-serif;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: .15em;
+    text-transform: uppercase;
+    color: var(--azul);
+    padding: 16px 26px 6px;
+    opacity: .8;
+  }
+
+  /* ── HAMBURGER ── */
+  #menu-btn {
+    display: none;
+    position: fixed;
+    top: 16px; left: 16px;
+    z-index: 200;
+    background: var(--marino);
+    border: 1px solid var(--linea);
+    color: var(--oro);
+    width: 42px; height: 42px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 20px;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* ── MAIN ── */
+  main {
+    margin-left: 260px;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* ── PORTADA ── */
+  .portada {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 80px 40px;
+    position: relative;
+    overflow: hidden;
+  }
+  .portada::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 80% 60% at 50% 50%, rgba(0,59,111,.6) 0%, transparent 70%),
+      radial-gradient(ellipse 40% 40% at 50% 20%, rgba(240,171,0,.08) 0%, transparent 60%);
+  }
+  .portada-cruz {
+    font-size: 56px;
+    color: var(--oro);
+    margin-bottom: 24px;
+    position: relative;
+    animation: flotar 4s ease-in-out infinite;
+    filter: drop-shadow(0 0 24px rgba(240,171,0,.5));
+  }
+  @keyframes flotar {
+    0%,100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+  }
+  .portada-subtitulo {
+    font-family: 'Raleway', sans-serif;
+    font-size: 11px;
+    letter-spacing: .22em;
+    text-transform: uppercase;
+    color: var(--azul);
+    margin-bottom: 20px;
+    position: relative;
+  }
+  .portada h1 {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(38px, 6vw, 72px);
+    font-weight: 900;
+    line-height: 1.1;
+    color: #fff;
+    position: relative;
+    margin-bottom: 12px;
+    text-shadow: 0 0 60px rgba(0,159,218,.3);
+  }
+  .portada h1 span { color: var(--oro); }
+  .portada-linea-decorativa {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin: 24px 0;
+    position: relative;
+  }
+  .portada-linea-decorativa::before,
+  .portada-linea-decorativa::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--oro), transparent);
+    max-width: 160px;
+  }
+  .portada-linea-decorativa span { color: var(--oro); font-size: 18px; }
+  .portada-desc {
+    font-family: 'Crimson Pro', serif;
+    font-size: 20px;
+    font-style: italic;
+    color: var(--texto-suave);
+    max-width: 560px;
+    line-height: 1.6;
+    position: relative;
+  }
+  .portada-autor {
+    margin-top: 36px;
+    font-family: 'Raleway', sans-serif;
+    font-size: 13px;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--azul);
+    position: relative;
+  }
+  .portada-autor strong {
+    display: block;
+    font-family: 'Cinzel', serif;
+    font-size: 18px;
+    letter-spacing: .08em;
+    color: var(--texto);
+    margin-top: 4px;
+  }
+  .portada-cta {
+    margin-top: 48px;
+    position: relative;
+  }
+  .portada-cta a {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 32px;
+    background: transparent;
+    border: 1.5px solid var(--oro);
+    color: var(--oro);
+    text-decoration: none;
+    font-family: 'Raleway', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    border-radius: 50px;
+    transition: all .3s ease;
+  }
+  .portada-cta a:hover {
+    background: var(--oro);
+    color: var(--fondo);
+    box-shadow: 0 0 32px rgba(240,171,0,.4);
+  }
+
+  /* ── SECCIONES ── */
+  section {
+    padding: 80px 60px;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+  section + section { border-top: 1px solid var(--linea); }
+
+  .chapter-header {
+    margin-bottom: 52px;
+  }
+  .chapter-num {
+    font-family: 'Raleway', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: .2em;
+    text-transform: uppercase;
+    color: var(--azul);
+    margin-bottom: 12px;
+  }
+  .chapter-title {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(26px, 4vw, 42px);
+    font-weight: 700;
+    color: #fff;
+    line-height: 1.2;
+    margin-bottom: 16px;
+  }
+  .chapter-title span { color: var(--oro); }
+  .chapter-title-line {
+    width: 64px;
+    height: 3px;
+    background: linear-gradient(90deg, var(--oro), transparent);
+    border-radius: 2px;
+    margin-bottom: 24px;
+  }
+  .chapter-intro {
+    font-size: 20px;
+    font-style: italic;
+    color: var(--texto-suave);
+    border-left: 3px solid var(--oro);
+    padding-left: 20px;
+    line-height: 1.7;
+    margin-bottom: 40px;
+  }
+
+  h3 {
+    font-family: 'Cinzel', serif;
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--oro-claro);
+    margin: 40px 0 14px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--linea);
+  }
+  h4 {
+    font-family: 'Raleway', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--azul);
+    margin: 28px 0 10px;
+  }
+  p { margin-bottom: 18px; color: var(--texto); }
+
+  /* ── VERSÍCULOS ── */
+  .versiculo {
+    background: linear-gradient(135deg, rgba(0,59,111,.35) 0%, rgba(0,59,111,.15) 100%);
+    border-left: 4px solid var(--oro);
+    border-radius: 0 10px 10px 0;
+    padding: 20px 24px;
+    margin: 24px 0;
+    position: relative;
+    overflow: hidden;
+  }
+  .versiculo::before {
+    content: '"';
+    position: absolute;
+    top: -10px; left: 12px;
+    font-family: 'Cinzel', serif;
+    font-size: 80px;
+    color: var(--oro);
+    opacity: .12;
+    line-height: 1;
+    pointer-events: none;
+  }
+  .versiculo-ref {
+    font-family: 'Raleway', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--azul);
+    margin-bottom: 8px;
+  }
+  .versiculo p {
+    font-style: italic;
+    font-size: 18px;
+    color: #f0e8d8;
+    margin: 0;
+    line-height: 1.7;
+  }
+  .versiculo .analisis {
+    margin-top: 12px;
+    font-size: 15px;
+    font-style: normal;
+    color: var(--texto-suave);
+    border-top: 1px solid var(--linea);
+    padding-top: 10px;
+  }
+
+  /* ── CARDS ATRIBUTOS ── */
+  .cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 16px;
+    margin: 28px 0;
+  }
+  .card {
+    background: linear-gradient(135deg, var(--fondo3) 0%, var(--fondo2) 100%);
+    border: 1px solid var(--linea);
+    border-radius: 12px;
+    padding: 22px 20px;
+    position: relative;
+    overflow: hidden;
+    transition: transform .2s ease, border-color .2s ease;
+  }
+  .card:hover {
+    transform: translateY(-3px);
+    border-color: rgba(240,171,0,.5);
+  }
+  .card::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--oro), var(--azul));
+  }
+  .card-icon { font-size: 28px; margin-bottom: 10px; }
+  .card-name {
+    font-family: 'Cinzel', serif;
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--oro-claro);
+    margin-bottom: 6px;
+  }
+  .card-ref {
+    font-family: 'Raleway', sans-serif;
+    font-size: 11px;
+    letter-spacing: .08em;
+    color: var(--azul);
+    margin-bottom: 8px;
+  }
+  .card p {
+    font-size: 14px;
+    color: var(--texto-suave);
+    margin: 0;
+    line-height: 1.6;
+  }
+
+  /* ── TABLA NOMBRES ── */
+  .nombres-tabla {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 24px 0;
+    font-size: 15px;
+  }
+  .nombres-tabla thead th {
+    background: var(--marino);
+    font-family: 'Raleway', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--azul);
+    padding: 12px 16px;
+    text-align: left;
+    border-bottom: 2px solid var(--linea);
+  }
+  .nombres-tabla tbody tr {
+    border-bottom: 1px solid rgba(240,171,0,.1);
+    transition: background .15s;
+  }
+  .nombres-tabla tbody tr:hover { background: rgba(0,59,111,.3); }
+  .nombres-tabla td {
+    padding: 12px 16px;
+    vertical-align: top;
+  }
+  .nombres-tabla td:first-child {
+    font-family: 'Cinzel', serif;
+    font-size: 14px;
+    color: var(--oro);
+    font-weight: 700;
+    white-space: nowrap;
+  }
+  .nombres-tabla td:nth-child(2) {
+    color: var(--azul);
+    font-size: 13px;
+    font-family: 'Raleway', sans-serif;
+  }
+  .nombres-tabla td:last-child {
+    color: var(--texto-suave);
+    font-size: 14px;
+  }
+
+  /* ── TIMELINE BAUTISMO ── */
+  .timeline { margin: 36px 0; position: relative; }
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 24px; top: 0; bottom: 0;
+    width: 2px;
+    background: linear-gradient(180deg, var(--oro), var(--azul), transparent);
+  }
+  .timeline-item {
+    display: flex;
+    gap: 24px;
+    margin-bottom: 32px;
+    padding-left: 8px;
+    position: relative;
+  }
+  .timeline-dot {
+    flex-shrink: 0;
+    width: 32px; height: 32px;
+    background: var(--marino);
+    border: 2px solid var(--oro);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Cinzel', serif;
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--oro);
+    position: relative;
+    z-index: 1;
+  }
+  .timeline-content { flex: 1; padding-top: 4px; }
+  .timeline-ref {
+    font-family: 'Raleway', sans-serif;
+    font-size: 11px;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--azul);
+    margin-bottom: 4px;
+  }
+  .timeline-title {
+    font-family: 'Cinzel', serif;
+    font-size: 16px;
+    color: var(--oro-claro);
+    margin-bottom: 8px;
+  }
+  .timeline-content p { font-size: 15px; margin: 0; color: var(--texto-suave); }
+
+  /* ── CALLOUT ── */
+  .callout {
+    background: linear-gradient(135deg, rgba(0,159,218,.12), rgba(0,59,111,.2));
+    border: 1px solid rgba(0,159,218,.3);
+    border-radius: 12px;
+    padding: 24px 28px;
+    margin: 32px 0;
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+  }
+  .callout-icon { font-size: 24px; flex-shrink: 0; margin-top: 2px; }
+  .callout-text { font-size: 16px; color: var(--texto); line-height: 1.7; }
+  .callout-text strong { color: var(--azul); }
+
+  /* ── CONCLUSIÓN FINAL ── */
+  .conclusion-final {
+    background: linear-gradient(135deg, rgba(0,59,111,.4), rgba(4,14,28,.6));
+    border: 1px solid var(--linea);
+    border-radius: 16px;
+    padding: 48px 40px;
+    text-align: center;
+    margin-top: 60px;
+  }
+  .conclusion-final .cruz-final {
+    font-size: 40px;
+    color: var(--oro);
+    margin-bottom: 20px;
+    display: block;
+    filter: drop-shadow(0 0 16px rgba(240,171,0,.4));
+  }
+  .conclusion-final h3 {
+    font-family: 'Cinzel', serif;
+    font-size: 28px;
+    color: #fff;
+    border: none;
+    margin: 0 0 16px;
+    padding: 0;
+  }
+  .conclusion-final p {
+    font-size: 18px;
+    font-style: italic;
+    color: var(--texto-suave);
+    max-width: 600px;
+    margin: 0 auto 14px;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    text-align: center;
+    padding: 40px;
+    border-top: 1px solid var(--linea);
+    font-family: 'Raleway', sans-serif;
+    font-size: 12px;
+    color: var(--texto-suave);
+    letter-spacing: .08em;
+  }
+  footer span { color: var(--oro); }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    nav { transform: translateX(-100%); }
+    nav.open { transform: translateX(0); }
+    main { margin-left: 0; }
+    #menu-btn { display: flex; }
+    section { padding: 60px 24px; }
+    .portada { padding: 80px 24px 60px; }
+  }
+  @media (max-width: 600px) {
+    .cards-grid { grid-template-columns: 1fr; }
+    .nombres-tabla { font-size: 13px; }
+    .nombres-tabla td { padding: 10px 10px; }
+  }
+
+  /* ── SCROLL REVEAL ── */
+  .reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity .6s ease, transform .6s ease;
+  }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+</style>
+</head>
+<body>
+
+<!-- Botón menú móvil -->
+<button id="menu-btn" onclick="toggleNav()" aria-label="Menú">☰</button>
+
+<!-- Navegación lateral -->
+<nav id="sidebar">
+  <div class="nav-logo">
+    <span class="cruz">✝</span>
+    <h2>El Dios Único<br>y Verdadero</h2>
+  </div>
+  <ul>
+    <li><a href="#portada">Portada</a></li>
+    <li class="nav-section-title">Capítulos</li>
+    <li><a href="#introduccion">Introducción</a></li>
+    <li><a href="#cap1">Cap. 1 — La Unicidad</a></li>
+    <li><a href="#cap2">Cap. 2 — El Bautismo</a></li>
+    <li><a href="#cap3">Cap. 3 — La Trinidad</a></li>
+    <li><a href="#cap4">Cap. 4 — Nombres de Dios</a></li>
+    <li><a href="#cap5">Cap. 5 — La Restauración</a></li>
+    <li><a href="#conclusion">Conclusión</a></li>
+  </ul>
+</nav>
+
+<main>
+
+  <!-- ══ PORTADA ══ -->
+  <div class="portada" id="portada">
+    <div class="portada-cruz">✝</div>
+    <div class="portada-subtitulo">Osmar Lugo — Estudio Teológico</div>
+    <h1>El Dios <span>Único</span><br>y Verdadero</h1>
+    <div class="portada-linea-decorativa">
+      <span>✦</span>
+    </div>
+    <p class="portada-desc">La Unicidad de Dios, el Bautismo en el Nombre de Jesús y la Restauración de la Fe Apostólica</p>
+    <div class="portada-autor">
+      Escrito por<strong>Osmar Lugo</strong>
+    </div>
+    <div class="portada-cta">
+      <a href="#introduccion">Comenzar lectura ↓</a>
+    </div>
+  </div>
+
+  <!-- ══ INTRODUCCIÓN ══ -->
+  <section id="introduccion">
+    <div class="chapter-header reveal">
+      <div class="chapter-num">Introducción</div>
+      <h2 class="chapter-title">El <span>Clamor</span> por la Verdad</h2>
+      <div class="chapter-title-line"></div>
+    </div>
+    <p class="reveal">Vivimos en una era de información, donde la verdad parece diluirse entre opiniones, tradiciones humanas y corrientes filosóficas que desafían la fe cristiana. La humanidad se encuentra en una constante búsqueda de Dios, pero ¿es posible que las respuestas se hayan nublado con interpretaciones humanas que desviaron el mensaje original de las Escrituras?</p>
+    <p class="reveal">Este libro tiene como objetivo volver al fundamento, a las raíces de la fe apostólica, donde Dios fue reconocido como Uno, indivisible, y Jesucristo como su manifestación plena y gloriosa.</p>
+    <div class="callout reveal">
+      <span class="callout-icon">🕊️</span>
+      <p class="callout-text">Desde la época de los apóstoles, el mensaje del Evangelio estuvo centrado en un <strong>Dios único</strong> y en el <strong>bautismo en el nombre de Jesucristo</strong>. Con el paso de los siglos, doctrinas como la Trinidad fueron formalizadas, marcando una ruptura con las enseñanzas originales.</p>
+    </div>
+    <p class="reveal">¿Qué sucedió? ¿Cómo y por qué se alejó el cristianismo del monoteísmo absoluto que predicaron los apóstoles? Este libro busca responder estas preguntas con profundidad teológica, respaldo histórico y un llamado a la restauración de la verdad.</p>
+  </section>
+
+  <!-- ══ CAPÍTULO 1 ══ -->
+  <section id="cap1">
+    <div class="chapter-header reveal">
+      <div class="chapter-num">Capítulo Uno</div>
+      <h2 class="chapter-title">La <span>Unicidad</span> de Dios</h2>
+      <div class="chapter-title-line"></div>
+      <p class="chapter-intro">La cualidad de ser uno sin igual. Dios no solo es "uno en número", sino absolutamente incomparable en naturaleza, carácter, poder y gloria.</p>
+    </div>
+
+    <h3 class="reveal">Etimología y Definición</h3>
+    <p class="reveal">La palabra <em>unicidad</em> proviene del latín <em>unicus</em>, que significa "único, singular". Aplicada a Dios, describe su naturaleza indivisible y exclusiva como el único ser supremo en existencia. La unicidad subraya que Dios no comparte su gloria ni su divinidad con nadie más.</p>
+
+    <div class="versiculo reveal">
+      <div class="versiculo-ref">Isaías 42:8</div>
+      <p>"Yo soy Jehová; este es mi nombre; y a otro no daré mi gloria, ni mi alabanza a esculturas."</p>
+    </div>
+
+    <h3 class="reveal">El Shemá Israel — La Declaración Central</h3>
+    <p class="reveal">El fundamento de la creencia en la unicidad de Dios se encuentra en el <em>Shemá Israel</em>, la declaración más importante del judaísmo y base de la fe cristiana unicitaria:</p>
+
+    <div class="versiculo reveal">
+      <div class="versiculo-ref">Deuteronomio 6:4</div>
+      <p>"Oye, Israel: el Señor nuestro Dios, el Señor uno es."</p>
+      <p class="analisis">La palabra "uno" en hebreo es <strong>אֶחָד (echad)</strong>, que denota una unidad absoluta e indivisible. Enfatiza que Dios no es una colección de partes o personas, sino una entidad única y singular.</p>
+    </div>
+
+    <h3 class="reveal">La Unicidad en las Escrituras</h3>
+    <div class="cards-grid">
+      <div class="card reveal">
+        <div class="card-icon">⚡</div>
+        <div class="card-name">Isaías 45:5-6</div>
+        <p>"Yo soy Jehová, y ninguno más hay; no hay Dios fuera de mí."</p>
+      </div>
+      <div class="card reveal">
+        <div class="card-icon">🏔️</div>
+        <div class="card-name">Isaías 46:9</div>
+        <p>"Yo soy Dios, y no hay otro Dios, y nada hay semejante a mí."</p>
+      </div>
+      <div class="card reveal">
+        <div class="card-icon">🌅</div>
+        <div class="card-name">Éxodo 15:11</div>
+        <p>"¿Quién como tú, oh Jehová? Magnífico en santidad, terrible en maravillosas hazañas."</p>
+      </div>
+      <div class="card reveal">
+        <div class="card-icon">💎</div>
+        <div class="card-name">1 Samuel 2:2</div>
+        <p>"No hay santo como Jehová; porque no hay ninguno fuera de ti."</p>
+      </div>
+      <div class="card reveal">
+        <div class="card-icon">🌿</div>
+        <div class="card-name">Miqueas 7:18</div>
+        <p>"¿Qué Dios como tú, que perdona la maldad y se deleita en misericordia?"</p>
+      </div>
+      <div class="card reveal">
+        <div class="card-icon">✨</div>
+        <div class="card-name">Juan 17:3</div>
+        <p>"Esta es la vida eterna: que te conozcan a ti, el único Dios verdadero."</p>
+      </div>
+    </div>
+
+    <h3 class="reveal">Los Atributos del Dios Único</h3>
+    <div class="cards-grid">
+      <div class="card reveal"><div class="card-icon">♾️</div><div class="card-name">Eternidad</div><p>Sin principio ni fin (Sal. 90:2)</p></div>
+      <div class="card reveal"><div class="card-icon">💪</div><div class="card-name">Omnipotencia</div><p>Todo el poder (Is. 44:24)</p></div>
+      <div class="card reveal"><div class="card-icon">🧠</div><div class="card-name">Omnisciencia</div><p>Conoce todo (Sal. 139:1-6)</p></div>
+      <div class="card reveal"><div class="card-icon">🌐</div><div class="card-name">Omnipresencia</div><p>Presente en todo lugar (Sal. 139:7)</p></div>
+      <div class="card reveal"><div class="card-icon">🪨</div><div class="card-name">Inmutabilidad</div><p>No cambia (Mal. 3:6)</p></div>
+      <div class="card reveal"><div class="card-icon">👑</div><div class="card-name">Soberanía</div><p>Gobierna con autoridad absoluta</p></div>
+      <div class="card reveal"><div class="card-icon">🕊️</div><div class="card-name">Santidad</div><p>Separado del pecado (Is. 6:3)</p></div>
+      <div class="card reveal"><div class="card-icon">❤️</div><div class="card-name">Amor Infinito</div><p>Dios es amor (1 Jn. 4:8)</p></div>
+    </div>
+
+    <h3 class="reveal">Jesucristo: La Manifestación Plena de Dios</h3>
+    <p class="reveal">La manifestación de Dios en Jesucristo es uno de los misterios más gloriosos revelados en las Escrituras:</p>
+
+    <div class="versiculo reveal">
+      <div class="versiculo-ref">1 Timoteo 3:16</div>
+      <p>"Grande es el misterio de la piedad: Dios fue manifestado en carne, justificado en el Espíritu, visto de los ángeles, predicado a los gentiles, recibido arriba en gloria."</p>
+    </div>
+    <div class="versiculo reveal">
+      <div class="versiculo-ref">Colosenses 2:9</div>
+      <p>"Porque en él habita corporalmente toda la plenitud de la Deidad."</p>
+      <p class="analisis">Jesús no es una parte de Dios, sino la plenitud de la divinidad en forma humana. No hay separación entre Jesús y Dios; Él es Dios mismo manifestado en carne.</p>
+    </div>
+    <div class="versiculo reveal">
+      <div class="versiculo-ref">Juan 8:58</div>
+      <p>"Jesús les dijo: De cierto os digo: Antes que Abraham fuese, yo soy."</p>
+      <p class="analisis">Jesús usa el nombre "Yo soy" (griego: <em>ἐγώ εἰμι</em>), la traducción directa de YHWH en Éxodo 3:14, identificándose como el Dios eterno.</p>
+    </div>
+  </section>
+
+  <!-- ══ CAPÍTULO 2 ══ -->
+  <section id="cap2">
+    <div class="chapter-header reveal">
+      <div class="chapter-num">Capítulo Dos</div>
+      <h2 class="chapter-title">El Bautismo en el <span>Nombre de Jesús</span></h2>
+      <div class="chapter-title-line"></div>
+      <p class="chapter-intro">La práctica establecida por los apóstoles como parte fundamental del plan de salvación. No una opción, sino el modelo bíblico.</p>
+    </div>
+
+    <h3 class="reveal">Etimología del Bautismo</h3>
+    <p class="reveal">La palabra <em>bautismo</em> proviene del griego <em>baptisma</em> y <em>baptizo</em>, que significan "inmersión" o "sumergir". En su uso bíblico, se refiere al acto de sumergir completamente a una persona en agua como símbolo de arrepentimiento, limpieza y nueva vida en Cristo.</p>
+
+    <h3 class="reveal">Registro Bíblico del Bautismo en el Nombre de Jesús</h3>
+    <p class="reveal">A lo largo del libro de los Hechos, la iglesia primitiva bautizó consistentemente invocando el nombre de Jesucristo:</p>
+
+    <div class="timeline">
+      <div class="timeline-item reveal">
+        <div class="timeline-dot">1</div>
+        <div class="timeline-content">
+          <div class="timeline-ref">Hechos 2:38 — Día de Pentecostés</div>
+          <div class="timeline-title">El Nacimiento de la Iglesia</div>
+          <p>"Arrepentíos, y bautícese cada uno de vosotros en el nombre de Jesucristo para perdón de los pecados; y recibiréis el don del Espíritu Santo." Este evento marcó el inicio de la iglesia y estableció el modelo apostólico.</p>
+        </div>
+      </div>
+      <div class="timeline-item reveal">
+        <div class="timeline-dot">2</div>
+        <div class="timeline-content">
+          <div class="timeline-ref">Hechos 8:16 — Los Samaritanos</div>
+          <div class="timeline-title">Expansión del Evangelio</div>
+          <p>Felipe predicó en Samaria y los creyentes fueron bautizados en el nombre de Jesús, aún antes de recibir el Espíritu Santo. Pedro y Juan completaron la obra apostólica.</p>
+        </div>
+      </div>
+      <div class="timeline-item reveal">
+        <div class="timeline-dot">3</div>
+        <div class="timeline-content">
+          <div class="timeline-ref">Hechos 10:48 — Cornelio y su casa</div>
+          <div class="timeline-title">El Evangelio a los Gentiles</div>
+          <p>"Y mandó bautizarles en el nombre del Señor Jesús." Pedro confirmó que el mensaje de salvación era para toda nación y linaje.</p>
+        </div>
+      </div>
+      <div class="timeline-item reveal">
+        <div class="timeline-dot">4</div>
+        <div class="timeline-content">
+          <div class="timeline-ref">Hechos 19:5 — Los Discípulos de Juan</div>
+          <div class="timeline-title">El Nuevo Bautismo</div>
+          <p>Discípulos que solo conocían el bautismo de Juan fueron bautizados en el nombre del Señor Jesús, enfatizando que este era el único bautismo válido del nuevo pacto.</p>
+        </div>
+      </div>
+      <div class="timeline-item reveal">
+        <div class="timeline-dot">5</div>
+        <div class="timeline-content">
+          <div class="timeline-ref">Hechos 22:16 — El caso de Pablo</div>
+          <div class="timeline-title">Testimonio Personal</div>
+          <p>"Levántate y bautízate, y lava tus pecados, invocando su nombre." El testimonio personal del apóstol Pablo confirma la práctica uniforme de la iglesia primitiva.</p>
+        </div>
+      </div>
+    </div>
+
+    <h3 class="reveal">Mateo 28:19 y su Comprensión Apostólica</h3>
+    <div class="callout reveal">
+      <span class="callout-icon">📖</span>
+      <p class="callout-text">"Por tanto, id, y haced discípulos a todas las naciones, bautizándolos en el nombre del Padre, y del Hijo, y del Espíritu Santo." (Mateo 28:19)<br><br>Los apóstoles entendieron que <strong>"el nombre"</strong> (singular en el original griego: <em>εἰς τὸ ὄνομα</em>) del Padre, del Hijo y del Espíritu Santo es <strong>Jesucristo</strong> — la plenitud de la Deidad corporal (Col. 2:9).</p>
+    </div>
+
+    <div class="versiculo reveal">
+      <div class="versiculo-ref">Hechos 4:12</div>
+      <p>"Y en ningún otro hay salvación; porque no hay otro nombre bajo el cielo, dado a los hombres, en que podamos ser salvos."</p>
+    </div>
+  </section>
+
+  <!-- ══ CAPÍTULO 3 ══ -->
+  <section id="cap3">
+    <div class="chapter-header reveal">
+      <div class="chapter-num">Capítulo Tres</div>
+      <h2 class="chapter-title">El Origen y Desarrollo<br>de la <span>Trinidad</span></h2>
+      <div class="chapter-title-line"></div>
+      <p class="chapter-intro">Un análisis histórico y teológico de cómo se formalizó esta doctrina, su contraste con la fe apostólica original y su impacto en la práctica del bautismo.</p>
+    </div>
+
+    <h3 class="reveal">Etimología del Término "Trinidad"</h3>
+    <p class="reveal">La palabra <em>Trinidad</em> proviene del latín <em>trinitas</em>, que significa "tres" o "triunidad". Este término <strong>no aparece en la Biblia</strong>. Fue introducido por el teólogo <strong>Tertuliano (160–225 d.C.)</strong> en su obra <em>Adversus Praxeas</em> para describir la relación entre el Padre, el Hijo y el Espíritu Santo.</p>
+
+    <h3 class="reveal">Desarrollo Histórico</h3>
+    <div class="cards-grid">
+      <div class="card reveal">
+        <div class="card-icon">⛪</div>
+        <div class="card-name">Siglo I — La Iglesia Apostólica</div>
+        <div class="card-ref">Era apostólica</div>
+        <p>Los apóstoles predicaban un monoteísmo estricto. Jesucristo era reconocido como la manifestación plena de Dios en carne (1 Tim. 3:16). No hay evidencia de doctrina trinitaria formal.</p>
+      </div>
+      <div class="card reveal">
+        <div class="card-icon">⚔️</div>
+        <div class="card-name">Siglo II — Primeros Conflictos</div>
+        <div class="card-ref">Post-apostólico</div>
+        <p>Surgieron el monarquianismo (unidad absoluta de Dios) y el arrianismo (el Hijo como criatura inferior). Tertuliano introduce el término "Trinidad".</p>
+      </div>
+      <div class="card reveal">
+        <div class="card-icon">🏛️</div>
+        <div class="card-name">Concilio de Nicea (325 d.C.)</div>
+        <div class="card-ref">Convocado por Constantino</div>
+        <p>Se declara que el Hijo es de la misma sustancia (<em>homousios</em>) que el Padre. El Espíritu Santo no fue el foco principal. La Trinidad aún no estaba completamente formalizada.</p>
+      </div>
+      <div class="card reveal">
+        <div class="card-icon">📜</div>
+        <div class="card-name">Concilio de Constantinopla (381)</div>
+        <div class="card-ref">Formalización final</div>
+        <p>Se define al Espíritu Santo como la tercera persona igual en naturaleza. La Trinidad es formalmente aceptada como doctrina oficial de la iglesia institucional.</p>
+      </div>
+    </div>
+
+    <h3 class="reveal">Contraste con la Iglesia de los Hechos</h3>
+    <div class="versiculo reveal">
+      <div class="versiculo-ref">2 Corintios 5:19</div>
+      <p>"Dios estaba en Cristo reconciliando consigo al mundo."</p>
+      <p class="analisis">Los apóstoles predicaban que toda la plenitud de la Deidad habitaba corporalmente en Cristo (Col. 2:9). No encontramos en el Nuevo Testamento la referencia a Dios como tres personas distintas.</p>
+    </div>
+  </section>
+
+  <!-- ══ CAPÍTULO 4 ══ -->
+  <section id="cap4">
+    <div class="chapter-header reveal">
+      <div class="chapter-num">Capítulo Cuatro</div>
+      <h2 class="chapter-title">Los <span>Nombres de Dios</span><br>en el Antiguo Testamento</h2>
+      <div class="chapter-title-line"></div>
+      <p class="chapter-intro">Cada nombre revela un aspecto del carácter de Dios. Todos encuentran su plenitud en la persona de Jesucristo (Colosenses 2:9).</p>
+    </div>
+
+    <table class="nombres-tabla reveal">
+      <thead>
+        <tr>
+          <th>Nombre</th>
+          <th>Referencia</th>
+          <th>Significado</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>Elohim</td><td>Génesis 1:1</td><td>Dios fuerte y poderoso, creador de todo</td></tr>
+        <tr><td>El Shaddai</td><td>Génesis 17:1</td><td>Dios Todopoderoso, suficiencia absoluta</td></tr>
+        <tr><td>El Elyon</td><td>Génesis 14:18</td><td>Dios Altísimo, supremacía sobre todo</td></tr>
+        <tr><td>El Olam</td><td>Génesis 21:33</td><td>Dios Eterno, naturaleza inmutable</td></tr>
+        <tr><td>Jehová / YHWH</td><td>Éxodo 3:14</td><td>"Yo Soy el que Soy" — autoexistencia y eternidad</td></tr>
+        <tr><td>Jehová Jireh</td><td>Génesis 22:14</td><td>El Señor que provee</td></tr>
+        <tr><td>Jehová Rapha</td><td>Éxodo 15:26</td><td>El Señor que sana</td></tr>
+        <tr><td>Jehová Nissi</td><td>Éxodo 17:15</td><td>El Señor es mi Bandera (victoria)</td></tr>
+        <tr><td>Jehová Shalom</td><td>Jueces 6:24</td><td>El Señor es Paz</td></tr>
+        <tr><td>Jehová Sabaot</td><td>1 Samuel 1:3</td><td>El Señor de los Ejércitos celestiales</td></tr>
+        <tr><td>Jehová Tsidkenu</td><td>Jeremías 23:6</td><td>El Señor justicia nuestra</td></tr>
+        <tr><td>Jehová Shammah</td><td>Ezequiel 48:35</td><td>El Señor está allí — presencia permanente</td></tr>
+        <tr><td>Adonai</td><td>Salmos 8:1</td><td>Señor, dominio absoluto</td></tr>
+        <tr><td>Roca (Tzur)</td><td>Deuteronomio 32:4</td><td>Estabilidad y fortaleza eterna</td></tr>
+        <tr><td>Abba (Padre)</td><td>Isaías 63:16</td><td>Cercanía e intimidad con su pueblo</td></tr>
+      </tbody>
+    </table>
+
+    <h3 class="reveal">Jesús y los Nombres de Dios</h3>
+    <p class="reveal">Jesús cumple y personifica cada nombre de Dios revelado en el Antiguo Testamento, demostrando que Él es el mismo Dios eterno manifestado en forma humana:</p>
+
+    <div class="versiculo reveal">
+      <div class="versiculo-ref">Juan 8:58 — Jesús como YHWH</div>
+      <p>"De cierto os digo: Antes que Abraham fuese, yo soy."</p>
+      <p class="analisis">Jesús usa <em>ἐγώ εἰμι (ego eimi)</em> — traducción griega del nombre divino de Éxodo 3:14. Se identifica directamente como el Dios eterno.</p>
+    </div>
+    <div class="versiculo reveal">
+      <div class="versiculo-ref">Mateo 1:23 — Jesús como Emmanuel</div>
+      <p>"He aquí, una virgen concebirá y dará a luz un hijo, y llamarás su nombre Emanuel, que traducido es: Dios con nosotros."</p>
+    </div>
+    <div class="versiculo reveal">
+      <div class="versiculo-ref">Filipenses 2:11 — Jesús como Adonai</div>
+      <p>"Y toda lengua confiese que Jesucristo es el Señor, para gloria de Dios Padre."</p>
+      <p class="analisis">Jesús es reconocido como <em>Κύριος (Kyrios)</em>, el equivalente griego de Adonai, con la misma autoridad y soberanía de YHWH.</p>
+    </div>
+  </section>
+
+  <!-- ══ CAPÍTULO 5 ══ -->
+  <section id="cap5">
+    <div class="chapter-header reveal">
+      <div class="chapter-num">Capítulo Cinco</div>
+      <h2 class="chapter-title">La Restauración de<br>la <span>Fe Apostólica</span></h2>
+      <div class="chapter-title-line"></div>
+      <p class="chapter-intro">¿Por qué es vital regresar a la enseñanza original? La Biblia advierte sobre la apostasía y llama a una restauración activa de la verdad revelada.</p>
+    </div>
+
+    <h3 class="reveal">La Apostasía: Advertencia Bíblica</h3>
+    <p class="reveal">El término <em>apostasía</em> proviene del griego <em>apostasia (ἀποστασία)</em> — "abandono, rebelión, desviación". La Escritura advierte reiteradamente sobre este peligro:</p>
+
+    <div class="cards-grid">
+      <div class="card reveal"><div class="card-icon">⚠️</div><div class="card-name">Hechos 20:29-30</div><p>Pablo advierte que tras su partida entrarán lobos rapaces que no perdonarán al rebaño.</p></div>
+      <div class="card reveal"><div class="card-icon">📣</div><div class="card-name">2 Tesalonicenses 2:3</div><p>Pablo menciona una "gran apostasía" como señal de los tiempos finales.</p></div>
+      <div class="card reveal"><div class="card-icon">🛡️</div><div class="card-name">1 Timoteo 4:1</div><p>"En los postreros tiempos algunos apostatarán de la fe, escuchando a espíritus engañadores."</p></div>
+      <div class="card reveal"><div class="card-icon">🔥</div><div class="card-name">2 Pedro 2:1-2</div><p>Pedro advierte sobre falsos maestros que introducirán herejías destructoras.</p></div>
+    </div>
+
+    <h3 class="reveal">El Fundamento de la Enseñanza Apostólica</h3>
+    <p class="reveal">La iglesia primitiva se sostenía sobre cinco pilares fundamentales:</p>
+    <div class="cards-grid">
+      <div class="card reveal"><div class="card-icon">1️⃣</div><div class="card-name">Monoteísmo absoluto</div><p>Deuteronomio 6:4, Marcos 12:29</p></div>
+      <div class="card reveal"><div class="card-icon">✝️</div><div class="card-name">Cristo como Dios manifestado</div><p>Colosenses 2:9, 1 Timoteo 3:16</p></div>
+      <div class="card reveal"><div class="card-icon">💧</div><div class="card-name">Bautismo en nombre de Jesús</div><p>Hechos 2:38, 8:16, 10:48, 19:5</p></div>
+      <div class="card reveal"><div class="card-icon">🔥</div><div class="card-name">Bautismo del Espíritu Santo</div><p>Hechos 2:4, 10:46, 19:6</p></div>
+      <div class="card reveal"><div class="card-icon">🌿</div><div class="card-name">Santidad y separación</div><p>Hebreos 12:14, 1 Pedro 1:15-16</p></div>
+    </div>
+
+    <h3 class="reveal">Cómo Vivir la Verdad Hoy</h3>
+    <div class="callout reveal">
+      <span class="callout-icon">📖</span>
+      <p class="callout-text"><strong>Volver a las Escrituras como autoridad suprema.</strong> "Y estos eran más nobles que los que estaban en Tesalónica, pues escudriñaban cada día las Escrituras para ver si estas cosas eran así." (Hechos 17:11)</p>
+    </div>
+    <div class="callout reveal">
+      <span class="callout-icon">⛪</span>
+      <p class="callout-text"><strong>Seguir el modelo de la iglesia primitiva.</strong> "Y perseveraban en la doctrina de los apóstoles, en la comunión unos con otros, en el partimiento del pan y en las oraciones." (Hechos 2:42)</p>
+    </div>
+    <div class="callout reveal">
+      <span class="callout-icon">🕊️</span>
+      <p class="callout-text"><strong>Buscar la llenura del Espíritu Santo.</strong> "Sed llenos del Espíritu." (Efesios 5:18) La guía del Espíritu es esencial para discernir la verdad.</p>
+    </div>
+  </section>
+
+  <!-- ══ CONCLUSIÓN ══ -->
+  <section id="conclusion">
+    <div class="chapter-header reveal">
+      <div class="chapter-num">Conclusión</div>
+      <h2 class="chapter-title">Volviendo al<br><span>Camino Original</span></h2>
+      <div class="chapter-title-line"></div>
+    </div>
+
+    <p class="reveal">A lo largo de este estudio hemos explorado la unicidad de Dios, el bautismo en el nombre de Jesús y la necesidad de restaurar la fe apostólica. La verdad revelada en las Escrituras no ha cambiado, pero a lo largo de la historia, doctrinas humanas han intentado desviar el mensaje original.</p>
+
+    <div class="versiculo reveal">
+      <div class="versiculo-ref">2 Juan 9</div>
+      <p>"Cualquiera que se extravía, y no persevera en la doctrina de Cristo, no tiene a Dios; el que persevera en la doctrina de Cristo, ése sí tiene al Padre y al Hijo."</p>
+    </div>
+
+    <div class="conclusion-final reveal">
+      <span class="cruz-final">✝</span>
+      <h3>El Llamado Permanece</h3>
+      <p>La fe en un Dios único y verdadero, manifestado en Jesucristo, sigue siendo el fundamento de la salvación.</p>
+      <p>El bautismo en su nombre no es una opción — es el modelo bíblico establecido por los apóstoles.</p>
+      <p>El mismo Dios que obró en la iglesia primitiva sigue obrando hoy, y la invitación permanece abierta para todo aquel que anhele caminar en la verdad.</p>
+    </div>
+  </section>
+
+  <footer>
+    <p>✦ &nbsp;<span>El Dios Único y Verdadero</span>&nbsp; ✦</p>
+    <p style="margin-top:8px;">Osmar Lugo — IPUC Algarrobo &nbsp;·&nbsp; Iglesia Pentecostal Unida de Colombia</p>
+  </footer>
+
+</main>
+
+<script>
+  // Toggle nav móvil
+  function toggleNav() {
+    document.getElementById('sidebar').classList.toggle('open');
+  }
+
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        setTimeout(() => e.target.classList.add('visible'), i * 60);
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  reveals.forEach(r => observer.observe(r));
+
+  // Nav activo en scroll
+  const sections = document.querySelectorAll('section, .portada');
+  const navLinks = document.querySelectorAll('nav a');
+  const scrollSpy = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        const id = e.target.id;
+        navLinks.forEach(a => {
+          a.classList.toggle('active', a.getAttribute('href') === '#' + id);
+        });
+      }
+    });
+  }, { threshold: 0.3 });
+  sections.forEach(s => scrollSpy.observe(s));
+
+  // Cerrar nav al hacer clic en un enlace (móvil)
+  navLinks.forEach(a => a.addEventListener('click', () => {
+    document.getElementById('sidebar').classList.remove('open');
+  }));
+</script>
+</body>
+</html>

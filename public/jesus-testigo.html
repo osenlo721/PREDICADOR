@@ -1,0 +1,803 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jesús de Nazaret — Yo Estaba Ahí</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Raleway:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--azul:#009FDA;--marino:#003B6F;--oro:#F0AB00;--oro-claro:#FFD166;--fondo:#040e1c;--texto:#e8e0d0;--texto-suave:#a89f90;--linea:rgba(240,171,0,.2);}
+*{margin:0;padding:0;box-sizing:border-box;}html{scroll-behavior:smooth;}
+body{background:var(--fondo);color:var(--texto);font-family:'Crimson Pro',Georgia,serif;font-size:19px;line-height:2;overflow-x:hidden;}
+::-webkit-scrollbar{width:4px;}::-webkit-scrollbar-track{background:var(--fondo);}::-webkit-scrollbar-thumb{background:var(--azul);border-radius:2px;}
+.nav-toggle{position:fixed;top:16px;left:16px;z-index:300;background:var(--marino);border:1px solid var(--linea);color:var(--oro);width:44px;height:44px;border-radius:8px;cursor:pointer;font-size:20px;display:flex;align-items:center;justify-content:center;transition:all .2s;box-shadow:0 2px 12px rgba(0,0,0,.4);}
+.nav-toggle:hover{background:var(--azul);color:#fff;}
+nav{position:fixed;left:0;top:0;bottom:0;width:265px;background:linear-gradient(180deg,var(--marino) 0%,#011529 100%);border-right:1px solid var(--linea);z-index:200;overflow-y:auto;transform:translateX(0);transition:transform .35s ease;padding:32px 0;}
+nav.hidden{transform:translateX(-100%);}
+nav .nav-brand{font-family:'Cinzel',serif;font-size:12px;font-weight:700;color:var(--oro);padding:0 20px 20px;border-bottom:1px solid var(--linea);margin-bottom:8px;letter-spacing:1px;line-height:1.5;}
+nav .nav-section{font-family:'Cinzel',serif;font-size:9px;letter-spacing:3px;color:var(--azul);padding:12px 20px 4px;text-transform:uppercase;opacity:.8;}
+nav a{display:flex;align-items:center;gap:10px;padding:7px 20px;font-family:'Raleway',sans-serif;font-size:11px;font-weight:500;letter-spacing:.5px;color:var(--texto-suave);text-decoration:none;border-left:2px solid transparent;transition:all .2s;}
+nav a:hover,nav a.active{color:var(--oro);border-left-color:var(--oro);background:rgba(240,171,0,.06);}
+nav a .nav-num{font-family:'Cinzel',serif;font-size:10px;color:var(--azul);min-width:20px;}
+.page-wrap{margin-left:265px;transition:margin .35s ease;}
+.page-wrap.full{margin-left:0;}
+
+/* PORTADA */
+.cover{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:80px 32px 60px;position:relative;overflow:hidden;background:var(--fondo);}
+.cover::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 50% 30%,rgba(240,171,0,.08) 0%,transparent 70%);pointer-events:none;}
+.cover-icon{font-size:56px;margin-bottom:32px;animation:fadeDown .8s ease both;}
+.cover-testigo{font-family:'Crimson Pro',serif;font-style:italic;font-size:clamp(14px,2vw,18px);color:var(--texto-suave);margin-bottom:20px;letter-spacing:1px;animation:fadeDown .9s ease .1s both;}
+.cover-title{font-family:'Cinzel',serif;font-size:clamp(40px,9vw,92px);font-weight:900;line-height:.95;margin-bottom:16px;animation:fadeDown 1s ease .2s both;}
+.cover-title .t1{color:var(--texto);}
+.cover-title .t2{color:var(--oro);}
+.cover-sub{font-family:'Crimson Pro',serif;font-style:italic;font-size:clamp(16px,2.5vw,22px);color:var(--texto-suave);margin-bottom:40px;animation:fadeDown 1s ease .25s both;max-width:500px;line-height:1.6;}
+.cover-line{width:60px;height:1px;background:linear-gradient(to right,transparent,var(--oro),transparent);margin:0 auto 24px;}
+.cover-verse{position:absolute;bottom:40px;font-family:'Crimson Pro',serif;font-style:italic;font-size:14px;color:rgba(240,171,0,.4);max-width:440px;text-align:center;line-height:1.6;}
+
+/* CAPÍTULOS — NARRATIVA PURA */
+main{max-width:680px;margin:0 auto;padding:0 24px;}
+
+.chapter{padding:80px 0 60px;border-bottom:1px solid rgba(240,171,0,.08);opacity:0;transform:translateY(30px);transition:opacity .7s ease,transform .7s ease;}
+.chapter.visible{opacity:1;transform:none;}
+
+/* Cabecera mínima — solo capítulo y título */
+.ch-label{font-family:'Cinzel',serif;font-size:10px;letter-spacing:5px;color:rgba(240,171,0,.4);text-transform:uppercase;margin-bottom:16px;}
+.ch-title{font-family:'Cinzel',serif;font-size:clamp(20px,3.5vw,30px);font-weight:700;color:var(--oro);line-height:1.2;margin-bottom:40px;}
+
+/* PÁRRAFOS NARRATIVOS — el corazón */
+p{margin-bottom:28px;color:var(--texto);}
+p.apertura{font-size:1.15em;font-style:italic;color:var(--texto-suave);border-left:2px solid rgba(240,171,0,.3);padding-left:20px;margin-bottom:36px;}
+
+/* ESCRITURA CITADA — discreta, integrada */
+.escritura{display:block;font-family:'Crimson Pro',serif;font-style:italic;font-size:.97em;color:var(--oro-claro);padding:20px 24px;margin:28px 0;border-left:2px solid rgba(240,171,0,.25);background:rgba(240,171,0,.03);border-radius:0 6px 6px 0;}
+.escritura cite{display:block;font-family:'Raleway',sans-serif;font-size:11px;letter-spacing:2px;color:var(--texto-suave);font-style:normal;margin-top:8px;}
+
+/* PAUSA — respiración narrativa */
+.pausa{text-align:center;color:rgba(240,171,0,.25);font-size:20px;margin:36px 0;letter-spacing:12px;}
+
+/* MOMENTO CUMBRE — para las escenas más intensas */
+.cumbre{background:rgba(4,14,28,.9);border:1px solid rgba(240,171,0,.15);border-radius:10px;padding:28px 32px;margin:36px 0;font-style:italic;color:var(--texto);font-size:1.02em;line-height:2;}
+
+/* AT CUMPLIDO — sutil, no doctrinal */
+.at-sombra{display:flex;gap:16px;padding:16px 20px;margin:28px 0;background:rgba(0,59,111,.12);border-left:2px solid rgba(0,159,218,.2);border-radius:0 6px 6px 0;}
+.at-sombra .at-ref{font-family:'Cinzel',serif;font-size:10px;letter-spacing:2px;color:var(--azul);min-width:80px;padding-top:3px;text-transform:uppercase;}
+.at-sombra p{font-size:.93em;color:var(--texto-suave);margin:0;}
+
+.frase-final{text-align:center;padding:48px 24px;margin:40px 0;}
+.frase-final p{font-family:'Cinzel',serif;font-size:clamp(16px,2.5vw,22px);color:var(--texto);line-height:1.6;font-weight:600;}
+
+.epilogo{text-align:center;padding:80px 32px 120px;}
+.epilogo p{max-width:520px;margin:0 auto 20px;color:var(--texto-suave);font-style:italic;font-size:1.05em;}
+.epilogo .firma{margin-top:40px;font-family:'Cinzel',serif;font-size:12px;letter-spacing:4px;color:rgba(240,171,0,.4);}
+
+@keyframes fadeDown{from{opacity:0;transform:translateY(-20px);}to{opacity:1;transform:none;}}
+@media(max-width:768px){nav{transform:translateX(-100%);}nav.show{transform:translateX(0);}.page-wrap{margin-left:0!important;}}
+@media(max-width:600px){nav{width:220px;}}
+</style>
+</head>
+<body>
+<button class="nav-toggle" id="navToggle" onclick="toggleNav()">☰</button>
+<nav id="sidenav">
+  <div class="nav-brand">✝ Jesús de Nazaret<br>Yo estaba ahí</div>
+  <div class="nav-section">La Historia</div>
+  <a href="#portada"><span class="nav-num">·</span>Portada</a>
+  <div class="nav-section">Capítulos</div>
+  <a href="#c1"><span class="nav-num">I</span>Antes que naciera</a>
+  <a href="#c2"><span class="nav-num">II</span>La noche de Belén</a>
+  <a href="#c3"><span class="nav-num">III</span>Nazaret — el hijo del carpintero</a>
+  <a href="#c4"><span class="nav-num">IV</span>El Jordán — cuando el cielo habló</a>
+  <a href="#c5"><span class="nav-num">V</span>El desierto — solo contra todo</a>
+  <a href="#c6"><span class="nav-num">VI</span>El maestro que nadie esperaba</a>
+  <a href="#c7"><span class="nav-num">VII</span>Sus manos — lo que tocaron</a>
+  <a href="#c8"><span class="nav-num">VIII</span>Los que lo siguieron</a>
+  <a href="#c9"><span class="nav-num">IX</span>La última semana</a>
+  <a href="#c10"><span class="nav-num">X</span>Getsemaní — la noche más larga</a>
+  <a href="#c11"><span class="nav-num">XI</span>El juicio — la mayor injusticia</a>
+  <a href="#c12"><span class="nav-num">XII</span>Isaías lo vio 700 años antes</a>
+  <a href="#c13"><span class="nav-num">XIII</span>El Gólgota</a>
+  <a href="#c14"><span class="nav-num">XIV</span>El tercer día</a>
+  <a href="#c15"><span class="nav-num">XV</span>Él continúa</a>
+</nav>
+
+<div class="page-wrap" id="pageWrap">
+
+<section class="cover" id="portada">
+  <div class="cover-icon">✝</div>
+  <div class="cover-testigo">— Yo estaba ahí. Lo vi todo. Déjame contarte. —</div>
+  <h1 class="cover-title">
+    <div class="t1">Jesús</div>
+    <div class="t2">de Nazaret</div>
+  </h1>
+  <div class="cover-sub">"La historia más grande jamás vivida — contada por un testigo que no puede guardar silencio."</div>
+  <div class="cover-line"></div>
+  <div class="cover-verse">"Y aquel Verbo fue hecho carne, y habitó entre nosotros." — Juan 1:14</div>
+</section>
+
+<main>
+
+<!-- ══════════════ I ══════════════ -->
+<section class="chapter" id="c1">
+  <div class="ch-label">Capítulo I</div>
+  <h2 class="ch-title">Antes que naciera</h2>
+
+  <p class="apertura">No comenzó en Belén. Comenzó mucho antes. Comenzó donde siempre comienzan las historias que importan de verdad — en el corazón de Dios.</p>
+
+  <p>Había una promesa. Vieja como el mundo. Tan vieja que ya nadie recordaba cuándo la había hecho Dios por primera vez. Fue en un jardín, cuando todo estaba roto todavía caliente de lo que acababa de perderse, cuando Dios miró a la serpiente y dijo algo que no era para ella — era para nosotros:</p>
+
+  <blockquote class="escritura">"Pondré enemistad entre ti y la mujer, y entre tu simiente y la simiente suya; ésta te herirá en la cabeza, y tú le herirás en el calcañar."<cite>Génesis 3:15</cite></blockquote>
+
+  <p>Una promesa. Una semilla. Plantada en el día más oscuro que la humanidad había conocido. Y durante siglos, generación tras generación, el pueblo de Dios la cargó sin saber del todo qué significaba. La cargaron Abraham e Isaac, cuando Dios prometió que en su simiente serían benditas todas las naciones. La cargó Moisés cuando el ángel le dijo que vendría un profeta como él. La cargó David cuando escribió en el salmo su propia historia — y sin saberlo, escribió la de otro.</p>
+
+  <p>Isaías la cargó más que ninguno. Y un día, setecientos años antes de que ocurriera, Isaías se sentó a escribir algo que no podía explicar de dónde venía. Palabras que no describían su presente. Palabras sobre un siervo sufriente, sobre un hombre despreciado, sobre heridas que sanarían a otros. Palabras que él mismo probablemente leyó de nuevo y no entendió del todo.</p>
+
+  <blockquote class="escritura">"Porque un niño nos es nacido, hijo nos es dado, y el principado sobre su hombro; y se llamará su nombre Admirable, Consejero, Dios Fuerte, Padre Eterno, Príncipe de Paz."<cite>Isaías 9:6</cite></blockquote>
+
+  <p>Un niño. Un hijo. Con esos nombres. ¿Quién podría ser ese niño?</p>
+
+  <p>Pasaron los siglos. Pasaron los imperios. Asiria vino y se fue. Babilonia vino y se fue. Persia. Grecia. Roma. El mundo cambió de amo varias veces. Y la promesa seguía ahí, esperando, como una semilla bajo la nieve que nadie podía ver pero que estaba viva.</p>
+
+  <p>Y entonces llegó el momento.</p>
+
+  <div class="pausa">· · ·</div>
+
+  <p>Había una joven en Nazaret. Se llamaba María. No era nadie especial — en el sentido en que el mundo usa esa palabra. No era rica. No era sacerdotisa. No era filósofa. Era una muchacha prometida a un carpintero llamado José, planeando una boda modesta en un pueblo que nadie visitaba si podía evitarlo.</p>
+
+  <p>Y un día llegó Gabriel.</p>
+
+  <p>Yo no sé exactamente cómo fue. El texto dice que entró a donde ella estaba y le dijo: "¡Salve, muy favorecida! El Señor es contigo." Y María se turbó. El texto usa esa palabra — se turbó. No de miedo al principio, sino de confusión. ¿Qué clase de salutación es esta? ¿Qué significa "muy favorecida"? ¿Qué está pasando?</p>
+
+  <blockquote class="escritura">"No temas, María, porque has hallado gracia delante de Dios. Y ahora, concebirás en tu vientre, y darás a luz un hijo, y llamarás su nombre Jesús."<cite>Lucas 1:30-31</cite></blockquote>
+
+  <p>Silencio. Lo que vino después del mensaje de Gabriel fue el silencio más cargado de la historia humana. Una joven sola con la noticia más incomprensible que un ser humano había recibido. Y entonces habló:</p>
+
+  <blockquote class="escritura">"He aquí la sierva del Señor; hágase conmigo conforme a tu palabra."<cite>Lucas 1:38</cite></blockquote>
+
+  <p>No pidió tiempo para pensarlo. No negoció condiciones. No preguntó qué diría la gente — y había mucho que decir. Una prometida embarazada en Israel podía ser apedreada. María lo sabía. Y aun así dijo sí.</p>
+
+  <p>Ese sí de María es quizás la respuesta de fe más grande de todo el Antiguo y el Nuevo Testamento juntos.</p>
+
+  <div class="at-sombra">
+    <span class="at-ref">Isaías 7:14</span>
+    <p>"La virgen concebirá y dará a luz un hijo." Escrito setecientos años antes. Esa noche en Nazaret, comenzó a cumplirse.</p>
+  </div>
+
+  <p>José, por su parte, se enteró de otra manera. No hubo ángel al principio — hubo silencio. Hubo el peso de descubrir que su prometida estaba embarazada y él sabía que no era suyo. Era un hombre justo, dice el texto. Un hombre justo que amaba a María y no quería exponerla. Planeó dejarla en secreto.</p>
+
+  <p>Y esa noche, mientras dormía con ese peso aplastándole el pecho, el ángel llegó en sueños:</p>
+
+  <blockquote class="escritura">"José, hijo de David, no temas recibir a María tu mujer, porque lo que en ella es engendrado, del Espíritu Santo es. Y dará a luz un hijo, y llamarás su nombre Jesús, porque él salvará a su pueblo de sus pecados."<cite>Mateo 1:20-21</cite></blockquote>
+
+  <p>José se levantó. Recibió a María. Y juntos cargaron una promesa que ninguno entendía del todo — pero en la que ambos confiaron completamente.</p>
+
+  <div class="frase-final"><p>El niño que los profetas anunciaron por siglos estaba a punto de llegar. Y el mundo, en su mayoría, no tenía idea de lo que se acercaba.</p></div>
+</section>
+
+<!-- ══════════════ II ══════════════ -->
+<section class="chapter" id="c2">
+  <div class="ch-label">Capítulo II</div>
+  <h2 class="ch-title">La noche de Belén</h2>
+
+  <p class="apertura">Si yo te contara el lugar exacto donde nació el hombre más importante de la historia, no me creerías. O llorarías. O las dos cosas.</p>
+
+  <p>César Augusto había decretado un censo. Todo el Imperio debía registrarse. Y eso significaba que José tenía que ir a Belén — su ciudad de origen, la ciudad de David — con su esposa que estaba a punto de dar a luz. No había opción. El Imperio no negociaba.</p>
+
+  <p>Pienso en ese viaje. Más de cien kilómetros desde Nazaret hasta Belén. María montada en un asno — si tuvieron la suerte de conseguir uno — con el vientre listo, con cada paso del animal resonando en su cuerpo. José caminando junto a ella, mirándola cada tanto, calculando el tiempo, calculando la distancia, sin poder hacer nada más que seguir.</p>
+
+  <p>Llegaron a Belén de noche. La ciudad estaba llena. El censo había traído a todo el mundo de regreso a sus ciudades de origen y no había lugar en ninguna posada. José llamó a puertas. Explicó la situación. Mostró a María. Y puerta tras puerta, la respuesta fue no.</p>
+
+  <p>No sé cuántas puertas llamó. El texto no lo dice. Pero imagínate ese hombre en la oscuridad, con su esposa detrás que ya sentía las contracciones, llamando a puertas de extraños que lo miraban y le cerraban la cara. Hasta que alguien — quién sabe quién, el texto no da nombre — ofreció el único espacio que tenía: el establo.</p>
+
+  <div class="cumbre">
+    Y allí, en ese lugar que olía a paja y a animal, con el frío de una noche de invierno en las colinas de Judea, entre el ruido sordo de las bestias y el silencio de un pueblo que dormía sin saber lo que ocurría a metros de sus camas — nació Jesús.
+  </div>
+
+  <p>María lo envolvió en pañales. No había cuna. Lo acostó en el pesebre — el comedero de los animales. El lugar donde se ponía la comida de las bestias fue la primera cama del hijo de Dios.</p>
+
+  <p>Permíteme detenerme aquí un momento.</p>
+
+  <p>Este niño — este recién nacido con los puños apretados y los ojos cerrados como todos los recién nacidos — era el cumplimiento de cada sacrificio que Israel había ofrecido en el Templo. Era la razón de cada cordero degollado en el altar. Era el hombre del que Isaías había escrito sin entender del todo. Y estaba en un pesebre. En Belén. En el frío. Sin que casi nadie en el mundo lo supiera.</p>
+
+  <div class="at-sombra">
+    <span class="at-ref">Miqueas 5:2</span>
+    <p>"Pero tú, Belén Efrata... de ti me saldrá el que será Señor en Israel." Escrito setecientos años antes. Esa noche se cumplió.</p>
+  </div>
+
+  <div class="pausa">· · ·</div>
+
+  <p>Los primeros que supieron no fueron los sabios de Jerusalén. No fueron los sacerdotes del Templo. Fueron unos pastores en un campo cercano, cuidando rebaños de noche. Hombres que olían a oveja y dormían a la intemperie. El ángel del Señor llegó a ellos y la gloria del Señor los rodeó — y el texto dice, con toda honestidad, que tuvieron gran temor.</p>
+
+  <blockquote class="escritura">"No temáis; porque he aquí os doy nuevas de gran gozo, que será para todo el pueblo: que os ha nacido hoy, en la ciudad de David, un Salvador, que es Cristo el Señor."<cite>Lucas 2:10-11</cite></blockquote>
+
+  <p>Y entonces apareció con el ángel una multitud de las huestes celestiales que alababan a Dios. Los pastores se miraron unos a otros. Y dijeron: "Vamos, pues, a Belén, y veamos esto que ha sucedido."</p>
+
+  <p>Fueron corriendo. Encontraron a María y a José. Y al niño acostado en el pesebre. Y vieron lo que el ángel les había dicho. Y lo que vieron los dejó sin palabras y con palabras al mismo tiempo — porque regresaron glorificando y alabando a Dios por todo lo que habían oído y visto.</p>
+
+  <p>Y María, dice el texto con esa precisión que solo tiene quien estaba ahí, guardaba todas estas cosas, meditándolas en su corazón.</p>
+
+  <p>Una madre. Un bebé. Un pesebre. Y el peso de saber que lo que tienes en los brazos es más grande que todo lo que puedes comprender.</p>
+
+  <div class="frase-final"><p>El mundo esa noche siguió girando. Roma siguió gobernando. Los sacerdotes siguieron durmiendo. Y en un establo de Belén, sobre paja húmeda, lloraba el niño que había venido a cambiar todo.</p></div>
+</section>
+
+<!-- ══════════════ III ══════════════ -->
+<section class="chapter" id="c3">
+  <div class="ch-label">Capítulo III</div>
+  <h2 class="ch-title">Nazaret — el hijo del carpintero</h2>
+
+  <p class="apertura">Treinta años. Ese es el espacio que Lucas resume en una sola línea: "Y Jesús crecía en sabiduría y en estatura, y en gracia para con Dios y los hombres." Treinta años en ocho palabras.</p>
+
+  <p>Creció en Nazaret. Un pueblo tan sin importancia que cuando Natanael escuchó que el Mesías era de allí, respondió con la pregunta más honesta del Evangelio de Juan: "¿Puede haber algo bueno de Nazaret?" Era un pueblo de agricultores y artesanos en Galilea, una región que los judíos del sur miraban con condescendencia. No había escuela de rabinos en Nazaret. No había Templo. No había nada que lo pusiera en el mapa.</p>
+
+  <p>Y ahí vivió Jesús treinta años.</p>
+
+  <p>Aprendió el oficio de José. Carpintero — en hebreo <em>naggar</em> — que no era solo el que hacía muebles sino el que construía, el que trabaja madera y piedra. Jesús conoció el peso de una viga de madera sobre el hombro. Conoció el filo de la herramienta y el olor de la madera recién cortada. Conoció el cansancio de los brazos al final del día y el sueño profundo del que trabajó con las manos.</p>
+
+  <p>Había algo en sus manos. Manos de trabajo. Manos que sabían lo que era el esfuerzo real. Las mismas manos que después tocarían leprosos y devolverían la vista a ciegos — primero aprendieron a clavar, a cortar, a construir.</p>
+
+  <div class="pausa">· · ·</div>
+
+  <p>A los doce años ocurrió algo que María y José nunca olvidaron.</p>
+
+  <p>Habían ido a Jerusalén para la Pascua — como todos los años. Y al regreso, en la caravana familiar que volvía a Galilea, se dieron cuenta de que Jesús no estaba. Creyeron que venía con algún pariente o conocido. Pero cuando llegó la noche y buscaron entre todos — no estaba.</p>
+
+  <p>Regresaron a Jerusalén. Un día completo de camino deshecho. Buscando al hijo que se había perdido entre la multitud de la fiesta. Lo que sintió María en ese día entero de búsqueda, yo no lo puedo nombrar — pero sí lo puedo imaginar.</p>
+
+  <p>Al tercer día lo encontraron en el Templo. Sentado en medio de los doctores de la Ley, escuchándolos y haciéndoles preguntas. Y el texto dice algo extraordinario: todos los que le oían se maravillaban de su inteligencia y de sus respuestas.</p>
+
+  <p>María, con el alivio y el dolor mezclados en la voz, le dijo: "Hijo, ¿por qué nos has hecho esto? He aquí, tu padre y yo te hemos buscado con angustia."</p>
+
+  <p>Y Jesús respondió con la primera pregunta que el Evangelio le escucha hacer:</p>
+
+  <blockquote class="escritura">"¿Por qué me buscabais? ¿No sabíais que en los negocios de mi Padre me es necesario estar?"<cite>Lucas 2:49</cite></blockquote>
+
+  <p>Ellos no entendieron lo que les decía. El texto lo dice sin disculpas. Pero María guardó todas estas cosas en su corazón. Y Jesús descendió con ellos a Nazaret, y les estaba sujeto.</p>
+
+  <p>Regresó al taller. Volvió a clavar madera. Volvió a los días ordinarios de un pueblo ordinario. Como si nada hubiera ocurrido. Como si no acabara de decir, con doce años, que Dios era su Padre.</p>
+
+  <div class="pausa">· · ·</div>
+
+  <p>José desaparece del relato evangélico antes del ministerio de Jesús. No hay explicación. Solo su ausencia. Lo más probable es que muriera durante esos años silenciosos — y Jesús, como hijo mayor, asumió la responsabilidad de la familia. Habría trabajado para sostener a su madre y a sus hermanos. Habría conocido el dolor del duelo. El texto no lo dice — pero el texto tampoco necesita decirlo. Era humano. Y los humanos pierden a sus padres.</p>
+
+  <p>Treinta años. El más largo de los silencios. Y en ese silencio, algo esperaba.</p>
+
+  <div class="frase-final"><p>En Nazaret nadie sospechaba nada. Era el hijo del carpintero. Conocían su cara. Conocían sus manos. Conocían a su madre. Y no tenían idea de quién era.</p></div>
+</section>
+
+<!-- ══════════════ IV ══════════════ -->
+<section class="chapter" id="c4">
+  <div class="ch-label">Capítulo IV</div>
+  <h2 class="ch-title">El Jordán — cuando el cielo habló</h2>
+
+  <p class="apertura">Antes de que Jesús saliera de Nazaret, el desierto de Judea ya estaba ardiendo con la voz de un hombre.</p>
+
+  <p>Se llamaba Juan. Era primo de Jesús — nacido seis meses antes, anunciado también por Gabriel, también con una historia imposible: su madre Elisabet era estéril y anciana cuando lo concibió. Desde el vientre de su madre algo había ocurrido en él — cuando María entró a saludar a Elisabet, el bebé saltó en el vientre de su madre. Juan no conoció infancia normal. El texto lo dice sin rodeos: estaba en los desiertos hasta el día de su manifestación a Israel.</p>
+
+  <p>Y cuando llegó su momento, llegó vestido de pelo de camello, con un cinturón de cuero, comiendo langostas y miel silvestre, predicando junto al Jordán con una urgencia que nadie recordaba haber escuchado desde los profetas. Siglos de silencio profético — y de repente esa voz en el desierto:</p>
+
+  <blockquote class="escritura">"Arrepentíos, porque el reino de los cielos se ha acercado."<cite>Mateo 3:2</cite></blockquote>
+
+  <p>Salían a él desde Jerusalén. Desde toda Judea. Desde toda la región del Jordán. Se metían al río con sus pecados y salían bautizados. Los fariseos y los saduceos también vinieron — y Juan los enfrentó sin titubear: "Generación de víboras, ¿quién os enseñó a huir de la ira venidera?" No había reverencia al título ni al cargo. Solo la pregunta que importaba: ¿habéis producido frutos dignos de arrepentimiento?</p>
+
+  <p>Y entre toda esa multitud confesa y mojada, Juan seguía anunciando que él no era el que venía. Que después de él venía alguien cuya sandalia él no era digno de desatar. Alguien que bautizaría no con agua sino con Espíritu Santo y fuego.</p>
+
+  <div class="pausa">· · ·</div>
+
+  <p>Y entonces Jesús dejó Nazaret.</p>
+
+  <p>Caminó desde Galilea hasta el Jordán. Solo el camino son días de marcha. Llegó a donde Juan bautizaba. Sin anuncio. Sin escolta. Con las sandalias del camino. Con la cara curtida del norte.</p>
+
+  <p>Juan lo vio venir.</p>
+
+  <p>Y algo ocurrió en Juan que no había ocurrido con nadie más en toda esa multitud que había pasado por el río. El mismo hombre que no tembló ante los fariseos, el mismo que llamó generación de víboras a los líderes religiosos de Israel — ese hombre, cuando vio a Jesús acercarse, dijo a los que estaban con él:</p>
+
+  <blockquote class="escritura">"He aquí el Cordero de Dios, que quita el pecado del mundo."<cite>Juan 1:29</cite></blockquote>
+
+  <p>Y cuando Jesús llegó hasta él para ser bautizado, Juan se opuso: "Yo necesito ser bautizado por ti, ¿y tú vienes a mí?"</p>
+
+  <p>Jesús no discutió. No explicó. Solo dijo: "Deja ahora, porque así nos conviene cumplir toda justicia."</p>
+
+  <p>Juan cedió. Y Jesús entró al agua.</p>
+
+  <div class="pausa">· · ·</div>
+
+  <p>Yo quiero que estés en esa orilla un momento. El Jordán no es un río enorme — es estrecho, con la corriente marrón del agua que bajó del norte. La multitud estaba alrededor. El sol de Judea. El olor del río. El sonido del agua.</p>
+
+  <p>Jesús salió del agua.</p>
+
+  <p>Y el cielo se abrió.</p>
+
+  <p>El Espíritu de Dios descendió como paloma y vino sobre Él. Y una voz desde el cielo dijo algo que cortó el aire de esa mañana como un trueno que no dolía:</p>
+
+  <blockquote class="escritura">"Este es mi Hijo amado, en quien tengo complacencia."<cite>Mateo 3:17</cite></blockquote>
+
+  <p>Los que estaban en esa orilla ese día oyeron esa voz. Vieron la paloma. Vieron a Jesús de pie en el agua, empapado, con el cielo abierto sobre su cabeza. Y ninguno de ellos — ninguno — supo del todo qué acababa de ocurrir.</p>
+
+  <p>Pero algo había cambiado. El aire tenía otro peso. Y el hombre que salió del río ya no era solo el hijo del carpintero de Nazaret.</p>
+
+  <div class="at-sombra">
+    <span class="at-ref">Génesis 8:11</span>
+    <p>Noé envió la paloma después del diluvio. Cuando regresó con la rama de olivo, era señal de que el juicio había terminado y comenzaba algo nuevo. La paloma sobre Jesús en el agua — lo mismo. Algo nuevo acababa de comenzar.</p>
+  </div>
+
+  <div class="frase-final"><p>Treinta años de silencio. Un río. Una voz del cielo. Y el carpintero de Nazaret salió del Jordán para nunca más volver a ser anónimo.</p></div>
+</section>
+
+<!-- ══════════════ V ══════════════ -->
+<section class="chapter" id="c5">
+  <div class="ch-label">Capítulo V</div>
+  <h2 class="ch-title">El desierto — solo contra todo</h2>
+
+  <p class="apertura">El mismo Espíritu que descendió sobre Él en el Jordán lo llevó inmediatamente al desierto. No hubo descanso entre la unción y la prueba. Así es como funciona.</p>
+
+  <p>Cuarenta días. Sin comer. Solo en el desierto de Judea — un paisaje de piedra caliza y acantilados donde el calor del día te aplasta y el frío de la noche te congela y el silencio lo llena todo. Cuarenta días en ese lugar. Completamente solo.</p>
+
+  <p>Y al final de los cuarenta días, cuando el cuerpo estaba en el punto más vulnerable que puede estar un cuerpo humano, llegó el tentador.</p>
+
+  <p>No lo imaginemos con cuernos y fuego. El texto no describe así la tentación. La describe con palabras directas, limpias, razonables. Y eso es exactamente lo más aterrador de la tentación — que siempre suena razonable.</p>
+
+  <blockquote class="escritura">"Si eres Hijo de Dios, di que estas piedras se conviertan en pan."<cite>Mateo 4:3</cite></blockquote>
+
+  <p>Cuarenta días sin comer. Las piedras del desierto de Judea tienen una forma redondeada que se parece al pan. Eso no es accidente. Es la tentación más antigua del mundo: usa lo que tienes para satisfacer lo que necesitas — aunque no sea el momento ni la manera.</p>
+
+  <p>Y Jesús respondió con Deuteronomio. Con la Palabra. Con el libro que Israel había fallado en vivir cuarenta años en el desierto:</p>
+
+  <blockquote class="escritura">"Escrito está: No solo de pan vivirá el hombre, sino de toda palabra que sale de la boca de Dios."<cite>Mateo 4:4</cite></blockquote>
+
+  <p>Segunda tentación. El tentador lo llevó a Jerusalén, al pináculo del Templo. Le mostró el abismo y le dijo que se lanzara — que estaba escrito que los ángeles lo sostendrían. Que demostrara quién era. Que convirtiera la fe en espectáculo.</p>
+
+  <p>Jesús respondió: "Escrito está también: No tentarás al Señor tu Dios."</p>
+
+  <p>Tercera tentación. Lo llevó a un monte muy alto y le mostró todos los reinos del mundo y su gloria. Y le dijo: "Todo esto te daré, si postrado me adorares."</p>
+
+  <p>Aquí me detengo. Porque esta fue la tentación más profunda. No el hambre. No el espectáculo. Sino el atajo. Los reinos del mundo sin la cruz. El destino sin el camino. La corona sin el Gólgota. Y Jesús lo sabía — Él sabía lo que se aproximaba. Sabía el precio. Y el tentador le ofrecía llegar sin pagarlo.</p>
+
+  <p>Respondió: "Vete, Satanás, porque escrito está: Al Señor tu Dios adorarás, y a él solo servirás."</p>
+
+  <p>El tentador se fue. Y el texto dice que ángeles vinieron y le servían.</p>
+
+  <div class="cumbre">
+    Solo. En el desierto. Sin comer cuarenta días. Tentado en todo según nuestra semejanza. Sin ceder ni una vez. Y cuando terminó, salió del desierto hacia Galilea — al trabajo que había venido a hacer.
+  </div>
+
+  <div class="frase-final"><p>Adán fue tentado en un jardín con todo a su favor, y cayó. Jesús fue tentado en un desierto sin nada, y no cedió. Esa diferencia es la bisagra de la historia humana.</p></div>
+</section>
+
+<!-- ══════════════ VI ══════════════ -->
+<section class="chapter" id="c6">
+  <div class="ch-label">Capítulo VI</div>
+  <h2 class="ch-title">El maestro que nadie esperaba</h2>
+
+  <p class="apertura">Cuando Jesús abrió la boca para enseñar, algo ocurría en el auditorio que nadie podía describir bien pero que todos sentían. Mateo lo captó en una sola oración: "La gente se admiraba de su doctrina; porque les enseñaba como quien tiene autoridad, y no como los escribas."</p>
+
+  <p>Los escribas citaban autoridades. "Dice el rabino Hillel... dice el rabino Shammai..." Eran eslabones en una cadena de tradición. Jesús no citaba a nadie. Jesús hablaba en primera persona — y con una frecuencia que dejaba a los oyentes sin palabras, ponía la Ley de frente y la reinterpretaba:</p>
+
+  <blockquote class="escritura">"Oísteis que fue dicho a los antiguos... pero yo os digo."<cite>Mateo 5:21-22</cite></blockquote>
+
+  <p>¿Quién habla así? ¿Quién pone su propia voz por encima de Moisés? Nadie en Israel había hablado así en siglos. Quizás nunca.</p>
+
+  <p>Lo escuché en el Sermón del Monte. Estaba sentado entre la multitud en aquella ladera de Galilea. Había miles de personas. El viento del lago venía del oeste. Y Él habló.</p>
+
+  <p>No comenzó con amenazas. No comenzó con una lista de reglas. Comenzó con las bienaventuranzas — palabras que describían felicidad en los lugares donde nadie busca felicidad: los pobres en espíritu, los que lloran, los mansos, los que tienen hambre de justicia. Los que el mundo descarta son los que el reino recibe.</p>
+
+  <p>Habló de la sal y la luz. Habló del amor a los enemigos — esa palabra que nadie esperaba escuchar unida a "ama". Habló de orar en secreto. De perdonar. De no acumular tesoros en la tierra.</p>
+
+  <p>Y al final dijo algo que resumió todo lo que había dicho:</p>
+
+  <blockquote class="escritura">"Todo aquel que me oye estas palabras, y las hace, le compararé a un hombre prudente, que edificó su casa sobre la roca."<cite>Mateo 7:24</cite></blockquote>
+
+  <p>Cuando terminó de hablar, el silencio que quedó fue más denso que cualquier discurso. La gente no sabía qué hacer con lo que había escuchado. Era demasiado y era suficiente al mismo tiempo.</p>
+
+  <div class="pausa">· · ·</div>
+
+  <p>Sus parábolas eran otra cosa. No las enseñó para los que ya sabían — las enseñó para los que querían saber. Y cada una era una ventana hacia algo que no podía decirse de otra manera.</p>
+
+  <p>El hijo que tomó su herencia, se fue a un país lejano, la derrochó toda, terminó cuidando cerdos y comiendo lo que comían los cerdos — y en ese punto más bajo, dice el texto, "volviendo en sí." Como si el pecado fuera una forma de inconsciencia. Y se levantó y fue al padre. Y cuando todavía estaba lejos, el padre lo vio — lo estaba esperando, lo estaba mirando el camino cada día — y corrió a su encuentro.</p>
+
+  <p>Esa imagen del padre corriendo. Un anciano levantando su túnica para correr hacia un hijo que huele a cerdo. Jesús contó esa historia y nadie en el auditorio que conocía el honor de un padre judío pudo no estremecerse.</p>
+
+  <div class="frase-final"><p>Nunca nadie había hablado así. Nunca nadie había dicho las cosas que Él decía — ni con esas palabras ni con ese amor detrás de cada una.</p></div>
+</section>
+
+<!-- ══════════════ VII ══════════════ -->
+<section class="chapter" id="c7">
+  <div class="ch-label">Capítulo VII</div>
+  <h2 class="ch-title">Sus manos — lo que tocaron</h2>
+
+  <p class="apertura">Hay algo que ningún evangelio deja pasar sin decirlo: que antes de sanar, Jesús se compadeció. Siempre. El texto lo repite una y otra vez como si quisiera asegurarse de que lo entendemos. No fue poder por poder. Fue amor que se movía.</p>
+
+  <p>Un leproso se le acercó. En Israel, los leprosos no se acercaban — era la ley. Vivían fuera de los pueblos, gritaban "¡Impuro!" para avisar a los que se acercaban, no podían tocar a nadie ni que nadie los tocara. Ese hombre rompió la ley para llegar hasta Jesús. Se postró. Y dijo: "Señor, si quieres, puedes limpiarme."</p>
+
+  <p>Jesús extendió la mano y lo tocó. Lo tocó. Antes de hablar — lo tocó. Y dijo: "Quiero; sé limpio." Y al instante la lepra desapareció.</p>
+
+  <p>Ese toque. Ese toque antes de la palabra. Ese hombre probablemente no había sido tocado por otro ser humano en años. Quizás en una década. Y la primera cosa que Jesús hizo no fue hablar — fue tocarlo.</p>
+
+  <div class="pausa">· · ·</div>
+
+  <p>Bajaron al paralítico por un agujero en el techo. Sus amigos habían abierto el techo de la casa donde Jesús enseñaba porque no podían entrar por la puerta — había tanta gente. Imagínate eso. Cuatro hombres en un techo, desmantelando el techo de la casa de otro, haciendo un agujero sobre la cabeza de Jesús, bajando a su amigo con cuerdas.</p>
+
+  <p>Jesús levantó la vista. Los vio. Y el texto dice que viendo la fe de ellos — la fe de los que bajaban al paralítico, no la del paralítico — le dijo: "Tus pecados te son perdonados."</p>
+
+  <p>Los escribas que estaban ahí pensaron: "¿Quién puede perdonar pecados sino solo Dios?" Tenían razón en la pregunta. Jesús sabía lo que estaban pensando. Y les respondió: "Para que sepáis que el Hijo del Hombre tiene potestad en la tierra para perdonar pecados..." y le dijo al paralítico: "Levántate, toma tu camilla, y vete a tu casa."</p>
+
+  <p>Y el hombre se levantó.</p>
+
+  <div class="pausa">· · ·</div>
+
+  <p>Lázaro llevaba cuatro días muerto cuando Jesús llegó a Betania. María, la hermana, cayó a sus pies. Las palabras que le dijo fueron las mismas que su hermana Marta le había dicho minutos antes: "Señor, si hubieras estado aquí, mi hermano no habría muerto."</p>
+
+  <p>Y Jesús la vio llorando. Y vio a los judíos que la acompañaban llorando también. Y el texto dice — con la precisión más conmovedora de todo el Nuevo Testamento — que Jesús se estremeció en espíritu, se conmovió.</p>
+
+  <p>Y preguntó: "¿Dónde le pusisteis?"</p>
+
+  <p>Le dijeron: "Señor, ven y ve."</p>
+
+  <p>Y Jesús lloró.</p>
+
+  <p>El versículo más corto de la Biblia. Dos palabras en español. Dos palabras que contienen todo lo que necesitas saber sobre quién era este hombre — el Dios que se hizo hombre y aprendió a llorar con los que lloran. Junto a la tumba de su amigo. Rodeado de gente que lloraba. Él también lloró.</p>
+
+  <blockquote class="escritura">"Jesús lloró."<cite>Juan 11:35</cite></blockquote>
+
+  <p>Después llegaron a la tumba. Mandó quitar la piedra. Marta advirtió que ya olía — cuatro días. Jesús oró en voz alta. Y luego dijo con una voz que yo quisiera haber escuchado con estos oídos:</p>
+
+  <blockquote class="escritura">"¡Lázaro, ven fuera!"<cite>Juan 11:43</cite></blockquote>
+
+  <p>Y el muerto salió. Atado con vendas. Con el rostro envuelto en un sudario. Salió caminando de su propia tumba.</p>
+
+  <div class="frase-final"><p>Sus manos tocaron lo que nadie tocaba. Su voz llamó a los muertos por nombre. Y en cada milagro, antes del poder, estaba el amor. Siempre el amor primero.</p></div>
+</section>
+
+<!-- ══════════════ VIII ══════════════ -->
+<section class="chapter" id="c8">
+  <div class="ch-label">Capítulo VIII</div>
+  <h2 class="ch-title">Los que lo siguieron</h2>
+
+  <p class="apertura">No eligió a ninguno como el mundo elige. No fue al Templo a buscar sacerdotes. No fue a la Academia a buscar filósofos. Fue al lago.</p>
+
+  <p>Simón y Andrés echaban la red en el lago. Pescadores. Olían a pescado desde la madrugada. Jesús pasó junto a ellos y les dijo dos palabras: "Seguidme." Y el texto dice que dejaron las redes al instante y le siguieron.</p>
+
+  <p>Más adelante, Jacobo y Juan estaban en la barca con su padre Zebedeo reparando las redes. Jesús los llamó. Y ellos dejaron la barca y a su padre y le siguieron.</p>
+
+  <p>A Mateo lo encontró en la mesa de los tributos. Era recaudador de impuestos — una de las profesiones más despreciadas en Israel. Trabajaba para Roma. Cobraba de su propio pueblo. Nadie se sentaba a comer con un recaudador de impuestos si podía evitarlo. Jesús se detuvo frente a su mesa y le dijo: "Sígueme." Y Mateo se levantó, dejó todo y le siguió.</p>
+
+  <p>Después Mateo hizo una gran fiesta en su casa. E invitó a sus amigos — que eran, naturalmente, otros recaudadores de impuestos y personas que los fariseos llamaban pecadores. Y Jesús fue y se sentó a la mesa con ellos.</p>
+
+  <p>Los fariseos preguntaron a los discípulos: "¿Por qué come vuestro Maestro con los publicanos y pecadores?" Jesús lo escuchó y respondió: "Los sanos no tienen necesidad de médico, sino los enfermos."</p>
+
+  <div class="pausa">· · ·</div>
+
+  <p>Eran doce. Simón Pedro — impulsivo, ruidoso, que hablaba antes de pensar y actuaba antes de hablar. Andrés, su hermano — el que siempre traía personas a Jesús. Jacobo y Juan — a quienes Jesús llamó Boanerges, hijos del trueno, porque una vez quisieron llamar fuego del cielo sobre un pueblo que no los recibió. Felipe — que necesitaba ver para creer. Bartolomé. Tomás — el que dudaba con honestidad. Mateo el recaudador. Jacobo hijo de Alfeo. Tadeo. Simón el Zelote — que antes de conocer a Jesús probablemente quería expulsar a Roma con violencia. Y Judas Iscariote, que llevaba la bolsa del grupo.</p>
+
+  <p>Doce hombres normales. Con sus miedos y sus ambiciones y sus malentendidos. Pelearon entre sí por quién sería el mayor. Durmieron cuando debían velar. Huyeron cuando debían quedarse. No entendieron la mitad de lo que Jesús les dijo mientras vivió.</p>
+
+  <p>Y con ellos cambió el mundo.</p>
+
+  <div class="frase-final"><p>No eligió a los mejores. Eligió a los disponibles. Y los fue haciendo en el camino.</p></div>
+</section>
+
+<!-- ══════════════ IX ══════════════ -->
+<section class="chapter" id="c9">
+  <div class="ch-label">Capítulo IX</div>
+  <h2 class="ch-title">La última semana</h2>
+
+  <p class="apertura">Hubo un momento en que Jesús puso su rostro para ir a Jerusalén y ya no lo desvió. Lucas lo dice con esa precisión: "Afirmó su rostro para ir a Jerusalén." Sabía lo que lo esperaba. Fue de todas formas.</p>
+
+  <p>Llegó a Jerusalén montado en un asno. Las multitudes tendían sus mantos en el camino. Cortaban ramas de los árboles. Gritaban: "¡Hosanna! ¡Bendito el que viene en el nombre del Señor!"</p>
+
+  <div class="at-sombra">
+    <span class="at-ref">Zacarías 9:9</span>
+    <p>"He aquí tu rey vendrá a ti, justo y salvador, humilde, y cabalgando sobre un asno." Escrito quinientos años antes. Ese domingo se cumplió.</p>
+  </div>
+
+  <p>Los fariseos le dijeron que reprendiera a sus discípulos. Jesús respondió: "Os digo que si éstos callaran, las piedras clamarían."</p>
+
+  <p>Y cuando llegó a la vista de la ciudad, hizo algo que me detiene cada vez que lo leo. Se detuvo. Y lloró sobre Jerusalén. No por Él. Por la ciudad. Por lo que sabía que le esperaba a esa ciudad que no lo reconoció.</p>
+
+  <blockquote class="escritura">"¡Jerusalén, Jerusalén, que matas a los profetas, y apedreas a los que te son enviados! ¡Cuántas veces quise juntar a tus hijos, como la gallina junta sus polluelos debajo de las alas, y no quisiste!"<cite>Mateo 23:37</cite></blockquote>
+
+  <p>La imagen de la gallina que junta sus polluelos. Dios comparándose con una gallina que extiende las alas sobre sus crías. La ternura de esa imagen en labios de alguien que sabe que en días va a ser crucificado.</p>
+
+  <div class="pausa">· · ·</div>
+
+  <p>Entró al Templo y volcó las mesas de los cambistas. Tiró las sillas de los que vendían palomas. Y dijo: "Escrito está: Mi casa, casa de oración será llamada; mas vosotros la habéis hecho cueva de ladrones."</p>
+
+  <p>Esa semana enseñó en el Templo todos los días. Los sacerdotes y los escribas buscaban la manera de matarlo pero temían al pueblo. Y el pueblo lo escuchaba de madrugada para escucharlo.</p>
+
+  <p>El jueves, en la noche, celebró la Pascua con sus discípulos en un aposento alto. Tomó el pan, lo partió y dijo: "Esto es mi cuerpo." Tomó la copa y dijo: "Esta copa es el nuevo pacto en mi sangre." Y después se levantó, se ató una toalla a la cintura, tomó una palangana de agua y lavó los pies de sus discípulos. Uno por uno. Incluyendo los de Judas, que esa noche lo traicionaría. Incluyendo los de Pedro, que esa noche lo negaría tres veces.</p>
+
+  <div class="frase-final"><p>Lavó los pies del que lo iba a vender y del que lo iba a negar. Eso es lo que hizo esa última noche antes de su arresto. Amó hasta el final.</p></div>
+</section>
+
+<!-- ══════════════ X ══════════════ -->
+<section class="chapter" id="c10">
+  <div class="ch-label">Capítulo X</div>
+  <h2 class="ch-title">Getsemaní — la noche más larga</h2>
+
+  <p class="apertura">Después de la cena cruzaron el arroyo Cedrón y entraron al jardín de Getsemaní. Getsemaní significa prensa de aceite. El lugar donde las aceitunas se aplastaban para extraer lo que tenían dentro.</p>
+
+  <p>Les dijo a los discípulos: "Sentaos aquí, entre tanto que voy allá y oro." Tomó consigo a Pedro, Jacobo y Juan — los tres más cercanos. Y les dijo algo que yo no puedo leer sin que me cambie el peso del pecho:</p>
+
+  <blockquote class="escritura">"Mi alma está muy triste, hasta la muerte; quedaos aquí, y velad conmigo."<cite>Mateo 26:38</cite></blockquote>
+
+  <p>Mi alma está muy triste, hasta la muerte. No es retórica. No es poesía. Es el estado real de un hombre que sabe lo que se aproxima y lo está sintiendo en el cuerpo. Se fue un poco más adelante. Cayó de rodillas. Cayó sobre su rostro. Y oró:</p>
+
+  <blockquote class="escritura">"Padre mío, si es posible, pase de mí esta copa; pero no sea como yo quiero, sino como tú."<cite>Mateo 26:39</cite></blockquote>
+
+  <p>Volvió a los tres discípulos. Dormían.</p>
+
+  <p>"¿Así que no habéis podido velar conmigo una hora?"</p>
+
+  <p>Fue de nuevo. Oró lo mismo. Volvió. Dormían otra vez.</p>
+
+  <p>Fue por tercera vez. Y en esa tercera oración, Lucas registra algo que ningún médico puede explicar completamente: su sudor se volvió como grandes gotas de sangre que caían hasta la tierra. La hematidrosis — el sudor de sangre — ocurre en casos de angustia extrema. El cuerpo de Jesús, bajo el peso de lo que se aproximaba, sudaba sangre.</p>
+
+  <p>Solo. En la oscuridad del jardín. Con los discípulos dormidos a metros de distancia. Sudando sangre. Y aun así, al final de la tercera oración, se levantó y fue hacia los que dormían:</p>
+
+  <blockquote class="escritura">"Levantaos, vamos; he aquí se acerca el que me entrega."<cite>Mateo 26:46</cite></blockquote>
+
+  <p>Se acabó la lucha. Había elegido. No su voluntad — la del Padre.</p>
+
+  <div class="pausa">· · ·</div>
+
+  <p>Judas llegó con una multitud armada con espadas y palos. La señal era un beso. Identificaría al que debían arrestar con un beso.</p>
+
+  <p>Se acercó a Jesús. Lo besó.</p>
+
+  <p>Y Jesús le dijo — esto es lo que me destruye cada vez que lo leo — le dijo: "Amigo, ¿a qué vienes?"</p>
+
+  <p>Amigo. Le llamó amigo. Al que lo besaba para entregarlo a la muerte. Amigo.</p>
+
+  <div class="cumbre">
+    Pedro sacó la espada y cortó la oreja al siervo del sumo sacerdote. Jesús lo detuvo. Tocó la oreja del hombre que venía a arrestarlo y lo sanó. El último milagro antes de la cruz fue sanar a uno de los que venían a crucificarlo.
+  </div>
+
+  <div class="frase-final"><p>Los discípulos huyeron. Todos. El texto no lo suaviza: todos lo abandonaron y huyeron. Jesús quedó solo entre los que lo habían arrestado. Solo. Como había estado en el desierto. Como había orado en el jardín. Solo.</p></div>
+</section>
+
+<!-- ══════════════ XI ══════════════ -->
+<section class="chapter" id="c11">
+  <div class="ch-label">Capítulo XI</div>
+  <h2 class="ch-title">El juicio — la mayor injusticia</h2>
+
+  <p class="apertura">Lo llevaron primero a Anás, suegro del sumo sacerdote. Después a Caifás, el sumo sacerdote. Después a Pilato, el gobernador romano. Después a Herodes. Después de nuevo a Pilato. Cinco juicios en una noche y una mañana. Ninguno fue justo.</p>
+
+  <p>En casa de Caifás reunieron al concilio a medianoche — lo cual ya era ilegal por la ley judía. Buscaban testimonios falsos contra Jesús. Vinieron muchos testigos falsos y sus testimonios no concordaban entre sí. El texto lo dice sin piedad: no podían ponerse de acuerdo en la mentira.</p>
+
+  <p>Caifás se levantó y le preguntó directamente: "¿Eres tú el Cristo, el Hijo de Dios?"</p>
+
+  <p>Jesús respondió: "Tú lo has dicho. Y además os digo, que desde ahora veréis al Hijo del Hombre sentado a la diestra del poder de Dios, y viniendo en las nubes del cielo."</p>
+
+  <p>Caifás rasgó sus vestiduras. "Ha blasfemado. ¿Qué más necesidad tenemos de testigos?" Los que estaban ahí escupieron en su rostro. Lo golpearon con los puños. Lo abofetearon.</p>
+
+  <p>Mientras eso ocurría adentro, Pedro estaba en el patio afuera. Una sirvienta lo reconoció. "Tú también estabas con Jesús el galileo." Pedro lo negó. Otra lo reconoció. Lo negó de nuevo. Un tercero insistió — "ciertamente eres de ellos, hasta tu manera de hablar te descubre." Y Pedro comenzó a maldecir y a jurar: "No conozco al hombre."</p>
+
+  <p>Inmediatamente cantó el gallo.</p>
+
+  <p>Y Jesús, desde adentro, volvió el rostro y miró a Pedro.</p>
+
+  <p>Solo eso. Una mirada. El texto no dice qué había en esa mirada. No necesita decirlo. Pedro salió y lloró amargamente.</p>
+
+  <div class="pausa">· · ·</div>
+
+  <p>Lo llevaron a Pilato. Pilato no encontró ningún delito en Él. Lo dijo tres veces. Lo envió a Herodes — que estaba en Jerusalén por la fiesta. Herodes lo interrogó con muchas palabras. Jesús no le respondió nada. Herodes lo menospreció, lo vistió con una ropa espléndida en burla, y lo devolvió a Pilato.</p>
+
+  <p>Pilato propuso soltarlo — era costumbre soltar a un preso en la Pascua. Preguntó a la multitud: "¿A quién queréis que os suelte: a Barrabás, o a Jesús, llamado el Cristo?"</p>
+
+  <p>La multitud gritó: "¡A Barrabás!"</p>
+
+  <p>La misma multitud que días antes gritaba hosanna con ramas en la mano.</p>
+
+  <p>Pilato preguntó: "¿Qué pues haré de Jesús, llamado el Cristo?"</p>
+
+  <p>Y todos dijeron: "¡Sea crucificado!"</p>
+
+  <p>Pilato tomó agua y se lavó las manos delante de la multitud. "Inocente soy yo de la sangre de este justo."</p>
+
+  <p>Y entregó a Jesús para ser crucificado.</p>
+
+  <div class="frase-final"><p>El hombre más justo que había pisado la tierra fue condenado a la pena más cruel que el Imperio Romano había inventado. Y nadie detuvo nada.</p></div>
+</section>
+
+<!-- ══════════════ XII ══════════════ -->
+<section class="chapter" id="c12">
+  <div class="ch-label">Capítulo XII</div>
+  <h2 class="ch-title">Isaías lo vio 700 años antes</h2>
+
+  <p class="apertura">Quiero detenerte aquí un momento antes del Gólgota. Porque lo que estoy a punto de contarte, Isaías ya lo contó. Setecientos años antes de que ocurriera.</p>
+
+  <p>Isaías se sentó a escribir en el siglo VIII antes de Cristo y describió una escena que todavía no había ocurrido. Describió a un hombre. Un siervo. Alguien que vendría y sufriría de una manera que ningún escritor de ficción habría inventado, porque nadie inventa sufrimiento gratuito para su héroe sin razón.</p>
+
+  <p>Lee esto despacio. Y después lee los evangelios. Y dime si puedes explicar la coincidencia.</p>
+
+  <blockquote class="escritura">"Despreciado y desechado entre los hombres, varón de dolores, experimentado en quebranto; y como que escondimos de él el rostro, fue menospreciado, y no lo estimamos."<cite>Isaías 53:3</cite></blockquote>
+
+  <p>Juan 1:11 — "A lo suyo vino, y los suyos no le recibieron."</p>
+
+  <blockquote class="escritura">"Ciertamente llevó él nuestras enfermedades, y sufrió nuestros dolores; y nosotros le tuvimos por azotado, por herido de Dios y abatido."<cite>Isaías 53:4</cite></blockquote>
+
+  <p>Y en los evangelios, Mateo cita este versículo exacto al describir las sanidades de Jesús.</p>
+
+  <blockquote class="escritura">"Mas él herido fue por nuestras rebeliones, molido por nuestros pecados; el castigo de nuestra paz fue sobre él, y por su llaga fuimos nosotros curados."<cite>Isaías 53:5</cite></blockquote>
+
+  <p>Herido. Molido. El castigo sobre él. Por su llaga — curados.</p>
+
+  <blockquote class="escritura">"Como cordero fue llevado al matadero; y como oveja delante de sus trasquiladores, enmudeció, y no abrió su boca."<cite>Isaías 53:7</cite></blockquote>
+
+  <p>Marcos 15:5 — "Jesús ni aun con esto respondió; de modo que Pilato se maravilló."</p>
+
+  <blockquote class="escritura">"Y se dispuso con los impíos su sepultura, mas con los ricos fue en su muerte; aunque nunca hizo maldad, ni hubo engaño en su boca."<cite>Isaías 53:9</cite></blockquote>
+
+  <p>Crucificado entre dos ladrones — con los impíos. Sepultado en el sepulcro nuevo de José de Arimatea, hombre rico — con los ricos en su muerte. Dos detalles distintos. Los dos exactos.</p>
+
+  <div class="cumbre">
+    Setecientos años. Eso es lo que hay entre Isaías escribiendo y Jesús muriendo. Y cada detalle coincide. No algunos. Todos.
+  </div>
+
+  <div class="frase-final"><p>No hay explicación humana para eso. Ninguna. O Isaías mentía — y no hay razón para que un profeta mintiera sobre el sufrimiento gratuito de un futuro siervo. O Isaías vio lo que iba a ocurrir. Y si lo vio, fue porque alguien se lo mostró.</p></div>
+</section>
+
+<!-- ══════════════ XIII ══════════════ -->
+<section class="chapter" id="c13">
+  <div class="ch-label">Capítulo XIII</div>
+  <h2 class="ch-title">El Gólgota</h2>
+
+  <p class="apertura">No sé cómo contarte esto sin que duela. No creo que deba contártelo de otra manera.</p>
+
+  <p>Lo azotaron primero. El flagrum romano — correas de cuero con fragmentos de hueso y metal en las puntas. No había número fijo de azotes. El verdugo paraba cuando el cuerpo ya no podía más o cuando el oficial lo ordenaba. La piel se abría. La carne quedaba expuesta. Hombres morían solo en la flagelación antes de llegar a la cruz.</p>
+
+  <p>Los soldados lo llevaron al pretorio. Lo vistieron con un manto de escarlata. Tejieron una corona con ramas de espinas y la presionaron en su cabeza. Pusieron una caña en su mano derecha. Y se arrodillaron ante él burlándose: "¡Salve, Rey de los judíos!" Le escupían. Le golpeaban la cabeza con la caña. Le arrancaron el manto. Lo vistieron con sus propias ropas. Y lo llevaron a crucificar.</p>
+
+  <p>Cargó la cruz hacia el lugar llamado Gólgota — el lugar de la Calavera. Tan agotado estaba que en el camino los soldados obligaron a un hombre que llegaba del campo — Simón de Cirene — a cargar la cruz por él. El Hijo de Dios no pudo cargar su propia cruz hasta el final.</p>
+
+  <div class="pausa">· · ·</div>
+
+  <p>Lo crucificaron. Clavaron sus manos y sus pies. Levantaron la cruz. Y sobre su cabeza pusieron una inscripción: "ESTE ES JESÚS, EL REY DE LOS JUDÍOS."</p>
+
+  <p>A cada lado, un ladrón crucificado también. Uno lo insultaba. El otro lo defendió — y le dijo: "Señor, acuérdate de mí cuando vengas en tu reino." Y Jesús, desde la cruz, le respondió: "De cierto te digo que hoy estarás conmigo en el paraíso."</p>
+
+  <p>Desde la hora sexta hasta la hora novena — de mediodía a las tres de la tarde — hubo tinieblas sobre toda la tierra.</p>
+
+  <p>Y a la hora novena, Jesús clamó a gran voz:</p>
+
+  <blockquote class="escritura">"Dios mío, Dios mío, ¿por qué me has desamparado?"<cite>Mateo 27:46 — Salmo 22:1, escrito mil años antes</cite></blockquote>
+
+  <p>Después dijo: "Tengo sed." Le dieron a beber vinagre en una esponja.</p>
+
+  <p>Y entonces dijo — con toda la voz que le quedaba, con toda la fuerza de alguien que elige el momento de su último aliento:</p>
+
+  <blockquote class="escritura">"Consumado es."<cite>Juan 19:30</cite></blockquote>
+
+  <p>Inclinó la cabeza. Y entregó el espíritu.</p>
+
+  <div class="cumbre">
+    En ese momento el velo del Templo se rasgó de arriba abajo. La tierra tembló. Las rocas se partieron. El centurión que estaba frente a la cruz, que había visto cómo murió, dijo: "Verdaderamente este hombre era Hijo de Dios."
+  </div>
+
+  <p>José de Arimatea, miembro del concilio que no había consentido en la muerte de Jesús, fue a Pilato y pidió el cuerpo. Lo envolvieron en una sábana limpia. Lo pusieron en su propio sepulcro nuevo, cavado en la roca. Rodaron una piedra grande a la entrada. Y se fueron.</p>
+
+  <p>Las mujeres que habían seguido a Jesús desde Galilea estaban sentadas frente al sepulcro, mirando.</p>
+
+  <div class="frase-final"><p>Era el viernes por la tarde. El Sabbat comenzaba. Y en una tumba prestada, envuelto en sábanas, yacía el hombre que había dicho: "Yo soy la resurrección y la vida."</p></div>
+</section>
+
+<!-- ══════════════ XIV ══════════════ -->
+<section class="chapter" id="c14">
+  <div class="ch-label">Capítulo XIV</div>
+  <h2 class="ch-title">El tercer día</h2>
+
+  <p class="apertura">El domingo muy de madrugada, cuando aún estaba oscuro, las mujeres fueron al sepulcro. Llevaban especias aromáticas. Iban a terminar de embalsamar un cuerpo muerto. En el camino se preguntaban quién les quitaría la piedra.</p>
+
+  <p>Cuando llegaron, la piedra ya estaba quitada.</p>
+
+  <p>María Magdalena corrió de regreso a donde estaban Pedro y Juan. Les dijo: "Se han llevado al Señor del sepulcro, y no sabemos dónde le han puesto." Pedro y Juan corrieron. Juan llegó primero — se asomó pero no entró. Pedro llegó detrás y entró directamente. Vio las vendas en el suelo. Vio el sudario que había estado en la cabeza, doblado en un lugar aparte.</p>
+
+  <p>No había cuerpo. Solo la ropa. Doblada.</p>
+
+  <div class="pausa">· · ·</div>
+
+  <p>María Magdalena se quedó llorando junto al sepulcro después de que Pedro y Juan se fueron. Se inclinó para mirar dentro y vio dos ángeles vestidos de blanco, sentados donde había estado el cuerpo. Le preguntaron: "Mujer, ¿por qué lloras?"</p>
+
+  <p>"Porque se han llevado a mi Señor, y no sé dónde le han puesto."</p>
+
+  <p>Se volvió. Vio a alguien de pie. Pensó que era el hortelano. Le dijo: "Señor, si tú lo has llevado, dime dónde lo has puesto, y yo lo llevaré."</p>
+
+  <p>Y Él dijo su nombre:</p>
+
+  <blockquote class="escritura">"María."<cite>Juan 20:16</cite></blockquote>
+
+  <p>Una sola palabra. Su nombre. Y ella lo reconoció. Se volvió y le dijo: "¡Raboni!" — que quiere decir Maestro.</p>
+
+  <div class="pausa">· · ·</div>
+
+  <p>Ese mismo día, dos discípulos caminaban hacia Emaús — un pueblo a doce kilómetros de Jerusalén. Iban hablando de todo lo que había ocurrido, con el rostro entristecido. Un desconocido se unió a ellos y les preguntó de qué hablaban. Se detuvieron. Con los ojos tristes le dijeron que hablaban de Jesús de Nazaret, que esperaban que fuera el que había de redimir a Israel, pero que los principales sacerdotes lo habían crucificado hacía ya tres días.</p>
+
+  <p>El desconocido comenzó a explicarles las Escrituras desde Moisés y todos los profetas — todo lo que en ellas se refería a él. Caminaron los doce kilómetros con ese fuego en el pecho que todavía no sabían nombrar.</p>
+
+  <p>Llegaron al pueblo. El desconocido hizo ademán de seguir. Ellos le rogaron que se quedara. Se sentaron a la mesa. Él tomó el pan, lo bendijo, lo partió y se los dio. Y en ese momento se les abrieron los ojos. Lo reconocieron. Y en ese instante desapareció de su vista.</p>
+
+  <p>Se miraron el uno al otro. Y dijeron:</p>
+
+  <blockquote class="escritura">"¿No ardía nuestro corazón en nosotros, mientras nos hablaba en el camino, y cuando nos abría las Escrituras?"<cite>Lucas 24:32</cite></blockquote>
+
+  <div class="frase-final"><p>No habían reconocido su cara. Pero habían reconocido el fuego. Y ese fuego no se apagó. Nunca más se apagó.</p></div>
+</section>
+
+<!-- ══════════════ XV ══════════════ -->
+<section class="chapter" id="c15">
+  <div class="ch-label">Capítulo XV</div>
+  <h2 class="ch-title">Él continúa</h2>
+
+  <p class="apertura">Cuarenta días estuvo apareciendo. A María Magdalena primero. Después a los dos del camino a Emaús. A Pedro solo — ese encuentro que el texto no nos cuenta con detalle pero que menciona, y que debió haber sido el más necesario para Pedro de todos. A los once discípulos en el aposento alto. A más de quinientas personas a la vez, según Pablo.</p>
+
+  <p>Tomás no estaba la primera vez que apareció a los discípulos. Cuando le contaron, dijo: "Si no viere en sus manos la señal de los clavos, y metiere mi dedo en el lugar de los clavos, y metiere mi mano en su costado, no creeré."</p>
+
+  <p>Ocho días después, Jesús apareció de nuevo. Tomás estaba. Y Jesús se dirigió directamente a él — como si hubiera escuchado lo que Tomás dijo cuando Él no estaba:</p>
+
+  <blockquote class="escritura">"Pon aquí tu dedo, y mira mis manos; y acerca tu mano, y métela en mi costado; y no seas incrédulo, sino creyente."<cite>Juan 20:27</cite></blockquote>
+
+  <p>Tomás no metió la mano. No fue necesario. Solo dijo: "¡Señor mío, y Dios mío!" Y Jesús le respondió: "Porque me has visto, Tomás, creíste; bienaventurados los que no vieron, y creyeron."</p>
+
+  <div class="pausa">· · ·</div>
+
+  <p>La última vez que los discípulos lo vieron fue en el monte de los Olivos. Les dio la instrucción final:</p>
+
+  <blockquote class="escritura">"Pero recibiréis poder, cuando haya venido sobre vosotros el Espíritu Santo, y me seréis testigos en Jerusalén, en toda Judea, en Samaria, y hasta lo último de la tierra."<cite>Hechos 1:8</cite></blockquote>
+
+  <p>Y mientras lo miraban, fue alzado, y una nube lo recibió y lo quitó de sus ojos.</p>
+
+  <p>Se quedaron mirando al cielo. Dos ángeles de blanco les dijeron: "Este mismo Jesús, que ha sido tomado de vosotros al cielo, así vendrá como le habéis visto ir al cielo."</p>
+
+  <div class="pausa">· · ·</div>
+
+  <p>Cincuenta días después de la resurrección, en el día de Pentecostés, el Espíritu fue derramado sobre los que estaban reunidos en el aposento alto. Lenguas de fuego. El sonido de viento recio. Hablaron en lenguas. La ciudad entera se alborotó.</p>
+
+  <p>Pedro — el que tres veces lo había negado — se puso de pie ante miles de personas y predicó. Y tres mil personas en un solo día creyeron y fueron bautizadas.</p>
+
+  <p>Esa iglesia que comenzó ese día en Jerusalén llegó a Roma. Llegó a África. Llegó a Asia. Llegó a Europa. Llegó cruzando océanos que en ese entonces nadie sabía que existían. Llegó a continentes sin nombre. Llegó hasta Belén, Colombia. Llegó hasta ti.</p>
+
+  <div class="cumbre">
+    El libro de los Hechos termina en el capítulo 28 sin un versículo final. A mitad de la historia. Como si el que lo escribió supiera que la historia todavía no había terminado. Y tenía razón. Todavía no ha terminado.
+  </div>
+
+  <div class="frase-final"><p>El niño que nació en el pesebre de Belén, el carpintero de Nazaret, el predicador del lago de Galilea, el crucificado del Gólgota, el resucitado del jardín — sigue siendo el mismo. Ayer. Hoy. Y por los siglos.</p></div>
+</section>
+
+</main>
+
+<section class="epilogo">
+  <p>Yo estaba ahí. Lo vi todo. Y no puedo guardar silencio.</p>
+  <p>No hay historia más grande. No hay amor más profundo. No hay muerte más injusta ni resurrección más gloriosa. No hay nadie como Él en toda la historia de todo lo que existe.</p>
+  <p>Y la pregunta que Él mismo hizo un día a sus discípulos en el camino sigue siendo la única que importa:</p>
+  <blockquote class="escritura" style="max-width:400px;margin:28px auto;">"¿Y vosotros, quién decís que soy yo?"<cite>Mateo 16:15</cite></blockquote>
+  <div class="firma">Jesús de Nazaret · Yo estaba ahí · Predicador IPUC</div>
+</section>
+
+</div>
+
+<script>
+const obs=new IntersectionObserver(e=>{e.forEach(el=>{if(el.isIntersecting)el.target.classList.add('visible');});},{threshold:.05});
+document.querySelectorAll('.chapter').forEach(e=>obs.observe(e));
+const nav=document.getElementById('sidenav');
+const wrap=document.getElementById('pageWrap');
+const isMobile=()=>window.innerWidth<=768;
+function toggleNav(){
+  if(isMobile()){nav.classList.toggle('show');}
+  else{nav.classList.toggle('hidden');wrap.classList.parameter('full');}
+}
+function toggleNav(){
+  if(isMobile()){nav.classList.toggle('show');}
+  else{nav.classList.toggle('hidden');wrap.classList.toggle('full');}
+}
+const secs=document.querySelectorAll('section[id]');
+const links=document.querySelectorAll('nav a');
+window.addEventListener('scroll',()=>{
+  let cur='';
+  secs.forEach(s=>{if(window.scrollY>=s.offsetTop-200)cur=s.id;});
+  links.forEach(a=>{a.classList.remove('active');if(a.getAttribute('href')==='#'+cur)a.classList.add('active');});
+});
+links.forEach(a=>{a.addEventListener('click',()=>{if(isMobile())nav.classList.remove('show');});});
+document.addEventListener('click',e=>{
+  if(isMobile()&&nav.classList.contains('show')&&!nav.contains(e.target)&&!e.target.closest('.nav-toggle')){nav.classList.remove('show');}
+});
+</script>
+</body>
+</html>

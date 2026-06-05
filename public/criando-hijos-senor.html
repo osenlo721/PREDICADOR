@@ -1,0 +1,1063 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Criando Hijos en el Señor — Ebook</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Raleway:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--azul:#009FDA;--marino:#003B6F;--oro:#F0AB00;--oro-claro:#FFD166;--fondo:#040e1c;--texto:#e8e0d0;--texto-suave:#a89f90;--linea:rgba(240,171,0,.2);}
+*{margin:0;padding:0;box-sizing:border-box;}html{scroll-behavior:smooth;}
+body{background:var(--fondo);color:var(--texto);font-family:'Crimson Pro',Georgia,serif;font-size:18px;line-height:1.85;overflow-x:hidden;}
+::-webkit-scrollbar{width:4px;}::-webkit-scrollbar-track{background:var(--fondo);}::-webkit-scrollbar-thumb{background:var(--azul);border-radius:2px;}
+.nav-toggle{position:fixed;top:16px;left:16px;z-index:300;background:var(--marino);border:1px solid var(--linea);color:var(--oro);width:44px;height:44px;border-radius:8px;cursor:pointer;font-size:20px;display:flex;align-items:center;justify-content:center;transition:all .2s;box-shadow:0 2px 12px rgba(0,0,0,.4);}
+.nav-toggle:hover{background:var(--azul);color:#fff;}
+nav{position:fixed;left:0;top:0;bottom:0;width:265px;background:linear-gradient(180deg,var(--marino) 0%,#011529 100%);border-right:1px solid var(--linea);z-index:200;overflow-y:auto;transform:translateX(0);transition:transform .35s ease;padding:32px 0;}
+nav.hidden{transform:translateX(-100%);}
+nav .nav-brand{font-family:'Cinzel',serif;font-size:12px;font-weight:700;color:var(--oro);padding:0 20px 20px;border-bottom:1px solid var(--linea);margin-bottom:8px;letter-spacing:1px;line-height:1.5;}
+nav .nav-section{font-family:'Cinzel',serif;font-size:9px;letter-spacing:3px;color:var(--azul);padding:12px 20px 4px;text-transform:uppercase;opacity:.8;}
+nav a{display:flex;align-items:center;gap:10px;padding:7px 20px;font-family:'Raleway',sans-serif;font-size:11px;font-weight:500;letter-spacing:.5px;color:var(--texto-suave);text-decoration:none;border-left:2px solid transparent;transition:all .2s;}
+nav a:hover,nav a.active{color:var(--oro);border-left-color:var(--oro);background:rgba(240,171,0,.06);}
+nav a .nav-num{font-family:'Cinzel',serif;font-size:10px;color:var(--azul);min-width:20px;}
+.page-wrap{margin-left:265px;transition:margin .35s ease;}
+.page-wrap.full{margin-left:0;}
+
+.cover{min-height:100vh;background:linear-gradient(160deg,#041830 0%,var(--fondo) 65%);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:80px 32px 60px;position:relative;overflow:hidden;}
+.cover::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 50% at 50% 10%,rgba(0,159,218,.18) 0%,transparent 70%),radial-gradient(ellipse 40% 40% at 80% 85%,rgba(240,171,0,.1) 0%,transparent 60%);pointer-events:none;}
+.cover-icon{font-size:64px;margin-bottom:24px;animation:fadeDown .8s ease both;}
+.cover-tag{font-family:'Cinzel',serif;font-size:10px;letter-spacing:5px;color:var(--azul);text-transform:uppercase;margin-bottom:20px;animation:fadeDown .9s ease .1s both;}
+.cover-title{font-family:'Cinzel',serif;font-size:clamp(36px,8vw,84px);font-weight:900;line-height:1;margin-bottom:8px;animation:fadeDown 1s ease .2s both;}
+.cover-title .t1{color:var(--texto);}
+.cover-title .t2{color:var(--oro);}
+.cover-sub{font-family:'Cinzel',serif;font-size:clamp(13px,2vw,17px);color:var(--azul);letter-spacing:2px;margin-bottom:32px;animation:fadeDown 1s ease .25s both;}
+.cover-line{width:60px;height:1px;background:linear-gradient(to right,transparent,var(--oro),transparent);margin:0 auto 24px;}
+.cover-author{font-family:'Raleway',sans-serif;font-size:13px;letter-spacing:4px;color:var(--texto-suave);text-transform:uppercase;}
+.cover-verse{position:absolute;bottom:40px;font-family:'Crimson Pro',serif;font-style:italic;font-size:14px;color:var(--texto-suave);max-width:440px;text-align:center;line-height:1.6;}
+
+.bloque-banner{padding:60px 24px 0;max-width:740px;margin:0 auto;text-align:center;}
+.bloque-banner .bb-num{font-family:'Cinzel',serif;font-size:10px;letter-spacing:5px;color:var(--azul);text-transform:uppercase;margin-bottom:12px;}
+.bloque-banner .bb-title{font-family:'Cinzel',serif;font-size:clamp(22px,5vw,42px);font-weight:900;color:var(--oro);margin-bottom:8px;}
+.bloque-banner .bb-sub{font-family:'Cinzel',serif;font-size:clamp(13px,2vw,17px);color:var(--azul);margin-bottom:28px;}
+.bloque-banner .bb-line{width:80px;height:2px;background:linear-gradient(to right,transparent,var(--oro),transparent);margin:0 auto;}
+
+main{max-width:740px;margin:0 auto;padding:0 24px;}
+.chapter{padding:72px 0 56px;border-bottom:1px solid rgba(240,171,0,.1);opacity:0;transform:translateY(30px);transition:opacity .7s ease,transform .7s ease;}
+.chapter.visible{opacity:1;transform:none;}
+.ch-num{font-family:'Cinzel',serif;font-size:11px;letter-spacing:4px;color:var(--azul);text-transform:uppercase;margin-bottom:12px;}
+.ch-title{font-family:'Cinzel',serif;font-size:clamp(20px,3.5vw,30px);font-weight:700;color:var(--oro);line-height:1.2;margin-bottom:8px;}
+.ch-sub{font-family:'Cinzel',serif;font-size:clamp(13px,2vw,18px);color:var(--azul);margin-bottom:28px;}
+.ch-divider{width:40px;height:2px;background:linear-gradient(to right,var(--oro),var(--azul));margin-bottom:32px;border-radius:2px;}
+p{margin-bottom:20px;}
+strong{color:var(--oro);font-weight:600;}
+em{color:var(--azul);font-style:italic;}
+
+.quote{border-left:3px solid var(--oro);padding:16px 24px;margin:28px 0;background:rgba(240,171,0,.05);border-radius:0 8px 8px 0;}
+.quote p{font-family:'Crimson Pro',serif;font-style:italic;font-size:1.05em;color:var(--oro-claro);margin-bottom:6px;}
+.quote cite{font-family:'Raleway',sans-serif;font-size:12px;letter-spacing:2px;color:var(--texto-suave);}
+
+.section-label{font-family:'Cinzel',serif;font-size:11px;letter-spacing:3px;color:var(--azul);text-transform:uppercase;margin:36px 0 12px;}
+
+.list-yes,.list-no{list-style:none;margin:16px 0 24px;padding:0;}
+.list-yes li,.list-no li{padding:6px 0 6px 28px;position:relative;font-size:.97em;color:var(--texto-suave);border-bottom:1px solid rgba(255,255,255,.05);}
+.list-yes li::before{content:'✅';position:absolute;left:0;top:6px;font-size:14px;}
+.list-no li::before{content:'❌';position:absolute;left:0;top:6px;font-size:14px;}
+
+.compare{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:28px 0;}
+.compare-box{padding:20px;border-radius:8px;border:1px solid;}
+.compare-box.a{border-color:rgba(0,159,218,.3);background:rgba(0,159,218,.05);}
+.compare-box.b{border-color:rgba(240,171,0,.3);background:rgba(240,171,0,.05);}
+.compare-box h4{font-family:'Cinzel',serif;font-size:10px;letter-spacing:3px;margin-bottom:12px;text-transform:uppercase;}
+.compare-box.a h4{color:var(--azul);}
+.compare-box.b h4{color:var(--oro);}
+.compare-box ul{list-style:none;}
+.compare-box ul li{font-size:14px;padding:4px 0;color:var(--texto-suave);border-bottom:1px solid rgba(255,255,255,.06);}
+
+.frase{text-align:center;padding:40px 24px;margin:32px 0;position:relative;}
+.frase::before{content:'"';font-family:'Cinzel',serif;font-size:100px;color:rgba(240,171,0,.07);position:absolute;top:-10px;left:16px;line-height:1;}
+.frase p{font-family:'Cinzel',serif;font-size:clamp(15px,2.2vw,20px);color:var(--texto);line-height:1.5;position:relative;z-index:1;margin:0;}
+
+.tip-box{background:linear-gradient(135deg,rgba(0,59,111,.4) 0%,rgba(4,14,28,.8) 100%);border:1px solid rgba(0,159,218,.25);border-radius:12px;padding:24px;margin:28px 0;}
+.tip-box h4{font-family:'Cinzel',serif;font-size:11px;letter-spacing:4px;color:var(--azul);text-transform:uppercase;margin-bottom:14px;}
+.tip-box p,.tip-box li{color:var(--texto-suave);font-size:.95em;margin-bottom:8px;}
+.tip-box ol,.tip-box ul{padding-left:20px;}
+.tip-box li{margin-bottom:8px;}
+
+.gold-box{background:rgba(240,171,0,.06);border:1px solid rgba(240,171,0,.2);border-radius:12px;padding:24px;margin:28px 0;}
+.gold-box h4{font-family:'Cinzel',serif;font-size:11px;letter-spacing:4px;color:var(--oro);text-transform:uppercase;margin-bottom:14px;}
+.gold-box p{color:var(--texto-suave);font-size:.95em;margin-bottom:10px;}
+.gold-box strong{color:var(--oro);}
+
+.etimo{background:rgba(240,171,0,.04);border:1px solid rgba(240,171,0,.15);border-radius:8px;padding:20px 24px;margin:20px 0;}
+.etimo .e-palabra{font-family:'Cinzel',serif;font-size:20px;color:var(--oro);margin-bottom:4px;}
+.etimo .e-origen{font-family:'Raleway',sans-serif;font-size:12px;color:var(--azul);letter-spacing:2px;margin-bottom:8px;}
+.etimo p{color:var(--texto-suave);font-size:.95em;margin:0;}
+
+.pasos{counter-reset:paso;list-style:none;padding:0;margin:24px 0;}
+.pasos li{counter-increment:paso;display:flex;gap:16px;margin-bottom:22px;align-items:flex-start;}
+.pasos li::before{content:counter(paso);font-family:'Cinzel',serif;font-size:20px;font-weight:700;color:var(--oro);min-width:32px;line-height:1.3;}
+.pasos li .paso-content h5{font-family:'Cinzel',serif;font-size:14px;color:var(--azul);margin-bottom:5px;letter-spacing:1px;}
+.pasos li .paso-content p{color:var(--texto-suave);font-size:.95em;margin:0;}
+
+.actividad{background:linear-gradient(135deg,rgba(0,59,111,.35) 0%,rgba(4,14,28,.9) 100%);border:1px solid rgba(0,159,218,.2);border-radius:12px;padding:24px;margin:28px 0;}
+.actividad h4{font-family:'Cinzel',serif;font-size:10px;letter-spacing:4px;color:var(--azul);text-transform:uppercase;margin-bottom:14px;}
+.actividad ol{padding-left:20px;color:var(--texto-suave);font-size:.95em;}
+.actividad ol li{margin-bottom:8px;}
+.actividad .oracion{margin-top:16px;padding:14px 18px;background:rgba(240,171,0,.06);border-left:2px solid var(--oro);border-radius:0 8px 8px 0;font-style:italic;color:var(--texto-suave);font-size:.93em;}
+
+.epilogo{text-align:center;padding:80px 32px 120px;}
+.epilogo .big{font-family:'Cinzel',serif;font-size:clamp(32px,7vw,68px);font-weight:900;color:transparent;-webkit-text-stroke:1px rgba(240,171,0,.35);letter-spacing:6px;display:block;margin-bottom:40px;}
+.epilogo h2{font-family:'Cinzel',serif;font-size:clamp(18px,3vw,28px);color:var(--oro);margin-bottom:24px;}
+.epilogo p{max-width:540px;margin:0 auto 16px;color:var(--texto-suave);}
+.epilogo .firma{margin-top:48px;font-family:'Cinzel',serif;font-size:13px;letter-spacing:4px;color:var(--azul);}
+
+@keyframes fadeDown{from{opacity:0;transform:translateY(-20px);}to{opacity:1;transform:none;}}
+@keyframes fadeIn{from{opacity:0;}to{opacity:1;}}
+@media(max-width:768px){nav{transform:translateX(-100%);}nav.show{transform:translateX(0);}.page-wrap{margin-left:0!important;}}
+@media(max-width:600px){.compare{grid-template-columns:1fr;}nav{width:220px;}.pasos li{flex-direction:column;gap:8px;}}
+</style>
+</head>
+<body>
+<button class="nav-toggle" id="navToggle" onclick="toggleNav()">☰</button>
+<nav id="sidenav">
+  <div class="nav-brand">👨‍👩‍👧‍👦 Criando Hijos<br>en el Señor</div>
+  <div class="nav-section">Introducción</div>
+  <a href="#portada"><span class="nav-num">·</span>Portada</a>
+  <a href="#intro"><span class="nav-num">·</span>Introducción</a>
+  <div class="nav-section">Bloque I — Fundamentos</div>
+  <a href="#c1"><span class="nav-num">01</span>Los hijos son herencia</a>
+  <a href="#c2"><span class="nav-num">02</span>El mandato de Efesios 6:4</a>
+  <a href="#c3"><span class="nav-num">03</span>Deuteronomio 6 — el hogar como escuela</a>
+  <div class="nav-section">Bloque II — El Corazón</div>
+  <a href="#c4"><span class="nav-num">04</span>Criar el corazón, no la conducta</a>
+  <a href="#c5"><span class="nav-num">05</span>El modelo de Dios como Padre</a>
+  <a href="#c6"><span class="nav-num">06</span>Amor que no cede y amor que no aplasta</a>
+  <div class="nav-section">Bloque III — Disciplina</div>
+  <a href="#c7"><span class="nav-num">07</span>¿Qué es disciplina bíblica?</a>
+  <a href="#c8"><span class="nav-num">08</span>No provoquéis a ira</a>
+  <a href="#c9"><span class="nav-num">09</span>Disciplina vs castigo</a>
+  <div class="nav-section">Bloque IV — Fe y Carácter</div>
+  <a href="#c10"><span class="nav-num">10</span>Transmitir la fe — no la religión</a>
+  <a href="#c11"><span class="nav-num">11</span>Formando el carácter</a>
+  <a href="#c12"><span class="nav-num">12</span>El legado generacional</a>
+  <div class="nav-section">Bloque V — Desafíos Reales</div>
+  <a href="#c13"><span class="nav-num">13</span>La tecnología y la crianza</a>
+  <a href="#c14"><span class="nav-num">14</span>Cuando el hijo se aleja de Dios</a>
+  <a href="#c15"><span class="nav-num">15</span>Crianza en hogares rotos</a>
+</nav>
+
+<div class="page-wrap" id="pageWrap">
+
+<section class="cover" id="portada">
+  <div class="cover-icon">👨‍👩‍👧‍👦</div>
+  <div class="cover-tag">Ebook · Serie Familia</div>
+  <h1 class="cover-title">
+    <div class="t1">Criando Hijos</div>
+    <div class="t2">en el Señor</div>
+  </h1>
+  <div class="cover-sub">La responsabilidad más sagrada que Dios confió a los padres</div>
+  <div class="cover-line"></div>
+  <div class="cover-author">Osmar Lugo · IPUC</div>
+  <div class="cover-verse">"Y vosotros, padres, no provoquéis a ira a vuestros hijos, sino criadlos en disciplina y amonestación del Señor." — Efesios 6:4</div>
+</section>
+
+<main>
+
+<!-- INTRO -->
+<section class="chapter" id="intro">
+  <div class="ch-num">Introducción</div>
+  <h2 class="ch-title">La tarea más importante del mundo</h2>
+  <div class="ch-sub">Que nadie te preparó para hacer</div>
+  <div class="ch-divider"></div>
+
+  <p>Para casi todo en la vida existe un proceso de preparación: para conducir, para ejercer una profesión, para construir una casa. Pero para criar hijos — la responsabilidad más permanente e influyente que existe — la mayoría de las personas llega sin ninguna formación formal.</p>
+
+  <p>Y sin embargo, la Biblia no guarda silencio sobre este tema. Desde Génesis hasta las cartas apostólicas, Dios habla sobre la crianza con claridad, con profundidad y con una perspectiva que ningún libro de psicología puede igualar: porque el Dios que diseñó al ser humano sabe mejor que nadie cómo formarlo.</p>
+
+  <div class="quote">
+    <p>"He aquí, herencia de Jehová son los hijos; cosa de estima el fruto del vientre."</p>
+    <cite>Salmo 127:3 — Los hijos son herencia de Dios, no posesión de los padres</cite>
+  </div>
+
+  <p>Este ebook no es una lista de técnicas de crianza con barniz bíblico. Es un estudio honesto de lo que la Palabra de Dios dice sobre cómo criar a un ser humano que sea íntegro, fiel y útil para el reino — desde los fundamentos hasta los desafíos más difíciles que los padres modernos enfrentan.</p>
+
+  <div class="gold-box">
+    <h4>Lo que este ebook abarca</h4>
+    <p><strong>Bloque I:</strong> Los fundamentos — qué dice la Biblia sobre la responsabilidad de criar</p>
+    <p><strong>Bloque II:</strong> El corazón — criar desde el amor de Dios, no desde el miedo</p>
+    <p><strong>Bloque III:</strong> La disciplina — lo que realmente significa según la Biblia</p>
+    <p><strong>Bloque IV:</strong> Fe y carácter — transmitir lo que más importa</p>
+    <p><strong>Bloque V:</strong> Desafíos reales — tecnología, hijos alejados, hogares rotos</p>
+  </div>
+</section>
+
+<!-- ═══════ BLOQUE I ═══════ -->
+<div class="bloque-banner" id="bloque1">
+  <div class="bb-num">Bloque Primero</div>
+  <div class="bb-title">Los Fundamentos</div>
+  <div class="bb-sub">La base que lo sostiene todo</div>
+  <div class="bb-line"></div>
+</div>
+
+<!-- CAP 1 — HERENCIA -->
+<section class="chapter" id="c1">
+  <div class="ch-num">Capítulo 1</div>
+  <h2 class="ch-title">Los hijos son herencia de Dios</h2>
+  <div class="ch-sub">Salmo 127 — la perspectiva que cambia todo</div>
+  <div class="ch-divider"></div>
+
+  <p>La manera en que defines a tus hijos determina cómo los crías. Si los ves como una extensión de tus ambiciones, los crías para cumplir tus sueños. Si los ves como una responsabilidad social, los crías para encajar. Pero si los ves como la Biblia los define — <strong>herencia de Dios</strong> — los crías con un propósito completamente diferente.</p>
+
+  <div class="quote">
+    <p>"He aquí, herencia de Jehová son los hijos; cosa de estima el fruto del vientre. Como saetas en mano del valiente, así son los hijos habidos en la juventud."</p>
+    <cite>Salmo 127:3-4</cite>
+  </div>
+
+  <div class="section-label">Tres implicaciones de ser herencia de Dios</div>
+
+  <ul class="pasos">
+    <li>
+      <div class="paso-content">
+        <h5>Los hijos pertenecen a Dios, no a ti</h5>
+        <p>Los padres son administradores, no dueños. Dios confió esos hijos a tu cuidado — pero siguen siendo suyos. Esa perspectiva libera al padre del control excesivo y lo llama a la fidelidad. No los crías según tu imagen — los crías hacia la imagen de Dios.</p>
+      </div>
+    </li>
+    <li>
+      <div class="paso-content">
+        <h5>Son "cosa de estima" — tienen valor infinito</h5>
+        <p>La palabra hebrea es <em>sakar</em> — recompensa, tesoro de gran valor. Cada hijo, independientemente de sus habilidades, temperamento o circunstancias, es un ser de valor incomparable ante Dios. Eso define cómo se les trata, cómo se les habla y cuánto se invierte en su formación.</p>
+      </div>
+    </li>
+    <li>
+      <div class="paso-content">
+        <h5>Son como saetas — fueron diseñados para ser lanzados</h5>
+        <p>Una saeta guardada en el carcaj no cumple su propósito. Los hijos están diseñados para ser enviados al mundo con dirección, con fuerza y con precisión. La crianza no es protegerlos de la vida — es prepararlos para vivirla fielmente.</p>
+      </div>
+    </li>
+  </ul>
+
+  <div class="section-label">Si Jehová no edifica la casa</div>
+  <div class="quote">
+    <p>"Si Jehová no edificare la casa, en vano trabajan los que la edifican."</p>
+    <cite>Salmo 127:1 — El mismo salmo abre con este principio</cite>
+  </div>
+  <p>La crianza más intencional, la disciplina más consistente, las mejores escuelas y actividades — todo es en vano si Dios no está en el centro. El Salmo 127 no es pesimismo — es realismo espiritual. La crianza que deja a Dios fuera construye sobre arena, por más impresionante que parezca la estructura.</p>
+
+  <div class="frase"><p>"No eres el padre o la madre de tus hijos — eres el administrador del hijo de Dios. Esa distinción lo cambia absolutamente todo."</p></div>
+
+  <div class="actividad">
+    <h4>Para reflexionar</h4>
+    <ol>
+      <li>¿Cuándo fue la última vez que trataste a tu hijo como herencia de Dios — con esa clase de valor?</li>
+      <li>¿Estás criando a tu hijo hacia la imagen que Dios tiene de él, o hacia la imagen que tú tienes?</li>
+      <li>¿Dios está construyendo tu casa, o tú estás intentando construirla sin Él?</li>
+    </ol>
+    <div class="oracion">"Señor, reconozco que estos hijos son tuyos. Ayúdame a criarlos como un fiel administrador, no como un dueño. Que mi casa la edifiques tú. Amén."</div>
+  </div>
+</section>
+
+<!-- CAP 2 — EFESIOS 6:4 -->
+<section class="chapter" id="c2">
+  <div class="ch-num">Capítulo 2</div>
+  <h2 class="ch-title">El mandato de Efesios 6:4</h2>
+  <div class="ch-sub">La instrucción apostólica más completa sobre la crianza</div>
+  <div class="ch-divider"></div>
+
+  <p>En toda la Biblia, hay muy pocos versículos que hablen directamente a los padres sobre su responsabilidad con los hijos. Efesios 6:4 es el más completo del Nuevo Testamento — y contiene más teología de crianza en una sola oración de lo que muchos libros modernos alcanzan en capítulos enteros.</p>
+
+  <div class="quote">
+    <p>"Y vosotros, padres, no provoquéis a ira a vuestros hijos, sino criadlos en disciplina y amonestación del Señor."</p>
+    <cite>Efesios 6:4</cite>
+  </div>
+
+  <div class="section-label">Exégesis del versículo</div>
+
+  <div class="etimo">
+    <div class="e-palabra">Ektrephete — ἐκτρέφετε</div>
+    <div class="e-origen">"Criadlos" — imperativo presente activo</div>
+    <p>La palabra viene de <em>ek</em> (fuera de) + <em>trephō</em> (alimentar, nutrir hasta la madurez). Es el mismo término que Pablo usa en Efesios 5:29 para describir cómo Cristo cuida a la iglesia: "la sustenta y la cuida." <strong>El mandato no es solo mantener vivo al hijo — es nutrirlo hasta su plena madurez.</strong> Es una acción continua, no un evento puntual.</p>
+  </div>
+
+  <div class="etimo">
+    <div class="e-palabra">Paideia — παιδεία</div>
+    <div class="e-origen">"Disciplina" — formación integral del carácter</div>
+    <p>No significa castigo. Viene de <em>pais</em> — niño. Es el proceso completo de formación que incluye instrucción, corrección, entrenamiento y guía. La misma palabra que Hebreos 12 usa para describir cómo Dios nos disciplina como Padre. <strong>Paideia es formación de carácter, no control de conducta.</strong></p>
+  </div>
+
+  <div class="etimo">
+    <div class="e-palabra">Nouthesia — νουθεσία</div>
+    <div class="e-origen">"Amonestación" — instrucción verbal directa</div>
+    <p>De <em>nous</em> (mente) + <em>tithēmi</em> (poner). Literalmente: <strong>poner algo en la mente</strong>. Es la instrucción verbal, la corrección por medio de palabras, el consejo directo sobre el camino correcto. La amonestación del Señor implica que el contenido de esa instrucción verbal es la Palabra de Dios — no solo las reglas de la casa.</p>
+  </div>
+
+  <div class="section-label">El doble mandato</div>
+  <div class="compare">
+    <div class="compare-box a">
+      <h4>Lo negativo — no hagáis</h4>
+      <ul>
+        <li>"No provoquéis a ira" — parorgizo</li>
+        <li>No irritar, no exasperar</li>
+        <li>No criar con dureza destructiva</li>
+        <li>No desanimar el corazón del hijo</li>
+      </ul>
+    </div>
+    <div class="compare-box b">
+      <h4>Lo positivo — sí hacedlo</h4>
+      <ul>
+        <li>Alimentar hasta la madurez</li>
+        <li>Formar el carácter (paideia)</li>
+        <li>Instruir verbalmente (nouthesia)</li>
+        <li>Todo bajo el señorío de Cristo</li>
+      </ul>
+    </div>
+  </div>
+
+  <p>El versículo no dice solo qué hacer — dice también qué no hacer. Pablo reconoce que los padres pueden fallar en ambas direcciones: por exceso de dureza (provocar ira) o por falta de formación (no disciplinar). El equilibrio bíblico está en el centro: formación firme sin destrucción del alma.</p>
+
+  <div class="frase"><p>"El padre que solo corrige sin nutrir produce miedo. El que solo nutre sin corregir produce desorden. El mandato bíblico es hacer ambos."</p></div>
+</section>
+
+<!-- CAP 3 — DEUTERONOMIO 6 -->
+<section class="chapter" id="c3">
+  <div class="ch-num">Capítulo 3</div>
+  <h2 class="ch-title">Deuteronomio 6 — el hogar como escuela</h2>
+  <div class="ch-sub">El modelo educativo más antiguo y más efectivo</div>
+  <div class="ch-divider"></div>
+
+  <p>Siglos antes de que existieran las escuelas formales, Dios le dio a Israel el modelo educativo más poderoso que jamás se ha diseñado: el hogar. Deuteronomio 6 es el manual de educación espiritual más completo de toda la Biblia.</p>
+
+  <div class="quote">
+    <p>"Y estas palabras que yo te mando hoy, estarán sobre tu corazón; y las repetirás a tus hijos, y hablarás de ellas estando en tu casa, y andando por el camino, y al acostarte, y cuando te levantes."</p>
+    <cite>Deuteronomio 6:6-7</cite>
+  </div>
+
+  <div class="section-label">La exégesis del verbo clave</div>
+
+  <div class="etimo">
+    <div class="e-palabra">Shanan — שָׁנַן</div>
+    <div class="e-origen">Hebreo · "repetirás" — afilar, inculcar con insistencia</div>
+    <p>El verbo hebreo no significa "mencionar ocasionalmente." Significa <strong>repetir con intensidad hasta que quede grabado</strong> — como un artesano que afila una herramienta con repetición constante. La imagen es un padre que no espera que la escuela dominical sea el único momento de formación espiritual — la fe impregna cada conversación cotidiana.</p>
+  </div>
+
+  <div class="section-label">Los cuatro momentos de enseñanza</div>
+
+  <ul class="pasos">
+    <li>
+      <div class="paso-content">
+        <h5>Estando en tu casa — la mesa familiar</h5>
+        <p>El hogar no es solo el lugar donde se duerme — es el aula principal de formación. Las conversaciones en la mesa, el ambiente del hogar, los valores que se viven (no solo los que se dicen) forman al hijo más que cualquier institución externa.</p>
+      </div>
+    </li>
+    <li>
+      <div class="paso-content">
+        <h5>Andando por el camino — en lo cotidiano</h5>
+        <p>La fe no se condiciona al templo. Cada viaje en el carro, cada actividad cotidiana es una oportunidad de enseñanza. El padre que aprovecha los momentos ordinarios transmite una fe ordinaria — en el mejor sentido: que vive en lo diario.</p>
+      </div>
+    </li>
+    <li>
+      <div class="paso-content">
+        <h5>Al acostarte — el cierre del día</h5>
+        <p>Los últimos minutos antes de dormir son de alta receptividad emocional. Una oración, una historia bíblica, una pregunta sobre el día — el cierre del día con Dios graba profundamente en el corazón del hijo.</p>
+      </div>
+    </li>
+    <li>
+      <div class="paso-content">
+        <h5>Cuando te levantes — el inicio del día</h5>
+        <p>Cómo empieza el día establece la orientación de todo lo demás. Una familia que comienza con gratitud, con oración, con la Palabra — enseña al hijo que Dios es el primero, no el último recurso.</p>
+      </div>
+    </li>
+  </ul>
+
+  <div class="section-label">La condición previa — primero en tu corazón</div>
+  <p>El versículo 6 dice "estarán sobre <strong>tu corazón</strong>" — antes de repetirlas a los hijos. No puedes transmitir lo que no tienes. El padre que quiere criar hijos en la fe debe primero ser él mismo un creyente genuino, en crecimiento activo. La fe no se enseña primariamente con palabras — se contagia con vida.</p>
+
+  <div class="tip-box">
+    <h4>Prácticas concretas del Deuteronomio 6</h4>
+    <ul>
+      <li>Devocional familiar breve antes o después de la cena</li>
+      <li>Oraciones en el carro de camino a la escuela o al trabajo</li>
+      <li>Responder las preguntas difíciles de los hijos con la Biblia</li>
+      <li>Celebrar los hitos espirituales (bautismo, primer ayuno, primeras respuestas al Espíritu)</li>
+      <li>Narrar la historia familiar de fe — cómo Dios ha sido fiel con tu familia</li>
+    </ul>
+  </div>
+
+  <div class="frase"><p>"La fe que solo se enseña en el templo produce creyentes de domingo. La fe que se vive en el hogar produce creyentes de toda la semana."</p></div>
+
+  <div class="actividad">
+    <h4>Actividad familiar</h4>
+    <ol>
+      <li>Lean juntos Deuteronomio 6:4-9 como familia</li>
+      <li>Elijan uno de los cuatro momentos de enseñanza para implementar esta semana</li>
+      <li>Comienza con algo simple: una oración de 2 minutos al acostarse</li>
+    </ol>
+    <div class="oracion">"Señor, que tu Palabra viva primero en mi corazón para poder transmitirla a mis hijos. Hazme el maestro que ellos necesitan. Amén."</div>
+  </div>
+</section>
+
+<!-- ═══════ BLOQUE II ═══════ -->
+<div class="bloque-banner" id="bloque2">
+  <div class="bb-num">Bloque Segundo</div>
+  <div class="bb-title">El Corazón de la Crianza</div>
+  <div class="bb-sub">Criar desde el amor de Dios, no desde el miedo</div>
+  <div class="bb-line"></div>
+</div>
+
+<!-- CAP 4 — CRIAR EL CORAZÓN -->
+<section class="chapter" id="c4">
+  <div class="ch-num">Capítulo 4</div>
+  <h2 class="ch-title">Criar el corazón, no la conducta</h2>
+  <div class="ch-sub">La diferencia entre obediencia exterior y transformación interior</div>
+  <div class="ch-divider"></div>
+
+  <p>El objetivo más fácil de la crianza es la conducta visible: que el hijo se comporte bien en público, que obedezca las reglas, que no cause problemas. Pero ese no es el objetivo bíblico. <strong>El objetivo bíblico de la crianza es el corazón.</strong></p>
+
+  <div class="quote">
+    <p>"Sobre toda cosa guardada, guarda tu corazón; porque de él mana la vida."</p>
+    <cite>Proverbios 4:23</cite>
+  </div>
+
+  <p>Jesús también lo dijo con claridad: "De la abundancia del corazón habla la boca" (Mateo 12:34). La conducta es el fruto — el corazón es la raíz. El padre que solo trabaja con el fruto sin atender a la raíz tendrá hijos que se comporten bien cuando sean observados y diferente cuando no lo sean.</p>
+
+  <div class="section-label">La crianza orientada al corazón</div>
+
+  <ul class="list-yes">
+    <li><strong>Pregunta por qué, no solo qué:</strong> cuando el hijo hace algo malo, la pregunta no es solo "¿por qué hiciste eso?" sino "¿qué estaba pasando en tu corazón cuando lo hiciste?"</li>
+    <li><strong>Aborda las motivaciones:</strong> la obediencia por miedo al castigo es diferente a la obediencia por amor a Dios. La primera cesa cuando desaparece el miedo; la segunda persiste.</li>
+    <li><strong>Celebra el carácter, no solo el éxito:</strong> valorar la honestidad, la generosidad y la compasión por encima de las calificaciones y los logros.</li>
+    <li><strong>Señala hacia Cristo, no hacia las reglas:</strong> la meta no es un hijo que cumple las reglas de la casa — es un hijo que ama a Dios y de ese amor fluye la obediencia.</li>
+  </ul>
+
+  <div class="compare">
+    <div class="compare-box a">
+      <h4>Crianza de conducta</h4>
+      <ul>
+        <li>"No hagas eso o te castigo"</li>
+        <li>Obediencia por miedo</li>
+        <li>Funciona mientras hay supervisión</li>
+        <li>El hijo aprende a no hacer</li>
+        <li>Produce cumplimiento externo</li>
+      </ul>
+    </div>
+    <div class="compare-box b">
+      <h4>Crianza del corazón</h4>
+      <ul>
+        <li>"¿Por qué hiciste eso? Hablemos"</li>
+        <li>Obediencia por amor y convicción</li>
+        <li>Funciona con o sin supervisión</li>
+        <li>El hijo aprende quién quiere ser</li>
+        <li>Produce transformación interna</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="frase"><p>"El hijo que obedece porque tiene miedo dejará de obedecer cuando el miedo desaparezca. El que obedece porque ama a Dios obedecerá toda su vida."</p></div>
+</section>
+
+<!-- CAP 5 — DIOS COMO PADRE -->
+<section class="chapter" id="c5">
+  <div class="ch-num">Capítulo 5</div>
+  <h2 class="ch-title">El modelo de Dios como Padre</h2>
+  <div class="ch-sub">Hebreos 12:5-11 — la paternidad divina como espejo</div>
+  <div class="ch-divider"></div>
+
+  <p>El mejor modelo de crianza que existe no está en ningún libro de psicología — está en cómo Dios nos cría a nosotros. Hebreos 12 usa la relación Padre-hijo entre Dios y el creyente como la explicación y el modelo de la disciplina.</p>
+
+  <div class="quote">
+    <p>"Porque el Señor al que ama, disciplina, y azota a todo el que recibe por hijo... Pero si se os deja sin disciplina, de la cual todos han sido participantes, entonces sois bastardos, y no hijos."</p>
+    <cite>Hebreos 12:6,8</cite>
+  </div>
+
+  <div class="section-label">Lo que el modelo de Dios enseña</div>
+
+  <ul class="pasos">
+    <li>
+      <div class="paso-content">
+        <h5>Disciplina nace del amor — no de la ira</h5>
+        <p>"Al que ama, disciplina." La disciplina de Dios no es descarga emocional ni ejercicio de poder — es expresión de amor. El padre que disciplina desde la ira no está modelando a Dios — está traicionando el modelo. La disciplina debe ser siempre más fría que el momento, más reflexiva que reactiva.</p>
+      </div>
+    </li>
+    <li>
+      <div class="paso-content">
+        <h5>La ausencia de disciplina es abandono</h5>
+        <p>v.8 — "si se os deja sin disciplina... entonces sois bastardos." El padre que nunca corrige por amor a la comodidad o por evitar conflictos no está siendo amable — está abandonando al hijo a su propia naturaleza sin guía. La falta de disciplina es también una forma de negligencia espiritual.</p>
+      </div>
+    </li>
+    <li>
+      <div class="paso-content">
+        <h5>La disciplina tiene un propósito eterno</h5>
+        <p>v.10 — "para lo que nos es provechoso, para que participemos de su santidad." Dios no disciplina por capricho — disciplina con un propósito: nuestra santificación. El padre bíblico también tiene un propósito claro en la corrección: la formación del carácter del hijo, no la descarga del enojo del padre.</p>
+      </div>
+    </li>
+    <li>
+      <div class="paso-content">
+        <h5>La disciplina duele antes de sanar</h5>
+        <p>v.11 — "ninguna disciplina al presente parece ser causa de gozo, sino de tristeza; pero después da fruto apacible de justicia." El padre que no puede soportar ver llorar a su hijo nunca lo disciplinará efectivamente. El dolor del momento no es el objetivo — es el precio del fruto posterior.</p>
+      </div>
+    </li>
+  </ul>
+
+  <div class="frase"><p>"El padre que cría como Dios cría — con amor firme, con propósito eterno, con paciencia y con consistencia — verá el fruto apacible de justicia en sus hijos."</p></div>
+</section>
+
+<!-- CAP 6 — AMOR QUE NO CEDE Y NO APLASTA -->
+<section class="chapter" id="c6">
+  <div class="ch-num">Capítulo 6</div>
+  <h2 class="ch-title">Amor que no cede y amor que no aplasta</h2>
+  <div class="ch-sub">El equilibrio que ningún extremo logra</div>
+  <div class="ch-divider"></div>
+
+  <p>La crianza tiende a fallar en dos direcciones opuestas: el padre demasiado permisivo que cede a todo y el padre demasiado autoritario que aplasta sin espacio para el hijo. La Biblia traza un camino que ninguno de los dos extremos puede ver desde su posición.</p>
+
+  <div class="section-label">Los dos extremos que la Biblia rechaza</div>
+
+  <div class="compare">
+    <div class="compare-box a">
+      <h4>Exceso de permisividad — Elí</h4>
+      <ul>
+        <li>1 Samuel 3:13 — "no los estorbó"</li>
+        <li>Hijos que deshonraban a Dios</li>
+        <li>Padre que no corrigió por afecto mal dirigido</li>
+        <li>Resultado: juicio sobre Elí y su casa</li>
+      </ul>
+    </div>
+    <div class="compare-box b">
+      <h4>Exceso de dureza — provocar ira</h4>
+      <ul>
+        <li>Efesios 6:4 — "no provoquéis a ira"</li>
+        <li>Crítica constante sin afirmación</li>
+        <li>Control que no deja espacio</li>
+        <li>Resultado: hijos que se rebelan o se desaniman</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="section-label">Lo que provoca ira en los hijos</div>
+  <ul class="list-no">
+    <li>Favoritismo entre hermanos — como Isaac con Esaú y Jacob</li>
+    <li>Promesas rotas repetidamente</li>
+    <li>Crítica constante sin afirmación genuina</li>
+    <li>Estándares imposibles o inconsistentes</li>
+    <li>Humillar al hijo frente a otros</li>
+    <li>Compararlo negativamente con otros</li>
+    <li>Nunca escuchar su perspectiva</li>
+  </ul>
+
+  <div class="section-label">El equilibrio bíblico</div>
+  <div class="quote">
+    <p>"El que detiene el castigo, a su hijo aborrece; mas el que lo ama, desde temprano lo corrige."</p>
+    <cite>Proverbios 13:24 — La corrección temprana es expresión de amor</cite>
+  </div>
+  <p>El equilibrio bíblico es amor con límites, firmeza con afecto, corrección con afirmación. No uno sin el otro. El hijo necesita saber que es profundamente amado <em>y</em> que hay fronteras reales que no se negocian. Esa combinación produce seguridad emocional y carácter sólido.</p>
+
+  <div class="actividad">
+    <h4>Examen de crianza</h4>
+    <ol>
+      <li>¿En qué dirección tiendes a fallar más — permisividad o dureza excesiva?</li>
+      <li>¿Tu hijo sabe con certeza que lo amas? ¿Lo dices? ¿Lo demuestras?</li>
+      <li>¿Tu hijo sabe con certeza que hay límites reales? ¿Los aplicas con consistencia?</li>
+    </ol>
+    <div class="oracion">"Señor, guárdame de los extremos. Dame amor que afirma y firmeza que forma. Dame sabiduría para conocer la diferencia. Amén."</div>
+  </div>
+</section>
+
+<!-- ═══════ BLOQUE III ═══════ -->
+<div class="bloque-banner" id="bloque3">
+  <div class="bb-num">Bloque Tercero</div>
+  <div class="bb-title">La Disciplina Bíblica</div>
+  <div class="bb-sub">Lo que realmente significa y lo que no</div>
+  <div class="bb-line"></div>
+</div>
+
+<!-- CAP 7 — QUÉ ES DISCIPLINA -->
+<section class="chapter" id="c7">
+  <div class="ch-num">Capítulo 7</div>
+  <h2 class="ch-title">¿Qué es la disciplina bíblica?</h2>
+  <div class="ch-sub">Mucho más que corrección — formación integral</div>
+  <div class="ch-divider"></div>
+
+  <p>La palabra "disciplina" en el contexto moderno se asocia casi exclusivamente con castigo. En la Biblia, la disciplina es algo mucho más rico y completo: es todo el proceso formativo que lleva al hijo desde la infancia hasta la madurez en Cristo.</p>
+
+  <div class="section-label">Disciplina en el Antiguo Testamento</div>
+  <div class="etimo">
+    <div class="e-palabra">Musar — מוּסָר</div>
+    <div class="e-origen">Hebreo · aparece 50 veces en Proverbios</div>
+    <p>Significa: <strong>instrucción, corrección, entrenamiento, formación moral</strong>. Incluye enseñanza verbal, corrección de errores, modelado por el ejemplo y, cuando necesario, corrección física proporcional. <em>Musar</em> es todo el proceso de hacer de un niño una persona íntegra. Es el corazón de todo el libro de Proverbios.</p>
+  </div>
+
+  <div class="section-label">Los componentes de la disciplina bíblica</div>
+
+  <ul class="pasos">
+    <li>
+      <div class="paso-content">
+        <h5>Instrucción verbal — la enseñanza activa</h5>
+        <p>Proverbios 1:8 — "Oye, hijo mío, la instrucción de tu padre." La mayor parte de la formación bíblica es verbal — conversaciones, narraciones, preguntas, respuestas. El padre que habla la Palabra a sus hijos regularmente es el centro de la disciplina bíblica.</p>
+      </div>
+    </li>
+    <li>
+      <div class="paso-content">
+        <h5>El ejemplo — la enseñanza implícita</h5>
+        <p>El hijo aprende más del padre que observa que del padre que habla. 1 Corintios 4:16 — "Os ruego que me imitéis a mí." El ejemplo no puede ser sustituido por ninguna cantidad de palabras. La hipocresía del padre es la primera razón por la que los hijos rechazan la fe.</p>
+      </div>
+    </li>
+    <li>
+      <div class="paso-content">
+        <h5>La corrección oportuna</h5>
+        <p>Proverbios 29:17 — "Corrige a tu hijo y te dará descanso." La corrección es parte necesaria de la disciplina — pero es solo una parte. Debe ser oportuna (en el momento correcto), proporcional (adecuada al error) y restauradora (orientada a la reconciliación, no al castigo puro).</p>
+      </div>
+    </li>
+    <li>
+      <div class="paso-content">
+        <h5>Consecuencias naturales y lógicas</h5>
+        <p>Gálatas 6:7 — "Todo lo que el hombre sembrare, eso también segará." Dejar que el hijo experimente las consecuencias naturales de sus decisiones es también disciplina. El padre que rescata al hijo de toda consecuencia lo priva de aprender la relación entre decisión y resultado.</p>
+      </div>
+    </li>
+  </ul>
+
+  <div class="gold-box">
+    <h4>La disciplina bíblica tiene cinco características</h4>
+    <p><strong>1. Nace del amor:</strong> no de la ira ni de la conveniencia del padre</p>
+    <p><strong>2. Tiene propósito:</strong> la formación del carácter, no la demostración de autoridad</p>
+    <p><strong>3. Es consistente:</strong> las reglas no cambian según el estado emocional del padre</p>
+    <p><strong>4. Es proporcional:</strong> la respuesta debe ser adecuada a la gravedad del error</p>
+    <p><strong>5. Termina en restauración:</strong> el objetivo no es la condena — es la reconciliación</p>
+  </div>
+</section>
+
+<!-- CAP 8 — NO PROVOQUÉIS -->
+<section class="chapter" id="c8">
+  <div class="ch-num">Capítulo 8</div>
+  <h2 class="ch-title">No provoquéis a ira a vuestros hijos</h2>
+  <div class="ch-sub">La advertencia que los padres necesitan escuchar</div>
+  <div class="ch-divider"></div>
+
+  <p>Pablo repite la misma advertencia dos veces — en Efesios 6:4 y en Colosenses 3:21. Cuando la Biblia repite algo, hay una razón: es un peligro real y frecuente. Los padres pueden herir a sus hijos no solo por falta de corrección sino por exceso de ella — o por la manera en que la aplican.</p>
+
+  <div class="quote">
+    <p>"Padres, no exasperéis a vuestros hijos, para que no se desalienten."</p>
+    <cite>Colosenses 3:21 — La consecuencia: desánimo profundo del alma</cite>
+  </div>
+
+  <div class="section-label">Lo que desanima el corazón del hijo</div>
+  <ul class="list-no">
+    <li><strong>Perfeccionismo:</strong> estándares que nunca pueden alcanzarse, elogios que nunca llegan</li>
+    <li><strong>Palabras que marcan:</strong> "eres un inútil", "nunca haces nada bien", "tu hermano nunca haría esto." Las palabras del padre tienen un peso específico que ninguna otra voz tiene.</li>
+    <li><strong>Inconsistencia:</strong> lo que hoy está permitido mañana está prohibido, dependiendo del humor del padre</li>
+    <li><strong>Disciplina pública:</strong> humillar al hijo frente a hermanos, amigos o la congregación</li>
+    <li><strong>No reconocer los errores del padre:</strong> el padre que nunca dice "me equivoqué" enseña al hijo que la autoridad no necesita rendición de cuentas</li>
+  </ul>
+
+  <div class="section-label">El poder de las palabras del padre sobre el hijo</div>
+  <p>Proverbios 18:21 — "La muerte y la vida están en poder de la lengua." Esto es especialmente verdad en la relación padre-hijo. El cerebro del niño en desarrollo registra las palabras del padre como definitorias de realidad. <strong>Lo que el padre dice repetidamente sobre el hijo, el hijo lo cree sobre sí mismo.</strong></p>
+
+  <div class="tip-box">
+    <h4>El poder de la bendición verbal</h4>
+    <p>En la cultura hebrea, la bendición del padre era un evento solemne con consecuencias reales (Génesis 27). Aunque los padres modernos no practiquen la bendición formal, el principio permanece: las palabras del padre sobre el hijo tienen peso espiritual.</p>
+    <p>Practica decirle a tu hijo: "Estoy orgulloso de ti." "Dios tiene un propósito grande para tu vida." "Eres valioso." "Te amo sin condiciones." Esas palabras construyen la identidad del hijo desde adentro.</p>
+  </div>
+
+  <div class="frase"><p>"Los hijos no recuerdan los juguetes que les diste. Recuerdan las palabras que les dijiste. Elige bien lo que quedará grabado en ellos para siempre."</p></div>
+</section>
+
+<!-- CAP 9 — DISCIPLINA VS CASTIGO -->
+<section class="chapter" id="c9">
+  <div class="ch-num">Capítulo 9</div>
+  <h2 class="ch-title">Disciplina vs castigo</h2>
+  <div class="ch-sub">La diferencia que define la relación</div>
+  <div class="ch-divider"></div>
+
+  <p>Esta es quizás la distinción más importante de toda la crianza y la menos enseñada. Disciplina y castigo no son sinónimos. Confundirlos produce padres que dañan cuando quieren corregir.</p>
+
+  <div class="compare">
+    <div class="compare-box a">
+      <h4>Castigo</h4>
+      <ul>
+        <li>Orientado al pasado — pagar por lo que hizo</li>
+        <li>Objetivo: infligir consecuencia dolorosa</li>
+        <li>El hijo aprende a evitar el dolor</li>
+        <li>Nace frecuentemente de la ira del padre</li>
+        <li>No necesariamente produce cambio interno</li>
+        <li>Termina cuando se aplica la pena</li>
+      </ul>
+    </div>
+    <div class="compare-box b">
+      <h4>Disciplina bíblica</h4>
+      <ul>
+        <li>Orientada al futuro — formar para adelante</li>
+        <li>Objetivo: producir cambio de carácter</li>
+        <li>El hijo aprende quién quiere ser</li>
+        <li>Nace del amor deliberado del padre</li>
+        <li>Busca transformación interna</li>
+        <li>Termina en restauración y afecto</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="quote">
+    <p>"Ninguna disciplina al presente parece ser causa de gozo, sino de tristeza; pero después da fruto apacible de justicia a los que en ella han sido ejercitados."</p>
+    <cite>Hebreos 12:11 — El fruto de la disciplina es justicia, no resentimiento</cite>
+  </div>
+
+  <div class="section-label">El proceso de la disciplina restauradora</div>
+  <ul class="pasos">
+    <li><div class="paso-content"><h5>Reconocer el error juntos</h5><p>Antes de aplicar cualquier consecuencia, el hijo debe entender qué hizo mal y por qué estuvo mal. La comprensión del error es más formativa que la consecuencia.</p></div></li>
+    <li><div class="paso-content"><h5>Aplicar consecuencias proporcionales</h5><p>La consecuencia debe ser lógica y proporcional. No cualquier error merece la misma respuesta. La consistencia y la proporcionalidad construyen confianza.</p></div></li>
+    <li><div class="paso-content"><h5>Restaurar la relación</h5><p>La disciplina bíblica termina con restauración — un abrazo, una oración juntos, la confirmación de que el amor no cambió. El hijo que sale de la corrección sabiendo que todavía es amado ha recibido disciplina bíblica.</p></div></li>
+  </ul>
+
+  <div class="frase"><p>"La disciplina que termina en restauración produce seguridad. La que termina en condena produce miedo. La diferencia está en si el padre ama más al hijo que a su propia autoridad."</p></div>
+</section>
+
+<!-- ═══════ BLOQUE IV ═══════ -->
+<div class="bloque-banner" id="bloque4">
+  <div class="bb-num">Bloque Cuarto</div>
+  <div class="bb-title">Fe y Carácter</div>
+  <div class="bb-sub">Transmitir lo que más importa</div>
+  <div class="bb-line"></div>
+</div>
+
+<!-- CAP 10 — TRANSMITIR FE -->
+<section class="chapter" id="c10">
+  <div class="ch-num">Capítulo 10</div>
+  <h2 class="ch-title">Transmitir la fe — no la religión</h2>
+  <div class="ch-sub">La diferencia entre criar creyentes y criar religiosos</div>
+  <div class="ch-divider"></div>
+
+  <p>Millones de adultos hoy rechazan la fe porque lo que les fue transmitido fue <em>religión</em> — un sistema de reglas, formas y actuaciones — en lugar de <em>fe</em>: una relación viva y transformadora con el Dios viviente. La diferencia entre transmitir una y la otra es enorme.</p>
+
+  <div class="quote">
+    <p>"Trayendo a la memoria la fe no fingida que hay en ti, la cual habitó primero en tu abuela Loida, y en tu madre Eunice, y estoy seguro que en ti también."</p>
+    <cite>2 Timoteo 1:5 — La fe genuina de Timoteo fue transmitida por su madre y abuela</cite>
+  </div>
+
+  <div class="section-label">Religión vs fe — la diferencia que importa</div>
+
+  <div class="compare">
+    <div class="compare-box a">
+      <h4>Religión transmitida</h4>
+      <ul>
+        <li>Lista de reglas externas</li>
+        <li>Actuación para la congregación</li>
+        <li>Miedo al juicio como motivación</li>
+        <li>Dios como policía del comportamiento</li>
+        <li>Fácil de abandonar en la adultez</li>
+      </ul>
+    </div>
+    <div class="compare-box b">
+      <h4>Fe transmitida</h4>
+      <ul>
+        <li>Relación con una Persona real</li>
+        <li>Autenticidad que los hijos ven</li>
+        <li>Amor a Dios como motivación</li>
+        <li>Dios como Padre que conoce</li>
+        <li>Persiste en la adultez porque es real</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="section-label">Cómo se transmite la fe genuina</div>
+  <ul class="list-yes">
+    <li><strong>Siendo auténtico sobre tus luchas espirituales:</strong> el hijo que ve a su padre luchar honestamente con la fe aprende más que el que ve una fachada de perfección</li>
+    <li><strong>Contando los testimonios de la fidelidad de Dios:</strong> Salmo 78:4 — "contaremos a la generación venidera las alabanzas de Jehová." La historia familiar de fe es uno de los activos espirituales más poderosos</li>
+    <li><strong>Respondiendo sus preguntas difíciles sin miedo:</strong> el hijo que puede preguntar todo en casa no necesita buscar respuestas afuera</li>
+    <li><strong>Incluyendo a los hijos en la vida espiritual activa:</strong> no solo llevarlos al culto — involucrarlos en el servicio, en la oración, en el ministerio</li>
+  </ul>
+
+  <div class="quote">
+    <p>"No las encubriremos a sus hijos; contaremos a la generación venidera las alabanzas de Jehová, y su potencia, y las maravillas que hizo."</p>
+    <cite>Salmo 78:4 — El testimonio intergeneracional de la fidelidad de Dios</cite>
+  </div>
+
+  <div class="frase"><p>"Los hijos no necesitan padres perfectos — necesitan padres reales que amen a Dios de manera genuina. La autenticidad transmite fe; la actuación transmite religión."</p></div>
+</section>
+
+<!-- CAP 11 — FORMANDO CARÁCTER -->
+<section class="chapter" id="c11">
+  <div class="ch-num">Capítulo 11</div>
+  <h2 class="ch-title">Formando el carácter</h2>
+  <div class="ch-sub">Las virtudes que la Biblia quiere ver en tus hijos</div>
+  <div class="ch-divider"></div>
+
+  <p>El carácter no se forma solo ni de manera automática. Se forma deliberadamente, a lo largo del tiempo, mediante las experiencias que el padre facilita, los valores que enseña y el modelo que provee. La pregunta no es si el carácter del hijo será formado — sino quién o qué lo formará.</p>
+
+  <div class="section-label">Las virtudes que la Biblia enfatiza para los hijos</div>
+
+  <ul class="pasos">
+    <li>
+      <div class="paso-content">
+        <h5>Honestidad — Éxodo 20:16 · Proverbios 12:17</h5>
+        <p>La integridad en las palabras es uno de los valores más formativos que un padre puede transmitir. Un hogar donde se dice la verdad — incluyendo cuando el padre reconoce sus errores — produce hijos que valoran la honestidad sobre la conveniencia.</p>
+      </div>
+    </li>
+    <li>
+      <div class="paso-content">
+        <h5>Responsabilidad — Gálatas 6:5</h5>
+        <p>"Cada uno lleve su propia carga." El padre que rescata al hijo de toda consecuencia le roba la oportunidad de desarrollar responsabilidad. Los hijos a quienes se les confían responsabilidades reales y proporcionales a su edad desarrollan capacidad y confianza.</p>
+      </div>
+    </li>
+    <li>
+      <div class="paso-content">
+        <h5>Generosidad — Lucas 6:38 · 2 Corintios 9:7</h5>
+        <p>La generosidad no es instintiva — es aprendida. Un hogar donde se da, donde se sirve, donde los recursos son vistos como herramientas para bendecir a otros, produce hijos generosos. El hijo que aprende a dar desde pequeño desarrolla una de las características más parecidas a Dios.</p>
+      </div>
+    </li>
+    <li>
+      <div class="paso-content">
+        <h5>Perseverancia — Santiago 1:3-4</h5>
+        <p>La cultura moderna enfrenta a los hijos con frustración inmediata y los rescata de ella inmediatamente. La Biblia valora la perseverancia — aprender a seguir cuando es difícil. El padre que permite que el hijo luche con algo difícil (con acompañamiento) le regala fortaleza de carácter.</p>
+      </div>
+    </li>
+    <li>
+      <div class="paso-content">
+        <h5>Compasión — Efesios 4:32 · Miqueas 6:8</h5>
+        <p>La compasión se enseña señalando las necesidades de otros, involucrando al hijo en el servicio y modelando sensibilidad ante el sufrimiento ajeno. Miqueas 6:8 — "amar misericordia" es uno de los tres requisitos del camino de Dios.</p>
+      </div>
+    </li>
+  </ul>
+</section>
+
+<!-- CAP 12 — LEGADO GENERACIONAL -->
+<section class="chapter" id="c12">
+  <div class="ch-num">Capítulo 12</div>
+  <h2 class="ch-title">El legado generacional</h2>
+  <div class="ch-sub">Lo que dejas cuando ya no estés</div>
+  <div class="ch-divider"></div>
+
+  <p>La crianza tiene una dimensión que trasciende la vida del padre. Lo que transmites a tus hijos, ellos lo transmitirán a sus hijos. Cada padre es un eslabón en una cadena generacional que puede ir en dirección hacia Dios o en dirección contraria.</p>
+
+  <div class="quote">
+    <p>"Que enseñaremos a nuestros hijos; y los dirán a sus hijos, para que lo pongan en Dios su confianza."</p>
+    <cite>Salmo 78:6-7</cite>
+  </div>
+
+  <div class="section-label">Los dos tipos de legado generacional</div>
+  <div class="compare">
+    <div class="compare-box a">
+      <h4>Legado de quebranto</h4>
+      <ul>
+        <li>Patrones de pecado no rotos</li>
+        <li>Heridas no sanadas que se replican</li>
+        <li>Éxodo 20:5 — "visito la maldad de los padres"</li>
+        <li>Patrones relacionales disfuncionales</li>
+      </ul>
+    </div>
+    <div class="compare-box b">
+      <h4>Legado de bendición</h4>
+      <ul>
+        <li>Salmo 103:17 — misericordia de generación en generación</li>
+        <li>Fe transmitida como Loida y Eunice</li>
+        <li>Patrones de amor, servicio e integridad</li>
+        <li>Historia familiar de fidelidad de Dios</li>
+      </ul>
+    </div>
+  </div>
+
+  <p>El padre que toma la decisión de romper patrones generacionales de quebranto y construir un legado de fe no solo bendice a sus hijos — bendice a generaciones que aún no nacieron. <strong>Esa es la inversión con el retorno más largo de toda la historia humana.</strong></p>
+
+  <div class="actividad">
+    <h4>Construyendo el legado</h4>
+    <ol>
+      <li>¿Qué legado positivo recibiste de tus padres que quieres transmitir?</li>
+      <li>¿Qué patrón negativo quieres que se detenga en tu generación?</li>
+      <li>Escribe una declaración de legado: "En nuestra familia nosotros..."</li>
+      <li>Léela a tus hijos y explícales lo que significa</li>
+    </ol>
+    <div class="oracion">"Señor, que lo bueno que has hecho en mí sea transmitido a mis hijos y a sus hijos. Y que lo que necesita ser roto, se rompa en mí para que ellos sean libres. Amén."</div>
+  </div>
+</section>
+
+<!-- ═══════ BLOQUE V ═══════ -->
+<div class="bloque-banner" id="bloque5">
+  <div class="bb-num">Bloque Quinto</div>
+  <div class="bb-title">Desafíos Reales</div>
+  <div class="bb-sub">Lo que ningún libro antiguo de crianza anticipó</div>
+  <div class="bb-line"></div>
+</div>
+
+<!-- CAP 13 — TECNOLOGÍA -->
+<section class="chapter" id="c13">
+  <div class="ch-num">Capítulo 13</div>
+  <h2 class="ch-title">La tecnología y la crianza</h2>
+  <div class="ch-sub">El desafío que ninguna generación anterior enfrentó</div>
+  <div class="ch-divider"></div>
+
+  <p>Los padres de hoy enfrentan un desafío que no existía en ninguna generación bíblica: el mundo digital. No hay versículo que hable de redes sociales, videojuegos o tiempo de pantalla. Pero los principios bíblicos son completamente aplicables — porque hablan del corazón humano, que no cambió.</p>
+
+  <div class="section-label">El problema real no es la tecnología</div>
+  <p>La tecnología es una herramienta — puede usarse para el bien o para el mal. El problema real es la misma pregunta de siempre: <strong>¿quién o qué forma el corazón de mi hijo?</strong> Si la pantalla tiene más horas de acceso al corazón del hijo que el padre, la pantalla ganará la batalla de la formación.</p>
+
+  <div class="quote">
+    <p>"Sobre toda cosa guardada, guarda tu corazón; porque de él mana la vida."</p>
+    <cite>Proverbios 4:23 — El corazón que se debe guardar incluye lo que entra por los ojos y los oídos</cite>
+  </div>
+
+  <div class="section-label">Principios bíblicos aplicados a la tecnología</div>
+
+  <ul class="list-yes">
+    <li><strong>Filipenses 4:8 — el filtro del contenido:</strong> "todo lo que es verdadero, todo lo honesto, todo lo justo, todo lo puro... en esto pensad." El estándar para el contenido digital es el mismo que para cualquier otro contenido: ¿forma o deforma?</li>
+    <li><strong>1 Corintios 10:23 — no todo conviene:</strong> "Todo me es lícito, mas no todo conviene." La libertad no es el único criterio — también importa si edifica o destruye.</li>
+    <li><strong>Efesios 5:15-16 — redimiendo el tiempo:</strong> "Mirad cómo andéis, no como necios sino como sabios, aprovechando bien el tiempo." El tiempo frente a una pantalla es tiempo que no se invierte en relaciones, habilidades o formación.</li>
+    <li><strong>Establecer acuerdos, no solo reglas:</strong> los hijos que participan en establecer los límites tecnológicos los cumplen con más comprensión que los que reciben las reglas impuestas sin explicación</li>
+  </ul>
+
+  <div class="tip-box">
+    <h4>Guía práctica de tecnología en el hogar cristiano</h4>
+    <p><strong>Tiempos sin pantalla:</strong> cenas familiares, tiempo de devocional, antes de dormir</p>
+    <p><strong>Espacios sin pantalla:</strong> cuartos de dormir, mesa familiar</p>
+    <p><strong>Contenido con criterio:</strong> revisar qué ve, con quién habla, qué juega</p>
+    <p><strong>Conversación sobre lo que ven:</strong> no prohibición ciega sino discernimiento enseñado</p>
+    <p><strong>El ejemplo del padre primero:</strong> el padre que está en el teléfono durante la cena no puede pedir al hijo que deje el suyo</p>
+  </div>
+
+  <div class="frase"><p>"El padre que compite con la pantalla por la atención del hijo sin ganar primero su corazón ya perdió la batalla. Gana el corazón — el resto sigue."</p></div>
+</section>
+
+<!-- CAP 14 — HIJO QUE SE ALEJA -->
+<section class="chapter" id="c14">
+  <div class="ch-num">Capítulo 14</div>
+  <h2 class="ch-title">Cuando el hijo se aleja de Dios</h2>
+  <div class="ch-sub">La situación que más duele y la que más necesita fe</div>
+  <div class="ch-divider"></div>
+
+  <p>No hay dolor más profundo para un padre creyente que ver a su hijo alejarse de Dios. Y sin embargo, es una realidad que muchas familias piadosas enfrentan. La pregunta no es si puede ocurrir — ya ocurrió con el hijo pródigo de la parábola de Jesús. La pregunta es cómo responder.</p>
+
+  <div class="quote">
+    <p>"Y levantándose, vino a su padre. Y cuando aún estaba lejos, lo vio su padre, y fue movido a misericordia, y corrió, y se echó sobre su cuello, y le besó."</p>
+    <cite>Lucas 15:20 — El padre que no dejó de mirar el camino</cite>
+  </div>
+
+  <div class="section-label">Lo que la parábola del hijo pródigo enseña al padre</div>
+
+  <ul class="pasos">
+    <li>
+      <div class="paso-content">
+        <h5>El padre le dejó ir — el respeto a la voluntad libre</h5>
+        <p>El padre no persiguió al hijo. No lo encadenó. No lo manipuló para que se quedara. La fe no puede ser forzada — solo invitada. El padre que intenta controlar la fe del hijo adulto generalmente produce más rechazo.</p>
+      </div>
+    </li>
+    <li>
+      <div class="paso-content">
+        <h5>El padre siguió mirando el camino</h5>
+        <p>"Cuando aún estaba lejos, lo vio su padre." Eso significa que el padre miraba regularmente hacia el camino. No olvidó al hijo — lo esperaba activamente. La oración constante por el hijo alejado es la vigilia del padre que sigue creyendo en el regreso.</p>
+      </div>
+    </li>
+    <li>
+      <div class="paso-content">
+        <h5>El padre corrió hacia él — sin condiciones</h5>
+        <p>No esperó que el hijo llegara hasta la puerta. Corrió. No exigió explicaciones primero. No dijo "ya veremos si eres sincero." Fue movido a misericordia — eso fue todo. La restauración del hijo alejado requiere que el padre esté dispuesto a correr sin importar lo que pasó.</p>
+      </div>
+    </li>
+  </ul>
+
+  <div class="section-label">Lo que el padre NO debe hacer</div>
+  <ul class="list-no">
+    <li>Usar la culpa como herramienta de control: "después de todo lo que hice por ti..."</li>
+    <li>Cortar la relación completamente — el hijo alejado necesita saber que la puerta está abierta</li>
+    <li>Pretender que el hijo no está alejado para no incomodar a la congregación</li>
+    <li>Perder la esperanza — el Dios que llamó al hijo la primera vez puede llamarlo de nuevo</li>
+  </ul>
+
+  <div class="gold-box">
+    <h4>Proverbios 22:6 — ¿es una promesa absoluta?</h4>
+    <p>"Instruye al niño en su camino, y aun cuando fuere viejo no se apartará de él."</p>
+    <p>Este proverbio es un principio general de sabiduría, no una promesa incondicional absoluta. Los proverbios describen lo que generalmente sucede — no garantías individuales. Hay hijos de padres piadosos que se alejaron. Hay hijos de padres impíos que encontraron a Dios. <strong>La siembra fiel no garantiza la cosecha en tus tiempos — pero aumenta dramáticamente la probabilidad.</strong></p>
+    <p>El padre que crió fielmente y ve a su hijo alejado no fracasó — sembró. La cosecha tiene su tiempo.</p>
+  </div>
+
+  <div class="frase"><p>"El hijo que se alejó no se fue del alcance de Dios — se fue del alcance de tu vista. Sigue orando. El Padre que corre todavía sigue mirando el camino."</p></div>
+</section>
+
+<!-- CAP 15 — HOGARES ROTOS -->
+<section class="chapter" id="c15">
+  <div class="ch-num">Capítulo 15</div>
+  <h2 class="ch-title">Crianza en hogares rotos</h2>
+  <div class="ch-sub">La gracia de Dios alcanza a cada situación familiar</div>
+  <div class="ch-divider"></div>
+
+  <p>El diseño ideal de Dios para la crianza incluye a ambos padres. Pero vivimos en un mundo caído donde muchos hijos son criados en familias monoparentales, con padrastros, con abuelos, o en situaciones de divorcio. La pregunta no es si Dios puede obrar en esas situaciones — la historia bíblica responde claramente que sí puede.</p>
+
+  <div class="quote">
+    <p>"Padre de huérfanos y defensor de viudas es Dios en su santa morada."</p>
+    <cite>Salmo 68:5 — Dios se identifica especialmente con los vulnerables</cite>
+  </div>
+
+  <div class="section-label">Ejemplos bíblicos de crianza fuera del ideal</div>
+
+  <ul class="list-yes">
+    <li><strong>Timoteo:</strong> criado sin padre creyente, por su madre Eunice y su abuela Loida — dos mujeres transmitieron la fe que produjo uno de los mayores discípulos de Pablo</li>
+    <li><strong>Moisés:</strong> adoptado por una princesa egipcia, criado en una cultura hostil a su fe — y aun así encontró su identidad en Dios</li>
+    <li><strong>José:</strong> a los 17 años vendido por sus hermanos, criado en esclavitud y prisión — y aun así formado en el carácter de Dios</li>
+    <li><strong>Ester:</strong> huérfana criada por su primo Mardoqueo — y se convirtió en instrumento de salvación de su pueblo</li>
+  </ul>
+
+  <div class="section-label">Para el padre o la madre sola</div>
+  <p>Criar a un hijo solo es una de las tareas más exigentes que existen. No hay descuento en la responsabilidad — pero tampoco hay abandono de Dios. Algunas verdades para el padre o la madre sola:</p>
+
+  <div class="tip-box">
+    <h4>Recursos bíblicos para el padre o madre sola</h4>
+    <p><strong>La promesa de sabiduría:</strong> Santiago 1:5 — "si alguno tiene falta de sabiduría, pídala a Dios, que la da a todos abundantemente." Dios no da sabiduría solo a los que tienen pareja.</p>
+    <p><strong>La comunidad como red de apoyo:</strong> Gálatas 6:2 — "sobrellevad los unos las cargas de los otros." La iglesia debe ser la familia extendida que suplanta lo que el hogar incompleto no puede dar solo.</p>
+    <p><strong>La gracia que suple la carencia:</strong> 2 Corintios 12:9 — "bástate mi gracia." Lo que tú no puedes dar, Dios puede suplir. Lo que te falta como padre único, el Padre celestial puede complementar.</p>
+    <p><strong>No cargar con culpa por lo que no controlas:</strong> el padre que hace lo mejor que puede con lo que tiene no es responsable de lo que Dios reserva para su soberanía.</p>
+  </div>
+
+  <div class="section-label">Para los hogares con padrastros o madrastras</div>
+  <p>La familia reconstituida tiene desafíos únicos: lealtades divididas, historia previa, heridas de divorcio. Pero también tiene oportunidades únicas de modelar gracia, perdón y amor que trasciende la biología. El padre que ama al hijo de otro como propio refleja algo del corazón de Dios, que nos adoptó siendo hijos de otro.</p>
+
+  <div class="quote">
+    <p>"Antes fuisteis no pueblo, pero ahora sois pueblo de Dios."</p>
+    <cite>1 Pedro 2:10 — La adopción divina como modelo del amor que trasciende la biología</cite>
+  </div>
+
+  <div class="frase"><p>"Dios no prometió solo bendecir las familias perfectas. Prometió estar con los que le buscan — y eso incluye a todo padre que cría con fe en circunstancias imperfectas."</p></div>
+
+  <div class="actividad">
+    <h4>Para cualquier estructura familiar</h4>
+    <ol>
+      <li>Lean juntos (padre e hijo/s) el Salmo 103:13 — "Como el padre se compadece de los hijos..."</li>
+      <li>¿Qué fortalezas tiene tu estructura familiar actual? Nómbralas y agradécelas a Dios</li>
+      <li>¿Qué necesidades específicas necesitas llevar al Señor por tus hijos hoy?</li>
+    </ol>
+    <div class="oracion">"Señor, en mi situación imperfecta, sé mi fortaleza. Donde yo fallo, tú complementas. Donde soy incompleto, tú eres suficiente. Ayúdame a criar en tu nombre y en tu gracia. Amén."</div>
+  </div>
+</section>
+
+</main>
+
+<section class="epilogo">
+  <span class="big">CRECER</span>
+  <h2>La inversión que dura eternamente</h2>
+  <p>No hay inversión de tiempo, energía y amor con retorno más duradero que la crianza fiel. Los hijos que conocen a Dios, que tienen carácter íntegro, que fueron amados con amor de pacto — ellos llevarán ese legado a generaciones que aún no nacieron.</p>
+  <p>No busques ser el padre perfecto. Busca ser el padre fiel — el que cría en disciplina y amonestación del Señor, el que no provoca a ira, el que nutre hasta la madurez. El resto está en manos de Dios.</p>
+  <div class="quote" style="max-width:480px;margin:32px auto;">
+    <p>"Instruye al niño en su camino, y aun cuando fuere viejo no se apartará de él."</p>
+    <cite>Proverbios 22:6</cite>
+  </div>
+  <div class="firma">Criando Hijos en el Señor · Osmar Lugo · IPUC</div>
+</section>
+
+</div>
+
+<script>
+const obs=new IntersectionObserver(e=>{e.forEach(el=>{if(el.isIntersecting)el.target.classList.add('visible');});},{threshold:.08});
+document.querySelectorAll('.chapter').forEach(e=>obs.observe(e));
+const nav=document.getElementById('sidenav');
+const wrap=document.getElementById('pageWrap');
+const isMobile=()=>window.innerWidth<=768;
+function toggleNav(){
+  if(isMobile()){nav.classList.toggle('show');}
+  else{nav.classList.toggle('hidden');wrap.classList.toggle('full');}
+}
+const secs=document.querySelectorAll('section[id], .bloque-banner[id]');
+const links=document.querySelectorAll('nav a');
+window.addEventListener('scroll',()=>{
+  let cur='';
+  secs.forEach(s=>{if(window.scrollY>=s.offsetTop-200)cur=s.id;});
+  links.forEach(a=>{a.classList.remove('active');if(a.getAttribute('href')==='#'+cur)a.classList.add('active');});
+});
+links.forEach(a=>{a.addEventListener('click',()=>{if(isMobile())nav.classList.remove('show');});});
+document.addEventListener('click',e=>{
+  if(isMobile()&&nav.classList.contains('show')&&!nav.contains(e.target)&&!e.target.closest('.nav-toggle')){nav.classList.remove('show');}
+});
+</script>
+</body>
+</html>

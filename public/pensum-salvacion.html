@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>La Salvación — Pénsum Doctrinal</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Raleway:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--azul:#009FDA;--marino:#003B6F;--oro:#F0AB00;--oro-claro:#FFD166;--fondo:#040e1c;--fondo2:#071628;--texto:#e8e0d0;--texto-suave:#a89f90;--linea:rgba(240,171,0,.2);}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{background:var(--fondo);color:var(--texto);font-family:'Crimson Pro',Georgia,serif;font-size:18px;line-height:1.85;overflow-x:hidden;}
+::-webkit-scrollbar{width:4px;}::-webkit-scrollbar-track{background:var(--fondo);}::-webkit-scrollbar-thumb{background:var(--azul);border-radius:2px;}
+.nav-toggle{position:fixed;top:16px;left:16px;z-index:200;background:var(--marino);border:1px solid var(--linea);color:var(--oro);width:40px;height:40px;border-radius:8px;cursor:pointer;font-size:18px;display:flex;align-items:center;justify-content:center;transition:all .2s;}
+.nav-toggle:hover{background:var(--azul);color:#fff;}
+nav{position:fixed;left:0;top:0;bottom:0;width:260px;background:linear-gradient(180deg,var(--marino) 0%,#011529 100%);border-right:1px solid var(--linea);z-index:100;overflow-y:auto;transform:translateX(-100%);transition:transform .35s ease;padding:32px 0;}
+nav.show{transform:translateX(0);}
+nav .nav-title{font-family:'Cinzel',serif;font-size:10px;letter-spacing:4px;color:var(--oro);padding:0 20px 16px;border-bottom:1px solid var(--linea);margin-bottom:12px;}
+nav a{display:block;padding:7px 20px;font-family:'Raleway',sans-serif;font-size:11px;font-weight:500;letter-spacing:1px;color:var(--texto-suave);text-decoration:none;border-left:2px solid transparent;transition:all .2s;}
+nav a:hover,nav a.active{color:var(--oro);border-left-color:var(--oro);background:rgba(240,171,0,.06);}
+nav .nav-section{font-family:'Cinzel',serif;font-size:9px;letter-spacing:3px;color:var(--azul);padding:12px 20px 4px;text-transform:uppercase;opacity:.7;}
+
+.cover{min-height:100vh;background:linear-gradient(160deg,#041830 0%,var(--fondo) 65%);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:80px 32px 60px;position:relative;overflow:hidden;}
+.cover::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 50% at 50% 10%,rgba(0,159,218,.18) 0%,transparent 70%),radial-gradient(ellipse 40% 40% at 80% 85%,rgba(240,171,0,.1) 0%,transparent 60%);pointer-events:none;}
+.cover-icon{font-size:64px;margin-bottom:24px;animation:fadeDown .8s ease both;}
+.cover-tag{font-family:'Cinzel',serif;font-size:10px;letter-spacing:5px;color:var(--azul);text-transform:uppercase;margin-bottom:20px;animation:fadeDown .9s ease .1s both;}
+.cover-title{font-family:'Cinzel',serif;font-size:clamp(52px,11vw,108px);font-weight:900;line-height:.95;margin-bottom:16px;animation:fadeDown 1s ease .2s both;}
+.cover-title span{color:var(--oro);}
+.cover-sub{font-family:'Cinzel',serif;font-size:clamp(12px,1.8vw,16px);color:var(--azul);letter-spacing:3px;margin-bottom:32px;animation:fadeDown 1s ease .25s both;}
+.cover-line{width:60px;height:1px;background:linear-gradient(to right,transparent,var(--oro),transparent);margin:0 auto 24px;animation:fadeIn 1.1s ease .35s both;}
+.cover-ramas{display:flex;flex-wrap:wrap;justify-content:center;gap:12px;margin-bottom:32px;animation:fadeDown 1.1s ease .4s both;}
+.cover-ramas span{font-family:'Raleway',sans-serif;font-size:11px;letter-spacing:2px;color:var(--texto-suave);padding:6px 14px;border:1px solid rgba(240,171,0,.2);border-radius:20px;}
+.cover-verse{position:absolute;bottom:40px;font-family:'Crimson Pro',serif;font-style:italic;font-size:14px;color:var(--texto-suave);max-width:440px;text-align:center;line-height:1.6;}
+
+main{max-width:740px;margin:0 auto;padding:0 24px;}
+
+/* MAPA DEL PÉNSUM */
+.pensum-map{padding:80px 0 60px;}
+.pensum-map.visible .map-item{opacity:1;transform:none;}
+.pensum-title{font-family:'Cinzel',serif;font-size:11px;letter-spacing:4px;color:var(--azul);text-transform:uppercase;margin-bottom:32px;text-align:center;}
+.map-root{text-align:center;margin-bottom:40px;}
+.map-root .root-box{display:inline-block;background:linear-gradient(135deg,var(--marino),#005a9e);border:2px solid var(--oro);border-radius:12px;padding:20px 40px;font-family:'Cinzel',serif;font-size:clamp(18px,3vw,26px);font-weight:700;color:var(--oro);letter-spacing:2px;}
+.map-connector{width:2px;height:40px;background:linear-gradient(to bottom,var(--oro),var(--azul));margin:0 auto;}
+.map-branches{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:16px;margin-top:0;}
+.map-item{background:rgba(0,59,111,.3);border:1px solid rgba(0,159,218,.3);border-radius:10px;padding:16px;text-align:center;opacity:0;transform:translateY(20px);transition:opacity .6s ease,transform .6s ease;cursor:pointer;text-decoration:none;display:block;}
+.map-item:hover{border-color:var(--oro);background:rgba(0,59,111,.5);}
+.map-item .mi-icon{font-size:28px;margin-bottom:8px;display:block;}
+.map-item .mi-num{font-family:'Cinzel',serif;font-size:9px;letter-spacing:3px;color:var(--azul);text-transform:uppercase;margin-bottom:4px;}
+.map-item .mi-title{font-family:'Cinzel',serif;font-size:13px;color:var(--oro);font-weight:600;}
+.map-item .mi-sub{font-size:12px;color:var(--texto-suave);margin-top:4px;font-family:'Raleway',sans-serif;}
+
+/* MÓDULOS */
+.modulo{padding:80px 0 60px;border-bottom:1px solid rgba(240,171,0,.1);opacity:0;transform:translateY(30px);transition:opacity .7s ease,transform .7s ease;}
+.modulo.visible{opacity:1;transform:none;}
+.mod-header{display:flex;align-items:center;gap:20px;margin-bottom:32px;}
+.mod-icon{font-size:48px;}
+.mod-meta{}
+.mod-num{font-family:'Cinzel',serif;font-size:10px;letter-spacing:4px;color:var(--azul);text-transform:uppercase;margin-bottom:4px;}
+.mod-title{font-family:'Cinzel',serif;font-size:clamp(20px,3.5vw,30px);font-weight:700;color:var(--oro);line-height:1.1;}
+.mod-sub{font-family:'Cinzel',serif;font-size:clamp(13px,2vw,17px);color:var(--azul);margin-top:4px;}
+.ch-divider{width:40px;height:2px;background:linear-gradient(to right,var(--oro),var(--azul));margin-bottom:32px;border-radius:2px;}
+
+p{margin-bottom:20px;}
+strong{color:var(--oro);font-weight:600;}
+em{color:var(--azul);font-style:italic;}
+
+.quote{border-left:3px solid var(--oro);padding:16px 24px;margin:28px 0;background:rgba(240,171,0,.05);border-radius:0 8px 8px 0;}
+.quote p{font-family:'Crimson Pro',serif;font-style:italic;font-size:1.05em;color:var(--oro-claro);margin-bottom:6px;}
+.quote cite{font-family:'Raleway',sans-serif;font-size:12px;letter-spacing:2px;color:var(--texto-suave);}
+
+.section-label{font-family:'Cinzel',serif;font-size:11px;letter-spacing:3px;color:var(--azul);text-transform:uppercase;margin:36px 0 12px;}
+
+.list-yes{list-style:none;margin:16px 0 24px;padding:0;}
+.list-yes li{padding:6px 0 6px 28px;position:relative;font-size:.97em;color:var(--texto-suave);border-bottom:1px solid rgba(255,255,255,.05);}
+.list-yes li::before{content:'✅';position:absolute;left:0;top:6px;font-size:14px;}
+
+.compare{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:28px 0;}
+.compare-box{padding:20px;border-radius:8px;border:1px solid;}
+.compare-box.a{border-color:rgba(0,159,218,.3);background:rgba(0,159,218,.05);}
+.compare-box.b{border-color:rgba(240,171,0,.3);background:rgba(240,171,0,.05);}
+.compare-box h4{font-family:'Cinzel',serif;font-size:10px;letter-spacing:3px;margin-bottom:12px;text-transform:uppercase;}
+.compare-box.a h4{color:var(--azul);}
+.compare-box.b h4{color:var(--oro);}
+.compare-box ul{list-style:none;}
+.compare-box ul li{font-size:14px;padding:4px 0;color:var(--texto-suave);border-bottom:1px solid rgba(255,255,255,.06);}
+
+.frase{text-align:center;padding:40px 24px;margin:32px 0;position:relative;}
+.frase::before{content:'"';font-family:'Cinzel',serif;font-size:100px;color:rgba(240,171,0,.07);position:absolute;top:-10px;left:16px;line-height:1;}
+.frase p{font-family:'Cinzel',serif;font-size:clamp(15px,2.2vw,20px);color:var(--texto);line-height:1.5;position:relative;z-index:1;margin:0;}
+
+.tip-box{background:linear-gradient(135deg,rgba(0,59,111,.4) 0%,rgba(4,14,28,.8) 100%);border:1px solid rgba(0,159,218,.25);border-radius:12px;padding:24px;margin:28px 0;}
+.tip-box h4{font-family:'Cinzel',serif;font-size:11px;letter-spacing:4px;color:var(--azul);text-transform:uppercase;margin-bottom:14px;}
+.tip-box p,.tip-box li{color:var(--texto-suave);font-size:.95em;margin-bottom:8px;}
+.tip-box ol,.tip-box ul{padding-left:20px;}
+.tip-box li{margin-bottom:8px;}
+
+.gold-box{background:rgba(240,171,0,.06);border:1px solid rgba(240,171,0,.2);border-radius:12px;padding:24px;margin:28px 0;}
+.gold-box h4{font-family:'Cinzel',serif;font-size:11px;letter-spacing:4px;color:var(--oro);text-transform:uppercase;margin-bottom:14px;}
+.gold-box p{color:var(--texto-suave);font-size:.95em;margin-bottom:10px;}
+
+.etimo{background:rgba(240,171,0,.04);border:1px solid rgba(240,171,0,.15);border-radius:8px;padding:20px 24px;margin:20px 0;}
+.etimo .e-palabra{font-family:'Cinzel',serif;font-size:20px;color:var(--oro);margin-bottom:4px;}
+.etimo .e-origen{font-family:'Raleway',sans-serif;font-size:12px;color:var(--azul);letter-spacing:2px;margin-bottom:8px;}
+.etimo p{color:var(--texto-suave);font-size:.95em;margin:0;}
+
+.flujo{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:8px;margin:32px 0;}
+.flujo-item{background:rgba(0,59,111,.3);border:1px solid rgba(0,159,218,.25);border-radius:8px;padding:12px 16px;text-align:center;min-width:100px;}
+.flujo-item .fi-label{font-family:'Cinzel',serif;font-size:10px;letter-spacing:2px;color:var(--azul);text-transform:uppercase;margin-bottom:4px;}
+.flujo-item .fi-word{font-family:'Cinzel',serif;font-size:14px;color:var(--oro);font-weight:600;}
+.flujo-arrow{color:var(--oro);font-size:20px;font-weight:700;}
+
+.epilogo{text-align:center;padding:80px 32px 120px;}
+.epilogo .big{font-family:'Cinzel',serif;font-size:clamp(36px,8vw,72px);font-weight:900;color:transparent;-webkit-text-stroke:1px rgba(240,171,0,.35);letter-spacing:6px;display:block;margin-bottom:40px;}
+.epilogo h2{font-family:'Cinzel',serif;font-size:clamp(18px,3vw,28px);color:var(--oro);margin-bottom:24px;}
+.epilogo p{max-width:540px;margin:0 auto 16px;color:var(--texto-suave);}
+.epilogo .firma{margin-top:48px;font-family:'Cinzel',serif;font-size:13px;letter-spacing:4px;color:var(--azul);}
+
+@keyframes fadeDown{from{opacity:0;transform:translateY(-20px);}to{opacity:1;transform:none;}}
+@keyframes fadeIn{from{opacity:0;}to{opacity:1;}}
+@media(max-width:600px){.compare{grid-template-columns:1fr;}nav{width:220px;}.mod-header{flex-direction:column;gap:12px;align-items:flex-start;}.flujo{flex-direction:column;}.flujo-arrow{transform:rotate(90deg);}}
+</style>
+</head>
+<body>
+<button class="nav-toggle" onclick="toggleNav()">☰</button>
+<nav id="sidenav">
+  <div class="nav-title">La Salvación</div>
+  <div class="nav-section">Pénsum</div>
+  <a href="#portada">Portada</a>
+  <a href="#mapa">Mapa del pénsum</a>
+  <div class="nav-section">Módulos</div>
+  <a href="#m0">Intro — El problema del pecado</a>
+  <a href="#m1">1. La Salvación</a>
+  <a href="#m2">2. Expiación</a>
+  <a href="#m3">3. Propiciación</a>
+  <a href="#m4">4. Justificación</a>
+  <a href="#m5">5. Redención</a>
+  <a href="#m6">6. Todo en Cristo</a>
+</nav>
+
+<!-- PORTADA -->
+<section class="cover" id="portada">
+  <div class="cover-icon">✝️</div>
+  <div class="cover-tag">Pénsum Doctrinal · Serie Fundamental</div>
+  <h1 class="cover-title">La<br><span>Salvación</span></h1>
+  <div class="cover-sub">Doctrinas fundamentales de la fe apostólica</div>
+  <div class="cover-line"></div>
+  <div class="cover-ramas">
+    <span>Expiación</span>
+    <span>Propiciación</span>
+    <span>Justificación</span>
+    <span>Redención</span>
+  </div>
+  <div class="cover-verse">"Porque de tal manera amó Dios al mundo, que ha dado a su Hijo unigénito, para que todo aquel que en él cree, no se pierda, mas tenga vida eterna." — Juan 3:16</div>
+</section>
+
+<main>
+
+<!-- MAPA -->
+<section class="pensum-map" id="mapa">
+  <p class="pensum-title">Árbol del pénsum</p>
+  <div class="map-root">
+    <div class="root-box">LA SALVACIÓN</div>
+  </div>
+  <div class="map-connector"></div>
+  <div class="map-branches">
+    <a class="map-item" href="#m1"><span class="mi-icon">🕊️</span><div class="mi-num">Módulo 1</div><div class="mi-title">Salvación</div><div class="mi-sub">El concepto raíz</div></a>
+    <a class="map-item" href="#m2"><span class="mi-icon">🩸</span><div class="mi-num">Módulo 2</div><div class="mi-title">Expiación</div><div class="mi-sub">El pago del pecado</div></a>
+    <a class="map-item" href="#m3"><span class="mi-icon">⚖️</span><div class="mi-num">Módulo 3</div><div class="mi-title">Propiciación</div><div class="mi-sub">La ira aplacada</div></a>
+    <a class="map-item" href="#m4"><span class="mi-icon">📜</span><div class="mi-num">Módulo 4</div><div class="mi-title">Justificación</div><div class="mi-sub">Declarado justo</div></a>
+    <a class="map-item" href="#m5"><span class="mi-icon">🔓</span><div class="mi-num">Módulo 5</div><div class="mi-title">Redención</div><div class="mi-sub">Comprado y libre</div></a>
+  </div>
+</section>
+
+<!-- INTRO -->
+<section class="modulo" id="m0">
+  <div class="mod-header">
+    <span class="mod-icon">⚠️</span>
+    <div class="mod-meta">
+      <div class="mod-num">Introducción</div>
+      <div class="mod-title">El problema que lo requiere todo</div>
+      <div class="mod-sub">¿Por qué necesita el ser humano ser salvo?</div>
+    </div>
+  </div>
+  <div class="ch-divider"></div>
+  <p>Antes de entender la salvación hay que entender el problema que la hace necesaria. No existe cura sin diagnóstico. Y el diagnóstico bíblico del ser humano es radical y sin eufemismos: <strong>el pecado separó al hombre de Dios</strong>.</p>
+  <div class="quote">
+    <p>"Por tanto, como el pecado entró en el mundo por un hombre, y por el pecado la muerte, así la muerte pasó a todos los hombres, por cuanto todos pecaron."</p>
+    <cite>Romanos 5:12</cite>
+  </div>
+  <p>Adán fue creado en comunión perfecta con Dios. El pecado rompió esa comunión y produjo tres tipos de muerte: <em>espiritual</em> (separación de Dios), <em>física</em> (corrupción del cuerpo), y <em>eterna</em> (separación definitiva de Dios). Toda la raza humana nació bajo esa sentencia.</p>
+  <div class="compare">
+    <div class="compare-box a">
+      <h4>El hombre sin salvación</h4>
+      <ul><li>Espiritualmente muerto</li><li>Separado de Dios</li><li>Bajo condenación</li><li>Esclavo del pecado</li><li>Sin esperanza propia</li></ul>
+    </div>
+    <div class="compare-box b">
+      <h4>Lo que Dios proveyó</h4>
+      <ul><li>Vida espiritual</li><li>Reconciliación</li><li>Justificación</li><li>Libertad</li><li>Esperanza eterna</li></ul>
+    </div>
+  </div>
+  <p>Ningún sistema religioso, ningún esfuerzo humano, ninguna filosofía podía resolver este problema. Requería una solución que viniera <strong>desde afuera del ser humano</strong>. Requería a Dios mismo entrando en la historia.</p>
+  <div class="frase"><p>"El hombre no puede salvarse a sí mismo por la misma razón que no puede levantarse tirando de sus propios cordones de zapato."</p></div>
+</section>
+
+<!-- MÓDULO 1 — SALVACIÓN -->
+<section class="modulo" id="m1">
+  <div class="mod-header">
+    <span class="mod-icon">🕊️</span>
+    <div class="mod-meta">
+      <div class="mod-num">Módulo 1</div>
+      <div class="mod-title">La Salvación</div>
+      <div class="mod-sub">El concepto raíz que lo contiene todo</div>
+    </div>
+  </div>
+  <div class="ch-divider"></div>
+
+  <div class="etimo">
+    <div class="e-palabra">Salvación</div>
+    <div class="e-origen">Griego: σωτηρία (sōtēría) | Hebreo: יְשׁוּעָה (yeshûʿāh)</div>
+    <p>Significa: liberación, preservación, seguridad, salud. La misma raíz de <strong>Jesús</strong> — Yeshúa en hebreo — que literalmente significa "Jehová salva". El nombre de Jesús es la doctrina de la salvación comprimida en una sola palabra.</p>
+  </div>
+
+  <p>La salvación es el <strong>acto soberano de Dios por el cual rescata al ser humano del pecado, de la muerte y del juicio eterno</strong>, restaurando la comunión que fue rota en el Edén. No es un proceso que el hombre inicia — es una obra que Dios completó en Cristo y que el hombre recibe por fe y obediencia.</p>
+
+  <div class="quote">
+    <p>"Y en ningún otro hay salvación; porque no hay otro nombre bajo el cielo, dado a los hombres, en que podamos ser salvos."</p>
+    <cite>Hechos 4:12 — Pedro ante el Sanedrín</cite>
+  </div>
+
+  <div class="section-label">Las dimensiones de la salvación</div>
+  <div class="tip-box">
+    <h4>Tres tiempos de la salvación</h4>
+    <ol>
+      <li><strong>Fuimos salvados</strong> (pasado) — en la cruz, el precio fue pagado. "Por gracia sois salvos" — Efesios 2:8</li>
+      <li><strong>Estamos siendo salvados</strong> (presente) — el proceso de santificación. "Ocupaos en vuestra salvación" — Filipenses 2:12</li>
+      <li><strong>Seremos salvados</strong> (futuro) — la glorificación final. "Nuestra salvación está más cerca de lo que creímos" — Romanos 13:11</li>
+    </ol>
+  </div>
+
+  <div class="section-label">¿Cómo se recibe la salvación?</div>
+  <p>La salvación no se logra — se recibe. Pero recibirla implica una respuesta activa al llamado de Dios. El patrón apostólico registrado en Hechos 2:38 es el modelo normativo:</p>
+  <ul class="list-yes">
+    <li><strong>Arrepentimiento</strong> — cambio de mente y corazón, giro hacia Dios</li>
+    <li><strong>Bautismo en el nombre de Jesucristo</strong> — para perdón de pecados</li>
+    <li><strong>Don del Espíritu Santo</strong> — la promesa del Padre cumplida</li>
+  </ul>
+
+  <div class="frase"><p>"Jesús no vino a hacer posible la salvación — vino a consumarla. La cruz no fue un intento. Fue 'Consumado es'."</p></div>
+</section>
+
+<!-- MÓDULO 2 — EXPIACIÓN -->
+<section class="modulo" id="m2">
+  <div class="mod-header">
+    <span class="mod-icon">🩸</span>
+    <div class="mod-meta">
+      <div class="mod-num">Módulo 2</div>
+      <div class="mod-title">Expiación</div>
+      <div class="mod-sub">El pago que cubrió el pecado</div>
+    </div>
+  </div>
+  <div class="ch-divider"></div>
+
+  <div class="etimo">
+    <div class="e-palabra">Expiación</div>
+    <div class="e-origen">Hebreo: כָּפַר (kāpar) | Griego: ἱλασμός (hilasmós)</div>
+    <p>Kāpar significa: cubrir, limpiar, borrar. En el Antiguo Testamento era el término del Día de la Expiación (Yom Kippur) cuando el sumo sacerdote ofrecía sacrificio por los pecados del pueblo. El Nuevo Testamento usa hilasmós — el acto de cubrir o quitar la culpa mediante un sacrificio.</p>
+  </div>
+
+  <p>La expiación responde a la pregunta: <em>¿cómo puede un Dios santo perdonar al pecador sin violar su propia justicia?</em> La respuesta es el sacrificio sustitutorio — alguien inocente pagando por el culpable. En el Antiguo Testamento, animales. En el Nuevo Testamento, <strong>el Cordero de Dios que quita el pecado del mundo</strong>.</p>
+
+  <div class="quote">
+    <p>"Mas él herido fue por nuestras rebeliones, molido por nuestros pecados; el castigo de nuestra paz fue sobre él, y por su llaga fuimos nosotros curados."</p>
+    <cite>Isaías 53:5 — Profecía de la expiación 700 años antes</cite>
+  </div>
+
+  <div class="section-label">El sistema sacrificial como sombra</div>
+  <p>El Antiguo Testamento está lleno de sacrificios de animales no porque la sangre de toros y machos cabríos tuviera poder real (Hebreos 10:4), sino porque <strong>prefiguraban el sacrificio definitivo de Cristo</strong>. Cada cordero inmolado en el templo era una flecha que apuntaba a la cruz.</p>
+
+  <div class="compare">
+    <div class="compare-box a">
+      <h4>Expiación en el AT</h4>
+      <ul><li>Sacrificios animales repetidos</li><li>Cubrían el pecado temporalmente</li><li>El sumo sacerdote entraba al lugar santísimo</li><li>Solo para Israel</li><li>Sombra de lo que vendría</li></ul>
+    </div>
+    <div class="compare-box b">
+      <h4>Expiación en Cristo</h4>
+      <ul><li>Sacrificio único y definitivo</li><li>Quita el pecado para siempre</li><li>Abrió el camino al Padre para todos</li><li>Para toda la humanidad</li><li>La realidad que proyectaba la sombra</li></ul>
+    </div>
+  </div>
+
+  <div class="quote">
+    <p>"Pero ahora, en la consumación de los siglos, se presentó una vez para siempre por el sacrificio de sí mismo para quitar de en medio el pecado."</p>
+    <cite>Hebreos 9:26</cite>
+  </div>
+
+  <p>La expiación de Cristo no fue parcial ni provisional. Fue <em>completa, suficiente y eterna</em>. "Consumado es" (Juan 19:30) — en griego <em>tetelestai</em> — era el término que se escribía en los documentos de deuda cuando quedaban totalmente pagados. La deuda del pecado fue cancelada en la cruz.</p>
+
+  <div class="frase"><p>"El precio de tu pecado no fue bajado — fue pagado. Completamente. Por Jesucristo."</p></div>
+</section>
+
+<!-- MÓDULO 3 — PROPICIACIÓN -->
+<section class="modulo" id="m3">
+  <div class="mod-header">
+    <span class="mod-icon">⚖️</span>
+    <div class="mod-meta">
+      <div class="mod-num">Módulo 3</div>
+      <div class="mod-title">Propiciación</div>
+      <div class="mod-sub">La ira de Dios satisfecha en Cristo</div>
+    </div>
+  </div>
+  <div class="ch-divider"></div>
+
+  <div class="etimo">
+    <div class="e-palabra">Propiciación</div>
+    <div class="e-origen">Griego: ἱλαστήριον (hilastḗrion)</div>
+    <p>Significa: el acto de aplacar o satisfacer la ira justa de un ser ofendido mediante un sacrificio. Es uno de los términos más teológicamente ricos del Nuevo Testamento. La misma palabra se usa en la Septuaginta para el <strong>propiciatorio</strong> — la tapa del Arca del Pacto donde se rociaba la sangre en el Día de la Expiación.</p>
+  </div>
+
+  <p>La propiciación complementa a la expiación. Si la expiación habla del <em>lado humano</em> — el pecado del hombre cubierto — la propiciación habla del <em>lado divino</em> — la justa ira de Dios satisfecha. Ambas son necesarias para entender completamente lo que ocurrió en la cruz.</p>
+
+  <div class="section-label">¿Tiene Dios ira?</div>
+  <p>Sí. La ira de Dios no es irracionalidad ni venganza caprichosa. Es la <strong>reacción santa y justa del carácter de Dios ante el pecado</strong>. Un Dios que no se indigna ante la injusticia, ante el mal, ante la destrucción del ser humano, no sería completamente bueno.</p>
+  <div class="quote">
+    <p>"La ira de Dios se revela desde el cielo contra toda impiedad e injusticia de los hombres que detienen con injusticia la verdad."</p>
+    <cite>Romanos 1:18</cite>
+  </div>
+  <p>La ira de Dios sobre el pecado era real, justa y necesaria de ser satisfecha. No podía simplemente ignorarse. La propiciación es la respuesta: <strong>Cristo absorbió esa ira en la cruz en lugar del pecador</strong>.</p>
+
+  <div class="section-label">Propiciación en el Nuevo Testamento</div>
+  <div class="gold-box">
+    <h4>Los tres textos clave</h4>
+    <p><strong>Romanos 3:25:</strong> "A quien Dios puso como propiciación por medio de la fe en su sangre." Cristo es el hilastḗrion — el lugar donde la ira es aplacada por la sangre.</p>
+    <p><strong>1 Juan 2:2:</strong> "Y él es la propiciación por nuestros pecados; y no solamente por los nuestros, sino también por los de todo el mundo." La propiciación es universal en alcance.</p>
+    <p><strong>1 Juan 4:10:</strong> "En esto consiste el amor: no en que nosotros hayamos amado a Dios, sino en que él nos amó a nosotros, y envió a su Hijo en propiciación por nuestros pecados." La propiciación es la definición del amor de Dios.</p>
+  </div>
+
+  <div class="tip-box">
+    <h4>La diferencia entre expiación y propiciación</h4>
+    <p><strong>Expiación:</strong> lo que se hace con el pecado — es cubierto, borrado, quitado</p>
+    <p><strong>Propiciación:</strong> lo que se hace con la ira de Dios — es satisfecha, aplacada, absorbida</p>
+    <p>En la cruz ambas ocurrieron simultáneamente: el pecado fue expiado Y la ira fue propiciada. Cristo fue el sacrificio que lo resolvió todo.</p>
+  </div>
+
+  <div class="frase"><p>"En la cruz, Dios no pasó por alto el pecado — lo juzgó. Pero lo juzgó en su propio Hijo, para que nosotros no lo padeciéramos."</p></div>
+</section>
+
+<!-- MÓDULO 4 — JUSTIFICACIÓN -->
+<section class="modulo" id="m4">
+  <div class="mod-header">
+    <span class="mod-icon">📜</span>
+    <div class="mod-meta">
+      <div class="mod-num">Módulo 4</div>
+      <div class="mod-title">Justificación</div>
+      <div class="mod-sub">Declarado justo delante de Dios</div>
+    </div>
+  </div>
+  <div class="ch-divider"></div>
+
+  <div class="etimo">
+    <div class="e-palabra">Justificación</div>
+    <div class="e-origen">Griego: δικαίωσις (dikaíōsis) | del verbo δικαιόω (dikaióō)</div>
+    <p>Término legal forense que significa: <strong>declarar justo, pronunciar inocente</strong>. No es hacer justo a alguien — es declararlo justo. Como un veredicto judicial, no un proceso moral. El juez no mejora al acusado — pronuncia el veredicto.</p>
+  </div>
+
+  <p>La justificación es el <strong>acto judicial de Dios por el cual declara al creyente justo</strong>, no sobre la base de sus propias obras o méritos, sino sobre la base de la justicia de Cristo imputada a su cuenta. Es el veredicto eterno del tribunal divino: <em>no culpable</em>.</p>
+
+  <div class="quote">
+    <p>"Al que no conoció pecado, por nosotros lo hizo pecado, para que nosotros fuésemos hechos justicia de Dios en él."</p>
+    <cite>2 Corintios 5:21 — El gran intercambio</cite>
+  </div>
+
+  <div class="section-label">El gran intercambio</div>
+  <p>Este versículo describe la transacción más extraordinaria de la historia:</p>
+  <div class="compare">
+    <div class="compare-box a">
+      <h4>Lo que Cristo tomó de nosotros</h4>
+      <ul><li>Nuestro pecado</li><li>Nuestra culpa</li><li>Nuestra condenación</li><li>La maldición de la ley</li><li>La ira que merecíamos</li></ul>
+    </div>
+    <div class="compare-box b">
+      <h4>Lo que Cristo nos dio</h4>
+      <ul><li>Su justicia perfecta</li><li>Su inocencia</li><li>Su relación con el Padre</li><li>La bendición del pacto</li><li>La aprobación divina</li></ul>
+    </div>
+  </div>
+
+  <div class="section-label">Justificación por fe — ¿y las obras?</div>
+  <p>Pablo enseña que la justificación es <em>por fe</em> (Romanos 3:28). Santiago enseña que la fe sin obras es muerta (Santiago 2:26). ¿Contradicción? No — son dos ángulos del mismo cristal:</p>
+  <div class="tip-box">
+    <h4>Pablo y Santiago — mismo punto, ángulo diferente</h4>
+    <p><strong>Pablo habla de la justificación ante Dios:</strong> nadie es declarado justo por méritos propios — solo por fe en Cristo.</p>
+    <p><strong>Santiago habla de la autenticidad de la fe:</strong> la fe que salva siempre produce obediencia visible. Una fe que no cambia nada no es fe salvadora.</p>
+    <p><strong>Conclusión:</strong> somos justificados por fe — y esa fe genuina siempre se demuestra en obras de obediencia.</p>
+  </div>
+
+  <div class="quote">
+    <p>"Justificados, pues, por la fe, tenemos paz para con Dios por medio de nuestro Señor Jesucristo."</p>
+    <cite>Romanos 5:1 — La paz es el resultado de la justificación</cite>
+  </div>
+
+  <div class="frase"><p>"La justificación no te hace perfecto — te declara justo. La diferencia entre los dos es toda la gracia del evangelio."</p></div>
+</section>
+
+<!-- MÓDULO 5 — REDENCIÓN -->
+<section class="modulo" id="m5">
+  <div class="mod-header">
+    <span class="mod-icon">🔓</span>
+    <div class="mod-meta">
+      <div class="mod-num">Módulo 5</div>
+      <div class="mod-title">Redención</div>
+      <div class="mod-sub">Comprado para ser libre</div>
+    </div>
+  </div>
+  <div class="ch-divider"></div>
+
+  <div class="etimo">
+    <div class="e-palabra">Redención</div>
+    <div class="e-origen">Griego: ἀπολύτρωσις (apolýtrōsis) | del verbo λυτρόω (lytrōō)</div>
+    <p>Lýtron significa: <strong>rescate, precio de liberación</strong>. En el mundo greco-romano, se usaba para describir la compra de la libertad de un esclavo. El redentor pagaba el lýtron al amo y el esclavo quedaba libre. La redención bíblica usa exactamente esta imagen: Cristo pagó el precio de rescate para liberarnos de la esclavitud del pecado.</p>
+  </div>
+
+  <p>La redención es la <strong>doctrina que une todas las demás</strong>. Si la expiación habla del pago, la propiciación de la ira satisfecha y la justificación del veredicto pronunciado — la redención es el <em>resultado final</em>: el ser humano liberado, rescatado, comprado por la sangre de Cristo.</p>
+
+  <div class="quote">
+    <p>"En quien tenemos redención por su sangre, el perdón de pecados según las riquezas de su gracia."</p>
+    <cite>Efesios 1:7</cite>
+  </div>
+
+  <div class="section-label">De dónde fuimos redimidos</div>
+  <ul class="list-yes">
+    <li><strong>De la esclavitud del pecado</strong> — "el que practica el pecado es esclavo del pecado" (Juan 8:34)</li>
+    <li><strong>De la maldición de la ley</strong> — "Cristo nos redimió de la maldición de la ley" (Gálatas 3:13)</li>
+    <li><strong>Del poder de la muerte</strong> — "para librar a todos los que por el temor de la muerte estaban... sujetos" (Hebreos 2:15)</li>
+    <li><strong>De la vana manera de vivir</strong> — "fuisteis rescatados de vuestra vana manera de vivir" (1 Pedro 1:18)</li>
+  </ul>
+
+  <div class="section-label">El precio de la redención</div>
+  <div class="gold-box">
+    <h4>¿Cuánto costó tu libertad?</h4>
+    <p><strong>"No con cosas corruptibles, como oro o plata, sino con la sangre preciosa de Cristo, como de un cordero sin mancha y sin contaminación."</strong> — 1 Pedro 1:18-19</p>
+    <p>El precio más alto que podía pagarse. No riquezas materiales. No esfuerzo humano. La sangre del Hijo de Dios. Eso fue lo que costó tu libertad.</p>
+  </div>
+
+  <div class="section-label">Redimidos para un propósito</div>
+  <p>La redención no es solo liberación <em>de</em> algo — es liberación <em>para</em> algo. Dios no nos rescató para que viviéramos sin propósito. Nos compró para que le pertenecemos y viviésemos para su gloria.</p>
+  <div class="quote">
+    <p>"Porque habéis sido comprados por precio; glorificad, pues, a Dios en vuestro cuerpo y en vuestro espíritu, los cuales son de Dios."</p>
+    <cite>1 Corintios 6:20</cite>
+  </div>
+  <div class="frase"><p>"No eres libre para hacer lo que quieras — eres libre de lo que te esclavizaba. Y ahora perteneces a Aquel que pagó el precio."</p></div>
+</section>
+
+<!-- MÓDULO 6 — TODO EN CRISTO -->
+<section class="modulo" id="m6">
+  <div class="mod-header">
+    <span class="mod-icon">👑</span>
+    <div class="mod-meta">
+      <div class="mod-num">Módulo 6</div>
+      <div class="mod-title">Todo en Cristo</div>
+      <div class="mod-sub">Un solo nombre, una sola salvación</div>
+    </div>
+  </div>
+  <div class="ch-divider"></div>
+
+  <p>Hemos recorrido cuatro palabras teológicas que describen diferentes dimensiones del mismo evento: la obra de <strong>Jesucristo en la cruz</strong>. No son cuatro salvaciones distintas — son cuatro lentes para ver la misma realidad en toda su riqueza.</p>
+
+  <div class="flujo">
+    <div class="flujo-item"><div class="fi-label">El problema</div><div class="fi-word">Pecado</div></div>
+    <span class="flujo-arrow">→</span>
+    <div class="flujo-item"><div class="fi-label">Módulo 2</div><div class="fi-word">Expiación</div></div>
+    <span class="flujo-arrow">→</span>
+    <div class="flujo-item"><div class="fi-label">Módulo 3</div><div class="fi-word">Propiciación</div></div>
+    <span class="flujo-arrow">→</span>
+    <div class="flujo-item"><div class="fi-label">Módulo 4</div><div class="fi-word">Justificación</div></div>
+    <span class="flujo-arrow">→</span>
+    <div class="flujo-item"><div class="fi-label">Resultado</div><div class="fi-word">Redención</div></div>
+  </div>
+
+  <div class="section-label">Un solo nombre lo contiene todo</div>
+  <p>La fe apostólica-unitaria entiende que todo lo que Dios hizo por la salvación del ser humano lo hizo en y a través de <strong>Jesucristo</strong>. No hay tres personas distintas distribuyendo roles en la salvación — hay un solo Dios que en Cristo se encarnó, murió, resucitó y salva.</p>
+  <div class="quote">
+    <p>"Porque en él habita corporalmente toda la plenitud de la Deidad."</p>
+    <cite>Colosenses 2:9 — No una parte de Dios — toda la plenitud</cite>
+  </div>
+  <p>La expiación fue obra de Cristo. La propiciación fue satisfecha por Cristo. La justificación se obtiene en Cristo. La redención fue comprada con la sangre de Cristo. <strong>Jesús no fue un instrumento de la salvación — Él ES la salvación.</strong></p>
+
+  <div class="section-label">La salvación completa en Hechos 2:38</div>
+  <p>Todo el pénsum que hemos estudiado converge en la instrucción apostólica más clara del Nuevo Testamento. Cuando Pedro dijo "arrepentíos y bautícese cada uno de vosotros en el nombre de Jesucristo para perdón de los pecados", estaba describiendo el momento en que el creyente recibe personalmente todo lo que Cristo ganó en la cruz:</p>
+
+  <div class="gold-box">
+    <h4>La salvación recibida</h4>
+    <p><strong>Arrepentimiento</strong> → el pecador reconoce su condición y se vuelve a Dios</p>
+    <p><strong>Bautismo en el nombre de Jesús</strong> → la expiación y propiciación se aplican personalmente; el pecado es perdonado</p>
+    <p><strong>Don del Espíritu Santo</strong> → la justificación es sellada; el creyente recibe la naturaleza divina</p>
+    <p><strong>Todo junto</strong> → la redención completa — libre del pecado, del juicio y de la muerte</p>
+  </div>
+
+  <div class="quote">
+    <p>"Mas por él estáis vosotros en Cristo Jesús, el cual nos ha sido hecho por Dios sabiduría, justificación, santificación y redención."</p>
+    <cite>1 Corintios 1:30 — Cristo ES todo lo que necesitamos</cite>
+  </div>
+  <div class="frase"><p>"No necesitas cuatro salvadores para las cuatro doctrinas. Necesitas a Jesucristo — en él están todas."</p></div>
+</section>
+
+</main>
+
+<section class="epilogo">
+  <span class="big">SALVO</span>
+  <h2>Una obra completa</h2>
+  <p>La salvación no es un proceso incompleto esperando tu cooperación. Es una obra terminada por Jesucristo que tú recibes por arrepentimiento, bautismo en su nombre y don del Espíritu Santo.</p>
+  <p>Expiación, propiciación, justificación y redención no son metas que alcanzar — son realidades que recibir. Cristo ya lo hizo todo.</p>
+  <div class="quote" style="max-width:480px;margin:32px auto;">
+    <p>"Consumado es."</p>
+    <cite>Juan 19:30 — Las últimas palabras de Jesús en la cruz. En griego: tetelestai. "Pagado en su totalidad."</cite>
+  </div>
+  <div class="firma">La Salvación · Pénsum Doctrinal · Predicador IPUC</div>
+</section>
+
+<script>
+const obs=new IntersectionObserver(e=>{
+  e.forEach(el=>{
+    if(el.isIntersecting){
+      el.target.classList.add('visible');
+      if(el.target.classList.contains('pensum-map')){
+        el.target.querySelectorAll('.map-item').forEach((item,i)=>{
+          setTimeout(()=>{item.style.opacity='1';item.style.transform='none';},i*120);
+        });
+      }
+    }
+  });
+},{threshold:.1});
+document.querySelectorAll('.modulo,.pensum-map').forEach(e=>obs.observe(e));
+function toggleNav(){document.getElementById('sidenav').classList.toggle('show');}
+document.querySelectorAll('nav a').forEach(a=>{a.addEventListener('click',()=>{document.getElementById('sidenav').classList.remove('show');document.querySelectorAll('nav a').forEach(x=>x.classList.remove('active'));a.classList.add('active');});});
+document.addEventListener('click',e=>{const nav=document.getElementById('sidenav');if(nav.classList.contains('show')&&!nav.contains(e.target)&&!e.target.closest('.nav-toggle')){nav.classList.remove('show');}});
+</script>
+</body>
+</html>

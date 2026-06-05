@@ -1,0 +1,824 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jesús de Nazaret — El Libro de su Vida</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Raleway:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--azul:#009FDA;--marino:#003B6F;--oro:#F0AB00;--oro-claro:#FFD166;--fondo:#040e1c;--texto:#e8e0d0;--texto-suave:#a89f90;--linea:rgba(240,171,0,.2);--rojo:#c0392b;--rojo-suave:rgba(192,57,43,.15);}
+*{margin:0;padding:0;box-sizing:border-box;}html{scroll-behavior:smooth;}
+body{background:var(--fondo);color:var(--texto);font-family:'Crimson Pro',Georgia,serif;font-size:18px;line-height:1.9;overflow-x:hidden;}
+::-webkit-scrollbar{width:4px;}::-webkit-scrollbar-track{background:var(--fondo);}::-webkit-scrollbar-thumb{background:var(--azul);border-radius:2px;}
+.nav-toggle{position:fixed;top:16px;left:16px;z-index:300;background:var(--marino);border:1px solid var(--linea);color:var(--oro);width:44px;height:44px;border-radius:8px;cursor:pointer;font-size:20px;display:flex;align-items:center;justify-content:center;transition:all .2s;box-shadow:0 2px 12px rgba(0,0,0,.4);}
+.nav-toggle:hover{background:var(--azul);color:#fff;}
+nav{position:fixed;left:0;top:0;bottom:0;width:265px;background:linear-gradient(180deg,var(--marino) 0%,#011529 100%);border-right:1px solid var(--linea);z-index:200;overflow-y:auto;transform:translateX(0);transition:transform .35s ease;padding:32px 0;}
+nav.hidden{transform:translateX(-100%);}
+nav .nav-brand{font-family:'Cinzel',serif;font-size:12px;font-weight:700;color:var(--oro);padding:0 20px 20px;border-bottom:1px solid var(--linea);margin-bottom:8px;letter-spacing:1px;line-height:1.5;}
+nav .nav-section{font-family:'Cinzel',serif;font-size:9px;letter-spacing:3px;color:var(--azul);padding:12px 20px 4px;text-transform:uppercase;opacity:.8;}
+nav a{display:flex;align-items:center;gap:10px;padding:7px 20px;font-family:'Raleway',sans-serif;font-size:11px;font-weight:500;letter-spacing:.5px;color:var(--texto-suave);text-decoration:none;border-left:2px solid transparent;transition:all .2s;}
+nav a:hover,nav a.active{color:var(--oro);border-left-color:var(--oro);background:rgba(240,171,0,.06);}
+nav a .nav-num{font-family:'Cinzel',serif;font-size:10px;color:var(--azul);min-width:20px;}
+.page-wrap{margin-left:265px;transition:margin .35s ease;}
+.page-wrap.full{margin-left:0;}
+
+/* PORTADA */
+.cover{min-height:100vh;background:linear-gradient(160deg,#041830 0%,var(--fondo) 60%);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:80px 32px 60px;position:relative;overflow:hidden;}
+.cover::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 70% 60% at 50% 20%,rgba(240,171,0,.12) 0%,transparent 70%),radial-gradient(ellipse 40% 40% at 80% 85%,rgba(0,159,218,.08) 0%,transparent 60%);pointer-events:none;}
+.cover-icon{font-size:72px;margin-bottom:24px;animation:fadeDown .8s ease both;}
+.cover-tag{font-family:'Cinzel',serif;font-size:10px;letter-spacing:5px;color:var(--azul);text-transform:uppercase;margin-bottom:16px;animation:fadeDown .9s ease .1s both;}
+.cover-title{font-family:'Cinzel',serif;font-size:clamp(44px,10vw,100px);font-weight:900;line-height:.95;margin-bottom:12px;animation:fadeDown 1s ease .2s both;}
+.cover-title .t1{color:var(--texto);}
+.cover-title .t2{color:var(--oro);}
+.cover-title .t3{color:var(--azul);font-size:.55em;letter-spacing:6px;display:block;margin-top:8px;}
+.cover-sub{font-family:'Crimson Pro',serif;font-style:italic;font-size:clamp(14px,2vw,20px);color:var(--texto-suave);margin-bottom:32px;animation:fadeDown 1s ease .25s both;max-width:440px;}
+.cover-line{width:60px;height:1px;background:linear-gradient(to right,transparent,var(--oro),transparent);margin:0 auto 24px;}
+.cover-author{font-family:'Raleway',sans-serif;font-size:13px;letter-spacing:4px;color:var(--texto-suave);text-transform:uppercase;}
+.cover-verse{position:absolute;bottom:40px;font-family:'Crimson Pro',serif;font-style:italic;font-size:14px;color:var(--texto-suave);max-width:460px;text-align:center;line-height:1.6;}
+
+main{max-width:740px;margin:0 auto;padding:0 24px;}
+
+/* CAPÍTULOS */
+.chapter{padding:72px 0 56px;border-bottom:1px solid rgba(240,171,0,.1);opacity:0;transform:translateY(30px);transition:opacity .7s ease,transform .7s ease;}
+.chapter.visible{opacity:1;transform:none;}
+
+.ch-header{margin-bottom:28px;}
+.ch-num{font-family:'Cinzel',serif;font-size:10px;letter-spacing:4px;color:var(--azul);text-transform:uppercase;margin-bottom:8px;}
+.ch-title{font-family:'Cinzel',serif;font-size:clamp(22px,4vw,36px);font-weight:700;color:var(--oro);line-height:1.2;margin-bottom:6px;}
+.ch-sub{font-family:'Cinzel',serif;font-size:clamp(13px,2vw,18px);color:var(--azul);letter-spacing:1px;}
+.ch-divider{width:40px;height:2px;background:linear-gradient(to right,var(--oro),var(--azul));margin:20px 0 28px;border-radius:2px;}
+
+p{margin-bottom:20px;}
+strong{color:var(--oro);font-weight:600;}
+em{color:var(--azul);font-style:italic;}
+
+/* CITA BÍBLICA */
+.quote{border-left:3px solid var(--oro);padding:16px 24px;margin:28px 0;background:rgba(240,171,0,.05);border-radius:0 8px 8px 0;}
+.quote p{font-family:'Crimson Pro',serif;font-style:italic;font-size:1.05em;color:var(--oro-claro);margin-bottom:6px;}
+.quote cite{font-family:'Raleway',sans-serif;font-size:12px;letter-spacing:2px;color:var(--texto-suave);}
+
+/* VOZ DE JESÚS — especial */
+.jesus-voz{background:linear-gradient(135deg,rgba(0,59,111,.5) 0%,rgba(4,14,28,.9) 100%);border:1px solid rgba(0,159,218,.3);border-radius:12px;padding:24px 28px;margin:28px 0;position:relative;}
+.jesus-voz::before{content:'✝';position:absolute;top:-14px;left:20px;font-size:18px;color:var(--oro);background:var(--fondo);padding:0 8px;}
+.jesus-voz .jv-label{font-family:'Cinzel',serif;font-size:9px;letter-spacing:4px;color:var(--azul);text-transform:uppercase;margin-bottom:12px;}
+.jesus-voz p{font-family:'Crimson Pro',serif;font-style:italic;font-size:1.05em;color:var(--texto);margin-bottom:8px;}
+.jesus-voz cite{font-family:'Raleway',sans-serif;font-size:11px;letter-spacing:2px;color:var(--texto-suave);}
+
+/* PROFECÍA CUMPLIDA */
+.profecia{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:28px 0;}
+.pro-box{padding:18px 20px;border-radius:8px;border:1px solid;}
+.pro-box.at{border-color:rgba(240,171,0,.3);background:rgba(240,171,0,.04);}
+.pro-box.nt{border-color:rgba(0,159,218,.3);background:rgba(0,159,218,.04);}
+.pro-box h4{font-family:'Cinzel',serif;font-size:9px;letter-spacing:3px;text-transform:uppercase;margin-bottom:10px;}
+.pro-box.at h4{color:var(--oro);}
+.pro-box.nt h4{color:var(--azul);}
+.pro-box p{font-family:'Crimson Pro',serif;font-size:15px;color:var(--texto-suave);line-height:1.5;margin:0;}
+.pro-box cite{font-family:'Raleway',sans-serif;font-size:11px;letter-spacing:1px;color:rgba(240,171,0,.5);display:block;margin-top:8px;}
+
+/* ISAÍAS 53 — especial */
+.is53{background:var(--rojo-suave);border:1px solid rgba(192,57,43,.4);border-radius:12px;padding:24px;margin:28px 0;}
+.is53 .is-label{font-family:'Cinzel',serif;font-size:10px;letter-spacing:4px;color:#e74c3c;text-transform:uppercase;margin-bottom:14px;}
+.is53 .is-verso{font-family:'Crimson Pro',serif;font-style:italic;font-size:1em;color:var(--texto);margin-bottom:6px;}
+.is53 .is-cumplimiento{font-family:'Raleway',sans-serif;font-size:12px;color:var(--texto-suave);border-left:2px solid rgba(192,57,43,.4);padding-left:12px;margin-top:6px;margin-bottom:16px;}
+
+.section-label{font-family:'Cinzel',serif;font-size:11px;letter-spacing:3px;color:var(--azul);text-transform:uppercase;margin:36px 0 12px;}
+
+.frase{text-align:center;padding:40px 24px;margin:32px 0;position:relative;}
+.frase::before{content:'"';font-family:'Cinzel',serif;font-size:100px;color:rgba(240,171,0,.07);position:absolute;top:-10px;left:16px;line-height:1;}
+.frase p{font-family:'Cinzel',serif;font-size:clamp(15px,2.2vw,20px);color:var(--texto);line-height:1.5;position:relative;z-index:1;margin:0;}
+
+.tip-box{background:linear-gradient(135deg,rgba(0,59,111,.4) 0%,rgba(4,14,28,.8) 100%);border:1px solid rgba(0,159,218,.25);border-radius:12px;padding:24px;margin:28px 0;}
+.tip-box h4{font-family:'Cinzel',serif;font-size:11px;letter-spacing:4px;color:var(--azul);text-transform:uppercase;margin-bottom:14px;}
+.tip-box p,.tip-box li{color:var(--texto-suave);font-size:.95em;margin-bottom:8px;}
+.tip-box ol,.tip-box ul{padding-left:20px;}
+.tip-box li{margin-bottom:8px;}
+
+.gold-box{background:rgba(240,171,0,.06);border:1px solid rgba(240,171,0,.2);border-radius:12px;padding:24px;margin:28px 0;}
+.gold-box h4{font-family:'Cinzel',serif;font-size:11px;letter-spacing:4px;color:var(--oro);text-transform:uppercase;margin-bottom:14px;}
+.gold-box p{color:var(--texto-suave);font-size:.95em;margin-bottom:10px;}
+.gold-box strong{color:var(--oro);}
+
+.etimo{background:rgba(240,171,0,.04);border:1px solid rgba(240,171,0,.15);border-radius:8px;padding:18px 22px;margin:20px 0;}
+.etimo .e-palabra{font-family:'Cinzel',serif;font-size:20px;color:var(--oro);margin-bottom:4px;}
+.etimo .e-origen{font-family:'Raleway',sans-serif;font-size:12px;color:var(--azul);letter-spacing:2px;margin-bottom:8px;}
+.etimo p{color:var(--texto-suave);font-size:.95em;margin:0;}
+
+.pasos{counter-reset:paso;list-style:none;padding:0;margin:24px 0;}
+.pasos li{counter-increment:paso;display:flex;gap:16px;margin-bottom:22px;align-items:flex-start;}
+.pasos li::before{content:counter(paso);font-family:'Cinzel',serif;font-size:20px;font-weight:700;color:var(--oro);min-width:32px;line-height:1.3;}
+.pasos li .paso-content h5{font-family:'Cinzel',serif;font-size:14px;color:var(--azul);margin-bottom:5px;letter-spacing:1px;}
+.pasos li .paso-content p{color:var(--texto-suave);font-size:.95em;margin:0;}
+
+/* TIPOS Y SOMBRAS */
+.tipo{background:rgba(0,59,111,.15);border-left:3px solid var(--azul);border-radius:0 8px 8px 0;padding:16px 20px;margin:12px 0;}
+.tipo .ti-at{font-family:'Cinzel',serif;font-size:13px;color:var(--oro);margin-bottom:4px;}
+.tipo .ti-nt{font-family:'Cinzel',serif;font-size:13px;color:var(--azul);margin-bottom:8px;}
+.tipo p{color:var(--texto-suave);font-size:.93em;margin:0;}
+
+.epilogo{text-align:center;padding:80px 32px 120px;}
+.epilogo .big{font-family:'Cinzel',serif;font-size:clamp(32px,7vw,68px);font-weight:900;color:transparent;-webkit-text-stroke:1px rgba(240,171,0,.35);letter-spacing:6px;display:block;margin-bottom:40px;}
+.epilogo h2{font-family:'Cinzel',serif;font-size:clamp(18px,3vw,28px);color:var(--oro);margin-bottom:24px;}
+.epilogo p{max-width:540px;margin:0 auto 16px;color:var(--texto-suave);}
+.epilogo .firma{margin-top:48px;font-family:'Cinzel',serif;font-size:13px;letter-spacing:4px;color:var(--azul);}
+
+@keyframes fadeDown{from{opacity:0;transform:translateY(-20px);}to{opacity:1;transform:none;}}
+@media(max-width:768px){nav{transform:translateX(-100%);}nav.show{transform:translateX(0);}.page-wrap{margin-left:0!important;}}
+@media(max-width:600px){.profecia{grid-template-columns:1fr;}nav{width:220px;}.pasos li{flex-direction:column;gap:8px;}}
+</style>
+</head>
+<body>
+<button class="nav-toggle" id="navToggle" onclick="toggleNav()">☰</button>
+<nav id="sidenav">
+  <div class="nav-brand">✝️ Jesús de Nazaret<br>El Libro de su Vida</div>
+  <div class="nav-section">La Historia</div>
+  <a href="#portada"><span class="nav-num">·</span>Portada</a>
+  <div class="nav-section">Capítulos</div>
+  <a href="#c1"><span class="nav-num">I</span>El anuncio — antes que naciera</a>
+  <a href="#c2"><span class="nav-num">II</span>El nacimiento que cambió la historia</a>
+  <a href="#c3"><span class="nav-num">III</span>Los años silenciosos de Nazaret</a>
+  <a href="#c4"><span class="nav-num">IV</span>El bautismo — la voz del cielo</a>
+  <a href="#c5"><span class="nav-num">V</span>Las tentaciones — el segundo Adán</a>
+  <a href="#c6"><span class="nav-num">VI</span>Sus enseñanzas — nadie habló así</a>
+  <a href="#c7"><span class="nav-num">VII</span>Sus milagros — señales del reino</a>
+  <a href="#c8"><span class="nav-num">VIII</span>Sus tipos y sombras del AT</a>
+  <a href="#c9"><span class="nav-num">IX</span>Su causa — por qué vino</a>
+  <a href="#c10"><span class="nav-num">X</span>Getsemaní — el sudor de sangre</a>
+  <a href="#c11"><span class="nav-num">XI</span>Isaías 53 — escrito 700 años antes</a>
+  <a href="#c12"><span class="nav-num">XII</span>La cruz — el momento más oscuro</a>
+  <a href="#c13"><span class="nav-num">XIII</span>La resurrección — todo cambia</a>
+  <a href="#c14"><span class="nav-num">XIV</span>Los Hechos — el Jesús que continúa</a>
+</nav>
+
+<div class="page-wrap" id="pageWrap">
+
+<section class="cover" id="portada">
+  <div class="cover-icon">✝️</div>
+  <div class="cover-tag">Ebook · Serie Personajes · La Historia más grande</div>
+  <h1 class="cover-title">
+    <div class="t1">Jesús</div>
+    <div class="t2">de Nazaret</div>
+    <div class="t3">El libro de su vida</div>
+  </h1>
+  <div class="cover-sub">"Siéntate delante de Él — escucha su vida, su causa, su destino, su amor."</div>
+  <div class="cover-line"></div>
+  <div class="cover-author">Predicador IPUC</div>
+  <div class="cover-verse">"En el principio era el Verbo, y el Verbo era con Dios, y el Verbo era Dios... Y aquel Verbo fue hecho carne, y habitó entre nosotros." — Juan 1:1,14</div>
+</section>
+
+<main>
+
+<!-- ════════════════════ CAP I ════════════════════ -->
+<section class="chapter" id="c1">
+  <div class="ch-header">
+    <div class="ch-num">Capítulo I</div>
+    <h2 class="ch-title">El anuncio — antes que naciera</h2>
+    <div class="ch-sub">Las profecías que esperaron siglos para cumplirse</div>
+  </div>
+  <div class="ch-divider"></div>
+
+  <p>La historia de Jesús no comenzó en Belén. Comenzó en el Edén, cuando Dios le dijo a la serpiente las primeras palabras del evangelio: <em>"pondré enemistad entre ti y la mujer, y entre tu simiente y la simiente suya; ésta te herirá en la cabeza, y tú le herirás en el calcañar"</em> (Génesis 3:15). Desde ese momento, cada página del Antiguo Testamento es un anuncio que apunta hacia un solo punto en la historia.</p>
+
+  <div class="section-label">Las profecías que nadie podía fabricar</div>
+
+  <div class="profecia">
+    <div class="pro-box at">
+      <h4>Profecía — AT</h4>
+      <p>"La virgen concebirá y dará a luz un hijo, y llamará su nombre Emmanuel."</p>
+      <cite>Isaías 7:14 — ~700 aC</cite>
+    </div>
+    <div class="pro-box nt">
+      <h4>Cumplimiento — NT</h4>
+      <p>"Todo esto aconteció para que se cumpliese lo dicho por el Señor por medio del profeta."</p>
+      <cite>Mateo 1:22-23</cite>
+    </div>
+  </div>
+
+  <div class="profecia">
+    <div class="pro-box at">
+      <h4>Profecía — AT</h4>
+      <p>"Pero tú, Belén Efrata... de ti me saldrá el que será Señor en Israel; y sus salidas son desde el principio, desde los días de la eternidad."</p>
+      <cite>Miqueas 5:2 — ~700 aC</cite>
+    </div>
+    <div class="pro-box nt">
+      <h4>Cumplimiento — NT</h4>
+      <p>"Jesús nació en Belén de Judea en días del rey Herodes."</p>
+      <cite>Mateo 2:1</cite>
+    </div>
+  </div>
+
+  <div class="profecia">
+    <div class="pro-box at">
+      <h4>Profecía — AT</h4>
+      <p>"De Egipto llamé a mi hijo."</p>
+      <cite>Oseas 11:1 — ~750 aC</cite>
+    </div>
+    <div class="pro-box nt">
+      <h4>Cumplimiento — NT</h4>
+      <p>"Y estuvo allá hasta la muerte de Herodes; para que se cumpliese lo que dijo el Señor por medio del profeta."</p>
+      <cite>Mateo 2:15</cite>
+    </div>
+  </div>
+
+  <div class="section-label">El ángel Gabriel y la joven de Nazaret</div>
+  <p>Gabriel vino a María — no a un palacio, no a una sacerdotisa, no a una filósofa. A una joven desconocida en un pueblo sin fama de una región despreciada. Y le dijo algo que ningún ser humano había escuchado antes: <em>"El Espíritu Santo vendrá sobre ti, y el poder del Altísimo te cubrirá con su sombra; por lo cual también el Santo Ser que nacerá, será llamado Hijo de Dios"</em> (Lucas 1:35).</p>
+
+  <p>La respuesta de María es una de las declaraciones más teológicamente profundas de todo el NT: <em>"He aquí la sierva del Señor; hágase conmigo conforme a tu palabra."</em> No pidió explicación científica. No negoció condiciones. Entregó su cuerpo, su reputación y su futuro al plan que no entendía completamente — pero en el que confió totalmente.</p>
+
+  <div class="section-label">El anuncio a José — el sueño que salva el plan</div>
+  <p>José descubrió que su prometida estaba embarazada. Era hombre justo — no quería exponerla públicamente. Planeó disolverlo en secreto. Y el ángel del Señor le apareció en sueños: <em>"José, hijo de David, no temas recibir a María tu mujer, porque lo que en ella es engendrado, del Espíritu Santo es. Y dará a luz un hijo, y llamarás su nombre JESÚS, porque él salvará a su pueblo de sus pecados"</em> (Mateo 1:20-21). El nombre que le pusieron no era decorativo. Era una declaración de misión: <strong>Yeshûa — Jehová salva.</strong></p>
+
+  <div class="frase"><p>"Dios preparó el anuncio durante siglos. Cuando el momento llegó, lo confió a una joven anónima y a un carpintero creyente. Así de radical es la gracia."</p></div>
+</section>
+
+<!-- ════════════════════ CAP II ════════════════════ -->
+<section class="chapter" id="c2">
+  <div class="ch-header">
+    <div class="ch-num">Capítulo II</div>
+    <h2 class="ch-title">El nacimiento que cambió la historia</h2>
+    <div class="ch-sub">Belén — Dios en un pesebre</div>
+  </div>
+  <div class="ch-divider"></div>
+
+  <p>No hubo posada. No hubo bienvenida oficial. No hubo sacerdotes esperando ni fanfarria real. El Dios que había creado el universo con una palabra entró al mundo en silencio, en el frío de una noche de Belén, envuelto en pañales y acostado en el comedero de los animales. La encarnación es el escándalo más grande de la historia religiosa: <strong>el Infinito haciéndose finito. El Eterno haciéndose temporal. El Todopoderoso haciéndose vulnerable.</strong></p>
+
+  <div class="section-label">Los que vinieron primero — los pastores</div>
+  <p>El ángel no fue al Templo de Jerusalén. No fue al palacio de Herodes. No fue a la escuela rabínica. Fue a un campo donde unos pastores cuidaban rebaños de noche. Los pastores en la cultura judía eran considerados de los empleos más humildes, frecuentemente desacreditados como testigos en los tribunales. Y fueron ellos los primeros en escuchar: <em>"Os ha nacido hoy, en la ciudad de David, un Salvador, que es Cristo el Señor"</em> (Lucas 2:11).</p>
+
+  <div class="section-label">Los tipos del AT que se cumplen en el nacimiento</div>
+  <div class="tipo">
+    <div class="ti-at">AT — El Cordero Pascual (Éxodo 12)</div>
+    <div class="ti-nt">NT — Jesús nace en Belén, región donde se criaban los corderos para el Templo</div>
+    <p>Los corderos para el sacrificio pascual eran criados exactamente en los campos de Belén. Los pastores que cuidaban esos rebaños sagrados fueron los primeros en escuchar del nacimiento del Cordero definitivo.</p>
+  </div>
+
+  <div class="tipo">
+    <div class="ti-at">AT — El arca en el desierto (Éxodo 40:34)</div>
+    <div class="ti-nt">NT — "el Verbo habitó entre nosotros" — Juan 1:14</div>
+    <p>La misma palabra griega usada para "habitó" (<em>eskḗnōsen</em>) significa literalmente "plantó su tienda." Dios que llenó el tabernáculo con su gloria ahora "planta su tienda" en forma humana — Dios mismo como tabernáculo viviente.</p>
+  </div>
+
+  <div class="section-label">El niño que hacía temblar a los reyes</div>
+  <p>Herodes el Grande, el rey más poderoso de Judea, se turbó cuando los magos preguntaron por el que había nacido Rey de los judíos. Un bebé en un pesebre perturbó al trono. Ese detalle no es menor — es profético. El nacimiento de Jesús fue, desde el primer día, una amenaza al poder del mundo. Y así lo reconoció el mundo.</p>
+
+  <div class="frase"><p>"El Dios que podría haber llegado en truenos y relámpagos eligió llegar en pañales. La humildad del pesebre no fue un accidente — fue la primera lección de su vida."</p></div>
+</section>
+
+<!-- ════════════════════ CAP III ════════════════════ -->
+<section class="chapter" id="c3">
+  <div class="ch-header">
+    <div class="ch-num">Capítulo III</div>
+    <h2 class="ch-title">Los años silenciosos de Nazaret</h2>
+    <div class="ch-sub">El Hijo de Dios aprendiendo a caminar, a leer, a trabajar</div>
+  </div>
+  <div class="ch-divider"></div>
+
+  <p>Entre el nacimiento de Jesús y su bautismo — aproximadamente treinta años — los evangelios guardan casi total silencio. Solo Lucas registra un episodio de esos años: el templo a los doce años. Todo lo demás es silencio. Y ese silencio es teológicamente elocuente.</p>
+
+  <div class="quote">
+    <p>"Y Jesús crecía en sabiduría y en estatura, y en gracia para con Dios y los hombres."</p>
+    <cite>Lucas 2:52 — El único resumen de treinta años de vida</cite>
+  </div>
+
+  <p>Jesús creció. Aprendió a caminar — cayó y se levantó como todo niño. Aprendió a hablar el arameo de las calles de Nazaret. Aprendió el oficio de carpintero de manos de José. Memorizó las Escrituras en la sinagoga del pueblo. Experimentó el hambre, el cansancio, la amistad, el duelo — el texto dice que su padre José murió antes de que comenzara el ministerio público, lo que significa que Jesús conoció el dolor de perder a un padre.</p>
+
+  <div class="section-label">A los doce años — en la casa de su Padre</div>
+  <div class="jesus-voz">
+    <div class="jv-label">Sus primeras palabras registradas</div>
+    <p>"¿Por qué me buscabais? ¿No sabíais que en los negocios de mi Padre me es necesario estar?"</p>
+    <cite>Lucas 2:49 — El niño de doce años, a sus padres en el Templo</cite>
+  </div>
+
+  <p>María y José lo encontraron en el Templo, sentado en medio de los doctores de la ley, escuchándolos y haciéndoles preguntas. "Y todos los que le oían, se maravillaban de su inteligencia y de sus respuestas." (v.47). El niño que había memorizado las mismas Escrituras que ellos enseñaban las entendía con una profundidad que no podían explicar. Porque Él era el sujeto de esas Escrituras.</p>
+
+  <div class="section-label">La kenosis — lo que eligió no usar</div>
+  <p>Durante estos treinta años, Jesús vivió la kenosis en su expresión más completa. El Dios omnisciente aprendía en la escuela de Nazaret. El Dios omnipotente se cansaba en el taller de carpintería. El Dios eterno experimentaba el tiempo — el transcurrir lento de los días ordinarios. No era actuación. Era la realidad de la encarnación: Dios eligió experimentar la humanidad desde adentro, sin atajos.</p>
+
+  <div class="frase"><p>"Jesús pasó treinta años aprendiendo antes de tres años enseñando. La paciencia de los años ordinarios fue parte de su misión — no una demora de ella."</p></div>
+</section>
+
+<!-- ════════════════════ CAP IV ════════════════════ -->
+<section class="chapter" id="c4">
+  <div class="ch-header">
+    <div class="ch-num">Capítulo IV</div>
+    <h2 class="ch-title">El bautismo — la voz del cielo</h2>
+    <div class="ch-sub">El Jordán — el día que todo comenzó</div>
+  </div>
+  <div class="ch-divider"></div>
+
+  <p>Durante treinta años nadie supo quién era. En Nazaret era el hijo del carpintero. En la sinagoga era el muchacho que memorizaba las Escrituras con una profundidad desconcertante. En el taller era el que trabajaba la madera en silencio, con sus manos callosas y su mirada larga. Treinta años de anonimato. Treinta años esperando el momento que el Padre había señalado desde antes de la fundación del mundo.</p>
+
+  <p>Y un día ese momento llegó.</p>
+
+  <div class="section-label">Juan en el desierto</div>
+  <p>Antes de que Jesús saliera de Nazaret, algo extraordinario estaba ocurriendo en el desierto de Judea. Un hombre vestido de pelo de camello, con un cinturón de cuero y que comía langostas y miel silvestre, había comenzado a predicar junto al Jordán con una urgencia que nadie recordaba haber escuchado antes. Se llamaba Juan. Y su mensaje sacudía al pueblo desde Jerusalén hasta los últimos rincones de Galilea:</p>
+
+  <div class="quote">
+    <p>"Arrepentíos, porque el reino de los cielos se ha acercado."</p>
+    <cite>Mateo 3:2</cite>
+  </div>
+
+  <p>Salían a él Jerusalén, toda Judea y toda la región de junto al Jordán. Se confesaban sus pecados y eran bautizados en el río. Los fariseos y los saduceos también vinieron — y Juan los recibió no con adulación sino con una pregunta que les ardió: <em>"¿Quién os enseñó a huir de la ira venidera?"</em> No les importaba el título ni el linaje. Lo que importaba era la sinceridad del corazón.</p>
+
+  <p>Y en medio de toda esa multitud que llegaba con culpa, con hambre espiritual, con el peso de años sin escuchar la voz de Dios — Juan seguía anunciando que alguien más grande que él estaba por llegar. <em>"Yo os bautizo en agua para arrepentimiento; pero el que viene tras mí... él os bautizará en Espíritu Santo y fuego"</em> (Mateo 3:11). Cada persona que bautizaba, Juan sabía que no era el final — era la preparación.</p>
+
+  <div class="section-label">El día que Jesús llegó al río</div>
+  <p>Entonces Jesús llegó desde Galilea al Jordán. Sin anuncio. Sin escolta. Sin el fanfarrón de un hombre que sabe que el mundo lo está esperando. Llegó como cualquier otro en la fila — caminando, con las sandalias polvorientas del camino, con el sol de Judea en la cara.</p>
+
+  <p>Juan lo vio venir y algo ocurrió en su interior que no había sentido con ninguno de los que había bautizado. Lo conocía — eran primos — pero lo que sintió no era reconocimiento familiar. Era otra cosa. Más profunda. El mismo Juan que meses antes había dicho en el desierto <em>"no soy digno de desatar la correa de su sandalia"</em> ahora lo tenía frente a frente, y todo lo que había predicado convergía en ese instante.</p>
+
+  <p>Se opuso: <em>"Yo necesito ser bautizado por ti, ¿y tú vienes a mí?"</em> (Mateo 3:14).</p>
+
+  <p>Y Jesús respondió con esa calma que definiría cada momento de su ministerio: <em>"Deja ahora, porque así nos conviene cumplir toda justicia."</em></p>
+
+  <p>Juan cedió. Y Jesús entró al agua.</p>
+
+  <div class="section-label">Cuando salió del agua</div>
+  <div class="quote">
+    <p>"Y Jesús, después que fue bautizado, subió luego del agua; y he aquí los cielos le fueron abiertos, y vio al Espíritu de Dios que descendía como paloma, y venía sobre él. Y hubo una voz de los cielos, que decía: Este es mi Hijo amado, en quien tengo complacencia."</p>
+    <cite>Mateo 3:16-17</cite>
+  </div>
+
+  <p>El cielo se abrió. Una paloma descendió. Una voz habló. Y los que estaban en esa orilla del Jordán ese día quedaron con algo en el corazón que no podían nombrar del todo — pero que ninguno olvidaría jamás. El anonimato de treinta años terminó en ese momento.</p>
+
+  <p>El hombre que había salido de Nazaret como carpintero salió del Jordán como el Ungido. Su misión había comenzado. Y el mundo nunca volvería a ser el mismo.</p>
+
+  <div class="section-label">El tipo del AT que se cumple</div>
+  <div class="tipo">
+    <div class="ti-at">AT — La paloma después del diluvio (Génesis 8:11)</div>
+    <div class="ti-nt">NT — La paloma sobre Jesús en el Jordán</div>
+    <p>Noé envió la paloma después del juicio del agua. Cuando regresó con la rama de olivo fue señal de que el juicio había terminado y comenzaba una nueva creación. La paloma sobre Jesús en el agua declara lo mismo: algo completamente nuevo acaba de comenzar.</p>
+  </div>
+
+  <div class="frase"><p>"Treinta años de silencio. Un río. Una voz. Y el mundo que no lo sabía aún estaba a punto de conocerlo."</p></div>
+</section>
+
+<section class="chapter" id="c5">
+  <div class="ch-header">
+    <div class="ch-num">Capítulo V</div>
+    <h2 class="ch-title">Las tentaciones — el segundo Adán</h2>
+    <div class="ch-sub">El desierto — lo que Adán perdió, Jesús recuperó</div>
+  </div>
+  <div class="ch-divider"></div>
+
+  <p>Inmediatamente después del bautismo, el Espíritu llevó a Jesús al desierto. No fue una desviación del plan — fue el plan. Cuarenta días sin comer. Y al final, cuando el cuerpo estaba en su punto más vulnerable, llegó el tentador.</p>
+
+  <div class="section-label">El segundo Adán donde el primero falló</div>
+  <p>Adán fue tentado en un jardín, con abundancia, sin hambre, con todo a su favor — y cayó. Jesús fue tentado en un desierto, después de cuarenta días de ayuno, en completa debilidad física — y venció. La comparación que Pablo hace en Romanos 5 no es accidental: <em>"Porque así como por la desobediencia de un hombre los muchos fueron constituidos pecadores, así también por la obediencia de uno, los muchos serán constituidos justos"</em> (v.19).</p>
+
+  <div class="section-label">Las tres tentaciones y su respuesta</div>
+  <ul class="pasos">
+    <li>
+      <div class="paso-content">
+        <h5>El apetito — "Di que estas piedras sean pan"</h5>
+        <p>Satanás atacó la necesidad física más básica después de cuarenta días. Jesús respondió: <em>"No solo de pan vivirá el hombre, sino de toda palabra que sale de la boca de Dios."</em> Cada respuesta fue una cita de Deuteronomio — el libro de la obediencia de Israel en el desierto. Jesús hizo en cuarenta días lo que Israel no pudo hacer en cuarenta años.</p>
+      </div>
+    </li>
+    <li>
+      <div class="paso-content">
+        <h5>El espectáculo — "Échate abajo, que los ángeles te sostendrán"</h5>
+        <p>La tentación de demostrar su identidad con un milagro espectacular. Jesús respondió: <em>"No tentarás al Señor tu Dios."</em> La fe que exige prueba no es fe — es negociación. Jesús eligió demostrar quién era con obediencia, no con espectáculo.</p>
+      </div>
+    </li>
+    <li>
+      <div class="paso-content">
+        <h5>El poder — "Todo esto te daré si postrado me adorares"</h5>
+        <p>Los reinos del mundo a cambio de una sola genuflexión. El atajo que evitaría la cruz. Jesús respondió: <em>"Al Señor tu Dios adorarás, y a él solo servirás."</em> Eligió la cruz antes que el trono fácil. El reino que valía la pena no podía conseguirse por el camino que el diablo ofrecía.</p>
+      </div>
+    </li>
+  </ul>
+
+  <div class="frase"><p>"Jesús fue tentado en todo según nuestra semejanza, pero sin pecado. Eso lo hace el sumo sacerdote perfecto — y la garantía de que podemos vencer lo que Él venció."</p></div>
+</section>
+
+<!-- ════════════════════ CAP VI ════════════════════ -->
+<section class="chapter" id="c6">
+  <div class="ch-header">
+    <div class="ch-num">Capítulo VI</div>
+    <h2 class="ch-title">Sus enseñanzas — nadie habló así</h2>
+    <div class="ch-sub">El maestro cuyas palabras cambian todo lo que tocan</div>
+  </div>
+  <div class="ch-divider"></div>
+
+  <p>Cuando Jesús terminó el Sermón del Monte, el texto dice: <em>"La gente se admiraba de su doctrina; porque les enseñaba como quien tiene autoridad, y no como los escribas"</em> (Mateo 7:28-29). La diferencia era total: los escribas citaban autoridades — <em>dice el rabino Hillel... dice el rabino Shammai...</em> Jesús hablaba en primera persona: <em>"Habéis oído que fue dicho... pero yo os digo."</em> Ningún profeta habló así. Solo alguien que tenía autoridad sobre la Ley podía reinterpretar la Ley.</p>
+
+  <div class="section-label">Los "Yo Soy" — siete declaraciones de identidad</div>
+  <div class="tip-box">
+    <h4>Los siete Yo Soy de Juan — Jesús reclamando ser Jehová</h4>
+    <ul>
+      <li><strong>"Yo soy el pan de vida"</strong> — Juan 6:35 — El que proveyó maná en el desierto fue Jehová. Jesús no provee el pan — Él es el pan.</li>
+      <li><strong>"Yo soy la luz del mundo"</strong> — Juan 8:12 — Jehová era la columna de fuego. Jesús es esa luz encarnada.</li>
+      <li><strong>"Yo soy la puerta"</strong> — Juan 10:9 — El único acceso al Padre. No un camino entre muchos — el único.</li>
+      <li><strong>"Yo soy el buen pastor"</strong> — Juan 10:11 — Ezequiel 34:11 prometió que Jehová mismo vendría como pastor. Jesús cumple esa promesa.</li>
+      <li><strong>"Yo soy la resurrección y la vida"</strong> — Juan 11:25 — No "doy" vida — soy la vida. Solo Dios tiene vida en sí mismo.</li>
+      <li><strong>"Yo soy el camino, la verdad y la vida"</strong> — Juan 14:6 — Triple declaración de exclusividad divina.</li>
+      <li><strong>"Yo soy la vid verdadera"</strong> — Juan 15:1 — Israel fue la vid de Jehová (Salmo 80:8). Jesús es la vid real.</li>
+    </ul>
+  </div>
+
+  <div class="section-label">El Sermón del Monte — la ética del reino</div>
+  <p>El Sermón del Monte no es una lista de reglas para ganar el cielo — es la descripción de cómo vive alguien que ha sido transformado por el reino de Dios. Las Bienaventuranzas no son méritos que se acumulan — son descripciones del carácter del ciudadano del reino. Jesús no dijo "haz estas cosas para ser bienaventurado" — dijo "estos son bienaventurados porque ya son así."</p>
+
+  <div class="section-label">Las parábolas — el reino explicado en historias</div>
+  <p>Jesús enseñó en parábolas porque las historias llegan donde los argumentos no pueden. Una historia se mete en el corazón antes de que la mente pueda defenderlo. El hijo pródigo, el buen samaritano, el sembrador, la oveja perdida — cada una un ventana al corazón de Dios que ningún argumento filosófico podría abrir.</p>
+
+  <div class="jesus-voz">
+    <div class="jv-label">La enseñanza que más desconcertó al mundo</div>
+    <p>"Oísteis que fue dicho: Amarás a tu prójimo, y aborrecerás a tu enemigo. Pero yo os digo: Amad a vuestros enemigos, bendecid a los que os maldicen, haced bien a los que os aborrecen, y orad por los que os ultrajan y os persiguen."</p>
+    <cite>Mateo 5:43-44</cite>
+  </div>
+
+  <div class="frase"><p>"Los guardas enviados a arrestar a Jesús regresaron con las manos vacías. Cuando les preguntaron por qué, respondieron: 'Jamás hombre alguno ha hablado como este hombre.' — Juan 7:46"</p></div>
+</section>
+
+<!-- ════════════════════ CAP VII ════════════════════ -->
+<section class="chapter" id="c7">
+  <div class="ch-header">
+    <div class="ch-num">Capítulo VII</div>
+    <h2 class="ch-title">Sus milagros — señales del reino</h2>
+    <div class="ch-sub">No para impresionar — para revelar quién era Dios</div>
+  </div>
+  <div class="ch-divider"></div>
+
+  <p>Jesús no hizo milagros para ganar popularidad ni para demostrar poder. Los hizo como <em>señales</em> — en griego <em>sēmeia</em> — indicadores que apuntaban más allá de sí mismos hacia una realidad mayor: el reino de Dios había llegado. Cada milagro era un anticipo del mundo como Dios lo había diseñado — sin enfermedad, sin muerte, sin escasez, sin tormenta.</p>
+
+  <div class="section-label">Las categorías del poder de Jesús</div>
+  <ul class="pasos">
+    <li>
+      <div class="paso-content">
+        <h5>Poder sobre la enfermedad — la misericordia visible</h5>
+        <p>Sanó leprosos — los marginados que nadie tocaba, y Jesús los tocó. Dio vista a ciegos. Limpió la sordera. Restauró paralíticos. Cada sanidad era una declaración: el reino de Dios restaura lo que el pecado destruyó. Y siempre, en cada historia, hay un detalle que el texto conserva: antes de sanar, <strong>se compadeció.</strong></p>
+      </div>
+    </li>
+    <li>
+      <div class="paso-content">
+        <h5>Poder sobre la naturaleza — la soberanía visible</h5>
+        <p>Calmó la tormenta con una palabra. Caminó sobre el agua. Multiplicó cinco panes y dos peces para más de cinco mil personas. El Creador tenía acceso directo a su creación — no como manipulador externo sino como origen interno de todo lo que existe.</p>
+      </div>
+    </li>
+    <li>
+      <div class="paso-content">
+        <h5>Poder sobre la muerte — el anticipo de la resurrección</h5>
+        <p>Resucitó a la hija de Jairo (acababa de morir), al hijo de la viuda de Naín (lo llevaban a enterrar), y a Lázaro (cuatro días en la tumba). Cada uno un grado más difícil. Cada uno demostrando que el dominio de la muerte tiene límites ante la voz de Jesús.</p>
+      </div>
+    </li>
+    <li>
+      <div class="paso-content">
+        <h5>Poder para perdonar pecados — lo más escandaloso</h5>
+        <p>Cuando bajaron al paralítico por el techo, Jesús dijo: "Tus pecados te son perdonados." Los escribas pensaron: "¿Quién puede perdonar pecados sino solo Dios?" (Marcos 2:7). Tenían razón — solo Dios puede perdonar pecados. Y ese era exactamente el punto.</p>
+      </div>
+    </li>
+  </ul>
+
+  <div class="frase"><p>"Los milagros de Jesús no fueron demostraciones de fuerza — fueron demostraciones de amor. Cada uno revela el mismo corazón: Dios que se mueve ante el sufrimiento humano."</p></div>
+</section>
+
+<!-- ════════════════════ CAP VIII ════════════════════ -->
+<section class="chapter" id="c8">
+  <div class="ch-header">
+    <div class="ch-num">Capítulo VIII</div>
+    <h2 class="ch-title">Los tipos y sombras del Antiguo Testamento</h2>
+    <div class="ch-sub">Todo el AT apuntaba hacia Él — Hebreos 10:1</div>
+  </div>
+  <div class="ch-divider"></div>
+
+  <div class="quote">
+    <p>"Porque la ley, teniendo la sombra de los bienes venideros, no la imagen misma de las cosas, nunca puede, por los mismos sacrificios que se ofrecen continuamente cada año, hacer perfectos a los que se acercan."</p>
+    <cite>Hebreos 10:1 — La ley era sombra; Cristo es la sustancia</cite>
+  </div>
+
+  <p>El sistema sacrificial del Antiguo Testamento no era un error que Jesús vino a corregir — era un sistema pedagógico que Dios diseñó para preparar a Israel para entender lo que Jesús haría. Cada sacrificio era una lección sobre el costo del pecado, la necesidad de un sustituto y la provisión de Dios.</p>
+
+  <div class="section-label">Los grandes tipos que se cumplen en Cristo</div>
+
+  <div class="tipo">
+    <div class="ti-at">AT — El Cordero Pascual (Éxodo 12)</div>
+    <div class="ti-nt">NT — "He aquí el Cordero de Dios, que quita el pecado del mundo" — Juan 1:29</div>
+    <p>El cordero pascual debía ser sin defecto, macho de un año. Su sangre en los postes producía liberación. Jesús murió en la Pascua, a la misma hora en que se sacrificaban los corderos en el Templo. Juan registra que no le quebraron ningún hueso — cumpliendo la instrucción del Éxodo: "ningún hueso quebraréis de él."</p>
+  </div>
+
+  <div class="tipo">
+    <div class="ti-at">AT — El sumo sacerdote en el Día de la Expiación (Levítico 16)</div>
+    <div class="ti-nt">NT — "Tenemos un gran sumo sacerdote que traspasó los cielos" — Hebreos 4:14</div>
+    <p>Una vez al año, el sumo sacerdote entraba al Lugar Santísimo con la sangre del sacrificio. Jesús entró de una vez para siempre al Lugar Santísimo celestial con su propia sangre. Lo que se repetía anualmente fue realizado de manera definitiva y perfecta.</p>
+  </div>
+
+  <div class="tipo">
+    <div class="ti-at">AT — La serpiente de bronce en el desierto (Números 21:8-9)</div>
+    <div class="ti-nt">NT — "Y como Moisés levantó la serpiente en el desierto, así es necesario que el Hijo del Hombre sea levantado" — Juan 3:14</div>
+    <p>Los israelitas mordidos por las serpientes eran sanados mirando la serpiente de bronce levantada. Jesús mismo usó este tipo para explicar su crucifixión: quien mire a Él levantado en la cruz será salvo.</p>
+  </div>
+
+  <div class="tipo">
+    <div class="ti-at">AT — Adán, el primer hombre (Génesis 2-3)</div>
+    <div class="ti-nt">NT — "El primer hombre Adán fue hecho alma viviente; el postrer Adán, espíritu vivificante" — 1 Corintios 15:45</div>
+    <p>Adán introdujo la muerte por desobediencia en un jardín. Cristo conquistó la muerte por obediencia en otro jardín (Getsemaní). Adán escondió su vergüenza detrás de hojas. Cristo cubrió nuestra vergüenza con su sangre.</p>
+  </div>
+
+  <div class="tipo">
+    <div class="ti-at">AT — Isaac en el monte Moriah (Génesis 22)</div>
+    <div class="ti-nt">NT — "Dios proveerá para sí el cordero" — Génesis 22:8, Hebreos 11:17-19</div>
+    <p>Abraham llevó a su hijo unigénito al monte de la ofrenda. Dios detuvo la mano de Abraham — porque ese sacrificio no era el final sino la sombra del sacrificio real. Dos mil años después, Dios no detuvo su propia mano sobre su propio Hijo en ese mismo monte.</p>
+  </div>
+
+  <div class="frase"><p>"Cada sacrificio en el Templo era un cheque girado a nombre de Cristo. Él fue la única cuenta que tenía fondos suficientes para cubrirlos todos."</p></div>
+</section>
+
+<!-- ════════════════════ CAP IX ════════════════════ -->
+<section class="chapter" id="c9">
+  <div class="ch-header">
+    <div class="ch-num">Capítulo IX</div>
+    <h2 class="ch-title">Su causa — por qué vino</h2>
+    <div class="ch-sub">El propósito que Él mismo declaró</div>
+  </div>
+  <div class="ch-divider"></div>
+
+  <p>Jesús nunca dejó duda sobre por qué había venido. En múltiples ocasiones, en palabras directas y sin ambigüedad, declaró su misión. No necesitamos especular — Él mismo lo dijo.</p>
+
+  <div class="section-label">Sus propias declaraciones de propósito</div>
+
+  <div class="jesus-voz">
+    <div class="jv-label">Lucas 4:18-19 — Al leer en la sinagoga de Nazaret</div>
+    <p>"El Espíritu del Señor está sobre mí, por cuanto me ha ungido para dar buenas nuevas a los pobres; me ha enviado a sanar a los quebrantados de corazón; a pregonar libertad a los cautivos, y vista a los ciegos; a poner en libertad a los oprimidos; a predicar el año agradable del Señor."</p>
+    <cite>Isaías 61:1-2 leído por Jesús — y cerró el libro diciendo: "Hoy se ha cumplido esta Escritura delante de vosotros."</cite>
+  </div>
+
+  <div class="jesus-voz">
+    <div class="jv-label">Marcos 10:45 — El principio del reino invertido</div>
+    <p>"Porque el Hijo del Hombre no vino para ser servido, sino para servir, y para dar su vida en rescate por muchos."</p>
+    <cite>Marcos 10:45</cite>
+  </div>
+
+  <div class="jesus-voz">
+    <div class="jv-label">Lucas 19:10 — La misión resumida en una línea</div>
+    <p>"Porque el Hijo del Hombre vino a buscar y a salvar lo que se había perdido."</p>
+    <cite>Lucas 19:10 — Después de la conversión de Zaqueo</cite>
+  </div>
+
+  <div class="section-label">La causa que dividió a Israel</div>
+  <p>Jesús vino para todos — pero el sistema religioso establecido lo rechazó. Los fariseos lo rechazaron porque amenazaba su autoridad. Los saduceos lo rechazaron porque cuestionaba su teología. Los zelotes lo rechazaron porque no lideró una revuelta política. Y sin embargo, los pecadores, los enfermos, los marginados, los gentiles — los que el sistema había descartado — lo recibieron con alabanza.</p>
+
+  <div class="section-label">Su amor — el motor de todo</div>
+  <div class="quote">
+    <p>"En esto consiste el amor: no en que nosotros hayamos amado a Dios, sino en que él nos amó a nosotros, y envió a su Hijo en propiciación por nuestros pecados."</p>
+    <cite>1 Juan 4:10</cite>
+  </div>
+  <p>La causa de Jesús no fue una ideología ni un movimiento político ni una reforma religiosa. Fue el amor. El mismo amor que movió al padre de la parábola a correr hacia el hijo pródigo — ese amor movió a Dios a hacerse hombre y caminar hacia la cruz.</p>
+
+  <div class="frase"><p>"Jesús no vino a explicar el amor de Dios. Vino a ser el amor de Dios — con carne, con voz, con manos que tocaban a los leprosos."</p></div>
+</section>
+
+<!-- ════════════════════ CAP X ════════════════════ -->
+<section class="chapter" id="c10">
+  <div class="ch-header">
+    <div class="ch-num">Capítulo X</div>
+    <h2 class="ch-title">Getsemaní — el sudor de sangre</h2>
+    <div class="ch-sub">La noche más oscura antes del amanecer más glorioso</div>
+  </div>
+  <div class="ch-divider"></div>
+
+  <p>Después de la Última Cena, Jesús cruzó el arroyo Cedrón con sus discípulos y entró al jardín de Getsemaní. El jardín donde las aceitunas se aplastaban para extraer el aceite. Y allí, el que nunca tembló ante los fariseos, el que calmó tempestades con una palabra, el que levantó a Lázaro de los muertos — cayó de rodillas y sudó gotas de sangre.</p>
+
+  <div class="quote">
+    <p>"Y estando en agonía, oraba más intensamente; y era su sudor como grandes gotas de sangre que caían hasta la tierra."</p>
+    <cite>Lucas 22:44 — La hematidrosis — el sudar sangre en agonía extrema</cite>
+  </div>
+
+  <div class="section-label">Lo que lo aterraba — no la muerte física</div>
+  <p>Jesús había dicho que los que pierden su vida por Él la ganarán. No temía a la muerte física. Lo que se aproximaba era algo incomparablemente más terrible: <strong>ser hecho pecado.</strong> El Hijo que había vivido en comunión perfecta con el Padre desde la eternidad estaba a horas de experimentar el abandono que el pecado produce. La separación de Dios que ningún ser humano podía soportar y que Él tendría que cargar por toda la humanidad.</p>
+
+  <div class="jesus-voz">
+    <div class="jv-label">La oración más angustiante de la historia</div>
+    <p>"Padre mío, si es posible, pase de mí esta copa; pero no sea como yo quiero, sino como tú."</p>
+    <cite>Mateo 26:39</cite>
+  </div>
+
+  <p>Tres veces oró la misma oración. Y tres veces recibió la misma respuesta implícita: no puede pasar. La copa no puede pasarse. No hay otro camino. La salvación de la humanidad requería exactamente esto. Y Jesús eligió la voluntad del Padre sobre la suya propia — con sangre en la frente, solo en el jardín, mientras sus discípulos dormían.</p>
+
+  <div class="section-label">La traición — con una señal de amor</div>
+  <p>Judas llegó con una multitud armada. Y lo identificó con un beso. El instrumento de traición fue el gesto del amor. Y Jesús le dijo: <em>"Amigo, ¿a qué vienes?"</em> (Mateo 26:50). Le llamó amigo. Hasta el final, hasta el beso traicionero en la mejilla, Jesús no retiró el amor que tenía por Judas.</p>
+
+  <div class="frase"><p>"En Getsemaní, Jesús eligió la voluntad del Padre sobre su propio deseo — solo, en agonía, sin apoyo humano. Eso es la obediencia más costosa de la historia."</p></div>
+</section>
+
+<!-- ════════════════════ CAP XI ════════════════════ -->
+<section class="chapter" id="c11">
+  <div class="ch-header">
+    <div class="ch-num">Capítulo XI</div>
+    <h2 class="ch-title">Isaías 53 — escrito 700 años antes</h2>
+    <div class="ch-sub">El capítulo más asombroso del Antiguo Testamento</div>
+  </div>
+  <div class="ch-divider"></div>
+
+  <p>Siéntate un momento. Lo que estás a punto de leer fue escrito por el profeta Isaías alrededor del año 700 antes de Cristo — setecientos años antes de que Jesús naciera en Belén. Y describe su vida, su muerte y su resurrección con una precisión que ninguna coincidencia puede explicar.</p>
+
+  <div class="is53">
+    <div class="is-label">Isaías 53 — Verso a verso y su cumplimiento</div>
+
+    <div class="is-verso">v.1 — "¿Quién ha creído a nuestro anuncio? ¿Y sobre quién se ha manifestado el brazo de Jehová?"</div>
+    <div class="is-cumplimiento">Juan 12:37-38 — "Pero a pesar de que había hecho tantas señales delante de ellos, no creían en él; para que se cumpliese la palabra del profeta Isaías."</div>
+
+    <div class="is-verso">v.2 — "No hay parecer en él, ni hermosura; le veremos, mas sin atractivo para que le deseemos."</div>
+    <div class="is-cumplimiento">Jesús nació en Belén, creció en Nazaret — "¿Puede haber algo bueno de Nazaret?" (Juan 1:46). No llegó en carroza real ni con ropas de rey. Era un carpintero de provincia.</div>
+
+    <div class="is-verso">v.3 — "Despreciado y desechado entre los hombres, varón de dolores, experimentado en quebranto."</div>
+    <div class="is-cumplimiento">Juan 1:11 — "A lo suyo vino, y los suyos no le recibieron." Los líderes religiosos de Israel — los que esperaban al Mesías — lo rechazaron, lo traicionaron y pidieron su crucifixión.</div>
+
+    <div class="is-verso">v.4 — "Ciertamente llevó él nuestras enfermedades, y sufrió nuestros dolores."</div>
+    <div class="is-cumplimiento">Mateo 8:17 — "Para que se cumpliese lo dicho por el profeta Isaías, cuando dijo: Él mismo tomó nuestras enfermedades, y llevó nuestras dolencias."</div>
+
+    <div class="is-verso">v.5 — "Mas él herido fue por nuestras rebeliones, molido por nuestros pecados; el castigo de nuestra paz fue sobre él, y por su llaga fuimos nosotros curados."</div>
+    <div class="is-cumplimiento">1 Pedro 2:24 — "quien llevó él mismo nuestros pecados en su cuerpo sobre el madero, para que nosotros, estando muertos a los pecados, vivamos a la justicia; y por cuya herida fuisteis sanados." La flagelación romana (las 39 azotes) cumple "por su llaga fuimos curados."</div>
+
+    <div class="is-verso">v.6 — "Todos nosotros nos descarriamos como ovejas, cada cual se apartó por su camino; mas Jehová cargó en él el pecado de todos nosotros."</div>
+    <div class="is-cumplimiento">Juan 1:29 — "He aquí el Cordero de Dios, que quita el pecado del mundo." El pecado de toda la humanidad — cargado sobre un solo Sustituto.</div>
+
+    <div class="is-verso">v.7 — "Angustiado él, y afligido, no abrió su boca; como cordero fue llevado al matadero... y como oveja delante de sus trasquiladores, enmudeció, y no abrió su boca."</div>
+    <div class="is-cumplimiento">Marcos 15:5 — "Pero Jesús ni aun con esto respondió; de modo que Pilato se maravilló." Ante Herodes, ante Pilato, ante los sumos sacerdotes — silencio. El Juez eterno no se defendió ante jueces temporales.</div>
+
+    <div class="is-verso">v.9 — "Y se dispuso con los impíos su sepultura, mas con los ricos fue en su muerte."</div>
+    <div class="is-cumplimiento">Mateo 27:57-60 — Crucificado entre dos ladrones (con los impíos), pero sepultado en el sepulcro nuevo de José de Arimatea, hombre rico (con los ricos en su muerte). Dos detalles independientes — ambos exactos.</div>
+
+    <div class="is-verso">v.10 — "Con todo eso, Jehová quiso quebrantarlo, sujetándole a padecimiento. Cuando haya puesto su vida en expiación por el pecado, verá linaje, vivirá por largos días."</div>
+    <div class="is-cumplimiento">"Verá linaje, vivirá por largos días" — profecía de resurrección. El que fue "quebrantado" vería días después de su muerte. Hechos 1:3 — "se presentó vivo con muchas pruebas indubitables, apareciéndoseles durante cuarenta días."</div>
+
+    <div class="is-verso">v.12 — "Por tanto, yo le daré parte con los grandes, y con los fuertes repartirá despojos; por cuanto derramó su vida hasta la muerte, y fue contado con los pecadores."</div>
+    <div class="is-cumplimiento">Lucas 23:33 — "cuando llegaron al lugar llamado de la Calavera, le crucificaron allí, y a los malhechores, uno a la derecha y otro a la izquierda." Contado literalmente con los transgresores — entre dos criminales.</div>
+  </div>
+
+  <div class="frase"><p>"¿Coincidencia? Norman Geisler calculó que la probabilidad de que solo ocho profecías del AT se cumplieran en una sola persona es 1 en 10 elevado a la 17. Isaías 53 tiene más de veinte. Eso no es coincidencia — es Dios."</p></div>
+</section>
+
+<!-- ════════════════════ CAP XII ════════════════════ -->
+<section class="chapter" id="c12">
+  <div class="ch-header">
+    <div class="ch-num">Capítulo XII</div>
+    <h2 class="ch-title">La cruz — el momento más oscuro</h2>
+    <div class="ch-sub">Gólgota — donde el amor llegó hasta el límite</div>
+  </div>
+  <div class="ch-divider"></div>
+
+  <p>Seis horas. Eso fue lo que tardó Dios en salvar al mundo. Desde la tercera hora de la mañana hasta la novena — desde las nueve hasta las tres de la tarde. En esas seis horas, el Hijo de Dios fue clavado en una cruz de madera en las afueras de Jerusalén y murió.</p>
+
+  <div class="section-label">La secuencia del horror</div>
+  <p><strong>La flagelación:</strong> antes de la crucifixión, los romanos azotaban al condenado con el flagrum — un látigo de correas con fragmentos de hueso y metal. Treinta y nueve azotes que desgarraban la carne hasta los huesos. Isaías 53:5 ya lo había escrito: "por su llaga fuimos nosotros curados."</p>
+
+  <p><strong>La corona de espinas:</strong> los soldados tejieron una corona de espinas y la presionaron en su cabeza. Le pusieron un manto de escarlata y se burlaron: "¡Salve, Rey de los judíos!" La coronación más oscura de la historia — el Rey de reyes coronado con el símbolo de la maldición (Génesis 3:18: "espinos te producirá la tierra").</p>
+
+  <p><strong>El camino al Gólgota:</strong> llevó la cruz hasta el lugar del cráneo. Tan agotado estaba por la flagelación que los soldados obligaron a Simón de Cirene a cargarla. El Hijo de Dios no pudo cargar su propia cruz — la humanidad tuvo que ayudarlo a llegar al lugar de su sacrificio.</p>
+
+  <div class="section-label">Las siete palabras desde la cruz</div>
+  <div class="tip-box">
+    <h4>Las últimas siete frases de Jesús — teología desde la agonía</h4>
+    <ul>
+      <li><strong>"Padre, perdónalos, porque no saben lo que hacen"</strong> — Lucas 23:34. La primera palabra es perdón. El que está siendo asesinado ora por sus asesinos.</li>
+      <li><strong>"De cierto te digo que hoy estarás conmigo en el paraíso"</strong> — Lucas 23:43. Al criminal arrepentido. La salvación operando desde la cruz misma.</li>
+      <li><strong>"Mujer, he ahí tu hijo... He ahí tu madre"</strong> — Juan 19:26-27. En su agonía, se ocupó de que su madre quedara con cuidado.</li>
+      <li><strong>"Dios mío, Dios mío, ¿por qué me has desamparado?"</strong> — Mateo 27:46. Las palabras del Salmo 22 — el abandono real de quien cargó el pecado del mundo.</li>
+      <li><strong>"Tengo sed"</strong> — Juan 19:28. La humanidad de Dios en su expresión más cruda.</li>
+      <li><strong>"Consumado es"</strong> — Juan 19:30. <em>Tetelestai</em> — pagado en su totalidad, completo, finalizado. El grito de victoria más grande de la historia.</li>
+      <li><strong>"Padre, en tus manos encomiendo mi espíritu"</strong> — Lucas 23:46. La última palabra es confianza.</li>
+    </ul>
+  </div>
+
+  <div class="section-label">"Consumado es" — Tetelestai</div>
+  <div class="etimo">
+    <div class="e-palabra">Τετέλεσται — Tetelestai</div>
+    <div class="e-origen">Griego · perfecto pasivo · "ha sido completado"</div>
+    <p>Esta palabra era estampada en los documentos de deuda del mundo romano cuando eran completamente pagados: "pagado en su totalidad." No "casi terminado." No "en proceso." <strong>Ha sido completado de manera definitiva e irreversible.</strong> Jesús no gritó una derrota — gritó una victoria. El sacrificio que los corderos pascuales habían prefigurado por siglos fue cumplido una vez, para siempre, en perfección absoluta.</p>
+  </div>
+
+  <div class="section-label">Lo que ocurrió en el universo cuando Él murió</div>
+  <p>En el momento de la muerte de Jesús, tres señales sobrenaturales sacudieron el mundo natural: <strong>el velo del Templo se rasgó de arriba abajo</strong> (el acceso directo a Dios ahora abierto para todos), <strong>la tierra tembló</strong> y <strong>las tinieblas cubrieron la tierra desde la hora sexta hasta la novena</strong>. El centurión romano que lo había crucificado dijo: <em>"Verdaderamente este hombre era Hijo de Dios"</em> (Marcos 15:39).</p>
+
+  <div class="is53">
+    <div class="is-label">Isaías 53:5 — El verso que lo explica todo</div>
+    <div class="is-verso">"Mas él herido fue por nuestras rebeliones, molido por nuestros pecados; el castigo de nuestra paz fue sobre él, y por su llaga fuimos nosotros curados."</div>
+    <div class="is-cumplimiento">Cada palabra: "herido" — los clavos, la lanza. "Por nuestras rebeliones" — no las suyas. "El castigo de nuestra paz" — Él recibió lo que nos daba a nosotros reconciliación. "Por su llaga" — singular, la herida definitiva. "Fuimos curados" — tiempo pasado perfecto. Está hecho.</div>
+  </div>
+
+  <div class="frase"><p>"No hay amor mayor que este. No hay sacrificio comparable. No hay historia igual. En el Gólgota, el Dios eterno eligió morir para que los mortales pudieran vivir eternamente."</p></div>
+</section>
+
+<!-- ════════════════════ CAP XIII ════════════════════ -->
+<section class="chapter" id="c13">
+  <div class="ch-header">
+    <div class="ch-num">Capítulo XIII</div>
+    <h2 class="ch-title">La resurrección — todo cambia</h2>
+    <div class="ch-sub">El tercer día — el evento que divide la historia en dos</div>
+  </div>
+  <div class="ch-divider"></div>
+
+  <p>Al tercer día, muy de madrugada, cuando aún estaba oscuro, las mujeres fueron al sepulcro. Llevaban especias aromáticas. Iban a terminar de embalsamar un cuerpo muerto. Y encontraron la piedra removida, el sepulcro vacío, las vendas dobladas en su lugar, y dos ángeles que les preguntaron: <em>"¿Por qué buscáis entre los muertos al que vive?"</em> (Lucas 24:5).</p>
+
+  <div class="section-label">La evidencia que los enemigos no podieron refutar</div>
+  <div class="tip-box">
+    <h4>Por qué la resurrección es la afirmación más verificada de la antigüedad</h4>
+    <ul>
+      <li><strong>El sepulcro vacío:</strong> nadie en Jerusalén negó que estaba vacío. Las autoridades judías y romanas dijeron que los discípulos habían robado el cuerpo — lo que implica que confirmaban que el cuerpo no estaba.</li>
+      <li><strong>Las apariciones:</strong> Pablo lista a más de 500 personas que vieron al resucitado, "de los cuales muchos viven aún" (1 Corintios 15:6) — una invitación directa a verificar los testimonios.</li>
+      <li><strong>La transformación de los discípulos:</strong> hombres que huyeron aterrorizados en Getsemaní predicaron la resurrección días después en el mismo Templo, ante las mismas autoridades, dispuestos a morir por esa afirmación. Los mentirosos no mueren por sus mentiras.</li>
+      <li><strong>El testimonio de las mujeres:</strong> en la cultura del primer siglo, el testimonio de las mujeres no era válido en los tribunales. Si los discípulos hubieran inventado la historia, habrían elegido testigos hombres. El que las mujeres sean las primeras testigos es señal de que la historia es real.</li>
+    </ul>
+  </div>
+
+  <div class="section-label">Lo que la resurrección significa</div>
+  <div class="pablo-resurrección">
+    <div class="quote">
+      <p>"Si Cristo no resucitó, vuestra fe es vana; aún estáis en vuestros pecados... Mas ahora Cristo ha resucitado de los muertos; primicias de los que durmieron es hecho."</p>
+      <cite>1 Corintios 15:17,20</cite>
+    </div>
+  </div>
+
+  <p>La resurrección no es un adorno del evangelio — es su corazón. Sin resurrección: Jesús sería un mártir más, su muerte sería trágica pero no salvadora, sus promesas serían palabras bonitas sin cumplimiento posible. Con la resurrección: el veredicto del Padre sobre el sacrificio del Hijo es claro — aceptado, suficiente, completo. Y la garantía de que los que están en Cristo también resucitarán.</p>
+
+  <div class="section-label">El camino a Emaús — el Jesús que camina con los desilusionados</div>
+  <p>Dos discípulos caminaban hacia Emaús hablando de lo ocurrido, con el rostro entristecido. Jesús se unió a ellos — pero no los reconocieron. Les explicó las Escrituras desde Moisés y los profetas. Y cuando llegaron al pueblo y partió el pan, se les abrieron los ojos. Entonces Él desapareció. Y ellos dijeron: <em>"¿No ardía nuestro corazón en nosotros, mientras nos hablaba en el camino, y cuando nos abría las Escrituras?"</em> (Lucas 24:32).</p>
+
+  <div class="frase"><p>"La resurrección no es el final de la historia de Jesús — es el inicio de la historia de la iglesia. El mismo Jesús que resucitó continúa caminando con los que van por el camino, aunque sus ojos no lo reconozcan."</p></div>
+</section>
+
+<!-- ════════════════════ CAP XIV ════════════════════ -->
+<section class="chapter" id="c14">
+  <div class="ch-header">
+    <div class="ch-num">Capítulo XIV</div>
+    <h2 class="ch-title">Los Hechos — el Jesús que continúa</h2>
+    <div class="ch-sub">La historia no terminó en la ascensión — continúa en la iglesia</div>
+  </div>
+  <div class="ch-divider"></div>
+
+  <p>Lucas comienza el libro de los Hechos con una frase que lo dice todo: <em>"En el primer tratado, oh Teófilo, hablé acerca de todas las cosas que Jesús comenzó a hacer y a enseñar"</em> (Hechos 1:1). El primer tratado — el Evangelio — era lo que Jesús <em>comenzó</em>. Los Hechos son la continuación de lo que Jesús sigue haciendo — ahora por su Espíritu en la iglesia.</p>
+
+  <div class="section-label">La promesa antes de la ascensión</div>
+  <div class="jesus-voz">
+    <div class="jv-label">Las últimas palabras de Jesús en la tierra</div>
+    <p>"Pero recibiréis poder, cuando haya venido sobre vosotros el Espíritu Santo, y me seréis testigos en Jerusalén, en toda Judea, en Samaria, y hasta lo último de la tierra."</p>
+    <cite>Hechos 1:8</cite>
+  </div>
+
+  <p>Ascendió. Una nube lo recibió lejos de sus ojos. Y dos ángeles les dijeron: <em>"Este mismo Jesús, que ha sido tomado de vosotros al cielo, así vendrá como le habéis visto ir al cielo"</em> (1:11). La historia de Jesús tiene tres actos: la encarnación que se vivió, la ascensión que se vio, y el regreso que se espera.</p>
+
+  <div class="section-label">Pentecostés — el Jesús derramado</div>
+  <p>Cincuenta días después de la resurrección, el Espíritu Santo fue derramado en el Aposento Alto. El mismo Jesús que prometió "yo os enviaré el Consolador" cumplió su promesa. Y desde ese día, Jesús no habitó solo en una forma corporal en un lugar geográfico — habitó por su Espíritu en cada creyente en cada nación en cada siglo.</p>
+
+  <div class="section-label">Pedro en Pentecostés — el sermón que fundó la iglesia</div>
+  <p>Pedro se puso de pie ante la multitud y declaró lo que los profetas habían prometido: <em>"A este Jesús a quien vosotros crucificasteis, Dios le ha hecho Señor y Cristo"</em> (Hechos 2:36). La respuesta fue la más poderosa del libro: tres mil personas preguntaron qué debían hacer. Y Pedro respondió con las palabras que son el punto de llegada de todo lo que Jesús hizo:</p>
+
+  <div class="quote">
+    <p>"Arrepentíos, y bautícese cada uno de vosotros en el nombre de Jesucristo para perdón de los pecados; y recibiréis el don del Espíritu Santo. Porque para vosotros es la promesa, y para vuestros hijos, y para todos los que están lejos; para cuantos el Señor nuestro Dios llamare."</p>
+    <cite>Hechos 2:38-39</cite>
+  </div>
+
+  <div class="section-label">El Jesús de los Hechos — vivo y actuante</div>
+  <p>A través de todo el libro de los Hechos, Jesús continúa su obra. Sana al paralítico de la puerta Hermosa "en el nombre de Jesucristo" (3:6). Aparece a Saulo en el camino a Damasco (9:3-5). Habla a Pedro en una visión sobre los gentiles (10:9-16). Aparece a Pablo en la noche en Corinto: <em>"No temas... yo estoy contigo"</em> (18:9-10). El Jesús histórico que caminó por Galilea es el mismo Jesús vivo que actúa en la iglesia.</p>
+
+  <div class="gold-box">
+    <h4>El Jesús que sigue siendo el mismo — Hebreos 13:8</h4>
+    <p><strong>"Jesucristo es el mismo ayer, y hoy, y por los siglos."</strong></p>
+    <p>El que sanó en Capernaum sana hoy. El que perdonó a la adúltera perdona hoy. El que llamó a Pedro y a Juan los sigue llamando hoy. El que derramó su Espíritu en Pentecostés lo sigue derramando hoy. La historia de Jesús no terminó en el siglo I — continúa en cada creyente en quien el Espíritu habita.</p>
+    <p>Y terminará cuando Él regrese — "este mismo Jesús... así vendrá" — para completar lo que comenzó: la restauración de todas las cosas, la resurrección de los muertos, el reino eterno donde Dios será todo en todos.</p>
+  </div>
+
+  <div class="frase"><p>"El libro de los Hechos no tiene versículo final. Termina en el capítulo 28 en medio de la historia — porque la historia de Jesús en el mundo todavía no ha terminado."</p></div>
+</section>
+
+</main>
+
+<section class="epilogo">
+  <span class="big">JESÚS</span>
+  <h2>Nadie como Él ha existido</h2>
+  <p>Nació en Belén anunciado por ángeles. Vivió en Nazaret como carpintero. Enseñó como nadie antes había enseñado. Amó como nadie antes había amado. Murió como el Cordero que quita el pecado del mundo. Resucitó al tercer día. Ascendió al Padre. Y prometió regresar.</p>
+  <p>Isaías lo vio 700 años antes. Los profetas lo anunciaron. Los tipos del tabernáculo lo prefiguraron. La historia entera apuntaba hacia Él. Y cuando llegó, el mundo que lo esperaba no lo reconoció — pero los que lo recibieron recibieron potestad de ser llamados hijos de Dios.</p>
+  <div class="quote" style="max-width:480px;margin:32px auto;">
+    <p>"Porque de tal manera amó Dios al mundo, que ha dado a su Hijo unigénito, para que todo aquel que en él cree, no se pierda, mas tenga vida eterna."</p>
+    <cite>Juan 3:16 — El versículo que contiene el evangelio completo</cite>
+  </div>
+  <div class="firma">Jesús de Nazaret · El Libro de su Vida · Predicador IPUC</div>
+</section>
+
+</div>
+
+<script>
+const obs=new IntersectionObserver(e=>{e.forEach(el=>{if(el.isIntersecting)el.target.classList.add('visible');});},{threshold:.06});
+document.querySelectorAll('.chapter').forEach(e=>obs.observe(e));
+const nav=document.getElementById('sidenav');
+const wrap=document.getElementById('pageWrap');
+const isMobile=()=>window.innerWidth<=768;
+function toggleNav(){
+  if(isMobile()){nav.classList.toggle('show');}
+  else{nav.classList.toggle('hidden');wrap.classList.toggle('full');}
+}
+const secs=document.querySelectorAll('section[id]');
+const links=document.querySelectorAll('nav a');
+window.addEventListener('scroll',()=>{
+  let cur='';
+  secs.forEach(s=>{if(window.scrollY>=s.offsetTop-200)cur=s.id;});
+  links.forEach(a=>{a.classList.remove('active');if(a.getAttribute('href')==='#'+cur)a.classList.add('active');});
+});
+links.forEach(a=>{a.addEventListener('click',()=>{if(isMobile())nav.classList.remove('show');});});
+document.addEventListener('click',e=>{
+  if(isMobile()&&nav.classList.contains('show')&&!nav.contains(e.target)&&!e.target.closest('.nav-toggle')){nav.classList.remove('show');}
+});
+</script>
+<script src="audio-reader.js"></script>
+</body>
+</html>

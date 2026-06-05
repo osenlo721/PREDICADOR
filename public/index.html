@@ -1,0 +1,3205 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<link rel="manifest" href="/manifest.json">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="theme-color" content="#009FDA">
+<title>Koinonia</title>
+<style>
+:root{
+  --azul:#009FDA;
+  --azul-oscuro:#003B6F;
+  --dorado:#F0AB00;
+  --dorado-oscuro:#b8860b;
+  --gris:#f0f2f5;
+  --gris-texto:#65676B;
+  --texto:#1c1e21;
+  --blanco:#ffffff;
+  --sombra:0 1px 3px rgba(0,0,0,0.12);
+  --radio:12px;
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--gris);color:var(--texto);height:100vh;overflow:hidden}
+
+/* SPLASH */
+#splash{position:fixed;inset:0;background:linear-gradient(160deg,var(--azul-oscuro),var(--azul));display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:999;transition:opacity 0.5s}
+.splash-logo{width:90px;height:90px;animation:pulse 1.5s ease-in-out infinite}
+@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.08)}}
+#splash h1{color:white;font-size:24px;font-weight:700;margin-top:14px}
+#splash p{color:rgba(255,255,255,0.7);font-size:13px;margin-top:4px}
+#splash .lema{color:var(--dorado);font-size:11px;margin-top:16px;font-style:italic}
+
+/* LOGIN - Dark Glassmorphism */
+#login-screen{display:none;position:fixed;inset:0;background:#060C18;align-items:center;justify-content:center;z-index:90;flex-direction:column;padding:1rem;overflow:hidden}
+#login-screen.show{display:flex}
+.login-bg{position:absolute;inset:0;overflow:hidden;pointer-events:none}
+.login-bg::before{content:'';position:absolute;inset:0;background-image:linear-gradient(rgba(0,155,218,0.05) 1px,transparent 1px),linear-gradient(90deg,rgba(0,155,218,0.05) 1px,transparent 1px);background-size:44px 44px}
+.login-bg::after{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent 0%,var(--dorado) 50%,transparent 100%);opacity:0.7}
+.lg-orb{position:absolute;border-radius:50%;filter:blur(60px);pointer-events:none}
+.lg-orb1{width:320px;height:320px;background:rgba(0,59,111,0.55);top:-100px;right:-80px}
+.lg-orb2{width:260px;height:260px;background:rgba(240,171,0,0.12);bottom:-80px;left:-60px}
+.lg-cross{position:absolute;color:rgba(240,171,0,0.13);font-size:52px;font-weight:100;user-select:none;animation:lg-float 7s ease-in-out infinite}
+.lg-cross:nth-child(3){top:12%;right:10%;animation-delay:0s;font-size:44px}
+.lg-cross:nth-child(4){bottom:18%;left:8%;animation-delay:3.5s;font-size:32px}
+.lg-cross:nth-child(5){top:55%;right:5%;animation-delay:1.5s;font-size:22px;opacity:0.5}
+@keyframes lg-float{0%,100%{transform:translateY(0) rotate(0deg)}50%{transform:translateY(-14px) rotate(8deg)}}
+.login-card{background:rgba(255,255,255,0.04);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border:1px solid rgba(240,171,0,0.22);border-radius:24px;padding:1.8rem 1.6rem 1.6rem;width:100%;max-width:355px;text-align:center;position:relative;box-shadow:0 0 80px rgba(0,59,111,0.55),inset 0 1px 0 rgba(255,255,255,0.06)}
+.login-card::before{content:'';position:absolute;top:-1px;left:25%;right:25%;height:2px;background:linear-gradient(90deg,transparent,var(--dorado),transparent);border-radius:2px}
+.login-logo-wrap{position:relative;display:inline-block;margin-bottom:.8rem}
+.login-logo{width:96px;height:96px;filter:drop-shadow(0 0 14px rgba(0,159,218,0.55));animation:logo-glow 3.5s ease-in-out infinite}
+@keyframes logo-glow{0%,100%{filter:drop-shadow(0 0 10px rgba(0,159,218,0.45));transform:scale(1)}50%{filter:drop-shadow(0 0 26px rgba(240,171,0,0.65));transform:scale(1.05)}}
+.login-title{font-size:27px;font-weight:800;background:linear-gradient(135deg,#ffffff 20%,var(--dorado));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:3px;letter-spacing:1.5px}
+.login-sub{font-size:11px;color:rgba(255,255,255,0.42);margin-bottom:1.4rem;letter-spacing:.6px;text-transform:uppercase}
+.btn-google{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;padding:12px;border:1px solid rgba(255,255,255,0.14);border-radius:12px;background:rgba(255,255,255,0.07);cursor:pointer;font-size:14px;font-weight:500;color:rgba(255,255,255,0.9);margin-bottom:12px;transition:background .2s}
+.btn-google:active{background:rgba(255,255,255,0.13)}
+.divider{display:flex;align-items:center;gap:10px;margin:8px 0 10px;color:rgba(255,255,255,0.25);font-size:10px;letter-spacing:1px;text-transform:uppercase}
+.divider::before,.divider::after{content:'';flex:1;height:1px;background:rgba(255,255,255,0.1)}
+.login-tabs{display:flex;border-radius:12px;overflow:hidden;background:rgba(0,0,0,0.35);border:1px solid rgba(255,255,255,0.07);margin-bottom:14px}
+.ltab{flex:1;padding:9px;font-size:13px;cursor:pointer;background:none;color:rgba(255,255,255,0.4);border:none;font-weight:600;transition:all .2s}
+.ltab.active{background:linear-gradient(135deg,var(--azul-oscuro),var(--azul));color:white}
+.linput{width:100%;border:none;border-bottom:1.5px solid rgba(255,255,255,0.18);border-radius:0;padding:11px 2px;font-size:13px;font-family:inherit;margin-bottom:14px;background:transparent;color:white;transition:border-color .2s;-webkit-text-fill-color:white}
+.linput:focus{outline:none;border-bottom-color:var(--dorado)}
+.linput::placeholder{color:rgba(255,255,255,0.32)}
+input[type=date].linput::-webkit-calendar-picker-indicator{filter:invert(1) opacity(.5)}
+.btn-entrar{width:100%;background:linear-gradient(135deg,var(--dorado-oscuro),var(--dorado));color:var(--azul-oscuro);border:none;padding:14px;border-radius:12px;font-size:15px;font-weight:800;cursor:pointer;letter-spacing:.4px;box-shadow:0 4px 22px rgba(240,171,0,0.32);transition:box-shadow .2s,transform .1s}
+.btn-entrar:active{transform:scale(0.98)}
+.nombre-wrap{display:none}.nombre-wrap.show{display:block}
+.fnac-wrap{display:none}.fnac-wrap.show{display:block}
+.fnac-label{font-size:10px;color:rgba(255,255,255,0.4);text-align:left;display:block;margin-bottom:2px;letter-spacing:.5px;text-transform:uppercase}
+.terminos-wrap{display:none;align-items:flex-start;gap:8px;margin-bottom:12px;background:rgba(255,255,255,0.04);border-radius:8px;padding:10px;border:1px solid rgba(255,255,255,0.07)}
+.terminos-wrap.show{display:flex}
+.terminos-wrap input[type=checkbox]{width:16px;height:16px;flex-shrink:0;margin-top:2px;accent-color:var(--dorado);cursor:pointer}
+.terminos-wrap label{font-size:11px;color:rgba(255,255,255,0.45);line-height:1.5;cursor:pointer;text-align:left}
+.terminos-wrap a{color:var(--dorado);text-decoration:underline}
+#login-error{font-size:12px;color:#ff7b7b;margin-top:10px;display:none;text-align:center;background:rgba(255,80,80,0.1);border-radius:8px;padding:8px 10px}
+/* CUMPLEAÑOS */
+.cumple-card{border-radius:var(--radio);margin-bottom:10px;background:linear-gradient(135deg,#7B2FF7,#F107A3);padding:16px;box-shadow:0 4px 20px rgba(123,47,247,0.35);text-align:center;color:white}
+.cumple-icon{font-size:36px;margin-bottom:6px}
+.cumple-title{font-size:15px;font-weight:800;margin-bottom:4px}
+.cumple-names{font-size:13px;opacity:0.9;line-height:1.6}
+
+/* APP */
+#app{display:none;flex-direction:column;height:100vh}
+
+/* HEADER */
+#header{background:linear-gradient(90deg,var(--azul-oscuro),var(--azul));padding:10px 14px;display:flex;align-items:center;gap:10px;flex-shrink:0;box-shadow:0 2px 8px rgba(0,0,0,0.2)}
+.logo-sm{width:34px;height:34px}
+.h-title{color:white;font-size:15px;font-weight:700}
+.h-right{margin-left:auto;display:flex;gap:8px;align-items:center}
+.av{width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;cursor:pointer;flex-shrink:0}
+.av-dorado{background:var(--dorado);color:var(--azul-oscuro)}
+.av-azul{background:var(--azul);color:white}
+.av-verde{background:#1D9E75;color:white}
+.av-morado{background:#534AB7;color:white}
+.logout-btn{background:rgba(255,255,255,0.2);border:none;color:white;font-size:10px;padding:4px 8px;border-radius:10px;cursor:pointer}
+
+/* CONTENT */
+#content{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding-bottom:70px}
+
+/* BOTTOM NAV */
+#bottom-nav{background:white;border-top:1px solid #e0e0e0;display:flex;position:fixed;bottom:0;left:0;right:0;z-index:50;height:58px;box-shadow:0 -2px 8px rgba(0,0,0,0.06)}
+.nav-btn{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;cursor:pointer;color:var(--gris-texto);border:none;background:none;font-size:10px;font-weight:500;padding:6px}
+.nav-btn svg{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.nav-btn.active{color:var(--azul)}
+
+/* VIEWS */
+.view{display:none;padding:10px}
+.view.active{display:block}
+
+/* FEED */
+.compose-box{background:white;border-radius:var(--radio);padding:12px;margin-bottom:10px;box-shadow:var(--sombra)}
+.compose-top{display:flex;gap:10px;align-items:center;margin-bottom:10px}
+.compose-area{flex:1;background:#f0f2f5;border-radius:24px;padding:10px 14px;font-size:13px;color:var(--gris-texto);cursor:pointer}
+.compose-actions{display:flex;gap:8px;border-top:1px solid #e0e0e0;padding-top:10px}
+.compose-btn{flex:1;display:flex;align-items:center;justify-content:center;gap:6px;padding:8px;border-radius:8px;border:none;background:none;cursor:pointer;font-size:12px;font-weight:600;color:var(--gris-texto)}
+.compose-btn:hover{background:#f0f2f5}
+.compose-photo-btn{background:none;border:none;color:var(--gris-texto);cursor:pointer;padding:6px;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.compose-photo-btn:hover{background:#f0f2f5;color:var(--azul)}
+
+.post{background:white;border-radius:var(--radio);margin-bottom:10px;box-shadow:var(--sombra);overflow:hidden}
+.post-header{display:flex;align-items:center;gap:10px;padding:12px 12px 8px}
+.post-info{flex:1}
+.post-autor{font-size:13px;font-weight:600;color:var(--texto)}
+.post-time{font-size:11px;color:var(--gris-texto)}
+.post-badge{font-size:10px;padding:1px 7px;border-radius:20px;font-weight:600;margin-left:4px}
+.pb-dorado{background:#FFF3CC;color:#854F0B}
+.pb-azul{background:#E6F1FB;color:#0C447C}
+.pb-verde{background:#E1F5EE;color:#0F6E56}
+.pb-morado{background:#EEEDFE;color:#3C3489}
+.post-menu{color:var(--gris-texto);cursor:pointer;background:none;border:none;font-size:22px;padding:4px 8px;line-height:1;letter-spacing:1px}
+#post-menu-popup{position:fixed;background:white;border-radius:12px;box-shadow:0 4px 20px rgba(0,0,0,0.18);z-index:250;min-width:200px;padding:6px 0;display:none}
+#post-menu-popup.open{display:block}
+.pmp-item{display:flex;align-items:center;gap:10px;padding:11px 16px;cursor:pointer;font-size:14px;font-weight:500;color:var(--texto)}
+.pmp-item:active{background:#f5f5f5}
+.pmp-item.danger{color:#dc2626}
+.post-body{padding:0 12px 10px;font-size:13px;line-height:1.6;color:var(--texto)}
+.post-img{width:100%;max-height:400px;object-fit:cover;display:block}
+.post-video{width:100%;max-height:420px;display:block;background:#000}
+.video-wrap{position:relative;background:#000;line-height:0}
+.video-play-overlay{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;cursor:pointer}
+.video-play-overlay.hidden{display:none}
+.play-circle{width:64px;height:64px;background:rgba(0,0,0,0.55);border-radius:50%;display:flex;align-items:center;justify-content:center;backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);border:2px solid rgba(255,255,255,0.22);transition:transform .12s,background .12s}
+.video-play-overlay:active .play-circle{transform:scale(0.9);background:rgba(0,0,0,0.75)}
+.post-event{margin:0 12px 10px;background:linear-gradient(135deg,var(--azul-oscuro),var(--azul));border-radius:10px;padding:12px;color:white}
+.event-date{font-size:11px;opacity:0.8}
+.event-title{font-size:14px;font-weight:700;margin:4px 0}
+.event-lugar{font-size:12px;opacity:0.85}
+.post-stats{display:flex;gap:4px;padding:4px 12px;border-top:1px solid #e0e0e0;border-bottom:1px solid #e0e0e0;font-size:12px;color:var(--gris-texto)}
+.post-versiculo{margin:0 12px 10px;background:linear-gradient(135deg,#fff8e1,#fffde7);border-left:4px solid var(--dorado);border-radius:0 8px 8px 0;padding:13px 14px;font-size:14px;line-height:1.75;color:var(--azul-oscuro);font-style:italic}
+.post-versiculo-ref{font-size:12px;font-weight:700;font-style:normal;color:var(--dorado-oscuro);margin-top:6px}
+.post-actions{display:flex;padding:4px 8px}
+.act-btn{flex:1;display:flex;align-items:center;justify-content:center;gap:6px;padding:8px;border-radius:8px;border:none;background:none;cursor:pointer;font-size:13px;font-weight:600;color:var(--gris-texto)}
+.act-btn:hover{background:#f0f2f5}
+.act-btn.liked{color:#e41c1c}
+
+/* PERFIL */
+.profile-header{background:white;border-radius:var(--radio);margin-bottom:10px;box-shadow:var(--sombra);overflow:hidden}
+.profile-cover{height:145px;background:linear-gradient(135deg,var(--azul-oscuro),var(--azul));position:relative;cursor:pointer;overflow:hidden;background-size:cover;background-position:center top;transition:filter .2s}
+.profile-cover:active{filter:brightness(.88)}
+.cover-overlay{position:absolute;inset:0;background:rgba(0,0,0,0);transition:background .22s;display:flex;align-items:flex-end;justify-content:flex-end;padding:8px}
+.profile-cover:hover .cover-overlay{background:rgba(0,0,0,0.28)}
+.btn-cambiar-portada{background:rgba(0,0,0,0.48);color:white;border:none;border-radius:16px;padding:5px 11px;font-size:11px;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:5px;backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);pointer-events:none;letter-spacing:.2px}
+.profile-info{padding:0 16px 16px;position:relative}
+.profile-av{width:72px;height:72px;border-radius:50%;background:var(--dorado);border:4px solid white;display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:700;color:var(--azul-oscuro);margin-top:-36px;margin-bottom:8px}
+.profile-name{font-size:18px;font-weight:700;color:var(--texto)}
+.profile-bio{font-size:13px;color:var(--gris-texto);margin:4px 0 10px}
+.profile-stats{display:flex;gap:20px}
+.pstat{text-align:center}
+.pstat-n{font-size:16px;font-weight:700;color:var(--texto)}
+.pstat-l{font-size:11px;color:var(--gris-texto)}
+.btn-editar{background:var(--gris);border:none;border-radius:8px;padding:8px 20px;font-size:13px;font-weight:600;cursor:pointer;color:var(--texto)}
+
+/* EVENTOS */
+.evento-card{background:white;border-radius:var(--radio);margin-bottom:10px;box-shadow:var(--sombra);overflow:hidden}
+.evento-cover{height:120px;background:linear-gradient(135deg,var(--azul-oscuro),var(--azul));display:flex;align-items:center;justify-content:center;font-size:40px}
+.evento-body{padding:12px}
+.evento-fecha{font-size:11px;color:var(--azul);font-weight:600;text-transform:uppercase}
+.evento-titulo{font-size:15px;font-weight:700;color:var(--texto);margin:4px 0}
+.evento-lugar{font-size:12px;color:var(--gris-texto);margin-bottom:10px}
+.btn-asistiré{background:var(--azul);color:white;border:none;border-radius:8px;padding:8px 20px;font-size:13px;font-weight:600;cursor:pointer;width:100%}
+
+/* AVATAR FOTO */
+.profile-av-wrap{display:inline-block;position:relative;margin-top:-36px;margin-bottom:8px}
+.profile-av-wrap .profile-av{margin-top:0;margin-bottom:0}
+.btn-cambiar-foto{position:absolute;bottom:2px;right:0;width:26px;height:26px;border-radius:50%;background:var(--azul);border:2.5px solid white;color:white;font-size:12px;cursor:pointer;display:flex;align-items:center;justify-content:center;padding:0;line-height:1}
+
+/* SECTION HEADER */
+.sec-header{background:linear-gradient(135deg,var(--azul-oscuro),var(--azul));border-radius:var(--radio);padding:16px;margin-bottom:10px;text-align:center;color:white}
+.sec-header h3{font-size:15px;font-weight:700}
+.sec-header p{font-size:11px;opacity:0.8;margin-top:3px}
+
+/* MODAL */
+.modal-bg{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:200;align-items:flex-end}
+.modal-bg.open{display:flex}
+.modal-sheet{background:white;border-radius:20px 20px 0 0;padding:20px;width:100%;max-height:90vh;overflow-y:auto}
+.modal-title{font-size:16px;font-weight:700;color:var(--azul-oscuro);margin-bottom:16px;display:flex;justify-content:space-between;align-items:center}
+.modal-close{color:var(--gris-texto);cursor:pointer;font-size:24px;background:none;border:none;line-height:1}
+.share-opts{display:flex;flex-direction:column;gap:12px;margin-top:8px}
+.share-opt{display:flex;align-items:center;gap:14px;padding:14px 12px;border-radius:12px;background:#f5f7fb;border:none;width:100%;cursor:pointer;font-size:15px;font-weight:500;color:var(--azul-oscuro)}
+.share-opt:active{background:#e8ecf4}
+.share-opt-icon{width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+#hp-img,#hp-video{max-width:100%;max-height:55vh;border-radius:12px;object-fit:contain}
+#sv-video{display:none;max-width:100%;max-height:100%;object-fit:contain}
+@keyframes nota-musical{0%,100%{transform:scale(1) rotate(-8deg)}50%{transform:scale(1.2) rotate(8deg)}}
+.sv-nota{font-size:96px;animation:nota-musical 1.2s ease-in-out infinite;display:none}
+.hp-audio-wrap{display:none;flex-direction:column;align-items:center;gap:14px;padding:18px 0}
+.hp-audio-nota{font-size:60px;animation:nota-musical 1.2s ease-in-out infinite}
+.form-label{font-size:12px;color:var(--gris-texto);font-weight:600;margin-bottom:5px;display:block}
+.form-input{width:100%;border:1.5px solid #e0e0e0;border-radius:10px;padding:11px 14px;font-size:13px;font-family:inherit;margin-bottom:12px}
+.form-input:focus{outline:none;border-color:var(--azul)}
+.form-textarea{width:100%;border:1.5px solid #e0e0e0;border-radius:10px;padding:11px 14px;font-size:13px;font-family:inherit;resize:none;height:80px;margin-bottom:12px}
+.foto-preview{width:100%;border-radius:10px;max-height:200px;object-fit:cover;margin-bottom:12px;display:none}
+.btn-foto{width:100%;background:#f0f2f5;border:2px dashed #ccc;border-radius:10px;padding:16px;font-size:13px;cursor:pointer;color:var(--gris-texto);margin-bottom:12px;text-align:center}
+.btn-publicar{width:100%;background:linear-gradient(90deg,var(--azul-oscuro),var(--azul));color:white;border:none;padding:14px;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer}
+.tipo-btns{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+.tipo-btn{font-size:12px;padding:6px 14px;border-radius:20px;border:1.5px solid #e0e0e0;cursor:pointer;background:white;color:var(--gris-texto);font-weight:500}
+.tipo-btn.sel{background:var(--azul);color:white;border-color:var(--azul)}
+
+/* TRANSMISIÓN EN VIVO */
+#live-banner{background:linear-gradient(135deg,var(--azul-oscuro),#001f3f);border-radius:var(--radio);margin-bottom:10px;overflow:hidden;box-shadow:var(--sombra);display:none}
+.live-header{display:flex;align-items:center;gap:8px;padding:10px 14px}
+.live-badge{display:flex;align-items:center;gap:5px;background:rgba(239,68,68,0.25);border:1px solid rgba(239,68,68,0.5);border-radius:20px;padding:4px 10px;font-size:11px;font-weight:700;color:white;flex-shrink:0;letter-spacing:0.5px}
+@keyframes live-pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:0.45;transform:scale(0.8)}}
+.live-dot{width:7px;height:7px;background:#ef4444;border-radius:50%;animation:live-pulse 1.2s ease-in-out infinite;display:inline-block}
+.live-titulo-text{font-size:13px;font-weight:600;color:white;flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.btn-live-config{background:rgba(255,255,255,0.15);border:none;color:white;border-radius:8px;padding:5px 10px;font-size:12px;cursor:pointer;white-space:nowrap;flex-shrink:0}
+.btn-live-config:active{background:rgba(255,255,255,0.25)}
+.live-player-wrap{position:relative;width:100%;padding-bottom:56.25%;height:0;overflow:hidden}
+.live-player-wrap iframe{position:absolute;top:0;left:0;width:100%;height:100%;border:none}
+/* HISTORIAS */
+.stories-bar{display:flex;gap:12px;padding:12px;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;background:white;border-radius:var(--radio);margin-bottom:10px;box-shadow:var(--sombra)}
+.stories-bar::-webkit-scrollbar{display:none}
+.story-item{display:flex;flex-direction:column;align-items:center;gap:5px;cursor:pointer;flex-shrink:0}
+.story-ring{width:62px;height:62px;border-radius:50%;padding:2.5px;background:linear-gradient(45deg,#f09433,#e6683c,#dc2743,#cc2366)}
+.story-av-wrap{width:100%;height:100%;border-radius:50%;overflow:hidden;border:2.5px solid white;background:var(--dorado);display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:700;color:var(--azul-oscuro)}
+.story-av-wrap img{width:100%;height:100%;object-fit:cover}
+.story-nombre{font-size:10px;color:var(--texto);max-width:66px;text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.story-add{width:62px;height:62px;border-radius:50%;background:var(--gris);border:2.5px dashed var(--azul);display:flex;align-items:center;justify-content:center;font-size:26px;color:var(--azul);cursor:pointer;flex-shrink:0}
+
+/* VISOR HISTORIA */
+#story-view{display:none;position:fixed;inset:0;background:#000;z-index:201;flex-direction:column}
+#story-view.open{display:flex}
+.sp-bars{display:flex;gap:3px;padding:10px 10px 0}
+.sp-bar{height:3px;flex:1;background:rgba(255,255,255,0.35);border-radius:2px;overflow:hidden}
+.sp-fill{height:100%;width:0%;background:white;border-radius:2px}
+.sp-fill.run{transition:width 5s linear;width:100%}
+.sv-header{display:flex;align-items:center;gap:10px;padding:8px 12px 6px;background:linear-gradient(to bottom,rgba(0,0,0,0.55),transparent)}
+.sv-uav{width:36px;height:36px;border-radius:50%;border:2px solid white;overflow:hidden;flex-shrink:0;background:var(--dorado);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:var(--azul-oscuro)}
+.sv-uav img{width:100%;height:100%;object-fit:cover}
+.sv-close{background:none;border:none;color:white;font-size:28px;cursor:pointer;padding:0 2px;line-height:1;margin-left:auto}
+.sv-img-area{flex:1;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.sv-img-area img{max-width:100%;max-height:100%;object-fit:contain}
+
+/* CHAT */
+#chat-view{display:none;position:fixed;inset:0;background:var(--gris);z-index:150;flex-direction:column}
+#chat-view.open{display:flex}
+.chat-header{background:linear-gradient(90deg,var(--azul-oscuro),var(--azul));padding:10px 14px;display:flex;align-items:center;gap:10px;flex-shrink:0;box-shadow:0 2px 8px rgba(0,0,0,0.2)}
+.chat-back{background:none;border:none;color:white;font-size:26px;cursor:pointer;padding:0 4px;line-height:1}
+.chat-av{width:36px;height:36px;border-radius:50%;background:var(--dorado);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:var(--azul-oscuro);flex-shrink:0}
+.chat-hname{color:white;font-size:15px;font-weight:700}
+.chat-messages{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:12px;display:flex;flex-direction:column;gap:6px}
+.msg{max-width:76%;padding:9px 13px;border-radius:18px;font-size:13px;line-height:1.5;word-break:break-word}
+.msg-out{align-self:flex-end;background:var(--azul);color:white;border-bottom-right-radius:4px}
+.msg-in{align-self:flex-start;background:white;color:var(--texto);border-bottom-left-radius:4px;box-shadow:var(--sombra)}
+.msg-time{font-size:10px;opacity:0.65;margin-top:2px;text-align:right}
+.msg-in .msg-time{text-align:left}
+.chat-input-area{background:white;border-top:1px solid #e0e0e0;padding:10px 12px;display:flex;gap:8px;align-items:center;flex-shrink:0}
+.chat-input{flex:1;border:1.5px solid #e0e0e0;border-radius:22px;padding:9px 16px;font-size:14px;font-family:inherit;outline:none;background:#f8f8f8}
+.chat-input:focus{border-color:var(--azul);background:white}
+.btn-send{width:40px;height:40px;border-radius:50%;background:var(--azul);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+
+/* COMENTARIOS */
+.post-comentarios{border-top:1px solid #e8e8e8;padding:8px 12px 12px}
+.comentario-item{display:flex;gap:8px;margin-bottom:8px}
+.comentario-av{width:30px;height:30px;border-radius:50%;background:var(--azul);color:white;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0;margin-top:2px}
+.comentario-body{flex:1;background:#f0f2f5;border-radius:12px;padding:7px 10px}
+.comentario-autor{font-size:12px;font-weight:700;color:var(--texto)}
+.comentario-time{font-size:10px;color:var(--gris-texto);font-weight:400;margin-left:5px}
+.comentario-texto{font-size:13px;color:var(--texto);margin-top:2px;line-height:1.45;word-break:break-word}
+.comentario-input-area{display:flex;gap:8px;align-items:center;margin-top:8px}
+.comentario-input{flex:1;border:1.5px solid #e0e0e0;border-radius:20px;padding:8px 14px;font-size:13px;font-family:inherit;outline:none;background:#f8f8f8}
+.comentario-input:focus{border-color:var(--azul);background:white}
+.btn-c-send{background:var(--azul);color:white;border:none;border-radius:20px;padding:8px 14px;font-size:12px;font-weight:600;cursor:pointer;white-space:nowrap;flex-shrink:0}
+
+/* COMUNIDAD TABS */
+.com-tabs{display:flex;gap:0;background:#f0f2f5;border-radius:10px;padding:3px;margin-bottom:10px}
+.com-tab{flex:1;padding:8px;border:none;background:none;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;color:var(--gris-texto)}
+.com-tab.active{background:white;color:var(--azul-oscuro);box-shadow:var(--sombra)}
+/* GRUPO CARDS */
+.grupo-card{background:white;border-radius:var(--radio);margin-bottom:10px;box-shadow:var(--sombra);display:flex;align-items:center;gap:12px;padding:12px;cursor:pointer}
+.grupo-foto{width:50px;height:50px;border-radius:12px;flex-shrink:0;background:linear-gradient(135deg,var(--azul-oscuro),var(--azul));display:flex;align-items:center;justify-content:center;font-size:22px;color:white;overflow:hidden}
+.grupo-foto img{width:100%;height:100%;object-fit:cover}
+.grupo-info{flex:1;min-width:0}
+.grupo-nombre{font-size:14px;font-weight:700;color:var(--texto)}
+.grupo-desc{font-size:12px;color:var(--gris-texto);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin:2px 0}
+.grupo-count{font-size:11px;color:var(--azul);font-weight:600}
+.btn-crear-grupo{width:100%;padding:13px;background:linear-gradient(90deg,var(--azul-oscuro),var(--azul));color:white;border:none;border-radius:var(--radio);font-size:14px;font-weight:700;cursor:pointer;margin-bottom:10px;display:flex;align-items:center;justify-content:center;gap:8px}
+/* GRUPO VIEW */
+#grupo-view{display:none;position:fixed;inset:0;background:var(--gris);z-index:100;flex-direction:column}
+#grupo-view.open{display:flex}
+.grupo-header{background:linear-gradient(135deg,var(--azul-oscuro),var(--azul));padding:12px 14px;display:flex;align-items:center;gap:10px;color:white;flex-shrink:0}
+.grupo-back{background:rgba(255,255,255,0.2);border:none;color:white;border-radius:50%;width:34px;height:34px;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;line-height:1}
+.grupo-hfoto{width:38px;height:38px;border-radius:10px;background:rgba(255,255,255,0.25);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;overflow:hidden}
+.grupo-hfoto img{width:100%;height:100%;object-fit:cover}
+.grupo-htitle{font-size:15px;font-weight:700;line-height:1.2}
+.grupo-hsub{font-size:11px;opacity:0.8;margin-top:1px}
+.grupo-tab-bar{display:flex;background:white;border-bottom:1px solid #e0e0e0;flex-shrink:0}
+.gtab{flex:1;padding:10px 4px;border:none;background:none;font-size:12px;font-weight:600;color:var(--gris-texto);cursor:pointer;border-bottom:3px solid transparent}
+.gtab.active{color:var(--azul);border-bottom-color:var(--azul)}
+.miembro-item{display:flex;align-items:center;gap:10px;padding:10px 12px;background:white;border-radius:var(--radio);margin-bottom:8px;box-shadow:var(--sombra)}
+.miembro-av{width:42px;height:42px;border-radius:50%;background:var(--dorado);color:var(--azul-oscuro);display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;flex-shrink:0;overflow:hidden}
+.miembro-av img{width:100%;height:100%;object-fit:cover}
+.miembro-info{flex:1;min-width:0}
+.miembro-nombre{font-size:14px;font-weight:600;color:var(--texto)}
+.miembro-rol{font-size:11px;color:var(--azul);font-weight:600;margin-top:1px}
+.btn-expulsar{background:#fee2e2;color:#dc2626;border:none;border-radius:8px;padding:6px 10px;font-size:11px;font-weight:600;cursor:pointer;flex-shrink:0}
+/* TOAST */
+#toast{position:fixed;bottom:76px;left:50%;transform:translateX(-50%);background:var(--azul-oscuro);color:white;padding:10px 20px;border-radius:24px;font-size:13px;opacity:0;transition:opacity 0.3s;pointer-events:none;z-index:300;white-space:nowrap}
+#toast.show{opacity:1}
+
+/* EMPTY */
+.empty{text-align:center;padding:40px 20px;color:var(--gris-texto)}
+.empty-icon{font-size:48px;margin-bottom:12px}
+.loading{text-align:center;padding:30px;color:var(--gris-texto);font-size:13px}
+.spinner{width:28px;height:28px;border:3px solid #e0e0e0;border-top-color:var(--azul);border-radius:50%;animation:spin 0.8s linear infinite;margin:0 auto 10px}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* MENU PANEL */
+#menu-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.45);z-index:180}
+#menu-overlay.open{display:block}
+#menu-panel{position:fixed;top:0;right:-280px;width:265px;height:100%;background:white;z-index:190;box-shadow:-4px 0 20px rgba(0,0,0,0.18);transition:right 0.28s ease;display:flex;flex-direction:column}
+#menu-panel.open{right:0}
+.mp-header{background:linear-gradient(135deg,var(--azul-oscuro),var(--azul));padding:22px 18px 18px;color:white}
+.mp-hname{font-size:15px;font-weight:700}
+.mp-hemail{font-size:11px;opacity:0.75;margin-top:3px}
+.mp-item{display:flex;align-items:center;gap:14px;padding:16px 20px;cursor:pointer;font-size:15px;font-weight:500;color:var(--texto);border-bottom:1px solid #f2f2f2}
+.mp-item:active{background:#f5f5f5}
+.mp-item-icon{font-size:20px;width:28px;text-align:center;flex-shrink:0}
+.mp-logout{color:#dc2626}
+
+/* NOTIF BADGE */
+.nav-notif-badge{position:absolute;top:3px;right:calc(50% - 16px);background:#ef4444;color:white;font-size:9px;font-weight:700;min-width:16px;height:16px;border-radius:8px;display:none;align-items:center;justify-content:center;padding:0 3px;pointer-events:none;line-height:1}
+.nav-notif-badge.show{display:flex}
+
+/* NOTIFICACIONES */
+.notif-item{background:white;border-radius:var(--radio);padding:12px 14px;margin-bottom:8px;box-shadow:var(--sombra);display:flex;gap:10px;align-items:flex-start;cursor:pointer}
+.notif-item:active{background:#f5f5f5}
+.notif-icon{font-size:20px;flex-shrink:0;width:38px;height:38px;background:#f0f2f5;border-radius:50%;display:flex;align-items:center;justify-content:center}
+.notif-body{flex:1;min-width:0}
+.notif-text{font-size:13px;color:var(--texto);line-height:1.5}
+.notif-time{font-size:11px;color:var(--gris-texto);margin-top:3px}
+.notif-item.unread{background:#f0f8ff;border-left:3px solid var(--azul)}
+.notif-section{margin-bottom:18px}
+.notif-section-title{font-size:13px;font-weight:700;color:var(--azul-oscuro);padding:7px 4px 8px;border-bottom:2px solid #e8eaed;margin-bottom:8px;display:flex;align-items:center;gap:6px}
+.notif-empty-msg{font-size:12px;color:var(--gris-texto);padding:10px;text-align:center;background:white;border-radius:var(--radio);box-shadow:var(--sombra)}
+.btn-conectar{background:var(--azul);color:white;border:none;border-radius:8px;padding:6px 12px;font-size:11px;font-weight:600;cursor:pointer;flex-shrink:0;white-space:nowrap}
+.btn-conectar.conectado{background:#e8f5e9;color:#1D9E75;cursor:default}
+.color-picker{display:flex;gap:9px;margin-bottom:12px;align-items:center;flex-wrap:wrap}
+.color-dot{width:28px;height:28px;border-radius:50%;cursor:pointer;border:2.5px solid transparent;flex-shrink:0;transition:transform 0.15s,border-color 0.15s}
+.color-dot:hover{transform:scale(1.15)}
+.color-dot.sel{border-color:#333;transform:scale(1.2)}
+.color-dot-blanco{border-color:#ccc}
+.post-body-color{padding:20px 16px;min-height:90px;border-radius:10px;font-size:16px;line-height:1.7;font-weight:600;text-align:center;margin:0 12px 10px;word-break:break-word}
+/* REACCIONES */
+.react-wrap{position:relative;display:inline-flex}
+.react-popup{position:absolute;bottom:46px;left:0;background:white;border-radius:28px;box-shadow:0 4px 20px rgba(0,0,0,0.18);display:none;gap:2px;padding:6px 8px;z-index:120;white-space:nowrap}
+.react-popup.open{display:flex}
+.react-opt{font-size:24px;cursor:pointer;padding:4px 6px;border-radius:50%;transition:transform 0.15s;line-height:1;background:none;border:none}
+.react-opt:hover{transform:scale(1.3)}
+.react-sum{display:flex;gap:6px;padding:2px 12px 6px;font-size:12px;color:var(--gris-texto);flex-wrap:wrap;min-height:20px}
+/* ROLES */
+.rol-badge{display:inline-block;font-size:10px;padding:2px 8px;border-radius:12px;font-weight:700;margin-left:4px;vertical-align:middle}
+.rb-pastor{background:#e8f0fe;color:#003B6F}
+.rb-diacono{background:#fff8e1;color:#b8860b}
+.rb-miembro{background:#e8f5e9;color:#1D9E75}
+.rb-admin{background:#fff3e0;color:#e65100}
+.rol-select{font-size:11px;border:1px solid #e0e0e0;border-radius:6px;padding:3px 6px;background:white;color:var(--texto);cursor:pointer;margin-top:4px}
+/* BUSCAR */
+.buscar-input{width:100%;border:1.5px solid #e0e0e0;border-radius:24px;padding:9px 16px;font-size:13px;font-family:inherit;margin-bottom:10px;outline:none;background:#f8f8f8}
+.buscar-input:focus{border-color:var(--azul);background:white}
+/* PERFIL DATOS */
+.perfil-datos-card{background:white;border-radius:var(--radio);padding:14px 16px;margin-bottom:10px;box-shadow:var(--sombra)}
+.perfil-datos-title{font-size:13px;font-weight:700;color:var(--azul-oscuro);margin-bottom:10px;padding-bottom:8px;border-bottom:2px solid #f0f2f5;display:flex;align-items:center;gap:6px}
+.pinfo-item{display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid #f7f7f7}
+.pinfo-item:last-child{border-bottom:none}
+.pinfo-icon{font-size:17px;width:28px;text-align:center;flex-shrink:0}
+.pinfo-label{font-size:12px;color:var(--gris-texto);font-weight:600;flex:1}
+.pinfo-val{font-size:13px;color:var(--texto);font-weight:500;max-width:55%;text-align:right}
+.pinfo-badge{display:inline-flex;align-items:center;gap:4px;background:var(--gris);border-radius:20px;padding:3px 10px;font-size:12px;font-weight:600}
+.pinfo-badge.si{background:#e8f5e9;color:#1D9E75}
+.pinfo-badge.no{background:#fce4ec;color:#c62828}
+
+/* TOGGLE */
+.toggle-row{display:flex;align-items:center;justify-content:space-between;padding:14px 0 6px;border-top:1px solid #f0f2f5;margin-top:6px}
+.toggle-lbl-wrap{flex:1;min-width:0}
+.toggle-lbl{font-size:13px;font-weight:600;color:var(--texto)}
+.toggle-sub{font-size:11px;color:var(--gris-texto);margin-top:2px}
+.toggle-switch{position:relative;width:46px;height:26px;flex-shrink:0;margin-left:12px}
+.toggle-switch input{opacity:0;width:0;height:0;position:absolute}
+.toggle-track{position:absolute;inset:0;background:#ccc;border-radius:26px;cursor:pointer;transition:background .22s}
+.toggle-switch input:checked+.toggle-track{background:var(--azul)}
+.toggle-track::before{content:'';position:absolute;width:20px;height:20px;left:3px;top:3px;background:white;border-radius:50%;transition:transform .22s;box-shadow:0 1px 4px rgba(0,0,0,0.22)}
+.toggle-switch input:checked+.toggle-track::before{transform:translateX(20px)}
+/* CONTACTO */
+.contacto-card{background:white;border-radius:var(--radio);padding:14px 16px;margin-bottom:10px;box-shadow:var(--sombra)}
+.contacto-title{font-size:13px;font-weight:700;color:var(--azul-oscuro);margin-bottom:12px;padding-bottom:8px;border-bottom:2px solid #f0f2f5;display:flex;align-items:center;gap:6px}
+.contacto-btns{display:flex;gap:10px}
+.btn-contacto{flex:1;display:flex;align-items:center;justify-content:center;gap:8px;padding:12px 10px;border-radius:10px;border:none;font-size:13px;font-weight:700;cursor:pointer;text-decoration:none;transition:opacity .15s,transform .1s}
+.btn-contacto:active{opacity:.78;transform:scale(0.97)}
+.btn-wa{background:#25D366;color:white}
+.btn-email{background:#e8f0fe;color:#1a73e8}
+/* MURO ORACIÓN */
+.oracion-card{background:white;border-radius:var(--radio);margin-bottom:10px;box-shadow:var(--sombra);padding:14px;border-left:4px solid #534AB7}
+.oracion-autor{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+.oracion-texto{font-size:14px;line-height:1.6;color:var(--texto);margin-bottom:12px;font-style:italic;padding:10px;background:#f5f0ff;border-radius:8px}
+.btn-orar{width:100%;padding:10px;background:#f3e8ff;color:#534AB7;border:none;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer}
+.btn-orar.orando{background:linear-gradient(90deg,var(--azul-oscuro),var(--azul));color:white}
+
+/* FOTOS */
+.fotos-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.foto-card{border-radius:var(--radio);overflow:hidden;background:white;box-shadow:var(--sombra);cursor:pointer}
+.foto-card img{width:100%;aspect-ratio:1;object-fit:cover;display:block}
+.foto-card-meta{padding:8px 8px 10px}
+.foto-card-desc{font-size:12px;color:var(--texto);margin-bottom:4px;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;line-height:1.4}
+.foto-card-autor{font-size:11px;color:var(--azul);font-weight:600}
+.foto-card-fecha{font-size:10px;color:var(--gris-texto);margin-top:2px}
+.btn-subir-foto{width:100%;background:linear-gradient(90deg,var(--azul-oscuro),var(--azul));color:white;border:none;padding:14px;border-radius:var(--radio);font-size:14px;font-weight:700;cursor:pointer;margin-bottom:10px;display:flex;align-items:center;justify-content:center;gap:8px}
+</style>
+</head>
+<body>
+
+<!-- SPLASH -->
+<div id="splash">
+  <svg class="splash-logo" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="60" cy="60" r="58" fill="#003B6F" stroke="#F0AB00" stroke-width="3"/>
+    <ellipse cx="60" cy="60" rx="30" ry="58" fill="none" stroke="#009FDA" stroke-width="1.5" opacity="0.6"/>
+    <ellipse cx="60" cy="60" rx="58" ry="20" fill="none" stroke="#009FDA" stroke-width="1.5" opacity="0.4"/>
+    <circle cx="60" cy="60" r="20" fill="#009FDA"/>
+    <path d="M48 60 L60 48 L72 60 L60 72 Z" fill="#F0AB00"/>
+    <text x="60" y="100" text-anchor="middle" font-size="7" font-weight="700" fill="#F0AB00" font-family="Arial">IGLESIA</text>
+    <text x="60" y="110" text-anchor="middle" font-size="5" fill="rgba(255,255,255,0.7)" font-family="Arial">DIGITAL</text>
+  </svg>
+  <h1>Koinonia</h1>
+  <p>Red social cristiana</p>
+  <div class="lema">Conectando la iglesia con la tecnología</div>
+</div>
+
+<!-- LOGIN -->
+<div id="login-screen">
+  <div class="login-bg">
+    <div class="lg-orb lg-orb1"></div>
+    <div class="lg-orb lg-orb2"></div>
+    <span class="lg-cross">✝</span>
+    <span class="lg-cross">✝</span>
+    <span class="lg-cross">✝</span>
+  </div>
+  <div class="login-card">
+    <div class="login-logo-wrap">
+      <svg class="login-logo" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="60" cy="60" r="58" fill="#003B6F" stroke="#F0AB00" stroke-width="3"/>
+        <ellipse cx="60" cy="60" rx="30" ry="58" fill="none" stroke="#009FDA" stroke-width="1.5" opacity="0.5"/>
+        <ellipse cx="60" cy="60" rx="58" ry="20" fill="none" stroke="#009FDA" stroke-width="1.5" opacity="0.35"/>
+        <circle cx="60" cy="60" r="20" fill="#009FDA"/>
+        <path d="M48 60 L60 48 L72 60 L60 72 Z" fill="#F0AB00"/>
+        <text x="60" y="100" text-anchor="middle" font-size="7" font-weight="700" fill="#F0AB00" font-family="Arial">IGLESIA</text>
+        <text x="60" y="110" text-anchor="middle" font-size="5" fill="rgba(255,255,255,0.6)" font-family="Arial">DIGITAL</text>
+      </svg>
+    </div>
+    <div class="login-title">Koinonia</div>
+    <div class="login-sub">Tu comunidad de fe digital</div>
+    <button class="btn-google" onclick="loginGoogle()">
+      <svg width="18" height="18" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+      Continuar con Google
+    </button>
+    <!-- FORMULARIO PRINCIPAL -->
+    <div id="login-form-main">
+      <div class="divider">o con correo</div>
+      <div class="login-tabs">
+        <button class="ltab active" onclick="switchTab('login',this)">Iniciar sesión</button>
+        <button class="ltab" onclick="switchTab('registro',this)">Registrarse</button>
+      </div>
+      <div class="nombre-wrap" id="nombre-wrap">
+        <input class="linput" id="l-nombre" type="text" placeholder="Tu nombre completo">
+      </div>
+      <div class="fnac-wrap" id="fnac-wrap">
+        <span class="fnac-label">Fecha de nacimiento *</span>
+        <input class="linput" id="l-fnac" type="date">
+      </div>
+      <input class="linput" id="l-email" type="email" placeholder="Correo electrónico">
+      <input class="linput" id="l-pass" type="password" placeholder="Contraseña">
+      <div id="forgot-wrap" style="text-align:right;margin:-8px 0 14px">
+        <button onclick="mostrarForgot()" style="background:none;border:none;color:var(--dorado);font-size:12px;cursor:pointer;padding:0;font-weight:600;letter-spacing:.2px">¿Olvidaste tu contraseña?</button>
+      </div>
+      <div class="terminos-wrap" id="terminos-wrap">
+        <input type="checkbox" id="terminos-check">
+        <label for="terminos-check">Acepto los <a href="/privacidad.html" target="_blank">Términos de uso y Política de Privacidad</a> de Koinonia, incluyendo el tratamiento de mis datos según la Ley 1581 de 2012 (Hábeas Data).</label>
+      </div>
+      <button class="btn-entrar" id="btn-accion" onclick="loginEmail()">Iniciar sesión</button>
+      <div id="login-error"></div>
+    </div>
+
+    <!-- PANEL RECUPERAR CONTRASEÑA -->
+    <div id="login-form-forgot" style="display:none">
+      <button onclick="ocultarForgot()" style="background:none;border:none;color:rgba(255,255,255,0.45);font-size:13px;cursor:pointer;padding:0;margin-bottom:18px;display:flex;align-items:center;gap:6px">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><polyline points="15 18 9 12 15 6"/></svg>
+        Volver al inicio de sesión
+      </button>
+      <div style="font-size:22px;margin-bottom:10px">🔑</div>
+      <div style="font-size:16px;font-weight:700;color:white;margin-bottom:6px">Restablecer contraseña</div>
+      <div style="font-size:12px;color:rgba(255,255,255,0.5);margin-bottom:20px;line-height:1.6">Escribe tu correo y te enviaremos un enlace para crear una nueva contraseña.</div>
+      <input class="linput" id="l-email-reset" type="email" placeholder="Correo electrónico" onkeydown="if(event.key==='Enter')enviarReset()">
+      <button class="btn-entrar" onclick="enviarReset()" style="margin-top:6px">Enviar enlace</button>
+      <div id="reset-msg" style="display:none;margin-top:12px;padding:10px 12px;border-radius:10px;font-size:13px;text-align:center;line-height:1.5"></div>
+    </div>
+  </div>
+</div>
+
+<!-- APP -->
+<div id="app">
+  <div id="header">
+    <svg class="logo-sm" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="60" cy="60" r="58" fill="#003B6F" stroke="#F0AB00" stroke-width="2"/>
+      <circle cx="60" cy="60" r="20" fill="#009FDA"/>
+      <path d="M48 60 L60 48 L72 60 L60 72 Z" fill="#F0AB00"/>
+    </svg>
+    <span class="h-title">Koinonia</span>
+  </div>
+
+  <div id="content">
+
+    <!-- FEED -->
+    <div id="view-feed" class="view active">
+      <!-- BANNER TRANSMISIÓN EN VIVO -->
+      <div id="live-banner">
+        <div class="live-header">
+          <div class="live-badge"><span class="live-dot"></span> EN VIVO</div>
+          <div class="live-titulo-text" id="live-titulo">Transmisión en vivo</div>
+          <button class="btn-live-config" id="btn-live-config" style="display:none" onclick="abrirModalTransmision()">⚙️ Configurar</button>
+        </div>
+        <div class="live-player-wrap">
+          <iframe id="live-iframe" src="" allowfullscreen allow="autoplay; encrypted-media; picture-in-picture"></iframe>
+        </div>
+      </div>
+      <div class="stories-bar" id="stories-bar">
+        <div class="story-item">
+          <div class="story-add" onclick="abrirModalHistoria()">+</div>
+          <div class="story-nombre">Mi historia</div>
+        </div>
+      </div>
+      <input type="file" id="si-camara" accept="image/*" capture="camera" style="display:none" onchange="previewHistoria(this,'imagen')">
+      <input type="file" id="si-imagen" accept="image/*" style="display:none" onchange="previewHistoria(this,'imagen')">
+      <input type="file" id="si-video" accept="video/*" style="display:none" onchange="previewHistoria(this,'video')">
+      <input type="file" id="si-audio" accept="audio/*" style="display:none" onchange="previewHistoria(this,'audio')">
+      <div class="compose-box">
+        <div class="compose-top">
+          <div class="av av-dorado" id="compose-av">?</div>
+          <div class="compose-area" onclick="openModal('modal-post')">¿Qué quieres compartir hoy?</div>
+          <button class="compose-photo-btn" onclick="abrirPostTipo('foto')" title="Agregar foto">
+            <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/>
+              <circle cx="12" cy="13" r="4"/>
+            </svg>
+          </button>
+          <button class="compose-photo-btn" onclick="abrirPostTipo('video')" title="Agregar video">
+            <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <polygon points="23 7 16 12 23 17 23 7"/>
+              <rect x="1" y="5" width="15" height="14" rx="2" ry="2"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+      <div id="feed-list"><div class="loading"><div class="spinner"></div>Cargando...</div></div>
+    </div>
+
+    <!-- EVENTOS -->
+    <div id="view-eventos" class="view">
+      <div class="sec-header"><h3>📅 Eventos</h3><p>Próximas actividades de la iglesia</p></div>
+      <div id="eventos-list"><div class="loading"><div class="spinner"></div>Cargando...</div></div>
+    </div>
+
+    <!-- MIEMBROS / GRUPOS -->
+    <div id="view-miembros" class="view">
+      <div class="sec-header"><h3>👥 Comunidad</h3><p>Miembros y grupos de la iglesia</p></div>
+      <div class="com-tabs">
+        <button class="com-tab active" id="ctab-miembros" onclick="switchComTab('miembros')">👤 Miembros</button>
+        <button class="com-tab" id="ctab-grupos" onclick="switchComTab('grupos')">👥 Grupos</button>
+      </div>
+      <div id="com-panel-miembros">
+        <input type="text" class="buscar-input" id="buscar-miembro" placeholder="🔍 Buscar miembro por nombre..." oninput="filtrarMiembros(this.value)">
+        <div id="miembros-list"><div class="loading"><div class="spinner"></div>Cargando...</div></div>
+      </div>
+      <div id="com-panel-grupos" style="display:none">
+        <button class="btn-crear-grupo" onclick="openModal('modal-crear-grupo')">➕ Crear grupo</button>
+        <div id="grupos-list"><div class="loading"><div class="spinner"></div>Cargando...</div></div>
+      </div>
+    </div>
+
+    <!-- PERFIL -->
+    <div id="view-perfil" class="view">
+      <div class="profile-header">
+        <div class="profile-cover" id="profile-cover" onclick="document.getElementById('portada-input').click()">
+          <div class="cover-overlay">
+            <span class="btn-cambiar-portada">📷 Cambiar portada</span>
+          </div>
+        </div>
+        <input type="file" id="portada-input" accept="image/*" style="display:none" onchange="subirPortada(this)">
+        <div class="profile-info">
+          <div class="profile-av-wrap">
+            <div class="profile-av" id="perfil-av">?</div>
+            <button class="btn-cambiar-foto" onclick="document.getElementById('avatar-input').click()" title="Cambiar foto de perfil">📷</button>
+          </div>
+          <input type="file" id="avatar-input" accept="image/*" style="display:none" onchange="subirFotoPerfil(this)">
+          <div class="profile-name" id="perfil-name">Cargando...</div>
+          <div class="profile-bio" id="perfil-bio">Miembro de Koinonia</div>
+          <div class="profile-stats">
+            <div class="pstat"><div class="pstat-n" id="perfil-posts">0</div><div class="pstat-l">Publicaciones</div></div>
+            <div class="pstat"><div class="pstat-n" id="perfil-likes">0</div><div class="pstat-l">Me gusta</div></div>
+          </div>
+          <div style="margin-top:12px">
+            <button class="btn-editar" onclick="openModal('modal-perfil')">✏️ Editar perfil</button>
+          </div>
+        </div>
+      </div>
+      <div id="perfil-datos"></div>
+      <div id="perfil-contacto"></div>
+      <div id="mis-posts"><div class="loading"><div class="spinner"></div>Cargando...</div></div>
+    </div>
+
+    <!-- MENSAJES -->
+    <div id="view-mensajes" class="view">
+      <div class="sec-header"><h3>💬 Mensajes</h3><p>Chats con otros miembros</p></div>
+      <div id="mensajes-list"><div class="loading"><div class="spinner"></div>Cargando...</div></div>
+    </div>
+
+    <!-- MURO DE ORACIÓN -->
+    <div id="view-oracion" class="view">
+      <div class="sec-header"><h3>🙏 Muro de Oración</h3><p>Eleva tus peticiones a la comunidad</p></div>
+      <button class="btn-crear-grupo" onclick="abrirOracionModal()" style="margin-bottom:10px">✏️ Compartir petición de oración</button>
+      <div id="oracion-list"><div class="loading"><div class="spinner"></div>Cargando...</div></div>
+    </div>
+
+    <!-- NOTIFICACIONES -->
+    <div id="view-notificaciones" class="view">
+      <div class="sec-header"><h3>🔔 Notificaciones</h3><p>Actividad reciente en tu cuenta</p></div>
+      <div id="notificaciones-list"><div class="loading"><div class="spinner"></div>Cargando...</div></div>
+    </div>
+
+    <!-- FOTOS -->
+    <div id="view-fotos" class="view">
+      <div class="sec-header"><h3>📷 Fotos</h3><p>Galería fotográfica de la comunidad</p></div>
+      <div id="fotos-upload-btn"></div>
+      <div class="fotos-grid" id="fotos-grid"><div class="loading" style="grid-column:1/-1"><div class="spinner"></div>Cargando...</div></div>
+    </div>
+
+  </div>
+
+  <div id="bottom-nav">
+    <button class="nav-btn active" onclick="nav('feed',this)">
+      <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+      Inicio
+    </button>
+    <button class="nav-btn" id="nav-btn-notif" onclick="nav('notificaciones',this)" style="position:relative">
+      <svg viewBox="0 0 24 24"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg>
+      <span class="nav-notif-badge" id="notif-badge">0</span>
+      Notificaciones
+    </button>
+    <button class="nav-btn" onclick="nav('mensajes',this)">
+      <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+      Mensajes
+    </button>
+    <button class="nav-btn" onclick="nav('fotos',this)">
+      <svg viewBox="0 0 24 24"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/><circle cx="12" cy="13" r="4"/></svg>
+      Fotos
+    </button>
+    <button class="nav-btn" onclick="abrirMenu()">
+      <svg viewBox="0 0 24 24"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      Menú
+    </button>
+  </div>
+</div>
+
+<!-- MENU OVERLAY + PANEL -->
+<div id="menu-overlay" onclick="cerrarMenu()"></div>
+<div id="menu-panel">
+  <div class="mp-header">
+    <div class="mp-hname" id="mp-nombre">Usuario</div>
+    <div class="mp-hemail" id="mp-email"></div>
+  </div>
+  <div class="mp-item" onclick="navFromMenu('miembros')">
+    <span class="mp-item-icon">👥</span> Comunidad
+  </div>
+  <div class="mp-item" onclick="navFromMenu('oracion')">
+    <span class="mp-item-icon">🙏</span> Muro de Oración
+  </div>
+  <div class="mp-item" onclick="navFromMenu('eventos')">
+    <span class="mp-item-icon">📅</span> Eventos
+  </div>
+  <div class="mp-item" onclick="navFromMenu('perfil')">
+    <span class="mp-item-icon">👤</span> Perfil
+  </div>
+  <div class="mp-item" onclick="window.open('/privacidad.html','_blank');cerrarMenu()">
+    <span class="mp-item-icon">🔒</span> Privacidad
+  </div>
+  <div style="flex:1"></div>
+  <div class="mp-item mp-logout" onclick="cerrarSesion();cerrarMenu()">
+    <span class="mp-item-icon">🚪</span> Cerrar sesión
+  </div>
+</div>
+
+<!-- MODAL PUBLICAR -->
+<div class="modal-bg" id="modal-post">
+  <div class="modal-sheet">
+    <div class="modal-title">Nueva publicación <button class="modal-close" onclick="closeModal('modal-post')">×</button></div>
+    <div class="tipo-btns">
+      <button class="tipo-btn sel" onclick="selTipo(this,'anuncio')">📢 Anuncio</button>
+      <button class="tipo-btn" onclick="selTipo(this,'testimonio')">⭐ Testimonio</button>
+      <button class="tipo-btn" onclick="selTipo(this,'oracion')">🙏 Oración</button>
+      <button class="tipo-btn" onclick="selTipo(this,'alabanza')">🎵 Alabanza</button>
+      <button class="tipo-btn" onclick="closeModal('modal-post');openModal('modal-evento')">📅 Evento</button>
+    </div>
+    <div class="color-picker" id="color-picker">
+      <span style="font-size:11px;color:var(--gris-texto);font-weight:600">Fondo:</span>
+      <div class="color-dot color-dot-blanco sel" style="background:#ffffff" onclick="selColor('#ffffff',this)" title="Blanco"></div>
+      <div class="color-dot" style="background:#003B6F" onclick="selColor('#003B6F',this)" title="Azul"></div>
+      <div class="color-dot" style="background:#F0AB00" onclick="selColor('#F0AB00',this)" title="Dorado"></div>
+      <div class="color-dot" style="background:#1D9E75" onclick="selColor('#1D9E75',this)" title="Verde"></div>
+      <div class="color-dot" style="background:#534AB7" onclick="selColor('#534AB7',this)" title="Morado"></div>
+      <div class="color-dot" style="background:#1a1a1a" onclick="selColor('#1a1a1a',this)" title="Negro"></div>
+      <div class="color-dot" style="background:#e53935" onclick="selColor('#e53935',this)" title="Rojo"></div>
+    </div>
+    <textarea class="form-textarea" id="post-texto" placeholder="¿Qué quieres compartir?"></textarea>
+    <input type="file" id="foto-input" accept="image/*" style="display:none" onchange="previsualizarFoto(this)">
+    <input type="file" id="video-input" accept="video/*" style="display:none" onchange="previsualizarVideo(this)">
+    <img id="foto-preview" class="foto-preview">
+    <video id="video-preview" style="display:none;width:100%;border-radius:10px;max-height:200px;margin-bottom:12px" controls playsinline></video>
+    <div style="display:flex;gap:8px;margin-bottom:12px">
+      <button class="btn-foto" style="margin-bottom:0;flex:1" onclick="document.getElementById('foto-input').click()">📸 Foto</button>
+      <button class="btn-foto" style="margin-bottom:0;flex:1" onclick="document.getElementById('video-input').click()">🎥 Video</button>
+    </div>
+    <button class="btn-publicar" onclick="publicar()">Publicar</button>
+  </div>
+</div>
+
+<!-- MODAL EVENTO -->
+<div class="modal-bg" id="modal-evento">
+  <div class="modal-sheet">
+    <div class="modal-title">Nuevo evento <button class="modal-close" onclick="closeModal('modal-evento')">×</button></div>
+    <label class="form-label">Nombre del evento</label>
+    <input class="form-input" id="ev-titulo" type="text" placeholder="Ej: Culto de Navidad">
+    <label class="form-label">Fecha</label>
+    <input class="form-input" id="ev-fecha" type="date">
+    <label class="form-label">Hora</label>
+    <input class="form-input" id="ev-hora" type="time">
+    <label class="form-label">Lugar</label>
+    <input class="form-input" id="ev-lugar" type="text" placeholder="Ej: Templo central">
+    <label class="form-label">Descripción</label>
+    <textarea class="form-textarea" id="ev-desc" placeholder="Detalles del evento..."></textarea>
+    <button class="btn-publicar" onclick="crearEvento()">Crear evento</button>
+  </div>
+</div>
+
+<!-- MODAL PERFIL -->
+<div class="modal-bg" id="modal-perfil">
+  <div class="modal-sheet">
+    <div class="modal-title">Editar perfil <button class="modal-close" onclick="closeModal('modal-perfil')">×</button></div>
+    <label class="form-label">Nombre</label>
+    <input class="form-input" id="edit-nombre" type="text" placeholder="Tu nombre">
+    <label class="form-label">Apellido</label>
+    <input class="form-input" id="edit-apellido" type="text" placeholder="Tu apellido">
+    <label class="form-label">Fecha de nacimiento</label>
+    <input class="form-input" id="edit-fnac" type="date">
+    <label class="form-label">Bio</label>
+    <input class="form-input" id="edit-bio" type="text" placeholder="Algo sobre ti...">
+    <label class="form-label">Ciudad</label>
+    <input class="form-input" id="edit-ciudad" type="text" placeholder="Tu ciudad">
+    <label class="form-label">Zona</label>
+    <select class="form-input" id="edit-zona">
+      <option value="">Sin zona</option>
+      <option>Zona 1</option><option>Zona 2</option><option>Zona 3</option>
+      <option>Zona 4</option><option>Zona 5</option><option>Zona 6</option><option>Zona 7</option>
+      <option>Zona 8 - Estación Villa</option>
+    </select>
+    <label class="form-label">Situación sentimental</label>
+    <select class="form-input" id="edit-estado-civil">
+      <option value="">Prefiero no decir</option>
+      <option value="Soltero/a">Soltero/a</option>
+      <option value="Casado/a">Casado/a</option>
+      <option value="Viudo/a">Viudo/a</option>
+      <option value="Divorciado/a">Divorciado/a</option>
+    </select>
+    <label class="form-label">Iglesia donde asiste</label>
+    <input class="form-input" id="edit-iglesia" type="text" placeholder="Nombre de tu iglesia">
+    <label class="form-label">¿Es bautizado/a?</label>
+    <select class="form-input" id="edit-bautizado">
+      <option value="">No especificado</option>
+      <option value="si">Sí</option>
+      <option value="no">No</option>
+    </select>
+    <label class="form-label">¿Recibió el Espíritu Santo?</label>
+    <select class="form-input" id="edit-espiritu">
+      <option value="">No especificado</option>
+      <option value="si">Sí</option>
+      <option value="no">No</option>
+    </select>
+    <label class="form-label">Teléfono / WhatsApp</label>
+    <input class="form-input" id="edit-telefono" type="tel" placeholder="Ej: +573001234567">
+    <label class="form-label">Correo electrónico de contacto</label>
+    <input class="form-input" id="edit-email-contacto" type="email" placeholder="tu@correo.com">
+    <div class="toggle-row">
+      <div class="toggle-lbl-wrap">
+        <div class="toggle-lbl">Mostrar información de contacto</div>
+        <div class="toggle-sub">Otros miembros podrán ver tu WhatsApp y correo</div>
+      </div>
+      <label class="toggle-switch">
+        <input type="checkbox" id="edit-mostrar-contacto">
+        <span class="toggle-track"></span>
+      </label>
+    </div>
+    <button class="btn-publicar" onclick="guardarPerfil()">Guardar</button>
+  </div>
+</div>
+
+<!-- MODAL TRANSMISIÓN EN VIVO -->
+<div class="modal-bg" id="modal-transmision">
+  <div class="modal-sheet">
+    <div class="modal-title">📡 Transmisión en vivo <button class="modal-close" onclick="closeModal('modal-transmision')">×</button></div>
+    <label class="form-label">Título de la transmisión</label>
+    <input class="form-input" id="live-titulo-input" type="text" placeholder="Ej: Servicio dominical" maxlength="60">
+    <label class="form-label">URL de YouTube o Facebook Live</label>
+    <input class="form-input" id="live-url-input" type="url" placeholder="https://youtube.com/watch?v=... o https://youtu.be/...">
+    <div id="live-url-preview" style="font-size:12px;color:var(--gris-texto);margin:-6px 0 10px;padding-left:4px"></div>
+    <button class="btn-publicar" onclick="guardarTransmision()">📡 Activar transmisión</button>
+    <button onclick="limpiarTransmision()" style="width:100%;padding:12px;margin-top:8px;border:none;background:#fee2e2;color:#dc2626;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer">🔴 Desactivar transmisión</button>
+  </div>
+</div>
+
+<!-- MODAL CREAR GRUPO -->
+<div class="modal-bg" id="modal-crear-grupo">
+  <div class="modal-sheet">
+    <div class="modal-title">Crear grupo <button class="modal-close" onclick="closeModal('modal-crear-grupo')">×</button></div>
+    <label class="form-label">Nombre del grupo *</label>
+    <input class="form-input" id="grp-nombre" type="text" placeholder="Nombre del grupo" maxlength="50">
+    <label class="form-label">Descripción</label>
+    <textarea class="form-textarea" id="grp-desc" placeholder="¿De qué trata este grupo?"></textarea>
+    <label class="form-label">Foto del grupo</label>
+    <button class="btn-foto" onclick="document.getElementById('grp-foto-input').click()">📷 Subir foto (opcional)</button>
+    <input type="file" id="grp-foto-input" accept="image/*" style="display:none" onchange="previewGrupoFoto(this)">
+    <img id="grp-foto-preview" class="foto-preview" src="" alt="">
+    <button class="btn-publicar" onclick="crearGrupo()">Crear grupo</button>
+  </div>
+</div>
+
+<!-- MODAL PUBLICAR EN GRUPO -->
+<div class="modal-bg" id="modal-post-grupo">
+  <div class="modal-sheet">
+    <div class="modal-title">Publicar en el grupo <button class="modal-close" onclick="closeModal('modal-post-grupo')">×</button></div>
+    <textarea class="form-textarea" id="gpost-texto" placeholder="¿Qué quieres compartir con el grupo?"></textarea>
+    <button class="btn-foto" onclick="document.getElementById('gpost-foto-input').click()">📷 Agregar foto</button>
+    <input type="file" id="gpost-foto-input" accept="image/*" style="display:none" onchange="previewGpostFoto(this)">
+    <img id="gpost-foto-preview" class="foto-preview" src="" alt="">
+    <button class="btn-publicar" onclick="publicarEnGrupo()">Publicar</button>
+  </div>
+</div>
+
+<!-- MODAL AÑADIR MIEMBRO -->
+<div class="modal-bg" id="modal-add-miembro">
+  <div class="modal-sheet">
+    <div class="modal-title">Añadir miembro <button class="modal-close" onclick="closeModal('modal-add-miembro')">×</button></div>
+    <div id="add-miembro-list"><div class="loading"><div class="spinner"></div>Cargando...</div></div>
+  </div>
+</div>
+
+<!-- MODAL COMPARTIR -->
+<div class="modal-bg" id="share-modal">
+  <div class="modal-sheet">
+    <div class="modal-title">Compartir <button class="modal-close" onclick="cerrarShareModal()">×</button></div>
+    <div class="share-opts">
+      <button class="share-opt" onclick="shareWhatsApp()">
+        <div class="share-opt-icon" style="background:#dcfce7">📱</div>
+        Compartir en WhatsApp
+      </button>
+      <button class="share-opt" onclick="shareCopy()">
+        <div class="share-opt-icon" style="background:#e0e7ff">🔗</div>
+        Copiar enlace
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL HISTORIA TIPO -->
+<div class="modal-bg" id="modal-historia-tipo">
+  <div class="modal-sheet">
+    <div class="modal-title">Nueva historia <button class="modal-close" onclick="closeModal('modal-historia-tipo')">×</button></div>
+    <div class="share-opts">
+      <button class="share-opt" onclick="elegirFuenteHistoria('camara')">
+        <div class="share-opt-icon" style="background:#fef3c7">📷</div>
+        Cámara
+      </button>
+      <button class="share-opt" onclick="elegirFuenteHistoria('imagen')">
+        <div class="share-opt-icon" style="background:#dbeafe">🖼️</div>
+        Imagen desde galería
+      </button>
+      <button class="share-opt" onclick="elegirFuenteHistoria('video')">
+        <div class="share-opt-icon" style="background:#fce7f3">🎥</div>
+        Video (máx. 30 seg)
+      </button>
+      <button class="share-opt" onclick="elegirFuenteHistoria('audio')">
+        <div class="share-opt-icon" style="background:#f3e8ff">🎵</div>
+        Audio
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL HISTORIA PREVIEW -->
+<div class="modal-bg" id="modal-historia-preview">
+  <div class="modal-sheet">
+    <div class="modal-title">Vista previa <button class="modal-close" onclick="cancelarHistoria()">×</button></div>
+    <div style="text-align:center;margin:12px 0">
+      <img id="hp-img" src="" alt="" style="display:none">
+      <video id="hp-video" src="" controls playsinline style="display:none"></video>
+      <div id="hp-audio-wrap" class="hp-audio-wrap">
+        <div class="hp-audio-nota">🎵</div>
+        <audio id="hp-audio" src="" controls style="width:100%"></audio>
+      </div>
+    </div>
+    <button class="btn-publicar" onclick="confirmarHistoria()">Publicar historia</button>
+    <button onclick="cancelarHistoria()" style="width:100%;padding:12px;margin-top:8px;border:none;background:none;color:var(--gris-texto);cursor:pointer;font-size:14px">Cancelar</button>
+  </div>
+</div>
+
+<!-- VISOR DE HISTORIAS -->
+<div id="story-view">
+  <div class="sp-bars" id="sp-bars"></div>
+  <div class="sv-header">
+    <div class="sv-uav" id="sv-uav"></div>
+    <div>
+      <div style="color:white;font-size:13px;font-weight:600" id="sv-nombre"></div>
+      <div style="color:rgba(255,255,255,0.75);font-size:11px" id="sv-tiempo"></div>
+    </div>
+    <button class="sv-close" onclick="cerrarHistoria()">×</button>
+  </div>
+  <div class="sv-img-area" onclick="siguienteHistoria()">
+    <img id="sv-img" src="" alt="">
+    <video id="sv-video" src="" autoplay playsinline loop></video>
+    <div id="sv-nota" class="sv-nota">🎵</div>
+    <audio id="sv-audio" src=""></audio>
+  </div>
+</div>
+
+<!-- GRUPO VIEW -->
+<div id="grupo-view">
+  <div class="grupo-header">
+    <button class="grupo-back" onclick="cerrarGrupo()">&#8592;</button>
+    <div class="grupo-hfoto" id="gh-foto">👥</div>
+    <div style="flex:1;min-width:0">
+      <div class="grupo-htitle" id="gh-nombre">Grupo</div>
+      <div class="grupo-hsub" id="gh-sub">0 miembros</div>
+    </div>
+    <button id="btn-add-miembro" onclick="abrirAddMiembro()" style="display:none;background:rgba(255,255,255,0.2);border:none;color:white;border-radius:8px;padding:6px 10px;font-size:12px;cursor:pointer;white-space:nowrap">+ Miembro</button>
+  </div>
+  <div class="grupo-tab-bar">
+    <button class="gtab active" id="gtab-btn-feed" onclick="navGrupo('feed')">📋 Feed</button>
+    <button class="gtab" id="gtab-btn-chat" onclick="navGrupo('chat')">💬 Chat</button>
+    <button class="gtab" id="gtab-btn-miembros" onclick="navGrupo('miembros')">👥 Miembros</button>
+  </div>
+  <!-- FEED TAB -->
+  <div id="gtab-feed" style="flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:10px">
+    <button class="btn-publicar" onclick="openModal('modal-post-grupo')" style="margin-bottom:10px">✏️ Publicar en el grupo</button>
+    <div id="grupo-posts-list"></div>
+  </div>
+  <!-- CHAT TAB -->
+  <div id="gtab-chat-wrapper" style="display:none;flex:1;flex-direction:column;min-height:0">
+    <div id="gtab-chat-msgs" class="chat-messages"></div>
+    <div class="chat-input-area">
+      <input class="chat-input" id="gchat-input" type="text" placeholder="Mensaje al grupo..." onkeydown="if(event.key==='Enter')enviarMsgGrupo()">
+      <button class="btn-send" onclick="enviarMsgGrupo()">
+        <svg viewBox="0 0 24 24" style="width:18px;height:18px;fill:none;stroke:white;stroke-width:2;stroke-linecap:round;stroke-linejoin:round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+      </button>
+    </div>
+  </div>
+  <!-- MIEMBROS TAB -->
+  <div id="gtab-miembros" style="display:none;flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:10px">
+    <div id="grupo-miembros-list"></div>
+  </div>
+</div>
+
+<!-- CHAT INDIVIDUAL -->
+<div id="chat-view">
+  <div class="chat-header">
+    <button class="chat-back" onclick="cerrarChat()">&#8592;</button>
+    <div class="chat-av" id="chat-av">?</div>
+    <div class="chat-hname" id="chat-hname">...</div>
+  </div>
+  <div class="chat-messages" id="chat-messages"></div>
+  <div class="chat-input-area">
+    <input class="chat-input" id="chat-input" type="text" placeholder="Escribe un mensaje..." onkeydown="if(event.key==='Enter')enviarMensaje()">
+    <button class="btn-send" onclick="enviarMensaje()">
+      <svg viewBox="0 0 24 24" style="width:18px;height:18px;fill:none;stroke:white;stroke-width:2;stroke-linecap:round;stroke-linejoin:round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+    </button>
+  </div>
+</div>
+
+<div id="post-menu-popup">
+  <div class="pmp-item danger" onclick="eliminarPost()">🗑️ Eliminar publicación</div>
+</div>
+
+<div id="toast"></div>
+
+<!-- MODAL SUBIR FOTO -->
+<div class="modal-bg" id="modal-foto-galeria">
+  <div class="modal-sheet">
+    <div class="modal-title">📷 Subir foto <button class="modal-close" onclick="closeModal('modal-foto-galeria')">×</button></div>
+    <label class="form-label">Imagen *</label>
+    <button class="btn-foto" onclick="document.getElementById('fotos-file-input').click()">📷 Seleccionar imagen</button>
+    <input type="file" id="fotos-file-input" accept="image/*" style="display:none" onchange="prevFotoGaleria(this)">
+    <img id="fotos-preview" class="foto-preview" src="" alt="">
+    <label class="form-label">Descripción (opcional)</label>
+    <input class="form-input" id="fotos-desc" type="text" placeholder="Ej: Culto de adoración..." maxlength="120">
+    <button class="btn-publicar" id="btn-publicar-foto" onclick="subirFotoGaleria()">📤 Publicar foto</button>
+  </div>
+</div>
+
+<script type="module">
+import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js';
+import { getFirestore, collection, addDoc, getDocs, doc, updateDoc, getDoc, setDoc, deleteDoc, query, orderBy, where, serverTimestamp, limit, onSnapshot, increment, arrayUnion, arrayRemove } from 'https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js';
+import { getAuth, signInWithPopup, GoogleAuthProvider, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged, updateProfile, sendPasswordResetEmail } from 'https://www.gstatic.com/firebasejs/10.7.0/firebase-auth.js';
+import { getMessaging, getToken, onMessage } from 'https://www.gstatic.com/firebasejs/10.7.0/firebase-messaging.js';
+
+const firebaseConfig = {
+  apiKey: "AIzaSyBBm9H0SB4mUmqy61WyqCG4FsFfGysPJ80",
+  authDomain: "iglesiadigital-ad872.firebaseapp.com",
+  projectId: "iglesiadigital-ad872",
+  storageBucket: "iglesiadigital-ad872.firebasestorage.app",
+  messagingSenderId: "159154545318",
+  appId: "1:159154545318:web:4b0a9c3c0ae35a86d9ca67"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+const auth = getAuth(app);
+let messaging = null;
+try { messaging = getMessaging(app); } catch(e) {}
+const provider = new GoogleAuthProvider();
+
+const CLOUDINARY_URL    = 'https://api.cloudinary.com/v1_1/djwgzp7we/image/upload';
+const CLOUDINARY_PRESET = 'koinonia_upload';
+
+async function subirACloudinary(file) {
+  const fd = new FormData();
+  fd.append('file', file);
+  fd.append('upload_preset', CLOUDINARY_PRESET);
+  const res = await fetch(CLOUDINARY_URL, { method: 'POST', body: fd });
+  if (!res.ok) throw new Error('Error Cloudinary ' + res.status);
+  const data = await res.json();
+  return data.secure_url.replace('/upload/', '/upload/w_800,q_70,f_auto/');
+}
+
+let currentUser = null;
+let loginMode = 'login';
+let postTipo = 'anuncio';
+let fotoFile = null;
+let videoFile = null;
+let videoObserver = null;
+let myAvatarUrl = null;
+const avatarCache = {};
+const ADMIN_EMAIL = 'osmar0721@gmail.com';
+let chatUid = null;
+let chatUnsubscribe = null;
+let chatOpenedAt = null;
+let postsListener = null;
+let contactos = {};
+let storyTimer = null;
+let shareUrl = '';
+let storiesActivas = [];
+let storyIndex = 0;
+let storyPreviewFile = null;
+let storyPreviewTipo = 'imagen';
+let grupoActivo = null;
+let grupoUnsubChat = null;
+let grupoMiembros = [];
+let grpFotoFile = null;
+let gpostFotoFile = null;
+let misConexiones = new Set();
+let miembrosMap = {};
+let todosLosMiembros = [];
+let colorFondo = '#ffffff';
+const DARK_FONDOS = ['#003B6F','#534AB7','#1a1a1a','#e53935','#1D9E75'];
+function chatId(a, b) { return [a, b].sort().join('_'); }
+
+// ======== NOTIFICACIONES ========
+// VAPID key: Firebase Console → Project Settings → Cloud Messaging → Web Push certificates
+const VAPID_KEY = 'BBRNrQr7VcjtRQcx6UO6X_jZU1fdY0q7zxs2kOT5xbPOu5KpNjw3EWlklFEzaiWR1Bj7wdiZkfEhd4OEsqpglJA';
+
+// ======== VERSÍCULO DEL DÍA ========
+const VERSICULOS = [
+  {ref:'Juan 3:16',texto:'Porque de tal manera amó Dios al mundo, que ha dado a su Hijo unigénito, para que todo aquel que en él cree, no se pierda, mas tenga vida eterna.'},
+  {ref:'Filipenses 4:13',texto:'Todo lo puedo en Cristo que me fortalece.'},
+  {ref:'Jeremías 29:11',texto:'Porque yo sé los planes que tengo para vosotros, dice Jehová, planes de bienestar y no de mal, para daros un futuro y una esperanza.'},
+  {ref:'Romanos 8:28',texto:'Y sabemos que a los que aman a Dios, todas las cosas les ayudan a bien, esto es, a los que conforme a su propósito son llamados.'},
+  {ref:'Isaías 40:31',texto:'Pero los que esperan a Jehová tendrán nuevas fuerzas; levantarán alas como las águilas; correrán y no se cansarán; caminarán y no se fatigarán.'},
+  {ref:'Salmos 23:1',texto:'Jehová es mi pastor; nada me faltará.'},
+  {ref:'Proverbios 3:5-6',texto:'Fíate de Jehová de todo tu corazón, y no te apoyes en tu propia prudencia. Reconócelo en todos tus caminos, y él enderezará tus veredas.'},
+  {ref:'Mateo 11:28',texto:'Venid a mí todos los que estáis trabajados y cargados, y yo os haré descansar.'},
+  {ref:'Josué 1:9',texto:'Mira que te mando que te esfuerces y seas valiente; no temas ni desmayes, porque Jehová tu Dios estará contigo en dondequiera que vayas.'},
+  {ref:'Salmos 46:1',texto:'Dios es nuestro amparo y fortaleza, nuestro pronto auxilio en las tribulaciones.'},
+  {ref:'Romanos 5:8',texto:'Mas Dios muestra su amor para con nosotros, en que siendo aún pecadores, Cristo murió por nosotros.'},
+  {ref:'1 Corintios 13:4-5',texto:'El amor es sufrido, es benigno; el amor no tiene envidia, el amor no es jactancioso, no se envanece; no hace nada indebido, no busca lo suyo.'},
+  {ref:'Salmos 119:105',texto:'Lámpara es a mis pies tu palabra, y lumbrera a mi camino.'},
+  {ref:'Efesios 2:8',texto:'Porque por gracia sois salvos por medio de la fe; y esto no de vosotros, pues es don de Dios.'},
+  {ref:'Gálatas 5:22-23',texto:'Mas el fruto del Espíritu es amor, gozo, paz, paciencia, benignidad, bondad, fe, mansedumbre, templanza.'},
+  {ref:'Mateo 6:33',texto:'Mas buscad primeramente el reino de Dios y su justicia, y todas estas cosas os serán añadidas.'},
+  {ref:'Salmos 37:4',texto:'Deléitate asimismo en Jehová, y él te concederá las peticiones de tu corazón.'},
+  {ref:'2 Timoteo 1:7',texto:'Porque no nos ha dado Dios espíritu de cobardía, sino de poder, de amor y de dominio propio.'},
+  {ref:'Isaías 41:10',texto:'No temas, porque yo estoy contigo; no desmayes, porque yo soy tu Dios que te esfuerzo; siempre te ayudaré, siempre te sustentaré con la diestra de mi justicia.'},
+  {ref:'Salmos 91:1',texto:'El que habita al abrigo del Altísimo morará bajo la sombra del Omnipotente.'},
+  {ref:'Colosenses 3:23',texto:'Y todo lo que hagáis, hacedlo de corazón, como para el Señor y no para los hombres.'},
+  {ref:'Juan 14:6',texto:'Jesús le dijo: Yo soy el camino, y la verdad, y la vida; nadie viene al Padre, sino por mí.'},
+  {ref:'Romanos 12:2',texto:'No os conforméis a este siglo, sino transformaos por medio de la renovación de vuestro entendimiento.'},
+  {ref:'Apocalipsis 3:20',texto:'He aquí, yo estoy a la puerta y llamo; si alguno oye mi voz y abre la puerta, entraré a él, y cenaré con él, y él conmigo.'},
+  {ref:'Juan 8:32',texto:'Y conoceréis la verdad, y la verdad os hará libres.'},
+  {ref:'Hebreos 11:1',texto:'Es pues la fe la certeza de lo que se espera, la convicción de lo que no se ve.'},
+  {ref:'Filipenses 4:6-7',texto:'Por nada estéis afanosos, sino sean conocidas vuestras peticiones delante de Dios en toda oración y ruego, con acción de gracias.'},
+  {ref:'1 Juan 1:9',texto:'Si confesamos nuestros pecados, él es fiel y justo para perdonar nuestros pecados, y limpiarnos de toda maldad.'},
+  {ref:'Marcos 11:24',texto:'Por tanto, os digo que todo lo que pidiereis orando, creed que lo recibiréis, y os vendrá.'},
+  {ref:'Salmos 27:1',texto:'Jehová es mi luz y mi salvación; ¿de quién temeré? Jehová es la fortaleza de mi vida; ¿de quién me he de atemorizar?'},
+  {ref:'Mateo 5:9',texto:'Bienaventurados los pacificadores, porque ellos serán llamados hijos de Dios.'},
+  {ref:'2 Crónicas 7:14',texto:'Si se humillare mi pueblo, sobre el cual mi nombre es invocado, y oraren, y buscaren mi rostro, y se convirtieren de sus malos caminos; entonces yo oiré desde los cielos, y perdonaré sus pecados, y sanaré su tierra.'},
+  {ref:'Salmos 34:18',texto:'Cercano está Jehová a los quebrantados de corazón; y salva a los contritos de espíritu.'},
+  {ref:'Isaías 26:3',texto:'Tú guardarás en completa paz a aquel cuyo pensamiento en ti persevera; porque en ti ha confiado.'},
+  {ref:'1 Pedro 5:7',texto:'Echando toda vuestra ansiedad sobre él, porque él tiene cuidado de vosotros.'},
+  {ref:'Deuteronomio 31:8',texto:'Y Jehová va delante de ti; él estará contigo, no te dejará, ni te desamparará; no temas ni te intimides.'},
+  {ref:'Salmos 121:2',texto:'Mi socorro viene de Jehová, que hizo los cielos y la tierra.'},
+  {ref:'Proverbios 22:6',texto:'Instruye al niño en su camino, y aun cuando fuere viejo no se apartará de él.'},
+  {ref:'Juan 16:33',texto:'Estas cosas os he hablado para que en mí tengáis paz. En el mundo tendréis aflicción; pero confiad, yo he vencido al mundo.'},
+  {ref:'Salmos 16:8',texto:'A Jehová he puesto siempre delante de mí; porque está a mi diestra, no seré conmovido.'},
+];
+
+async function publicarVersiculoDia() {
+  const ahora = new Date();
+  if (ahora.getHours() < 6) return;
+  const dateKey = ahora.toISOString().substring(0, 10);
+  const lsKey = 'koinonia_versiculo_' + dateKey;
+  if (localStorage.getItem(lsKey)) return;
+  const docId = 'versiculo-' + dateKey;
+  try {
+    const existing = await getDoc(doc(db, 'posts', docId));
+    if (existing.exists()) { localStorage.setItem(lsKey, '1'); return; }
+    const dayOfYear = Math.floor((ahora - new Date(ahora.getFullYear(), 0, 0)) / 86400000);
+    const v = VERSICULOS[dayOfYear % VERSICULOS.length];
+    await setDoc(doc(db, 'posts', docId), {
+      autor: 'Koinonia',
+      uid: 'koinonia-system',
+      tipo: 'versiculo',
+      texto: v.texto,
+      versiculo_ref: v.ref,
+      foto: null,
+      likes: 0,
+      comentariosCount: 0,
+      fecha: serverTimestamp()
+    });
+    localStorage.setItem(lsKey, '1');
+  } catch(e) {}
+}
+
+function mostrarNotificacion(titulo, cuerpo) {
+  if (Notification.permission !== 'granted') return;
+  try {
+    new Notification(titulo, { body: cuerpo, icon: '/icon-192.png', badge: '/icon-192.png' });
+  } catch(e) {}
+}
+
+async function pedirPermisoYGuardarToken() {
+  if (!('Notification' in window) || !messaging) return;
+  try {
+    const permiso = await Notification.requestPermission();
+    if (permiso !== 'granted') return;
+    const reg = await navigator.serviceWorker.ready;
+    const token = await getToken(messaging, { vapidKey: VAPID_KEY, serviceWorkerRegistration: reg });
+    if (token && currentUser) {
+      await updateDoc(doc(db, 'perfiles', currentUser.uid), { fcmToken: token });
+    }
+  } catch(e) { /* FCM requiere VAPID key válida para tokens */ }
+}
+
+function iniciarListenerPosts() {
+  if (postsListener) return;
+  const inicio = new Date();
+  const q = query(collection(db, 'posts'), orderBy('fecha', 'desc'), limit(1));
+  postsListener = onSnapshot(q, snap => {
+    snap.docChanges().forEach(change => {
+      if (change.type !== 'added') return;
+      const p = change.doc.data();
+      const fecha = p.fecha?.toDate ? p.fecha.toDate() : null;
+      if (!fecha || fecha <= inicio || p.uid === currentUser?.uid) return;
+      mostrarNotificacion(
+        `📢 ${p.autor || 'Alguien'} publicó`,
+        (p.texto || 'Nueva publicación').substring(0, 100)
+      );
+    });
+  });
+}
+
+if (messaging) {
+  onMessage(messaging, payload => {
+    const n = payload.notification || {};
+    if (n.title) mostrarNotificacion(n.title, n.body || '');
+  });
+}
+
+// ======== AUTH ========
+onAuthStateChanged(auth, async user => {
+  if (user) {
+    currentUser = user;
+    document.getElementById('login-screen').classList.remove('show');
+    document.getElementById('app').style.display = 'flex';
+    document.getElementById('splash').style.display = 'none';
+    const ini = (user.displayName || user.email).substring(0,2).toUpperCase();
+    const uav = document.getElementById('user-av'); if (uav) uav.textContent = ini;
+    document.getElementById('compose-av').textContent = ini;
+    await crearPerfilSiNoExiste(user);
+    cargarFeed();
+    cargarPerfil();
+    pedirPermisoYGuardarToken();
+    iniciarListenerPosts();
+    iniciarEscuchaNotificaciones();
+    cargarMisConexiones();
+  } else {
+    currentUser = null;
+    document.getElementById('app').style.display = 'none';
+    document.getElementById('login-screen').classList.add('show');
+  }
+});
+
+async function crearPerfilSiNoExiste(user) {
+  const ref = doc(db, 'perfiles', user.uid);
+  const snap = await getDoc(ref);
+  if (!snap.exists()) {
+    await setDoc(ref, {
+      nombre: user.displayName || user.email.split('@')[0],
+      email: user.email,
+      bio: 'Miembro de Koinonia',
+      zona: '',
+      esAdmin: user.email === ADMIN_EMAIL,
+      fechaRegistro: serverTimestamp()
+    });
+  }
+}
+
+setTimeout(() => {
+  if (!currentUser) {
+    document.getElementById('splash').style.opacity = '0';
+    setTimeout(() => {
+      document.getElementById('splash').style.display = 'none';
+      document.getElementById('login-screen').classList.add('show');
+    }, 500);
+  }
+}, 2000);
+
+window.switchTab = function(mode, btn) {
+  loginMode = mode;
+  document.querySelectorAll('.ltab').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  const nw = document.getElementById('nombre-wrap');
+  const fn = document.getElementById('fnac-wrap');
+  const ba = document.getElementById('btn-accion');
+  const fw = document.getElementById('forgot-wrap');
+  const tw = document.getElementById('terminos-wrap');
+  if (mode === 'registro') {
+    nw.classList.add('show'); fn.classList.add('show'); tw.classList.add('show');
+    ba.textContent = 'Crear cuenta'; ba.onclick = registrarEmail; fw.style.display='none';
+  } else {
+    nw.classList.remove('show'); fn.classList.remove('show'); tw.classList.remove('show');
+    ba.textContent = 'Iniciar sesión'; ba.onclick = loginEmail; fw.style.display='';
+  }
+}
+
+window.loginGoogle = async function() {
+  try { await signInWithPopup(auth, provider); }
+  catch(e) {
+    if (e.code === 'auth/popup-closed-by-user' || e.code === 'auth/cancelled-popup-request') return;
+    mostrarError('No se pudo iniciar con Google. Inténtalo de nuevo.');
+  }
+}
+
+window.loginEmail = async function() {
+  const email = document.getElementById('l-email').value.trim();
+  const pass  = document.getElementById('l-pass').value;
+  if (!email || !pass) { mostrarError('Completa todos los campos'); return; }
+  const btn = document.getElementById('btn-accion');
+  btn.disabled = true; btn.textContent = 'Entrando…';
+  try {
+    await signInWithEmailAndPassword(auth, email, pass);
+  } catch(e) {
+    btn.disabled = false; btn.textContent = 'Iniciar sesión';
+    const ERR = {
+      'auth/user-not-found':         'Correo no registrado en Koinonia.',
+      'auth/wrong-password':         'Contraseña incorrecta. Verifícala e intenta de nuevo.',
+      'auth/invalid-credential':     'Correo o contraseña incorrectos.',
+      'auth/invalid-email':          'El formato del correo no es válido.',
+      'auth/user-disabled':          'Esta cuenta ha sido desactivada.',
+      'auth/too-many-requests':      'Demasiados intentos fallidos. Espera unos minutos o restablece tu contraseña.',
+      'auth/network-request-failed': 'Sin conexión. Verifica tu red e intenta de nuevo.',
+    };
+    mostrarError(ERR[e.code] || 'Error al iniciar sesión. Inténtalo de nuevo.');
+  }
+}
+
+async function registrarEmail() {
+  const nombre = document.getElementById('l-nombre').value.trim();
+  const fnac   = document.getElementById('l-fnac').value;
+  const email  = document.getElementById('l-email').value.trim();
+  const pass   = document.getElementById('l-pass').value;
+  if (!nombre || !email || !pass) { mostrarError('Completa todos los campos'); return; }
+  if (!fnac) { mostrarError('La fecha de nacimiento es obligatoria'); return; }
+  if (!document.getElementById('terminos-check').checked) { mostrarError('Debes aceptar los términos y política de privacidad'); return; }
+  if (pass.length < 6) { mostrarError('Contraseña mínimo 6 caracteres'); return; }
+  const btn = document.getElementById('btn-accion');
+  btn.disabled = true; btn.textContent = 'Creando cuenta…';
+  try {
+    const cred = await createUserWithEmailAndPassword(auth, email, pass);
+    await updateProfile(cred.user, { displayName: nombre });
+    await setDoc(doc(db, 'perfiles', cred.user.uid), {
+      nombre, email, bio: 'Miembro de Koinonia', zona: '',
+      fechaNacimiento: fnac, esAdmin: email === ADMIN_EMAIL,
+      fechaRegistro: serverTimestamp()
+    });
+  } catch(e) {
+    btn.disabled = false; btn.textContent = 'Crear cuenta';
+    const ERR = {
+      'auth/email-already-in-use':   'Este correo ya está registrado. Intenta iniciar sesión.',
+      'auth/invalid-email':          'El formato del correo no es válido.',
+      'auth/weak-password':          'La contraseña es muy débil. Usa al menos 6 caracteres.',
+      'auth/network-request-failed': 'Sin conexión. Verifica tu red e intenta de nuevo.',
+    };
+    mostrarError(ERR[e.code] || 'No se pudo crear la cuenta. Inténtalo de nuevo.');
+  }
+}
+
+function mostrarError(msg) {
+  const el = document.getElementById('login-error');
+  el.textContent = msg; el.style.display = 'block';
+  clearTimeout(mostrarError._t);
+  mostrarError._t = setTimeout(() => { el.style.display = 'none'; }, 6000);
+}
+
+window.cerrarSesion = async function() { await signOut(auth); toast('Sesión cerrada'); }
+
+window.mostrarForgot = function() {
+  const emailVal = document.getElementById('l-email').value.trim();
+  document.getElementById('login-form-main').style.display = 'none';
+  document.getElementById('login-form-forgot').style.display = 'block';
+  const resetInput = document.getElementById('l-email-reset');
+  resetInput.value = emailVal;
+  document.getElementById('reset-msg').style.display = 'none';
+  setTimeout(() => resetInput.focus(), 80);
+}
+
+window.ocultarForgot = function() {
+  document.getElementById('login-form-forgot').style.display = 'none';
+  document.getElementById('login-form-main').style.display = 'block';
+}
+
+window.enviarReset = async function() {
+  const email = document.getElementById('l-email-reset').value.trim();
+  const msgEl = document.getElementById('reset-msg');
+  if (!email) {
+    msgEl.textContent = '⚠️ Escribe tu correo electrónico';
+    msgEl.style.background = 'rgba(255,200,0,0.12)';
+    msgEl.style.color = '#f0ab00';
+    msgEl.style.display = 'block';
+    return;
+  }
+  try {
+    await sendPasswordResetEmail(auth, email);
+    msgEl.textContent = '✅ Te enviamos un correo para restablecer tu contraseña. Revisa tu bandeja de entrada (y la carpeta de spam).';
+    msgEl.style.background = 'rgba(76,175,80,0.12)';
+    msgEl.style.color = '#66bb6a';
+    msgEl.style.display = 'block';
+  } catch(e) {
+    let msg = '❌ Ocurrió un error. Inténtalo de nuevo.';
+    if (e.code === 'auth/user-not-found')  msg = '❌ No existe una cuenta registrada con ese correo.';
+    if (e.code === 'auth/invalid-email')   msg = '❌ El formato del correo no es válido.';
+    if (e.code === 'auth/too-many-requests') msg = '❌ Demasiados intentos. Espera unos minutos.';
+    msgEl.textContent = msg;
+    msgEl.style.background = 'rgba(255,80,80,0.1)';
+    msgEl.style.color = '#ff7b7b';
+    msgEl.style.display = 'block';
+  }
+}
+
+window.recuperarContrasena = window.mostrarForgot;
+
+// ======== CUMPLEAÑOS ========
+async function mostrarCumpleanosEnFeed() {
+  try {
+    const hoy = new Date();
+    const mes = hoy.getMonth() + 1;
+    const dia = hoy.getDate();
+    const snap = await getDocs(collection(db, 'perfiles'));
+    const cumpleaneros = [];
+    snap.forEach(d => {
+      const p = d.data();
+      if (!p.fechaNacimiento) return;
+      const parts = p.fechaNacimiento.split('-');
+      if (parseInt(parts[1]) === mes && parseInt(parts[2]) === dia) {
+        const n = [p.nombre, p.apellido].filter(Boolean).join(' ') || 'Miembro';
+        cumpleaneros.push(n);
+      }
+    });
+    if (!cumpleaneros.length) return;
+    const card = document.createElement('div');
+    card.className = 'cumple-card';
+    const names = cumpleaneros.join(', ');
+    card.innerHTML = `<div class="cumple-icon">🎂</div><div class="cumple-title">¡Hoy es el cumpleaños de un miembro!</div><div class="cumple-names">🎉 ${names} — ¡que Dios les bendiga en su día!</div>`;
+    const feedList = document.getElementById('feed-list');
+    feedList.insertBefore(card, feedList.firstChild);
+  } catch(e) {}
+}
+
+// ======== FEED ========
+async function cargarFeed() {
+  cargarHistorias();
+  publicarVersiculoDia();
+  cargarTransmision();
+  try {
+    const q = query(collection(db,'posts'), orderBy('fecha','desc'), limit(30));
+    const snap = await getDocs(q);
+    const hace7dias = new Date(Date.now() - 7*24*60*60*1000);
+    if (snap.empty) {
+      document.getElementById('feed-list').innerHTML = '<div class="empty"><div class="empty-icon">✝️</div><p>Sé el primero en publicar algo</p></div>';
+      return;
+    }
+    // Pre-fetch avatares de autores no cacheados
+    const posts = [];
+    snap.forEach(d => { const p={id:d.id,...d.data()}; const f=p.fecha?.toDate?p.fecha.toDate():new Date(); if(f>=hace7dias) posts.push(p); });
+    const uidsNuevos = [...new Set(posts.map(p=>p.uid).filter(u=>u&&!(u in avatarCache)))];
+    await Promise.all(uidsNuevos.map(async uid=>{
+      try{ const s=await getDoc(doc(db,'perfiles',uid)); avatarCache[uid]=s.exists()?(s.data().avatarUrl||null):null; }catch(e){ avatarCache[uid]=null; }
+    }));
+    let html = '';
+    const avColors = ['av-azul','av-dorado','av-verde','av-morado'];
+    let i = 0;
+    posts.forEach(p => {
+      const fecha = p.fecha?.toDate ? p.fecha.toDate() : new Date();
+      const avC = avColors[i++ % 4];
+      const ini = (p.autor||'?').substring(0,2).toUpperCase();
+      const avUrl = p.avatarUrl || avatarCache[p.uid] || null;
+      const avStyle = avUrl ? `style="background-image:url(${avUrl});background-size:cover;background-position:center;color:transparent"` : '';
+      const avContent = avUrl ? '' : ini;
+      const canDelete = p.uid === currentUser.uid || currentUser.email === ADMIN_EMAIL;
+      const hasBg = p.colorFondo && p.colorFondo !== '#ffffff';
+      const isDarkBg = hasBg && DARK_FONDOS.includes(p.colorFondo);
+      const bgTextColor = hasBg ? (isDarkBg ? 'white' : (p.colorFondo === '#F0AB00' ? '#003B6F' : 'var(--texto)')) : '';
+      const bodyStyle = hasBg ? `background:${p.colorFondo};color:${bgTextColor}` : '';
+      html += `<div class="post" id="post-${p.id}">
+        <div class="post-header">
+          <div class="av ${avC}" ${avStyle}>${avContent}</div>
+          <div class="post-info">
+            <div class="post-autor">${p.autor||'Miembro'}</div>
+            <div class="post-time">${fmt(fecha)}</div>
+          </div>
+          ${canDelete ? `<button class="post-menu post-menu-btn" onclick="togglePostMenu('${p.id}','${p.uid||''}',event)">⋯</button>` : ''}
+        </div>
+        ${p.foto ? `<img src="${p.foto}" class="post-img" loading="lazy">` : ''}
+        ${p.video ? `<div class="video-wrap"><video class="post-video" preload="none" playsinline controls poster="${videoPoster(p.video)}" data-src="${p.video}"></video><div class="video-play-overlay" onclick="activarVideo(this)"><div class="play-circle"><svg viewBox="0 0 24 24" width="26" height="26"><polygon points="9,5 21,12 9,19" fill="white"/></svg></div></div></div>` : ''}
+        ${p.tipo === 'versiculo'
+          ? `<div class="post-versiculo">${escHtml(p.texto||'')}<div class="post-versiculo-ref">— ${escHtml(p.versiculo_ref||'')}</div></div>`
+          : (p.texto ? `<div class="${hasBg ? 'post-body-color' : 'post-body'}" ${hasBg ? `style="${bodyStyle}"` : ''}>${escHtml(p.texto)}</div>` : '')}
+        <div class="post-stats" id="stats-${p.id}">
+          <div class="react-sum" id="likes-${p.id}">${renderReaccionesHtml(p.reacciones)}</div>
+          <span id="ccount-${p.id}" style="cursor:pointer" onclick="toggleComentarios('${p.id}')">💬 ${p.comentariosCount||0} comentarios</span>
+        </div>
+        <div class="post-actions">
+          <div class="react-wrap">
+            <button class="act-btn" onclick="toggleReact('${p.id}',this)">❤️ Reaccionar</button>
+            <div class="react-popup" id="react-${p.id}">
+              <button class="react-opt" title="Amor" onclick="reaccionar('${p.id}','amor')">❤️</button>
+              <button class="react-opt" title="Oración" onclick="reaccionar('${p.id}','oracion')">🙏</button>
+              <button class="react-opt" title="Fuego" onclick="reaccionar('${p.id}','fuego')">🔥</button>
+              <button class="react-opt" title="Risa" onclick="reaccionar('${p.id}','risa')">😂</button>
+              <button class="react-opt" title="Aplauso" onclick="reaccionar('${p.id}','aplauso')">👏</button>
+            </div>
+          </div>
+          <button class="act-btn" onclick="toggleComentarios('${p.id}')">💬 Comentar</button>
+          <button class="act-btn" onclick="compartir('${p.id}')">↗️ Compartir</button>
+        </div>
+        <div class="post-comentarios" id="comentarios-${p.id}" style="display:none">
+          <div id="lista-${p.id}"></div>
+          <div class="comentario-input-area">
+            <input class="comentario-input" id="cinput-${p.id}" type="text" placeholder="Escribe un comentario..." onkeydown="if(event.key==='Enter')enviarComentario('${p.id}')">
+            <button class="btn-c-send" onclick="enviarComentario('${p.id}')">Enviar</button>
+          </div>
+        </div>
+      </div>`;
+    });
+    document.getElementById('feed-list').innerHTML = html || '<div class="empty"><div class="empty-icon">✝️</div><p>No hay publicaciones aún</p></div>';
+    mostrarCumpleanosEnFeed();
+    iniciarAutoplayVideos();
+  } catch(e) {
+    document.getElementById('feed-list').innerHTML = '<div class="empty"><div class="empty-icon">✝️</div><p>Sé el primero en publicar algo</p></div>';
+  }
+}
+
+function iniciarAutoplayVideos() { /* autoplay desactivado — videos se cargan solo al presionar play */ }
+
+window.activarVideo = function(overlay) {
+  const video = overlay.previousElementSibling;
+  if (video && video.dataset.src) { video.src = video.dataset.src; delete video.dataset.src; }
+  overlay.classList.add('hidden');
+  if (video) video.play().catch(() => {});
+};
+
+window.selTipo = function(btn, tipo) {
+  document.querySelectorAll('.tipo-btn').forEach(b => b.classList.remove('sel'));
+  btn.classList.add('sel'); postTipo = tipo;
+}
+
+window.selColor = function(color, el) {
+  colorFondo = color;
+  document.querySelectorAll('.color-dot').forEach(d => d.classList.remove('sel'));
+  el.classList.add('sel');
+  const ta = document.getElementById('post-texto');
+  const isDark = DARK_FONDOS.includes(color);
+  const isWhite = color === '#ffffff';
+  ta.style.background = color;
+  ta.style.color = isDark ? 'white' : (color === '#F0AB00' ? '#003B6F' : '');
+  ta.style.fontWeight = isWhite ? '' : '600';
+  ta.style.fontSize = isWhite ? '' : '15px';
+  ta.style.textAlign = isWhite ? '' : 'center';
+  ta.style.minHeight = isWhite ? '' : '90px';
+  ta.style.borderRadius = isWhite ? '' : '10px';
+}
+
+function resetColorPicker() {
+  colorFondo = '#ffffff';
+  const ta = document.getElementById('post-texto');
+  ['background','color','fontWeight','fontSize','textAlign','minHeight','borderRadius'].forEach(p => ta.style[p] = '');
+  document.querySelectorAll('.color-dot').forEach(d => d.classList.remove('sel'));
+  const first = document.querySelector('.color-dot');
+  if (first) first.classList.add('sel');
+}
+
+window.abrirPostTipo = function(tipo) {
+  if (tipo === 'evento') { openModal('modal-evento'); return; }
+  if (tipo === 'foto')  { document.getElementById('foto-input').click(); openModal('modal-post'); return; }
+  if (tipo === 'video') { openModal('modal-post'); setTimeout(() => document.getElementById('video-input').click(), 120); return; }
+  openModal('modal-post');
+}
+
+window.previsualizarFoto = function(input) {
+  const file = input.files[0];
+  if (!file) return;
+  if (file.size > 3 * 1024 * 1024) {
+    toast('❌ La foto no puede superar 3MB');
+    input.value = '';
+    return;
+  }
+  if (fotoFile) URL.revokeObjectURL(document.getElementById('foto-preview').src);
+  fotoFile = file;
+  const prev = document.getElementById('foto-preview');
+  prev.src = URL.createObjectURL(file);
+  prev.style.display = 'block';
+  // ocultar preview de video si había uno
+  const vp = document.getElementById('video-preview');
+  vp.style.display = 'none'; vp.src = '';
+  videoFile = null;
+}
+
+window.previsualizarVideo = function(input) {
+  const file = input.files[0];
+  if (!file) return;
+  if (file.size > 30 * 1024 * 1024) {
+    toast('❌ El video no puede superar 30MB');
+    input.value = '';
+    return;
+  }
+  const checkUrl = URL.createObjectURL(file);
+  const tmp = document.createElement('video');
+  tmp.preload = 'metadata';
+  tmp.onloadedmetadata = () => {
+    URL.revokeObjectURL(checkUrl);
+    if (tmp.duration > 60) {
+      toast('❌ El video no puede superar 1 minuto de duración');
+      input.value = '';
+      return;
+    }
+    const prev = document.getElementById('video-preview');
+    if (videoFile) URL.revokeObjectURL(prev.src);
+    videoFile = file;
+    prev.src = URL.createObjectURL(file);
+    prev.style.display = 'block';
+    const fp = document.getElementById('foto-preview');
+    fp.style.display = 'none'; fp.src = '';
+    fotoFile = null;
+    document.getElementById('foto-input').value = '';
+  };
+  tmp.src = checkUrl;
+}
+
+window.publicar = async function() {
+  const texto = document.getElementById('post-texto').value.trim();
+  if (!texto && !fotoFile && !videoFile) { toast('Escribe algo o agrega foto/video'); return; }
+  toast(videoFile ? '📤 Subiendo video...' : 'Publicando...');
+  try {
+    let fotoUrl = null, videoUrl = null;
+    if (fotoFile) fotoUrl = await subirACloudinary(fotoFile);
+    if (videoFile) videoUrl = await subirVideoACloudinary(videoFile);
+    await addDoc(collection(db,'posts'), {
+      texto, foto: fotoUrl, video: videoUrl, tipo: postTipo,
+      colorFondo: colorFondo !== '#ffffff' ? colorFondo : null,
+      autor: currentUser.displayName || currentUser.email.split('@')[0],
+      uid: currentUser.uid, avatarUrl: myAvatarUrl, likes: 0, fecha: serverTimestamp()
+    });
+    document.getElementById('post-texto').value = '';
+    const prev = document.getElementById('foto-preview');
+    URL.revokeObjectURL(prev.src); prev.style.display = 'none'; prev.src = '';
+    document.getElementById('foto-input').value = '';
+    fotoFile = null;
+    const vprev = document.getElementById('video-preview');
+    URL.revokeObjectURL(vprev.src); vprev.style.display = 'none'; vprev.src = '';
+    document.getElementById('video-input').value = '';
+    videoFile = null;
+    resetColorPicker();
+    closeModal('modal-post');
+    toast('✅ ¡Publicado!');
+    await cargarFeed();
+  } catch(e) { toast('❌ Error: ' + e.message); }
+}
+
+window.darLike = async function(id, actual, btn) {
+  const n = actual + 1;
+  const likesEl = document.getElementById(`likes-${id}`);
+  if (likesEl) likesEl.textContent = `❤️ ${n} me gusta`;
+  btn.classList.add('liked');
+  try { await updateDoc(doc(db,'posts',id), {likes:n}); } catch(e){}
+}
+
+window.compartir = function(id) {
+  shareUrl = `https://iglesiadigital-ad872.web.app/?post=${id}`;
+  if (navigator.share) {
+    navigator.share({ title: 'Koinonia', url: shareUrl });
+  } else {
+    document.getElementById('share-modal').classList.add('open');
+  }
+}
+
+window.cerrarShareModal = function() {
+  document.getElementById('share-modal').classList.remove('open');
+}
+
+window.shareWhatsApp = function() {
+  cerrarShareModal();
+  window.open('https://api.whatsapp.com/send?text=' + encodeURIComponent('Mira esto en Koinonia: ' + shareUrl), '_blank');
+}
+
+window.shareCopy = function() {
+  navigator.clipboard.writeText(shareUrl).then(() => {
+    cerrarShareModal();
+    toast('Enlace copiado');
+  }).catch(() => {
+    cerrarShareModal();
+    toast('No se pudo copiar');
+  });
+}
+
+// ======== EVENTOS ========
+async function cargarEventos() {
+  try {
+    const q = query(collection(db,'eventos'), orderBy('fecha','asc'));
+    const snap = await getDocs(q);
+    if (snap.empty) {
+      document.getElementById('eventos-list').innerHTML = '<div class="empty"><div class="empty-icon">📅</div><p>No hay eventos próximos</p></div>';
+      return;
+    }
+    let html = '';
+    snap.forEach(d => {
+      const e = {id:d.id,...d.data()};
+      const emojis = ['⛪','🎵','🙏','✝️','🌟'];
+      const em = emojis[Math.floor(Math.random()*emojis.length)];
+      html += `<div class="evento-card">
+        <div class="evento-cover">${em}</div>
+        <div class="evento-body">
+          <div class="evento-fecha">${e.fecha} · ${e.hora||''}</div>
+          <div class="evento-titulo">${e.titulo}</div>
+          <div class="evento-lugar">📍 ${e.lugar}</div>
+          ${e.descripcion ? `<p style="font-size:12px;color:var(--gris-texto);margin-bottom:10px">${e.descripcion}</p>` : ''}
+          <button class="btn-asistiré" onclick="asistiré('${e.id}',this)">✅ Asistiré</button>
+        </div>
+      </div>`;
+    });
+    document.getElementById('eventos-list').innerHTML = html;
+  } catch(e) {
+    document.getElementById('eventos-list').innerHTML = '<div class="empty"><div class="empty-icon">📅</div><p>No hay eventos aún</p></div>';
+  }
+}
+
+window.crearEvento = async function() {
+  const titulo = document.getElementById('ev-titulo').value.trim();
+  const fecha = document.getElementById('ev-fecha').value;
+  const hora = document.getElementById('ev-hora').value;
+  const lugar = document.getElementById('ev-lugar').value.trim();
+  const desc = document.getElementById('ev-desc').value.trim();
+  if (!titulo || !fecha || !lugar) { toast('Completa título, fecha y lugar'); return; }
+  try {
+    await addDoc(collection(db,'eventos'), {titulo, fecha, hora, lugar, descripcion:desc, creadoPor:currentUser.uid, asistentes:0, fechaCreacion:serverTimestamp()});
+    closeModal('modal-evento');
+    toast('✅ Evento creado');
+    await cargarEventos();
+    await addDoc(collection(db,'posts'), {
+      texto:`📅 Nuevo evento: ${titulo}\n📍 ${lugar}\n🗓️ ${fecha} ${hora}`,
+      foto:null, tipo:'evento',
+      autor: currentUser.displayName || currentUser.email.split('@')[0],
+      uid: currentUser.uid, likes: 0, fecha: serverTimestamp()
+    });
+    await cargarFeed();
+  } catch(e) { toast('❌ Error: ' + e.message); }
+}
+
+window.asistiré = async function(id, btn) {
+  btn.textContent = '✅ ¡Confirmado!';
+  btn.style.background = '#1D9E75';
+  try { await updateDoc(doc(db,'eventos',id), {asistentes: (await getDoc(doc(db,'eventos',id))).data().asistentes + 1}); } catch(e){}
+}
+
+// ======== MIEMBROS ========
+const ROL_LABELS = {pastor:'👨‍💼 Pastor', diacono:'⭐ Diácono', miembro:'🙏 Miembro', admin:'👑 Admin'};
+const ROL_CSS    = {pastor:'rb-pastor', diacono:'rb-diacono', miembro:'rb-miembro', admin:'rb-admin'};
+
+function miembroCardHtml(m, idx) {
+  const avColors = ['av-azul','av-dorado','av-verde','av-morado'];
+  const avC = avColors[idx % 4];
+  const ini = (m.nombre||'?').substring(0,2).toUpperCase();
+  const esYo = m.id === currentUser?.uid;
+  const yaConectado = misConexiones.has(m.id);
+  const isAdmin = currentUser?.email === ADMIN_EMAIL;
+  const rol = m.rol || 'miembro';
+  const rolLabel = ROL_LABELS[rol] || '🙏 Miembro';
+  const rolCls   = ROL_CSS[rol]   || 'rb-miembro';
+  const rolBadge = `<span class="rol-badge ${rolCls}">${rolLabel}</span>`;
+  const rolSelect = (isAdmin && !esYo)
+    ? `<select class="rol-select" onchange="asignarRol('${m.id}',this.value)">
+        <option value="miembro" ${rol==='miembro'?'selected':''}>🙏 Miembro</option>
+        <option value="pastor"  ${rol==='pastor' ?'selected':''}>👨‍💼 Pastor</option>
+        <option value="diacono" ${rol==='diacono'?'selected':''}>⭐ Diácono</option>
+        <option value="admin"   ${rol==='admin'  ?'selected':''}>👑 Admin</option>
+       </select>` : '';
+  return `<div style="background:white;border-radius:var(--radio);padding:12px;margin-bottom:8px;box-shadow:var(--sombra);display:flex;align-items:center;gap:12px">
+    <div class="av ${avC}" style="width:44px;height:44px;font-size:14px">${ini}</div>
+    <div style="flex:1;min-width:0">
+      <div style="font-size:13px;font-weight:600">${escHtml(m.nombre||'Miembro')} ${rolBadge}</div>
+      <div style="font-size:11px;color:var(--gris-texto)">${escHtml(m.bio||'Miembro de Koinonia')}</div>
+      ${m.zona ? `<div style="font-size:11px;color:var(--azul);margin-top:2px">${escHtml(m.zona)}</div>` : ''}
+      ${rolSelect}
+    </div>
+    ${!esYo ? `<button onclick="enviarSolicitud('${m.id}')" class="btn-conectar ${yaConectado?'conectado':''}" ${yaConectado?'disabled':''}>${yaConectado?'✅ Conectado':'🤝 Conectar'}</button>` : ''}
+  </div>`;
+}
+
+function renderMiembros(lista) {
+  const el = document.getElementById('miembros-list');
+  if (!el) return;
+  el.innerHTML = lista.length
+    ? lista.map((m,i) => miembroCardHtml(m, i)).join('')
+    : '<div class="empty"><div class="empty-icon">👥</div><p>Sin resultados</p></div>';
+}
+
+window.filtrarMiembros = function(q) {
+  const term = q.toLowerCase().trim();
+  renderMiembros(term ? todosLosMiembros.filter(m => (m.nombre||'').toLowerCase().includes(term)) : todosLosMiembros);
+}
+
+async function cargarMiembros() {
+  document.getElementById('miembros-list').innerHTML = '<div class="loading"><div class="spinner"></div>Cargando...</div>';
+  try {
+    const snap = await getDocs(collection(db,'perfiles'));
+    if (snap.empty) { document.getElementById('miembros-list').innerHTML = '<div class="empty"><div class="empty-icon">👥</div><p>No hay miembros aún</p></div>'; return; }
+    todosLosMiembros = [];
+    snap.forEach(d => {
+      const m = {id:d.id,...d.data()};
+      miembrosMap[m.id] = m.nombre || 'Miembro';
+      todosLosMiembros.push(m);
+    });
+    renderMiembros(todosLosMiembros);
+  } catch(e) { document.getElementById('miembros-list').innerHTML = '<div class="empty"><div class="empty-icon">👥</div><p>Error cargando miembros</p></div>'; }
+}
+
+window.asignarRol = async function(uid, rol) {
+  try {
+    await updateDoc(doc(db,'perfiles',uid), {rol});
+    toast('✅ Rol actualizado: ' + (ROL_LABELS[rol]||rol));
+    const m = todosLosMiembros.find(x => x.id === uid);
+    if (m) { m.rol = rol; renderMiembros(todosLosMiembros); }
+  } catch(e) { toast('❌ Error al asignar rol'); }
+}
+
+// ======== PERFIL ========
+async function cargarPerfil() {
+  if (!currentUser) return;
+  try {
+    const ref = doc(db,'perfiles',currentUser.uid);
+    const snap = await getDoc(ref);
+    if (snap.exists()) {
+      const p = snap.data();
+      const ini = (p.nombre||'?').substring(0,2).toUpperCase();
+      document.getElementById('perfil-av').textContent = ini;
+      const nombreCompleto = [p.nombre, p.apellido].filter(Boolean).join(' ');
+      document.getElementById('perfil-name').textContent = nombreCompleto || 'Usuario';
+      document.getElementById('perfil-bio').textContent = p.bio || 'Miembro de Koinonia';
+      // poblar formulario
+      document.getElementById('edit-nombre').value = p.nombre || '';
+      document.getElementById('edit-apellido').value = p.apellido || '';
+      document.getElementById('edit-fnac').value = p.fechaNacimiento || '';
+      document.getElementById('edit-bio').value = p.bio || '';
+      document.getElementById('edit-ciudad').value = p.ciudad || '';
+      document.getElementById('edit-zona').value = p.zona || '';
+      document.getElementById('edit-estado-civil').value = p.estadoCivil || '';
+      document.getElementById('edit-iglesia').value = p.iglesia || '';
+      document.getElementById('edit-bautizado').value = p.bautizado || '';
+      document.getElementById('edit-espiritu').value = p.espiritu || '';
+      document.getElementById('edit-telefono').value = p.telefono || '';
+      document.getElementById('edit-email-contacto').value = p.emailContacto || currentUser.email || '';
+      document.getElementById('edit-mostrar-contacto').checked = !!p.mostrarContacto;
+      if (p.avatarUrl) { aplicarAvatar(p.avatarUrl); }
+      myAvatarUrl = p.avatarUrl || null;
+      avatarCache[currentUser.uid] = myAvatarUrl;
+      aplicarPortada(p.fotoportada || null);
+      // tarjeta de contacto
+      const contactoEl = document.getElementById('perfil-contacto');
+      if (p.mostrarContacto && (p.telefono || p.emailContacto)) {
+        const numWa = (p.telefono || '').replace(/\D/g,'');
+        contactoEl.innerHTML = `<div class="contacto-card">
+          <div class="contacto-title">📞 Información de contacto</div>
+          <div class="contacto-btns">
+            ${p.telefono ? `<a href="https://wa.me/${numWa}" target="_blank" class="btn-contacto btn-wa">📱 WhatsApp</a>` : ''}
+            ${p.emailContacto ? `<a href="mailto:${p.emailContacto}" class="btn-contacto btn-email">📧 Correo</a>` : ''}
+          </div>
+        </div>`;
+      } else {
+        contactoEl.innerHTML = '';
+      }
+      // tarjeta de datos personales
+      const infos = [];
+      if (nombreCompleto) infos.push({icon:'👤', label:'Nombre completo', val: nombreCompleto});
+      if (p.ciudad)        infos.push({icon:'📍', label:'Ciudad',          val: p.ciudad});
+      if (p.zona)          infos.push({icon:'🗺️', label:'Zona',            val: p.zona});
+      if (p.estadoCivil)   infos.push({icon:'💍', label:'Estado civil',    val: p.estadoCivil});
+      if (p.iglesia)       infos.push({icon:'⛪', label:'Iglesia',         val: p.iglesia});
+      const bautBadge = p.bautizado ? `<span class="pinfo-badge ${p.bautizado}">${p.bautizado==='si'?'✅ Sí':'❌ No'}</span>` : '';
+      const espBadge  = p.espiritu  ? `<span class="pinfo-badge ${p.espiritu}">${p.espiritu==='si'?'✅ Sí':'❌ No'}</span>`  : '';
+      const datosEl = document.getElementById('perfil-datos');
+      if (infos.length || p.bautizado || p.espiritu) {
+        datosEl.innerHTML = `<div class="perfil-datos-card">
+          <div class="perfil-datos-title">✝️ Información personal</div>
+          ${infos.map(i=>`<div class="pinfo-item"><span class="pinfo-icon">${i.icon}</span><span class="pinfo-label">${i.label}</span><span class="pinfo-val">${i.val}</span></div>`).join('')}
+          ${p.bautizado ? `<div class="pinfo-item"><span class="pinfo-icon">💧</span><span class="pinfo-label">Bautizado/a</span><span class="pinfo-val">${bautBadge}</span></div>` : ''}
+          ${p.espiritu  ? `<div class="pinfo-item"><span class="pinfo-icon">🕊️</span><span class="pinfo-label">Espíritu Santo</span><span class="pinfo-val">${espBadge}</span></div>` : ''}
+        </div>`;
+      } else {
+        datosEl.innerHTML = '';
+      }
+    }
+    const postsSnap = await getDocs(query(collection(db,'posts'), where('uid','==',currentUser.uid)));
+    document.getElementById('perfil-posts').textContent = postsSnap.size;
+    let totalLikes = 0;
+    postsSnap.forEach(d => totalLikes += (d.data().likes||0));
+    document.getElementById('perfil-likes').textContent = totalLikes;
+    let html = '';
+    postsSnap.forEach(d => {
+      const p = {id:d.id,...d.data()};
+      html += `<div class="post">
+        ${p.foto ? `<img src="${p.foto}" class="post-img" loading="lazy">` : ''}
+        ${p.video ? `<div class="video-wrap"><video class="post-video" preload="none" playsinline controls poster="${videoPoster(p.video)}" data-src="${p.video}"></video><div class="video-play-overlay" onclick="activarVideo(this)"><div class="play-circle"><svg viewBox="0 0 24 24" width="26" height="26"><polygon points="9,5 21,12 9,19" fill="white"/></svg></div></div></div>` : ''}
+        ${p.texto ? `<div class="post-body">${p.texto}</div>` : ''}
+        <div class="post-stats"><span>❤️ ${p.likes||0}</span></div>
+      </div>`;
+    });
+    document.getElementById('mis-posts').innerHTML = html || '<div class="empty"><div class="empty-icon">📝</div><p>No has publicado nada aún</p></div>';
+  } catch(e) {}
+}
+
+window.guardarPerfil = async function() {
+  const nombre          = document.getElementById('edit-nombre').value.trim();
+  const apellido        = document.getElementById('edit-apellido').value.trim();
+  const fechaNacimiento = document.getElementById('edit-fnac').value;
+  const bio             = document.getElementById('edit-bio').value.trim();
+  const ciudad          = document.getElementById('edit-ciudad').value.trim();
+  const zona            = document.getElementById('edit-zona').value;
+  const estadoCivil     = document.getElementById('edit-estado-civil').value;
+  const iglesia         = document.getElementById('edit-iglesia').value.trim();
+  const bautizado       = document.getElementById('edit-bautizado').value;
+  const espiritu        = document.getElementById('edit-espiritu').value;
+  const telefono        = document.getElementById('edit-telefono').value.trim();
+  const emailContacto   = document.getElementById('edit-email-contacto').value.trim();
+  const mostrarContacto = document.getElementById('edit-mostrar-contacto').checked;
+  if (!nombre) { toast('El nombre es requerido'); return; }
+  try {
+    await updateDoc(doc(db,'perfiles',currentUser.uid), {
+      nombre, apellido, fechaNacimiento, bio, ciudad, zona, estadoCivil, iglesia,
+      bautizado, espiritu, telefono, emailContacto, mostrarContacto
+    });
+    await updateProfile(currentUser, {displayName: [nombre, apellido].filter(Boolean).join(' ')});
+    closeModal('modal-perfil');
+    toast('✅ Perfil actualizado');
+    await cargarPerfil();
+  } catch(e) { toast('❌ Error: ' + e.message); }
+}
+
+// ======== MENSAJES ========
+async function cargarMensajes() {
+  try {
+    const snap = await getDocs(collection(db, 'perfiles'));
+    const avColors = ['av-azul','av-dorado','av-verde','av-morado'];
+    let html = '';
+    let i = 0;
+    snap.forEach(d => {
+      if (d.id === currentUser.uid) return;
+      const m = {id: d.id, ...d.data()};
+      contactos[m.id] = m;
+      const avC = avColors[i++ % 4];
+      const ini = (m.nombre||'?').substring(0,2).toUpperCase();
+      const avImg = m.avatarUrl ? `style="background-image:url(${m.avatarUrl});background-size:cover;background-position:center;color:transparent"` : '';
+      html += `<div style="background:white;border-radius:var(--radio);padding:12px;margin-bottom:8px;box-shadow:var(--sombra);display:flex;align-items:center;gap:12px;cursor:pointer" onclick="abrirChat('${m.id}')">
+        <div class="av ${avC}" style="width:46px;height:46px;font-size:15px;flex-shrink:0" ${avImg}>${m.avatarUrl?'':ini}</div>
+        <div style="flex:1;min-width:0">
+          <div style="font-size:13px;font-weight:600">${m.nombre||'Miembro'}${m.esAdmin?' 👑':''}</div>
+          <div style="font-size:12px;color:var(--gris-texto);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${m.bio||'Miembro de Koinonia'}</div>
+        </div>
+        <svg viewBox="0 0 24 24" style="width:20px;height:20px;stroke:var(--azul);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+      </div>`;
+    });
+    document.getElementById('mensajes-list').innerHTML = html || '<div class="empty"><div class="empty-icon">💬</div><p>No hay otros miembros aún</p></div>';
+  } catch(e) {
+    document.getElementById('mensajes-list').innerHTML = '<div class="empty"><div class="empty-icon">💬</div><p>Error cargando miembros</p></div>';
+  }
+}
+
+window.abrirChat = function(uid) {
+  chatUid = uid;
+  const c = contactos[uid] || {};
+  const ini = (c.nombre||'?').substring(0,2).toUpperCase();
+  document.getElementById('chat-hname').textContent = c.nombre || 'Miembro';
+  const av = document.getElementById('chat-av');
+  if (c.avatarUrl) {
+    av.style.backgroundImage = `url(${c.avatarUrl})`;
+    av.style.backgroundSize = 'cover';
+    av.style.backgroundPosition = 'center';
+    av.style.color = 'transparent';
+    av.textContent = '';
+  } else {
+    av.removeAttribute('style');
+    av.textContent = ini;
+  }
+  document.getElementById('chat-view').classList.add('open');
+  document.getElementById('chat-messages').innerHTML = '<div class="loading"><div class="spinner"></div></div>';
+  setTimeout(() => document.getElementById('chat-input').focus(), 300);
+  chatOpenedAt = new Date();
+  if (chatUnsubscribe) chatUnsubscribe();
+  const cid = chatId(currentUser.uid, uid);
+  const q = query(collection(db, `chats/${cid}/mensajes`), orderBy('fecha','asc'), limit(100));
+  chatUnsubscribe = onSnapshot(q, snap => {
+    // Notificar mensajes nuevos del otro usuario
+    snap.docChanges().forEach(change => {
+      if (change.type !== 'added') return;
+      const msg = change.doc.data();
+      const fecha = msg.fecha?.toDate ? msg.fecha.toDate() : null;
+      if (fecha && fecha > chatOpenedAt && msg.uid !== currentUser.uid)
+        mostrarNotificacion(`💬 ${msg.nombre || 'Mensaje nuevo'}`, msg.texto);
+    });
+    let html = '';
+    snap.forEach(d => {
+      const msg = d.data();
+      const propio = msg.uid === currentUser.uid;
+      const fecha = msg.fecha?.toDate ? msg.fecha.toDate() : new Date();
+      html += `<div class="msg ${propio?'msg-out':'msg-in'}">${escHtml(msg.texto)}<div class="msg-time">${fmt(fecha)}</div></div>`;
+    });
+    const el = document.getElementById('chat-messages');
+    el.innerHTML = html || '<div style="text-align:center;color:var(--gris-texto);font-size:13px;padding:30px">Inicia la conversación 👋</div>';
+    el.scrollTop = el.scrollHeight;
+  });
+}
+
+window.cerrarChat = function() {
+  if (chatUnsubscribe) { chatUnsubscribe(); chatUnsubscribe = null; }
+  chatUid = null;
+  document.getElementById('chat-view').classList.remove('open');
+  document.getElementById('chat-input').value = '';
+}
+
+window.enviarMensaje = async function() {
+  const input = document.getElementById('chat-input');
+  const texto = input.value.trim();
+  if (!texto || !chatUid) return;
+  input.value = '';
+  const cid = chatId(currentUser.uid, chatUid);
+  const myName = currentUser.displayName || currentUser.email.split('@')[0];
+  try {
+    await addDoc(collection(db, `chats/${cid}/mensajes`), {
+      texto, uid: currentUser.uid, nombre: myName, fecha: serverTimestamp()
+    });
+    addDoc(collection(db,'notificaciones',chatUid,'items'), {
+      tipo: 'mensaje',
+      texto: `${myName}: "${texto.substring(0,80)}"`,
+      fromUid: currentUser.uid,
+      fecha: serverTimestamp(),
+      leida: false
+    }).catch(()=>{});
+  } catch(e) { toast('❌ Error al enviar'); }
+}
+
+function escHtml(t) {
+  return t.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+// ======== FOTO DE PERFIL ========
+function aplicarAvatar(url) {
+  ['user-av', 'compose-av', 'perfil-av'].forEach(id => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.style.backgroundImage = `url(${url})`;
+    el.style.backgroundSize = 'cover';
+    el.style.backgroundPosition = 'center';
+    el.style.color = 'transparent';
+    el.textContent = '';
+  });
+}
+
+window.subirFotoPerfil = async function(input) {
+  const file = input.files[0];
+  if (!file) return;
+  if (file.size > 3 * 1024 * 1024) {
+    toast('❌ La foto no puede superar 3MB');
+    input.value = '';
+    return;
+  }
+  toast('Subiendo foto...');
+  try {
+    const url = await subirACloudinary(file);
+    await updateDoc(doc(db, 'perfiles', currentUser.uid), { avatarUrl: url });
+    aplicarAvatar(url);
+    toast('✅ Foto de perfil actualizada');
+  } catch(e) { toast('❌ Error al subir foto: ' + e.message); }
+  input.value = '';
+}
+
+function aplicarPortada(url) {
+  const cover = document.getElementById('profile-cover');
+  if (!cover) return;
+  if (url) {
+    cover.style.backgroundImage = `url(${url})`;
+  } else {
+    cover.style.backgroundImage = '';
+  }
+}
+
+window.subirPortada = async function(input) {
+  const file = input.files[0];
+  if (!file) return;
+  if (file.size > 5 * 1024 * 1024) {
+    toast('❌ La portada no puede superar 5MB');
+    input.value = '';
+    return;
+  }
+  toast('Subiendo portada...');
+  try {
+    const url = await subirACloudinary(file);
+    await updateDoc(doc(db, 'perfiles', currentUser.uid), { fotoportada: url });
+    aplicarPortada(url);
+    toast('✅ Portada actualizada');
+  } catch(e) { toast('❌ Error al subir portada: ' + e.message); }
+  input.value = '';
+}
+
+// ======== COMENTARIOS ========
+window.toggleComentarios = async function(postId) {
+  const sec = document.getElementById(`comentarios-${postId}`);
+  if (!sec) return;
+  if (sec.style.display === 'none') {
+    sec.style.display = 'block';
+    await cargarComentarios(postId);
+    document.getElementById(`cinput-${postId}`)?.focus();
+  } else {
+    sec.style.display = 'none';
+  }
+}
+
+async function cargarComentarios(postId) {
+  const lista = document.getElementById(`lista-${postId}`);
+  if (!lista) return;
+  lista.innerHTML = '<div style="padding:8px 0;text-align:center"><div class="spinner" style="width:18px;height:18px;border-width:2px;margin:0 auto"></div></div>';
+  try {
+    const q = query(collection(db,`posts/${postId}/comentarios`), orderBy('fecha','asc'));
+    const snap = await getDocs(q);
+    if (snap.empty) {
+      lista.innerHTML = '<div style="padding:6px 0 8px;font-size:12px;color:var(--gris-texto)">Sin comentarios aún. ¡Sé el primero!</div>';
+      return;
+    }
+    const avColors = ['#009FDA','#F0AB00','#1D9E75','#534AB7'];
+    const comentarios = [];
+    snap.forEach(d => comentarios.push(d.data()));
+    // Pre-fetch avatares de comentaristas no cacheados
+    const uidsC = [...new Set(comentarios.map(c=>c.uid).filter(u=>u&&!(u in avatarCache)))];
+    await Promise.all(uidsC.map(async uid=>{
+      try{ const s=await getDoc(doc(db,'perfiles',uid)); avatarCache[uid]=s.exists()?(s.data().avatarUrl||null):null; }catch(e){ avatarCache[uid]=null; }
+    }));
+    let html = '';
+    let ci = 0;
+    comentarios.forEach(c => {
+      const fecha = c.fecha?.toDate ? c.fecha.toDate() : new Date();
+      const ini = (c.autor||'?').substring(0,2).toUpperCase();
+      const avUrl = c.avatarUrl || avatarCache[c.uid] || null;
+      const avStyle = avUrl
+        ? `style="background-image:url(${avUrl});background-size:cover;background-position:center;color:transparent"`
+        : `style="background:${avColors[ci++ % 4]}"`;
+      html += `<div class="comentario-item">
+        <div class="comentario-av" ${avStyle}>${avUrl?'':ini}</div>
+        <div class="comentario-body">
+          <span class="comentario-autor">${escHtml(c.autor||'Miembro')}</span>
+          <span class="comentario-time">${fmt(fecha)}</span>
+          <div class="comentario-texto">${escHtml(c.texto)}</div>
+        </div>
+      </div>`;
+    });
+    lista.innerHTML = html;
+  } catch(e) {
+    lista.innerHTML = '<div style="padding:6px 0;font-size:12px;color:var(--gris-texto)">Error al cargar comentarios</div>';
+  }
+}
+
+window.enviarComentario = async function(postId) {
+  const input = document.getElementById(`cinput-${postId}`);
+  const texto = input.value.trim();
+  if (!texto) return;
+  input.value = '';
+  input.disabled = true;
+  try {
+    const perfilSnap = await getDoc(doc(db,'perfiles',currentUser.uid));
+    const p = perfilSnap.exists() ? perfilSnap.data() : {};
+    const nombre = p.nombre || currentUser.displayName || currentUser.email.split('@')[0];
+    await addDoc(collection(db,`posts/${postId}/comentarios`), {
+      uid: currentUser.uid, autor: nombre, avatarUrl: myAvatarUrl, texto, fecha: serverTimestamp()
+    });
+    await updateDoc(doc(db,'posts',postId), { comentariosCount: increment(1) });
+    const postSnap = await getDoc(doc(db,'posts',postId));
+    const count = postSnap.data()?.comentariosCount || 0;
+    const ccEl = document.getElementById(`ccount-${postId}`);
+    if (ccEl) ccEl.textContent = `💬 ${count} comentarios`;
+    // Notificar al dueño del post
+    const ownerUid = postSnap.data()?.uid;
+    if (ownerUid && ownerUid !== currentUser.uid && ownerUid !== 'koinonia-system') {
+      addDoc(collection(db,'notificaciones',ownerUid,'items'), {
+        tipo: 'comentario',
+        texto: `${nombre} comentó en tu publicación: "${texto.substring(0,60)}"`,
+        fecha: serverTimestamp(),
+        leida: false,
+        postId
+      }).catch(()=>{});
+    }
+    await cargarComentarios(postId);
+  } catch(e) { toast('❌ Error al comentar'); }
+  input.disabled = false;
+  input.focus();
+}
+
+// ======== HISTORIAS ========
+async function cargarHistorias() {
+  try {
+    const ahora = new Date();
+    const q = query(collection(db,'historias'), where('expira','>',ahora), orderBy('expira','asc'));
+    const snap = await getDocs(q);
+    storiesActivas = [];
+    snap.forEach(d => storiesActivas.push({id:d.id,...d.data()}));
+    renderHistorias();
+  } catch(e) {}
+}
+
+function renderHistorias() {
+  const bar = document.getElementById('stories-bar');
+  if (!bar) return;
+  let html = `<div class="story-item">
+    <div class="story-add" onclick="abrirModalHistoria()">+</div>
+    <div class="story-nombre">Mi historia</div>
+  </div>`;
+  storiesActivas.forEach((s, i) => {
+    const ini = (s.nombre||'?').substring(0,2).toUpperCase();
+    const av = s.avatarUrl ? `<img src="${s.avatarUrl}" alt="">` : ini;
+    html += `<div class="story-item" onclick="abrirHistoria(${i})">
+      <div class="story-ring"><div class="story-av-wrap">${av}</div></div>
+      <div class="story-nombre">${escHtml(s.nombre||'Miembro')}</div>
+    </div>`;
+  });
+  bar.innerHTML = html;
+}
+
+window.abrirHistoria = function(index) {
+  if (index >= storiesActivas.length) { cerrarHistoria(); return; }
+  storyIndex = index;
+  const s = storiesActivas[index];
+  const svImg = document.getElementById('sv-img');
+  const svVid = document.getElementById('sv-video');
+  const svAudio = document.getElementById('sv-audio');
+  const svNota = document.getElementById('sv-nota');
+  svImg.style.display = 'none'; svImg.src = '';
+  svVid.style.display = 'none'; svVid.pause(); svVid.src = '';
+  svAudio.pause(); svAudio.src = ''; svNota.style.display = 'none';
+  if (s.tipo === 'video') {
+    svVid.style.display = 'block'; svVid.src = s.foto; svVid.play();
+  } else if (s.tipo === 'audio') {
+    svNota.style.display = 'block'; svAudio.src = s.foto; svAudio.play();
+  } else {
+    svImg.style.display = 'block'; svImg.src = s.foto;
+  }
+  document.getElementById('sv-nombre').textContent = s.nombre || 'Miembro';
+  const fecha = s.fecha?.toDate ? s.fecha.toDate() : new Date();
+  document.getElementById('sv-tiempo').textContent = fmt(fecha);
+  const av = document.getElementById('sv-uav');
+  av.innerHTML = s.avatarUrl ? `<img src="${s.avatarUrl}" alt="">` : (s.nombre||'?').substring(0,2).toUpperCase();
+  document.getElementById('story-view').classList.add('open');
+  // Barras de progreso
+  document.getElementById('sp-bars').innerHTML = storiesActivas.map((_,i) =>
+    `<div class="sp-bar"><div class="sp-fill${i<index?' run':''}" id="sp-${i}" style="width:${i<index?'100%':'0%'}"></div></div>`
+  ).join('');
+  requestAnimationFrame(() => requestAnimationFrame(() => {
+    const f = document.getElementById(`sp-${index}`);
+    if (f) f.classList.add('run');
+  }));
+  if (storyTimer) clearTimeout(storyTimer);
+  storyTimer = setTimeout(() => abrirHistoria(index + 1), 5000);
+}
+
+window.siguienteHistoria = function() {
+  if (storyTimer) { clearTimeout(storyTimer); storyTimer = null; }
+  abrirHistoria(storyIndex + 1);
+}
+
+window.cerrarHistoria = function() {
+  if (storyTimer) { clearTimeout(storyTimer); storyTimer = null; }
+  document.getElementById('story-view').classList.remove('open');
+  document.getElementById('sv-img').src = '';
+  const v = document.getElementById('sv-video'); v.pause(); v.src = '';
+  const a = document.getElementById('sv-audio'); a.pause(); a.src = '';
+  document.getElementById('sv-nota').style.display = 'none';
+}
+
+async function subirVideoACloudinary(file) {
+  const fd = new FormData();
+  fd.append('file', file);
+  fd.append('upload_preset', CLOUDINARY_PRESET);
+  const res = await fetch('https://api.cloudinary.com/v1_1/djwgzp7we/video/upload', { method: 'POST', body: fd });
+  if (!res.ok) throw new Error('Error Cloudinary ' + res.status);
+  const data = await res.json();
+  return data.secure_url.replace('/video/upload/', '/video/upload/q_auto,f_auto/');
+}
+
+function videoPoster(videoUrl) {
+  if (!videoUrl || !videoUrl.includes('cloudinary.com')) return '';
+  return videoUrl
+    .replace(/\/video\/upload\/[^/]*\//, '/video/upload/w_640,q_auto,f_jpg,so_0/')
+    .replace(/\.[^.]+$/, '.jpg');
+}
+
+window.abrirModalHistoria = function() {
+  document.getElementById('modal-historia-tipo').classList.add('open');
+}
+
+window.elegirFuenteHistoria = function(fuente) {
+  document.getElementById('modal-historia-tipo').classList.remove('open');
+  const map = { camara: 'si-camara', imagen: 'si-imagen', video: 'si-video', audio: 'si-audio' };
+  document.getElementById(map[fuente]).click();
+}
+
+window.previewHistoria = async function(input, tipo) {
+  const file = input.files[0];
+  if (!file) return;
+  if (tipo === 'video') {
+    if (file.size > 50 * 1024 * 1024) { toast('❌ El video no puede superar 50MB'); input.value = ''; return; }
+    const objUrl = URL.createObjectURL(file);
+    const valid = await new Promise(resolve => {
+      const v = document.createElement('video');
+      v.preload = 'metadata';
+      v.onloadedmetadata = () => { URL.revokeObjectURL(objUrl); resolve(v.duration <= 30); };
+      v.onerror = () => { URL.revokeObjectURL(objUrl); resolve(false); };
+      v.src = objUrl;
+    });
+    if (!valid) { toast('❌ El video no puede superar 30 segundos'); input.value = ''; return; }
+  } else {
+    if (file.size > 5 * 1024 * 1024) { toast('❌ La imagen no puede superar 5MB'); input.value = ''; return; }
+  }
+  storyPreviewFile = file;
+  storyPreviewTipo = tipo;
+  const previewUrl = URL.createObjectURL(file);
+  const hpImg = document.getElementById('hp-img');
+  const hpVid = document.getElementById('hp-video');
+  const hpAudioWrap = document.getElementById('hp-audio-wrap');
+  const hpAudio = document.getElementById('hp-audio');
+  hpImg.style.display = 'none'; hpImg.src = '';
+  hpVid.style.display = 'none'; hpVid.src = '';
+  hpAudioWrap.style.display = 'none'; hpAudio.pause(); hpAudio.src = '';
+  if (tipo === 'video') {
+    hpVid.style.display = 'block'; hpVid.src = previewUrl;
+  } else if (tipo === 'audio') {
+    hpAudioWrap.style.display = 'flex'; hpAudio.src = previewUrl;
+  } else {
+    hpImg.style.display = 'block'; hpImg.src = previewUrl;
+  }
+  document.getElementById('modal-historia-preview').classList.add('open');
+  input.value = '';
+}
+
+window.cancelarHistoria = function() {
+  storyPreviewFile = null;
+  document.getElementById('hp-img').src = '';
+  const v = document.getElementById('hp-video'); v.pause(); v.src = '';
+  const a = document.getElementById('hp-audio'); a.pause(); a.src = '';
+  document.getElementById('hp-audio-wrap').style.display = 'none';
+  document.getElementById('modal-historia-preview').classList.remove('open');
+}
+
+window.confirmarHistoria = async function() {
+  if (!storyPreviewFile || !currentUser) return;
+  document.getElementById('modal-historia-preview').classList.remove('open');
+  toast('Subiendo historia...');
+  try {
+    const mediaUrl = (storyPreviewTipo === 'video' || storyPreviewTipo === 'audio')
+      ? await subirVideoACloudinary(storyPreviewFile)
+      : await subirACloudinary(storyPreviewFile);
+    const expira = new Date(Date.now() + 24 * 60 * 60 * 1000);
+    const perfilSnap = await getDoc(doc(db,'perfiles',currentUser.uid));
+    const p = perfilSnap.exists() ? perfilSnap.data() : {};
+    await addDoc(collection(db,'historias'), {
+      uid: currentUser.uid,
+      nombre: p.nombre || currentUser.displayName || currentUser.email.split('@')[0],
+      avatarUrl: p.avatarUrl || null,
+      foto: mediaUrl,
+      tipo: storyPreviewTipo,
+      fecha: serverTimestamp(),
+      expira
+    });
+    storyPreviewFile = null;
+    toast('✅ Historia publicada');
+    await cargarHistorias();
+  } catch(e) { toast('❌ Error: ' + e.message); }
+}
+
+// ======== TRANSMISIÓN EN VIVO ========
+function urlToEmbed(url) {
+  url = url.trim();
+  // YouTube watch: youtube.com/watch?v=ID or youtube.com/watch?v=ID&...
+  let m = url.match(/(?:youtube\.com\/watch\?(?:.*&)?v=|youtube\.com\/live\/)([a-zA-Z0-9_-]{11})/);
+  if (m) return `https://www.youtube.com/embed/${m[1]}?rel=0&modestbranding=1`;
+  // YouTube short link: youtu.be/ID
+  m = url.match(/youtu\.be\/([a-zA-Z0-9_-]{11})/);
+  if (m) return `https://www.youtube.com/embed/${m[1]}?rel=0&modestbranding=1`;
+  // YouTube embed already
+  m = url.match(/youtube\.com\/embed\/([a-zA-Z0-9_-]{11})/);
+  if (m) return url;
+  // Facebook video / live
+  if (/facebook\.com|fb\.watch/.test(url)) {
+    return `https://www.facebook.com/plugins/video.php?href=${encodeURIComponent(url)}&show_text=0&allowfullscreen=true&autoplay=false`;
+  }
+  return null;
+}
+
+async function cargarTransmision() {
+  try {
+    const snap = await getDoc(doc(db, 'config', 'transmision'));
+    const banner = document.getElementById('live-banner');
+    if (!snap.exists() || !snap.data().url) { banner.style.display = 'none'; return; }
+    const d = snap.data();
+    const embedSrc = urlToEmbed(d.url);
+    if (!embedSrc) { banner.style.display = 'none'; return; }
+    document.getElementById('live-iframe').src = embedSrc;
+    document.getElementById('live-titulo').textContent = d.titulo || 'Transmisión en vivo';
+    banner.style.display = 'block';
+    if (currentUser && currentUser.email === ADMIN_EMAIL) {
+      document.getElementById('btn-live-config').style.display = 'block';
+    }
+  } catch(e) {}
+}
+
+window.abrirModalTransmision = async function() {
+  try {
+    const snap = await getDoc(doc(db, 'config', 'transmision'));
+    if (snap.exists() && snap.data().url) {
+      document.getElementById('live-url-input').value = snap.data().url || '';
+      document.getElementById('live-titulo-input').value = snap.data().titulo || '';
+    } else {
+      document.getElementById('live-url-input').value = '';
+      document.getElementById('live-titulo-input').value = '';
+    }
+    document.getElementById('live-url-preview').textContent = '';
+  } catch(e) {}
+  openModal('modal-transmision');
+}
+
+window.guardarTransmision = async function() {
+  const url = document.getElementById('live-url-input').value.trim();
+  const titulo = document.getElementById('live-titulo-input').value.trim();
+  if (!url) { toast('Ingresa una URL'); return; }
+  const embedSrc = urlToEmbed(url);
+  if (!embedSrc) { toast('URL no reconocida. Usa YouTube o Facebook Live'); return; }
+  try {
+    await setDoc(doc(db, 'config', 'transmision'), { url, titulo: titulo || 'Transmisión en vivo' });
+    closeModal('modal-transmision');
+    toast('✅ Transmisión activada');
+    cargarTransmision();
+  } catch(e) { toast('Error al guardar'); }
+}
+
+window.limpiarTransmision = async function() {
+  if (!confirm('¿Desactivar la transmisión?')) return;
+  try {
+    await setDoc(doc(db, 'config', 'transmision'), { url: '', titulo: '' });
+    document.getElementById('live-banner').style.display = 'none';
+    document.getElementById('live-iframe').src = '';
+    closeModal('modal-transmision');
+    toast('Transmisión desactivada');
+  } catch(e) { toast('Error'); }
+}
+
+// Live URL preview in modal
+document.addEventListener('DOMContentLoaded', () => {
+  const inp = document.getElementById('live-url-input');
+  if (inp) inp.addEventListener('input', () => {
+    const prev = document.getElementById('live-url-preview');
+    const embed = urlToEmbed(inp.value);
+    prev.textContent = embed ? '✅ URL válida — ' + (inp.value.includes('youtu') ? 'YouTube' : 'Facebook') : (inp.value ? '❌ URL no reconocida' : '');
+  });
+});
+
+// ======== MENÚ POST ========
+let postMenuActiveId = null;
+let postMenuActiveUid = null;
+
+window.togglePostMenu = function(id, uid, e) {
+  e.stopPropagation();
+  const popup = document.getElementById('post-menu-popup');
+  if (postMenuActiveId === id && popup.classList.contains('open')) {
+    popup.classList.remove('open');
+    postMenuActiveId = null;
+    postMenuActiveUid = null;
+    return;
+  }
+  postMenuActiveId = id;
+  postMenuActiveUid = uid;
+  const btn = e.currentTarget;
+  const rect = btn.getBoundingClientRect();
+  popup.style.top = (rect.bottom + 4) + 'px';
+  popup.style.right = (window.innerWidth - rect.right) + 'px';
+  popup.style.left = 'auto';
+  popup.classList.add('open');
+}
+
+window.eliminarPost = async function() {
+  const id = postMenuActiveId;
+  const uid = postMenuActiveUid;
+  document.getElementById('post-menu-popup').classList.remove('open');
+  postMenuActiveId = null;
+  postMenuActiveUid = null;
+  if (!id) return;
+  const esOwner = uid && uid === currentUser.uid;
+  const esAdmin = currentUser.email === ADMIN_EMAIL;
+  if (!esOwner && !esAdmin) { toast('No tienes permiso para eliminar este post'); return; }
+  if (!confirm('¿Eliminar esta publicación?')) return;
+  try {
+    await deleteDoc(doc(db, 'posts', id));
+    const el = document.getElementById(`post-${id}`);
+    if (el) el.remove();
+    toast('Publicación eliminada');
+  } catch(e) { toast('Error al eliminar'); }
+}
+
+// ======== GRUPOS ========
+window.switchComTab = function(tab) {
+  document.querySelectorAll('.com-tab').forEach(b => b.classList.remove('active'));
+  document.getElementById(`ctab-${tab}`).classList.add('active');
+  document.getElementById('com-panel-miembros').style.display = tab === 'miembros' ? 'block' : 'none';
+  document.getElementById('com-panel-grupos').style.display = tab === 'grupos' ? 'block' : 'none';
+  if (tab === 'grupos') cargarGrupos();
+}
+
+async function cargarGrupos() {
+  const el = document.getElementById('grupos-list');
+  if (!el) return;
+  el.innerHTML = '<div class="loading"><div class="spinner"></div>Cargando...</div>';
+  try {
+    const q = query(collection(db,'grupos'), where('miembrosUids','array-contains',currentUser.uid), orderBy('fechaCreacion','desc'));
+    const snap = await getDocs(q);
+    if (snap.empty) {
+      el.innerHTML = '<div class="empty"><div class="empty-icon">👥</div><p>No perteneces a ningún grupo aún</p><p style="font-size:12px;margin-top:8px">Crea uno con el botón de arriba</p></div>';
+      return;
+    }
+    let html = '';
+    snap.forEach(d => {
+      const g = d.data();
+      const fotoEl = g.foto ? `<img src="${g.foto}" alt="">` : '👥';
+      html += `<div class="grupo-card" onclick="abrirGrupo('${d.id}')">
+        <div class="grupo-foto">${fotoEl}</div>
+        <div class="grupo-info">
+          <div class="grupo-nombre">${escHtml(g.nombre)}</div>
+          <div class="grupo-desc">${escHtml(g.descripcion||'Sin descripción')}</div>
+          <div class="grupo-count">👥 ${g.miembrosCount||1} miembro${(g.miembrosCount||1)!==1?'s':''}</div>
+        </div>
+        <svg viewBox="0 0 24 24" style="width:16px;height:16px;stroke:var(--gris-texto);fill:none;stroke-width:2;flex-shrink:0"><polyline points="9 18 15 12 9 6"/></svg>
+      </div>`;
+    });
+    el.innerHTML = html;
+  } catch(e) { el.innerHTML = '<div class="empty"><p>Error al cargar grupos</p></div>'; }
+}
+
+window.abrirGrupo = async function(grupoId) {
+  try {
+    const snap = await getDoc(doc(db,'grupos',grupoId));
+    if (!snap.exists()) { toast('Grupo no encontrado'); return; }
+    grupoActivo = { id: grupoId, ...snap.data() };
+    const fotoEl = document.getElementById('gh-foto');
+    fotoEl.innerHTML = grupoActivo.foto ? `<img src="${grupoActivo.foto}" alt="">` : '👥';
+    document.getElementById('gh-nombre').textContent = grupoActivo.nombre;
+    document.getElementById('gh-sub').textContent = `${grupoActivo.miembrosCount||1} miembro${(grupoActivo.miembrosCount||1)!==1?'s':''}`;
+    document.getElementById('btn-add-miembro').style.display = grupoActivo.adminUid === currentUser.uid ? 'block' : 'none';
+    document.getElementById('grupo-view').classList.add('open');
+    navGrupo('feed');
+  } catch(e) { toast('Error al abrir grupo'); }
+}
+
+window.cerrarGrupo = function() {
+  if (grupoUnsubChat) { grupoUnsubChat(); grupoUnsubChat = null; }
+  document.getElementById('grupo-view').classList.remove('open');
+  grupoActivo = null;
+}
+
+window.navGrupo = function(tab) {
+  document.querySelectorAll('.gtab').forEach(b => b.classList.remove('active'));
+  document.getElementById(`gtab-btn-${tab}`).classList.add('active');
+  document.getElementById('gtab-feed').style.display = 'none';
+  document.getElementById('gtab-chat-wrapper').style.display = 'none';
+  document.getElementById('gtab-miembros').style.display = 'none';
+  if (tab === 'feed') { document.getElementById('gtab-feed').style.display = 'block'; cargarGrupoFeed(); }
+  else if (tab === 'chat') { document.getElementById('gtab-chat-wrapper').style.display = 'flex'; cargarGrupoChat(); }
+  else if (tab === 'miembros') { document.getElementById('gtab-miembros').style.display = 'block'; cargarGrupoMiembros(); }
+}
+
+window.previewGrupoFoto = function(input) {
+  const file = input.files[0]; if (!file) return;
+  if (file.size > 3*1024*1024) { toast('❌ Imagen muy grande (máx 3MB)'); input.value=''; return; }
+  grpFotoFile = file;
+  const img = document.getElementById('grp-foto-preview');
+  img.src = URL.createObjectURL(file); img.style.display = 'block';
+}
+
+window.crearGrupo = async function() {
+  const nombre = document.getElementById('grp-nombre').value.trim();
+  if (!nombre) { toast('El nombre es obligatorio'); return; }
+  toast('Creando grupo...');
+  try {
+    let fotoUrl = null;
+    if (grpFotoFile) fotoUrl = await subirACloudinary(grpFotoFile);
+    const perfilSnap = await getDoc(doc(db,'perfiles',currentUser.uid));
+    const p = perfilSnap.exists() ? perfilSnap.data() : {};
+    const adminNombre = p.nombre || currentUser.displayName || currentUser.email.split('@')[0];
+    const grupoRef = await addDoc(collection(db,'grupos'), {
+      nombre,
+      descripcion: document.getElementById('grp-desc').value.trim(),
+      foto: fotoUrl,
+      adminUid: currentUser.uid,
+      adminNombre,
+      fechaCreacion: serverTimestamp(),
+      miembrosCount: 1,
+      miembrosUids: [currentUser.uid]
+    });
+    await setDoc(doc(db,'grupos',grupoRef.id,'miembros',currentUser.uid), {
+      uid: currentUser.uid, nombre: adminNombre, avatarUrl: p.avatarUrl||null, rol:'admin', fecha: serverTimestamp()
+    });
+    grpFotoFile = null;
+    document.getElementById('grp-nombre').value = '';
+    document.getElementById('grp-desc').value = '';
+    document.getElementById('grp-foto-preview').style.display = 'none';
+    closeModal('modal-crear-grupo');
+    toast('✅ Grupo creado');
+    await cargarGrupos();
+    abrirGrupo(grupoRef.id);
+  } catch(e) { toast('❌ Error: ' + e.message); }
+}
+
+async function cargarGrupoFeed() {
+  if (!grupoActivo) return;
+  const el = document.getElementById('grupo-posts-list');
+  el.innerHTML = '<div class="loading"><div class="spinner"></div>Cargando...</div>';
+  try {
+    const q = query(collection(db,'grupos',grupoActivo.id,'posts'), orderBy('fecha','desc'), limit(30));
+    const snap = await getDocs(q);
+    if (snap.empty) { el.innerHTML = '<div class="empty"><div class="empty-icon">📋</div><p>Sé el primero en publicar</p></div>'; return; }
+    let html = '';
+    snap.forEach(d => {
+      const p = d.data();
+      const fecha = p.fecha?.toDate ? p.fecha.toDate() : new Date();
+      const av = p.avatarUrl ? `<img src="${p.avatarUrl}" style="width:100%;height:100%;object-fit:cover;border-radius:50%">` : (p.autor||'?').substring(0,2).toUpperCase();
+      html += `<div class="post">
+        <div class="post-header">
+          <div class="av av-dorado">${av}</div>
+          <div class="post-info"><div class="post-autor">${escHtml(p.autor||'Miembro')}</div><div class="post-time">${fmt(fecha)}</div></div>
+        </div>
+        ${p.texto?`<div class="post-body">${escHtml(p.texto)}</div>`:''}
+        ${p.foto?`<img class="post-img" src="${p.foto}" alt="">`:''}
+        <div class="post-stats"><span id="glikes-${d.id}">❤️ ${p.likes||0} me gusta</span></div>
+        <div class="post-actions"><button class="act-btn" onclick="darLikeGrupo('${d.id}',${p.likes||0},this)">❤️ Me gusta</button></div>
+      </div>`;
+    });
+    el.innerHTML = html;
+  } catch(e) { el.innerHTML = ''; }
+}
+
+window.previewGpostFoto = function(input) {
+  const file = input.files[0]; if (!file) return;
+  if (file.size > 5*1024*1024) { toast('❌ Imagen muy grande (máx 5MB)'); input.value=''; return; }
+  gpostFotoFile = file;
+  const img = document.getElementById('gpost-foto-preview');
+  img.src = URL.createObjectURL(file); img.style.display = 'block';
+}
+
+window.publicarEnGrupo = async function() {
+  if (!grupoActivo) return;
+  const texto = document.getElementById('gpost-texto').value.trim();
+  if (!texto && !gpostFotoFile) { toast('Escribe algo'); return; }
+  toast('Publicando...');
+  try {
+    let fotoUrl = null;
+    if (gpostFotoFile) fotoUrl = await subirACloudinary(gpostFotoFile);
+    const perfilSnap = await getDoc(doc(db,'perfiles',currentUser.uid));
+    const p = perfilSnap.exists() ? perfilSnap.data() : {};
+    await addDoc(collection(db,'grupos',grupoActivo.id,'posts'), {
+      uid: currentUser.uid,
+      autor: p.nombre || currentUser.displayName || currentUser.email.split('@')[0],
+      avatarUrl: p.avatarUrl||null, texto, foto: fotoUrl, likes: 0, fecha: serverTimestamp()
+    });
+    gpostFotoFile = null;
+    document.getElementById('gpost-texto').value = '';
+    document.getElementById('gpost-foto-preview').style.display = 'none';
+    closeModal('modal-post-grupo');
+    toast('✅ Publicado');
+    cargarGrupoFeed();
+  } catch(e) { toast('❌ Error: ' + e.message); }
+}
+
+function cargarGrupoChat() {
+  if (!grupoActivo) return;
+  if (grupoUnsubChat) { grupoUnsubChat(); grupoUnsubChat = null; }
+  const el = document.getElementById('gtab-chat-msgs');
+  el.innerHTML = '';
+  const q = query(collection(db,'grupos',grupoActivo.id,'chat'), orderBy('fecha','asc'), limit(100));
+  grupoUnsubChat = onSnapshot(q, snap => {
+    let html = '';
+    snap.forEach(d => {
+      const m = d.data();
+      const fecha = m.fecha?.toDate ? m.fecha.toDate() : new Date();
+      const mine = m.uid === currentUser.uid;
+      const av = m.avatarUrl ? `<img src="${m.avatarUrl}" style="width:100%;height:100%;object-fit:cover;border-radius:50%">` : (m.autor||'?').substring(0,2).toUpperCase();
+      html += `<div style="display:flex;gap:6px;align-items:flex-end;margin-bottom:6px;${mine?'flex-direction:row-reverse':''}">
+        ${!mine?`<div class="chat-av" style="width:28px;height:28px;font-size:10px;flex-shrink:0">${av}</div>`:''}
+        <div>
+          ${!mine?`<div style="font-size:10px;color:var(--gris-texto);margin-bottom:2px;padding-left:4px">${escHtml(m.autor||'')}</div>`:''}
+          <div class="msg ${mine?'msg-out':'msg-in'}">${escHtml(m.texto)}<div class="msg-time">${fmt(fecha)}</div></div>
+        </div>
+      </div>`;
+    });
+    el.innerHTML = html || '<div style="text-align:center;color:var(--gris-texto);font-size:13px;padding:30px">Inicia la conversación 👋</div>';
+    el.scrollTop = el.scrollHeight;
+  });
+}
+
+window.enviarMsgGrupo = async function() {
+  if (!grupoActivo || !currentUser) return;
+  const input = document.getElementById('gchat-input');
+  const texto = input.value.trim(); if (!texto) return;
+  input.value = '';
+  try {
+    const perfilSnap = await getDoc(doc(db,'perfiles',currentUser.uid));
+    const p = perfilSnap.exists() ? perfilSnap.data() : {};
+    await addDoc(collection(db,'grupos',grupoActivo.id,'chat'), {
+      uid: currentUser.uid,
+      autor: p.nombre || currentUser.displayName || currentUser.email.split('@')[0],
+      avatarUrl: p.avatarUrl||null, texto, fecha: serverTimestamp()
+    });
+  } catch(e) { toast('Error al enviar'); }
+}
+
+async function cargarGrupoMiembros() {
+  if (!grupoActivo) return;
+  const el = document.getElementById('grupo-miembros-list');
+  el.innerHTML = '<div class="loading"><div class="spinner"></div>Cargando...</div>';
+  try {
+    const snap = await getDocs(collection(db,'grupos',grupoActivo.id,'miembros'));
+    grupoMiembros = [];
+    let html = '';
+    snap.forEach(d => {
+      const m = d.data(); grupoMiembros.push(m);
+      const av = m.avatarUrl ? `<img src="${m.avatarUrl}" alt="">` : (m.nombre||'?').substring(0,2).toUpperCase();
+      const esAdmin = grupoActivo.adminUid === currentUser.uid;
+      const esYo = m.uid === currentUser.uid;
+      html += `<div class="miembro-item">
+        <div class="miembro-av">${av}</div>
+        <div class="miembro-info">
+          <div class="miembro-nombre">${escHtml(m.nombre||'Miembro')}</div>
+          <div class="miembro-rol">${m.rol==='admin'?'👑 Admin':'Miembro'}</div>
+        </div>
+        ${esAdmin && !esYo ? `<button class="btn-expulsar" onclick="eliminarMiembro('${m.uid}')">Expulsar</button>` : ''}
+      </div>`;
+    });
+    el.innerHTML = html || '<div class="empty"><p>Sin miembros</p></div>';
+  } catch(e) {}
+}
+
+window.abrirAddMiembro = async function() {
+  const el = document.getElementById('add-miembro-list');
+  el.innerHTML = '<div class="loading"><div class="spinner"></div>Cargando...</div>';
+  openModal('modal-add-miembro');
+  try {
+    const snap = await getDocs(collection(db,'perfiles'));
+    const yaEnGrupo = new Set(grupoActivo.miembrosUids || []);
+    let html = '';
+    snap.forEach(d => {
+      if (yaEnGrupo.has(d.id)) return;
+      const p = d.data();
+      const av = p.avatarUrl ? `<img src="${p.avatarUrl}" style="width:100%;height:100%;object-fit:cover;border-radius:50%">` : (p.nombre||'?').substring(0,2).toUpperCase();
+      html += `<div class="miembro-item" style="cursor:pointer" onclick="agregarMiembro('${d.id}','${escHtml(p.nombre||'')}','${p.avatarUrl||''}')">
+        <div class="miembro-av">${av}</div>
+        <div class="miembro-info"><div class="miembro-nombre">${escHtml(p.nombre||'Miembro')}</div></div>
+        <div style="color:var(--azul);font-size:22px;font-weight:700;flex-shrink:0">+</div>
+      </div>`;
+    });
+    el.innerHTML = html || '<div class="empty"><p>Todos los miembros ya están en el grupo</p></div>';
+  } catch(e) { el.innerHTML = '<div class="empty"><p>Error al cargar</p></div>'; }
+}
+
+window.agregarMiembro = async function(uid, nombre, avatarUrl) {
+  if (!grupoActivo) return;
+  if ((grupoActivo.miembrosCount||1) >= 30) { toast('El grupo ya tiene 30 miembros (máximo)'); return; }
+  try {
+    await setDoc(doc(db,'grupos',grupoActivo.id,'miembros',uid), {
+      uid, nombre, avatarUrl: avatarUrl||null, rol:'miembro', fecha: serverTimestamp()
+    });
+    await updateDoc(doc(db,'grupos',grupoActivo.id), {
+      miembrosCount: increment(1), miembrosUids: arrayUnion(uid)
+    });
+    grupoActivo.miembrosCount = (grupoActivo.miembrosCount||1) + 1;
+    if (!grupoActivo.miembrosUids) grupoActivo.miembrosUids = [];
+    grupoActivo.miembrosUids.push(uid);
+    document.getElementById('gh-sub').textContent = `${grupoActivo.miembrosCount} miembros`;
+    // Notificar al usuario agregado
+    addDoc(collection(db,'notificaciones',uid,'items'), {
+      tipo: 'grupo',
+      texto: `Te han agregado al grupo "${grupoActivo.nombre}"`,
+      fecha: serverTimestamp(),
+      leida: false,
+      grupoId: grupoActivo.id
+    }).catch(()=>{});
+    closeModal('modal-add-miembro');
+    toast(`✅ ${nombre} agregado al grupo`);
+    cargarGrupoMiembros();
+  } catch(e) { toast('Error: ' + e.message); }
+}
+
+window.eliminarMiembro = async function(uid) {
+  if (!grupoActivo || grupoActivo.adminUid !== currentUser.uid) return;
+  try {
+    await deleteDoc(doc(db,'grupos',grupoActivo.id,'miembros',uid));
+    await updateDoc(doc(db,'grupos',grupoActivo.id), {
+      miembrosCount: increment(-1), miembrosUids: arrayRemove(uid)
+    });
+    grupoActivo.miembrosCount = Math.max((grupoActivo.miembrosCount||1)-1,1);
+    document.getElementById('gh-sub').textContent = `${grupoActivo.miembrosCount} miembros`;
+    toast('Miembro eliminado del grupo');
+    cargarGrupoMiembros();
+  } catch(e) { toast('Error: ' + e.message); }
+}
+
+window.darLikeGrupo = async function(id, actual, btn) {
+  if (!grupoActivo) return;
+  const n = actual + 1;
+  const el = document.getElementById(`glikes-${id}`);
+  if (el) el.textContent = `❤️ ${n} me gusta`;
+  btn.classList.add('liked');
+  try { await updateDoc(doc(db,'grupos',grupoActivo.id,'posts',id), {likes:n}); } catch(e){}
+}
+
+// ======== CONEXIONES / AMIGOS ========
+async function cargarMisConexiones() {
+  if (!currentUser) return;
+  try {
+    const snap = await getDocs(collection(db,'conexiones',currentUser.uid,'lista'));
+    snap.forEach(d => misConexiones.add(d.id));
+  } catch(e) {}
+}
+
+window.enviarSolicitud = async function(targetUid) {
+  if (!currentUser) return;
+  if (misConexiones.has(targetUid)) { toast('Ya enviaste una solicitud a este miembro'); return; }
+  const targetNombre = miembrosMap[targetUid] || 'Miembro';
+  try {
+    const myName = currentUser.displayName || currentUser.email.split('@')[0];
+    await setDoc(doc(db,'conexiones',currentUser.uid,'lista',targetUid), {
+      uid: targetUid, nombre: targetNombre, estado: 'pendiente', fecha: serverTimestamp()
+    });
+    await addDoc(collection(db,'notificaciones',targetUid,'items'), {
+      tipo: 'solicitud',
+      texto: `${myName} te envió una solicitud de amistad`,
+      fromUid: currentUser.uid,
+      fromNombre: myName,
+      fecha: serverTimestamp(),
+      leida: false,
+      aceptada: false,
+      rechazada: false
+    });
+    misConexiones.add(targetUid);
+    toast('✅ Solicitud enviada a ' + targetNombre);
+    cargarMiembros();
+  } catch(e) { toast('❌ Error: ' + e.message); }
+}
+
+window.aceptarSolicitud = async function(notifId, fromUid) {
+  if (!currentUser || !fromUid) return;
+  try {
+    await updateDoc(doc(db,'notificaciones',currentUser.uid,'items',notifId), {aceptada:true, leida:true, rechazada:false});
+    const fromSnap = await getDoc(doc(db,'perfiles',fromUid));
+    const fromNombre = fromSnap.exists() ? (fromSnap.data().nombre||'Miembro') : 'Miembro';
+    await setDoc(doc(db,'conexiones',currentUser.uid,'lista',fromUid), {
+      uid: fromUid, nombre: fromNombre, estado: 'aceptado', fecha: serverTimestamp()
+    });
+    await updateDoc(doc(db,'conexiones',fromUid,'lista',currentUser.uid), {estado:'aceptado'}).catch(()=>{});
+    const myName = currentUser.displayName || currentUser.email.split('@')[0];
+    addDoc(collection(db,'notificaciones',fromUid,'items'), {
+      tipo: 'conexion_aceptada',
+      texto: `${myName} aceptó tu solicitud de amistad 🎉`,
+      fecha: serverTimestamp(),
+      leida: false
+    }).catch(()=>{});
+    misConexiones.add(fromUid);
+    toast('✅ Ahora estás conectado con ' + fromNombre);
+    cargarNotificaciones();
+  } catch(e) { toast('❌ Error: ' + e.message); }
+}
+
+window.rechazarSolicitud = async function(notifId) {
+  if (!currentUser) return;
+  try {
+    await updateDoc(doc(db,'notificaciones',currentUser.uid,'items',notifId), {rechazada:true, leida:true});
+    toast('Solicitud rechazada');
+    cargarNotificaciones();
+  } catch(e) { toast('❌ Error'); }
+}
+
+// ======== NAVEGACIÓN ========
+window.nav = function(v, el) {
+  document.querySelectorAll('.view').forEach(x => x.classList.remove('active'));
+  document.getElementById('view-'+v).classList.add('active');
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  el.classList.add('active');
+  if (v==='eventos') cargarEventos();
+  if (v==='miembros') cargarMiembros();
+  if (v==='perfil') cargarPerfil();
+  if (v==='feed') cargarFeed();
+  if (v==='mensajes') cargarMensajes();
+  if (v==='notificaciones') cargarNotificaciones();
+  if (v==='fotos') cargarFotos();
+}
+
+window.navFromMenu = function(v) {
+  cerrarMenu();
+  document.querySelectorAll('.view').forEach(x => x.classList.remove('active'));
+  document.getElementById('view-'+v).classList.add('active');
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  if (v==='eventos') cargarEventos();
+  if (v==='miembros') cargarMiembros();
+  if (v==='perfil') cargarPerfil();
+  if (v==='oracion') cargarOraciones();
+}
+
+window.abrirMenu = function() {
+  if (currentUser) {
+    document.getElementById('mp-nombre').textContent = currentUser.displayName || currentUser.email.split('@')[0];
+    document.getElementById('mp-email').textContent = currentUser.email;
+  }
+  document.getElementById('menu-panel').classList.add('open');
+  document.getElementById('menu-overlay').classList.add('open');
+}
+
+window.cerrarMenu = function() {
+  document.getElementById('menu-panel').classList.remove('open');
+  document.getElementById('menu-overlay').classList.remove('open');
+}
+
+async function cargarNotificaciones() {
+  const el = document.getElementById('notificaciones-list');
+  if (!el || !currentUser) return;
+  el.innerHTML = '<div class="loading"><div class="spinner"></div>Cargando...</div>';
+  try {
+    const [notifSnap, postsSnap] = await Promise.all([
+      getDocs(query(collection(db,'notificaciones',currentUser.uid,'items'), orderBy('fecha','desc'), limit(50))),
+      getDocs(query(collection(db,'posts'), orderBy('fecha','desc'), limit(15)))
+    ]);
+
+    const todos = [];
+    notifSnap.forEach(d => todos.push({id: d.id, ...d.data()}));
+
+    const solicitudes      = todos.filter(n => n.tipo === 'solicitud');
+    const comentariosYmas  = todos.filter(n => ['comentario','like','grupo','conexion_aceptada'].includes(n.tipo));
+    const mensajesNotif    = todos.filter(n => n.tipo === 'mensaje');
+
+    const recentPosts = [];
+    postsSnap.forEach(d => {
+      const p = {id: d.id, ...d.data()};
+      if (p.uid !== currentUser.uid && p.uid !== 'koinonia-system') recentPosts.push(p);
+    });
+
+    const renderItem = (n, icon, showSolicitudActions) => {
+      const fecha = n.fecha?.toDate ? n.fecha.toDate() : new Date();
+      const actions = showSolicitudActions && !n.aceptada && !n.rechazada
+        ? `<div style="display:flex;gap:8px;margin-top:8px">
+            <button onclick="aceptarSolicitud('${n.id}','${n.fromUid||''}')" style="background:var(--azul);color:white;border:none;border-radius:8px;padding:6px 14px;font-size:12px;font-weight:600;cursor:pointer">✅ Aceptar</button>
+            <button onclick="rechazarSolicitud('${n.id}')" style="background:#f0f2f5;color:var(--texto);border:none;border-radius:8px;padding:6px 14px;font-size:12px;font-weight:600;cursor:pointer">Rechazar</button>
+          </div>` : '';
+      const statusTag = n.tipo==='solicitud' && n.aceptada ? `<div style="font-size:11px;color:#1D9E75;margin-top:3px;font-weight:600">✅ Aceptada</div>`
+                       : n.tipo==='solicitud' && n.rechazada ? `<div style="font-size:11px;color:var(--gris-texto);margin-top:3px">Rechazada</div>` : '';
+      return `<div class="notif-item${n.leida?'':' unread'}" onclick="marcarLeida('${n.id}')">
+        <div class="notif-icon">${icon}</div>
+        <div class="notif-body">
+          <div class="notif-text">${escHtml(n.texto||'')}</div>
+          <div class="notif-time">${fmt(fecha)}</div>
+          ${statusTag}${actions}
+        </div>
+      </div>`;
+    };
+
+    const iconMap = { comentario:'💬', like:'❤️', grupo:'👥', conexion_aceptada:'🤝' };
+    let html = '';
+
+    // 1. Solicitudes de amistad
+    html += `<div class="notif-section"><div class="notif-section-title">👥 Solicitudes de amistad</div>`;
+    html += solicitudes.length
+      ? solicitudes.map(n => renderItem(n, '👥', true)).join('')
+      : `<div class="notif-empty-msg">Sin solicitudes pendientes</div>`;
+    html += `</div>`;
+
+    // 2. Nuevos posts de miembros
+    html += `<div class="notif-section"><div class="notif-section-title">📢 Nuevos posts de miembros</div>`;
+    if (recentPosts.length) {
+      html += recentPosts.slice(0,5).map(p => {
+        const fecha = p.fecha?.toDate ? p.fecha.toDate() : new Date();
+        const ini = (p.autor||'?').substring(0,2).toUpperCase();
+        const preview = escHtml((p.texto||'Foto / contenido').substring(0,80));
+        const dots = (p.texto||'').length > 80 ? '…' : '';
+        return `<div class="notif-item">
+          <div class="notif-icon" style="font-size:12px;font-weight:700;background:var(--azul);color:white">${ini}</div>
+          <div class="notif-body">
+            <div class="notif-text"><strong>${escHtml(p.autor||'Miembro')}</strong> publicó: "${preview}${dots}"</div>
+            <div class="notif-time">${fmt(fecha)}</div>
+          </div>
+        </div>`;
+      }).join('');
+    } else {
+      html += `<div class="notif-empty-msg">Sin publicaciones recientes</div>`;
+    }
+    html += `</div>`;
+
+    // 3. Comentarios en tus posts
+    html += `<div class="notif-section"><div class="notif-section-title">💬 Comentarios en tus posts</div>`;
+    html += comentariosYmas.length
+      ? comentariosYmas.map(n => renderItem(n, iconMap[n.tipo]||'🔔', false)).join('')
+      : `<div class="notif-empty-msg">Sin comentarios recientes</div>`;
+    html += `</div>`;
+
+    // 4. Mensajes nuevos
+    html += `<div class="notif-section"><div class="notif-section-title">✉️ Mensajes nuevos</div>`;
+    html += mensajesNotif.length
+      ? mensajesNotif.map(n => renderItem(n, '✉️', false)).join('')
+      : `<div class="notif-empty-msg">Sin mensajes nuevos</div>`;
+    html += `</div>`;
+
+    el.innerHTML = html;
+    notifSnap.forEach(d => {
+      if (!d.data().leida) updateDoc(doc(db,'notificaciones',currentUser.uid,'items',d.id), {leida:true}).catch(()=>{});
+    });
+  } catch(e) {
+    el.innerHTML = '<div class="empty"><div class="empty-icon">🔔</div><p>Sin notificaciones</p></div>';
+  }
+}
+
+window.marcarLeida = function(notifId) {
+  if (!currentUser) return;
+  updateDoc(doc(db,'notificaciones',currentUser.uid,'items',notifId), {leida:true}).catch(()=>{});
+}
+
+function iniciarEscuchaNotificaciones() {
+  if (!currentUser) return;
+  const q = query(collection(db,'notificaciones',currentUser.uid,'items'), where('leida','==',false), limit(20));
+  onSnapshot(q, snap => {
+    const count = snap.size;
+    const badge = document.getElementById('notif-badge');
+    if (badge) {
+      badge.textContent = count > 9 ? '9+' : String(count);
+      badge.classList.toggle('show', count > 0);
+    }
+  });
+}
+
+// ======== REACCIONES ========
+function renderReaccionesHtml(reacciones) {
+  if (!reacciones) return '';
+  const map = {amor:'❤️', oracion:'🙏', fuego:'🔥', risa:'😂', aplauso:'👏'};
+  return Object.entries(map)
+    .filter(([k]) => (reacciones[k]||0) > 0)
+    .map(([k,e]) => `<span>${e} ${reacciones[k]}</span>`)
+    .join('');
+}
+
+window.toggleReact = function(postId, btn) {
+  const popup = document.getElementById(`react-${postId}`);
+  if (!popup) return;
+  document.querySelectorAll('.react-popup.open').forEach(p => { if (p !== popup) p.classList.remove('open'); });
+  popup.classList.toggle('open');
+}
+
+window.reaccionar = async function(postId, tipo) {
+  const popup = document.getElementById(`react-${postId}`);
+  if (popup) popup.classList.remove('open');
+  try {
+    await updateDoc(doc(db,'posts',postId), {[`reacciones.${tipo}`]: increment(1)});
+    const snap = await getDoc(doc(db,'posts',postId));
+    const el = document.getElementById(`likes-${postId}`);
+    if (el) el.innerHTML = renderReaccionesHtml(snap.data()?.reacciones);
+  } catch(e) {}
+}
+
+// ======== MURO DE ORACIÓN ========
+async function cargarOraciones() {
+  const el = document.getElementById('oracion-list');
+  if (!el || !currentUser) return;
+  el.innerHTML = '<div class="loading"><div class="spinner"></div>Cargando...</div>';
+  try {
+    const q = query(collection(db,'posts'), where('tipo','==','oracion'), orderBy('fecha','desc'), limit(30));
+    const snap = await getDocs(q);
+    if (snap.empty) {
+      el.innerHTML = '<div class="empty"><div class="empty-icon">🙏</div><p>Sé el primero en compartir una petición</p></div>';
+      return;
+    }
+    let html = '';
+    snap.forEach(d => {
+      const p = {id:d.id,...d.data()};
+      const fecha = p.fecha?.toDate ? p.fecha.toDate() : new Date();
+      const ini = (p.autor||'?').substring(0,2).toUpperCase();
+      const oradores = p.oradores || 0;
+      html += `<div class="oracion-card">
+        <div class="oracion-autor">
+          <div class="av av-morado" style="width:38px;height:38px;font-size:12px;flex-shrink:0">${ini}</div>
+          <div>
+            <div style="font-size:13px;font-weight:600">${escHtml(p.autor||'Miembro')}</div>
+            <div style="font-size:11px;color:var(--gris-texto)">${fmt(fecha)}</div>
+          </div>
+        </div>
+        <div class="oracion-texto">${escHtml(p.texto||'')}</div>
+        <button class="btn-orar" id="orar-${d.id}" onclick="aporOrar('${d.id}',${oradores},this)">🙏 Orar por esto · ${oradores}</button>
+      </div>`;
+    });
+    el.innerHTML = html;
+  } catch(e) {
+    el.innerHTML = '<div class="empty"><div class="empty-icon">🙏</div><p>Error cargando peticiones</p></div>';
+  }
+}
+
+window.aporOrar = async function(id, actual, btn) {
+  btn.disabled = true;
+  btn.classList.add('orando');
+  const n = actual + 1;
+  btn.textContent = `🙏 Orando · ${n}`;
+  try { await updateDoc(doc(db,'posts',id), {oradores: n}); } catch(e) {}
+}
+
+window.abrirOracionModal = function() {
+  openModal('modal-post');
+  const oracionBtn = [...document.querySelectorAll('.tipo-btn')].find(b => b.textContent.includes('Oración'));
+  if (oracionBtn) { document.querySelectorAll('.tipo-btn').forEach(b => b.classList.remove('sel')); oracionBtn.classList.add('sel'); postTipo = 'oracion'; }
+}
+
+// ======== FOTOS ========
+let fotosFile = null;
+
+async function cargarFotos() {
+  const wrap = document.getElementById('fotos-upload-btn');
+  if (currentUser) {
+    wrap.innerHTML = '<button class="btn-subir-foto" onclick="openModal(\'modal-foto-galeria\')">📷 Subir foto</button>';
+  } else {
+    wrap.innerHTML = '';
+  }
+  const grid = document.getElementById('fotos-grid');
+  grid.innerHTML = '<div class="loading" style="grid-column:1/-1"><div class="spinner"></div>Cargando...</div>';
+  try {
+    const q = query(collection(db,'fotos'), orderBy('fecha','desc'), limit(60));
+    const snap = await getDocs(q);
+    if (snap.empty) {
+      grid.innerHTML = '<div class="empty" style="grid-column:1/-1"><div class="empty-icon">📷</div><p>No hay fotos aún. ¡Sé el primero en subir una!</p></div>';
+      return;
+    }
+    let html = '';
+    snap.forEach(d => {
+      const f = d.data();
+      const fecha = f.fecha?.toDate ? f.fecha.toDate() : new Date();
+      const fechaStr = fecha.toLocaleDateString('es-CO',{day:'numeric',month:'short',year:'numeric'});
+      html += `<div class="foto-card" onclick="verFotoGrande('${f.url}')">
+        <img src="${f.url}" loading="lazy" alt="${escHtml(f.descripcion||'Foto')}">
+        <div class="foto-card-meta">
+          ${f.descripcion ? `<div class="foto-card-desc">${escHtml(f.descripcion)}</div>` : ''}
+          <div class="foto-card-autor">${escHtml(f.autor||'Miembro')}</div>
+          <div class="foto-card-fecha">${fechaStr}</div>
+        </div>
+      </div>`;
+    });
+    grid.innerHTML = html;
+  } catch(e) {
+    grid.innerHTML = '<div class="empty" style="grid-column:1/-1"><div class="empty-icon">📷</div><p>Error al cargar las fotos</p></div>';
+  }
+}
+
+window.prevFotoGaleria = function(input) {
+  const file = input.files[0];
+  if (!file) return;
+  if (file.size > 10 * 1024 * 1024) { toast('❌ La foto no puede superar 10MB'); input.value = ''; return; }
+  fotosFile = file;
+  const prev = document.getElementById('fotos-preview');
+  prev.src = URL.createObjectURL(file);
+  prev.style.display = 'block';
+}
+
+window.subirFotoGaleria = async function() {
+  if (!currentUser) { toast('Debes iniciar sesión para subir fotos'); return; }
+  if (!fotosFile) { toast('Selecciona una imagen primero'); return; }
+  const desc = document.getElementById('fotos-desc').value.trim();
+  const btn = document.getElementById('btn-publicar-foto');
+  btn.disabled = true; btn.textContent = 'Subiendo...';
+  try {
+    const url = await subirACloudinary(fotosFile);
+    await addDoc(collection(db,'fotos'), {
+      url,
+      descripcion: desc,
+      autor: currentUser.displayName || currentUser.email.split('@')[0],
+      uid: currentUser.uid,
+      fecha: serverTimestamp()
+    });
+    closeModal('modal-foto-galeria');
+    document.getElementById('fotos-preview').style.display = 'none';
+    document.getElementById('fotos-preview').src = '';
+    document.getElementById('fotos-desc').value = '';
+    document.getElementById('fotos-file-input').value = '';
+    fotosFile = null;
+    toast('✅ Foto publicada en la galería');
+    cargarFotos();
+  } catch(e) {
+    toast('❌ Error al subir la foto. Inténtalo de nuevo.');
+  } finally {
+    btn.disabled = false; btn.textContent = '📤 Publicar foto';
+  }
+}
+
+window.verFotoGrande = function(url) {
+  const bg = document.createElement('div');
+  bg.className = 'foto-lightbox';
+  bg.onclick = () => document.body.removeChild(bg);
+  const img = document.createElement('img');
+  img.src = url;
+  bg.appendChild(img);
+  document.body.appendChild(bg);
+}
+
+// ======== UTILS ========
+function fmt(d) {
+  if (!d) return 'Ahora';
+  const diff = Math.floor((new Date()-d)/60000);
+  if (diff < 1) return 'Ahora mismo';
+  if (diff < 60) return 'Hace ' + diff + ' min';
+  if (diff < 1440) return 'Hace ' + Math.floor(diff/60) + 'h';
+  return d.toLocaleDateString('es-CO',{day:'numeric',month:'short'});
+}
+window.openModal = function(id) { document.getElementById(id).classList.add('open'); }
+window.closeModal = function(id) { document.getElementById(id).classList.remove('open'); }
+document.querySelectorAll('.modal-bg').forEach(m => m.addEventListener('click', function(e){ if(e.target===this) this.classList.remove('open'); }));
+document.addEventListener('click', e => {
+  if (!e.target.closest('#post-menu-popup') && !e.target.closest('.post-menu-btn')) {
+    document.getElementById('post-menu-popup').classList.remove('open');
+    postMenuActiveId = null;
+    postMenuActiveUid = null;
+  }
+  if (!e.target.closest('.react-wrap')) {
+    document.querySelectorAll('.react-popup.open').forEach(p => p.classList.remove('open'));
+  }
+});
+window.toast = function(msg) { const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),3000); }
+</script>
+<script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () =>
+    navigator.serviceWorker.register('/sw.js').catch(() => {})
+  );
+}
+</script>
+</body>
+</html>

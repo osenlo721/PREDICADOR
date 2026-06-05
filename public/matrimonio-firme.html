@@ -1,0 +1,754 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Matrimonio Firme — Osmar Lugo Orozco</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Raleway:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --azul: #009FDA;
+  --marino: #003B6F;
+  --oro: #F0AB00;
+  --oro-claro: #FFD166;
+  --fondo: #040e1c;
+  --fondo2: #071628;
+  --fondo3: #0a1e38;
+  --texto: #e8e0d0;
+  --texto-suave: #a89f90;
+  --linea: rgba(240,171,0,0.2);
+  --verde: #2d7a5a;
+  --rojo: #8b2020;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body {
+  background: var(--fondo);
+  color: var(--texto);
+  font-family: 'Crimson Pro', Georgia, serif;
+  font-size: 18px;
+  line-height: 1.85;
+  overflow-x: hidden;
+}
+::-webkit-scrollbar{width:4px;}
+::-webkit-scrollbar-track{background:var(--fondo);}
+::-webkit-scrollbar-thumb{background:var(--azul);border-radius:2px;}
+
+/* NAV TOGGLE */
+.nav-toggle {
+  position:fixed; top:16px; left:16px; z-index:200;
+  background:var(--marino); border:1px solid var(--linea);
+  color:var(--oro); width:40px; height:40px; border-radius:8px;
+  cursor:pointer; font-size:18px;
+  display:flex; align-items:center; justify-content:center;
+  transition:all .2s;
+}
+.nav-toggle:hover { background:var(--azul); color:#fff; }
+
+/* NAV LATERAL */
+nav {
+  position:fixed; left:0; top:0; bottom:0; width:250px;
+  background:linear-gradient(180deg,var(--marino) 0%,#011529 100%);
+  border-right:1px solid var(--linea);
+  z-index:100; overflow-y:auto;
+  transform:translateX(-100%);
+  transition:transform .35s ease;
+  padding:32px 0;
+}
+nav.show { transform:translateX(0); }
+nav .nav-title {
+  font-family:'Cinzel',serif; font-size:10px; letter-spacing:4px;
+  color:var(--oro); padding:0 20px 16px;
+  border-bottom:1px solid var(--linea); margin-bottom:12px;
+}
+nav a {
+  display:block; padding:7px 20px;
+  font-family:'Raleway',sans-serif; font-size:11px;
+  font-weight:500; letter-spacing:1px;
+  color:var(--texto-suave); text-decoration:none;
+  border-left:2px solid transparent; transition:all .2s;
+}
+nav a:hover, nav a.active {
+  color:var(--oro); border-left-color:var(--oro);
+  background:rgba(240,171,0,.06);
+}
+
+/* PORTADA */
+.cover {
+  min-height:100vh;
+  background:linear-gradient(160deg,#041830 0%,var(--fondo) 65%);
+  display:flex; flex-direction:column;
+  align-items:center; justify-content:center;
+  text-align:center; padding:80px 32px 60px;
+  position:relative; overflow:hidden;
+}
+.cover::before {
+  content:''; position:absolute; inset:0;
+  background:
+    radial-gradient(ellipse 60% 50% at 50% 10%, rgba(0,159,218,.18) 0%, transparent 70%),
+    radial-gradient(ellipse 40% 40% at 80% 85%, rgba(240,171,0,.1) 0%, transparent 60%);
+  pointer-events:none;
+}
+.cover-rings {
+  font-size:64px; margin-bottom:24px;
+  animation:fadeDown .8s ease both;
+}
+.cover-tag {
+  font-family:'Cinzel',serif; font-size:10px; letter-spacing:5px;
+  color:var(--azul); text-transform:uppercase; margin-bottom:20px;
+  animation:fadeDown .9s ease .1s both;
+}
+.cover-title {
+  font-family:'Cinzel',serif;
+  font-size:clamp(48px,10vw,96px);
+  font-weight:900; line-height:1; margin-bottom:8px;
+  animation:fadeDown 1s ease .2s both;
+}
+.cover-title span { color:var(--oro); }
+.cover-sub {
+  font-family:'Cinzel',serif;
+  font-size:clamp(14px,2vw,18px);
+  color:var(--azul); letter-spacing:2px;
+  margin-bottom:32px;
+  animation:fadeDown 1s ease .25s both;
+}
+.cover-line {
+  width:60px; height:1px;
+  background:linear-gradient(to right,transparent,var(--oro),transparent);
+  margin:0 auto 24px;
+  animation:fadeIn 1.1s ease .35s both;
+}
+.cover-author {
+  font-family:'Raleway',sans-serif; font-size:13px;
+  letter-spacing:4px; color:var(--texto-suave); text-transform:uppercase;
+  animation:fadeDown 1.1s ease .4s both;
+}
+.cover-verse {
+  position:absolute; bottom:40px;
+  font-family:'Crimson Pro',serif; font-style:italic;
+  font-size:14px; color:var(--texto-suave);
+  max-width:400px; text-align:center; line-height:1.6;
+  animation:fadeIn 1.4s ease .6s both;
+}
+
+/* MAIN */
+main { max-width:740px; margin:0 auto; padding:0 24px; }
+
+/* CAPÍTULOS */
+.chapter {
+  padding:80px 0 60px;
+  border-bottom:1px solid rgba(240,171,0,.1);
+  opacity:0; transform:translateY(30px);
+  transition:opacity .7s ease,transform .7s ease;
+}
+.chapter.visible { opacity:1; transform:none; }
+
+.ch-num {
+  font-family:'Cinzel',serif; font-size:11px;
+  letter-spacing:4px; color:var(--azul);
+  text-transform:uppercase; margin-bottom:12px;
+}
+.ch-title {
+  font-family:'Cinzel',serif;
+  font-size:clamp(20px,4vw,32px);
+  font-weight:700; color:var(--oro); line-height:1.2; margin-bottom:8px;
+}
+.ch-sub {
+  font-family:'Cinzel',serif;
+  font-size:clamp(14px,2.5vw,20px);
+  color:var(--azul); margin-bottom:28px;
+}
+.ch-divider {
+  width:40px; height:2px;
+  background:linear-gradient(to right,var(--oro),var(--azul));
+  margin-bottom:32px; border-radius:2px;
+}
+p { margin-bottom:20px; }
+strong { color:var(--oro); font-weight:600; }
+em { color:var(--azul); font-style:italic; }
+
+/* CITA */
+.quote {
+  border-left:3px solid var(--oro);
+  padding:16px 24px; margin:28px 0;
+  background:rgba(240,171,0,.05);
+  border-radius:0 8px 8px 0;
+}
+.quote p {
+  font-family:'Crimson Pro',serif; font-style:italic;
+  font-size:1.05em; color:var(--oro-claro); margin-bottom:6px;
+}
+.quote cite {
+  font-family:'Raleway',sans-serif; font-size:12px;
+  letter-spacing:2px; color:var(--texto-suave);
+}
+
+/* LISTA SI/NO */
+.list-yes, .list-no {
+  list-style:none; margin:16px 0 24px; padding:0;
+}
+.list-yes li, .list-no li {
+  padding:6px 0 6px 28px; position:relative;
+  font-size:0.97em; color:var(--texto-suave);
+  border-bottom:1px solid rgba(255,255,255,.05);
+}
+.list-yes li::before {
+  content:'✅'; position:absolute; left:0; top:6px; font-size:14px;
+}
+.list-no li::before {
+  content:'❌'; position:absolute; left:0; top:6px; font-size:14px;
+}
+
+/* COMPARATIVA */
+.compare {
+  display:grid; grid-template-columns:1fr 1fr;
+  gap:16px; margin:28px 0;
+}
+.compare-box {
+  padding:20px; border-radius:8px; border:1px solid;
+}
+.compare-box.bad { border-color:rgba(0,159,218,.3); background:rgba(0,159,218,.05); }
+.compare-box.good { border-color:rgba(240,171,0,.3); background:rgba(240,171,0,.05); }
+.compare-box h4 {
+  font-family:'Cinzel',serif; font-size:10px;
+  letter-spacing:3px; margin-bottom:12px; text-transform:uppercase;
+}
+.compare-box.bad h4 { color:var(--azul); }
+.compare-box.good h4 { color:var(--oro); }
+.compare-box ul { list-style:none; }
+.compare-box ul li {
+  font-size:14px; padding:4px 0;
+  color:var(--texto-suave);
+  border-bottom:1px solid rgba(255,255,255,.06);
+}
+
+/* FRASE CLAVE */
+.frase {
+  text-align:center; padding:40px 24px; margin:32px 0;
+  position:relative;
+}
+.frase::before {
+  content:'"'; font-family:'Cinzel',serif; font-size:100px;
+  color:rgba(240,171,0,.07); position:absolute;
+  top:-10px; left:16px; line-height:1;
+}
+.frase p {
+  font-family:'Cinzel',serif;
+  font-size:clamp(15px,2.2vw,20px);
+  color:var(--texto); line-height:1.5;
+  position:relative; z-index:1; margin:0;
+}
+
+/* ACTIVIDAD */
+.actividad {
+  background:linear-gradient(135deg,rgba(0,59,111,.4) 0%,rgba(4,14,28,.8) 100%);
+  border:1px solid rgba(0,159,218,.25);
+  border-radius:12px; padding:28px; margin-top:32px;
+}
+.actividad h4 {
+  font-family:'Cinzel',serif; font-size:11px;
+  letter-spacing:4px; color:var(--azul);
+  text-transform:uppercase; margin-bottom:16px;
+}
+.actividad ol {
+  padding-left:20px; color:var(--texto-suave); font-size:0.95em;
+}
+.actividad ol li { margin-bottom:10px; }
+.actividad .oracion {
+  margin-top:16px; padding:16px;
+  background:rgba(240,171,0,.06);
+  border-left:2px solid var(--oro);
+  border-radius:0 8px 8px 0;
+  font-style:italic; color:var(--texto-suave); font-size:0.95em;
+}
+
+/* SECCIÓN TITULO */
+.section-label {
+  font-family:'Cinzel',serif; font-size:11px;
+  letter-spacing:3px; color:var(--azul);
+  text-transform:uppercase; margin:32px 0 12px;
+}
+.section-title {
+  font-family:'Cinzel',serif; font-size:clamp(16px,2.5vw,22px);
+  color:var(--oro-claro); margin-bottom:16px;
+}
+
+/* CONCLUSIÓN */
+.conclusion {
+  background:linear-gradient(135deg,rgba(0,59,111,.35) 0%,rgba(4,14,28,.8) 100%);
+  border:1px solid rgba(240,171,0,.2);
+  border-radius:12px; padding:24px; margin-top:28px;
+}
+.conclusion p { color:var(--texto-suave); font-style:italic; margin-bottom:0; }
+
+/* EPÍLOGO */
+.epilogo {
+  text-align:center; padding:80px 32px 120px;
+}
+.epilogo .big { 
+  font-family:'Cinzel',serif;
+  font-size:clamp(36px,8vw,72px);
+  font-weight:900; color:transparent;
+  -webkit-text-stroke:1px rgba(240,171,0,.35);
+  letter-spacing:6px; display:block; margin-bottom:40px;
+}
+.epilogo h2 {
+  font-family:'Cinzel',serif;
+  font-size:clamp(18px,3vw,28px);
+  color:var(--oro); margin-bottom:24px;
+}
+.epilogo p { max-width:540px; margin:0 auto 16px; color:var(--texto-suave); }
+.epilogo .firma {
+  margin-top:48px; font-family:'Cinzel',serif;
+  font-size:13px; letter-spacing:4px; color:var(--azul);
+}
+
+@keyframes fadeDown {
+  from{opacity:0;transform:translateY(-20px);}
+  to{opacity:1;transform:none;}
+}
+@keyframes fadeIn {
+  from{opacity:0;} to{opacity:1;}
+}
+
+@media(max-width:600px){
+  .compare{grid-template-columns:1fr;}
+  nav{width:210px;}
+}
+</style>
+</head>
+<body>
+
+<button class="nav-toggle" onclick="toggleNav()">☰</button>
+
+<nav id="sidenav">
+  <div class="nav-title">Contenido</div>
+  <a href="#portada">Portada</a>
+  <a href="#intro">Introducción</a>
+  <a href="#cap1">1. Fundamento bíblico</a>
+  <a href="#cap2">2. Comunicación efectiva</a>
+  <a href="#cap3">3. Roles en el matrimonio</a>
+  <a href="#cap4">4. Resolución de conflictos</a>
+  <a href="#cap5">5. Amor e intimidad</a>
+  <a href="#cap6">6. La oración en pareja</a>
+  <a href="#cap7">7. Construyendo un legado</a>
+</nav>
+
+<!-- PORTADA -->
+<section class="cover" id="portada">
+  <div class="cover-rings">💍</div>
+  <div class="cover-tag">Osmar Lugo Orozco · Ebook</div>
+  <h1 class="cover-title">Matrimonio <span>Firme</span></h1>
+  <div class="cover-sub">Cómo fortalecer tu matrimonio según los parámetros de Dios</div>
+  <div class="cover-line"></div>
+  <div class="cover-author">Osmar Lugo Orozco</div>
+  <div class="cover-verse">"Si Jehová no edificare la casa, en vano trabajan los que la edifican." — Salmo 127:1</div>
+</section>
+
+<main>
+
+<!-- INTRO -->
+<section class="chapter" id="intro">
+  <div class="ch-num">Introducción</div>
+  <h2 class="ch-title">El fundamento</h2>
+  <div class="ch-sub">de todo hogar</div>
+  <div class="ch-divider"></div>
+  <p>El matrimonio es una institución sagrada, creada por Dios con un propósito eterno. Desde el principio, el Señor estableció la unión entre el hombre y la mujer no solo como un compañerismo para esta vida, sino como un reflejo del amor de Cristo por Su Iglesia.</p>
+  <p>Sin embargo, vivimos tiempos difíciles. Las parejas enfrentan desafíos que amenazan la estabilidad de sus hogares: estrés, falta de comunicación, diferencias de valores, crisis económicas, y ataques constantes contra los principios bíblicos.</p>
+  <p>Este libro nace con un anhelo: ayudar a los matrimonios a volver al fundamento de la Palabra de Dios. A través de enseñanzas claras y ejercicios prácticos, te invito a edificar tu matrimonio sobre la Roca que es Cristo.</p>
+  <p>Cada capítulo te dará herramientas basadas en la Biblia para:</p>
+  <ul class="list-yes">
+    <li>Mejorar la comunicación con tu cónyuge</li>
+    <li>Resolver conflictos de manera saludable</li>
+    <li>Cultivar el amor y la intimidad</li>
+    <li>Fortalecer tu vida espiritual como pareja</li>
+    <li>Construir un legado de fe para tus hijos</li>
+  </ul>
+  <div class="quote">
+    <p>"Si Jehová no edificare la casa, en vano trabajan los que la edifican."</p>
+    <cite>Salmo 127:1</cite>
+  </div>
+</section>
+
+<!-- CAP 1 -->
+<section class="chapter" id="cap1">
+  <div class="ch-num">Capítulo Uno</div>
+  <h2 class="ch-title">El fundamento bíblico</h2>
+  <div class="ch-sub">del matrimonio</div>
+  <div class="ch-divider"></div>
+  <div class="quote">
+    <p>"Por tanto, dejará el hombre a su padre y a su madre, y se unirá a su mujer, y serán una sola carne."</p>
+    <cite>Génesis 2:24</cite>
+  </div>
+  <p>El matrimonio no es un contrato social ni una invención humana. Es un <strong>pacto divino</strong>, diseñado por Dios desde la creación para satisfacer la necesidad de compañía, proveer ayuda mutua, reflejar Su amor en la tierra y perpetuar la vida y la fe en las siguientes generaciones.</p>
+
+  <div class="section-label">1 — El diseño original</div>
+  <p>Dios creó al hombre y a la mujer con diferencias complementarias: físicas, emocionales y espirituales. El matrimonio según Dios no es competencia, es complemento. No es esclavitud, es libertad en unidad.</p>
+  <div class="frase"><p>"Dios no une a dos personas perfectas, sino a dos personas que eligen crecer juntas en Su gracia."</p></div>
+
+  <div class="section-label">2 — Una sola carne</div>
+  <div class="compare">
+    <div class="compare-box bad">
+      <h4>Unidad espiritual</h4>
+      <ul><li>Oren juntos</li><li>Crezcan en la Palabra</li><li>Participen en la vida espiritual</li></ul>
+    </div>
+    <div class="compare-box good">
+      <h4>Unidad emocional</h4>
+      <ul><li>Sean el apoyo mutuo</li><li>Celebren juntos los logros</li><li>Abracen juntos las pérdidas</li></ul>
+    </div>
+  </div>
+
+  <div class="section-label">3 — Reflejo del amor de Cristo</div>
+  <div class="quote">
+    <p>"Maridos, amad a vuestras mujeres, así como Cristo amó a la iglesia, y se entregó a sí mismo por ella."</p>
+    <cite>Efesios 5:25</cite>
+  </div>
+  <p>El matrimonio cristiano tiene un propósito misionero: mostrar el amor de Cristo al mundo. Este modelo no es machismo ni feminismo; es <strong>Cristocentrismo</strong>.</p>
+
+  <div class="section-label">4 — Pacto, no contrato</div>
+  <div class="compare">
+    <div class="compare-box bad"><h4>Contrato</h4><ul><li>Condicional</li><li>Basado en beneficios</li></ul></div>
+    <div class="compare-box good"><h4>Pacto</h4><ul><li>Incondicional</li><li>Basado en fidelidad y entrega</li></ul></div>
+  </div>
+  <div class="frase"><p>"El amor basado en pacto permanece cuando el amor basado en emociones falla."</p></div>
+
+  <div class="actividad">
+    <h4>Actividad para el matrimonio</h4>
+    <ol>
+      <li>Lean juntos Efesios 5:22-33 y Mateo 19:4-6</li>
+      <li>¿Qué aspecto del diseño original de Dios necesitamos fortalecer más?</li>
+      <li>¿Estamos reflejando el amor de Cristo en nuestro matrimonio?</li>
+      <li>Escriban juntos una oración de renovación de su pacto matrimonial</li>
+    </ol>
+    <div class="oracion">"Señor, hoy renovamos nuestro pacto ante Ti. Queremos vivir un matrimonio conforme a Tu diseño. Haznos uno en espíritu, alma y cuerpo. En el nombre de Jesús. Amén."</div>
+  </div>
+</section>
+
+<!-- CAP 2 -->
+<section class="chapter" id="cap2">
+  <div class="ch-num">Capítulo Dos</div>
+  <h2 class="ch-title">Comunicación efectiva</h2>
+  <div class="ch-sub">en el matrimonio</div>
+  <div class="ch-divider"></div>
+  <div class="quote">
+    <p>"Sea vuestra palabra siempre con gracia, sazonada con sal, para que sepáis cómo debéis responder a cada uno."</p>
+    <cite>Colosenses 4:6</cite>
+  </div>
+  <p>La comunicación es la sangre que corre por las venas del matrimonio. Sin ella, el matrimonio se enfría, se endurece, se estanca. Con buena comunicación, la pareja se entiende, se fortalece y se nutre emocional y espiritualmente.</p>
+
+  <div class="section-label">El poder de las palabras</div>
+  <div class="compare">
+    <div class="compare-box good">
+      <h4>Palabras que edifican</h4>
+      <ul><li>"Te admiro"</li><li>"Gracias por todo lo que haces"</li><li>"Estoy contigo, pase lo que pase"</li><li>"Perdóname, me equivoqué"</li></ul>
+    </div>
+    <div class="compare-box bad">
+      <h4>Palabras que destruyen</h4>
+      <ul><li>"Siempre haces todo mal"</li><li>"Nunca cambiarás"</li><li>"Me arrepiento de haberme casado"</li></ul>
+    </div>
+  </div>
+
+  <div class="section-label">Escuchar con el corazón</div>
+  <div class="quote">
+    <p>"Todo hombre sea pronto para oír, tardo para hablar, tardo para airarse."</p>
+    <cite>Santiago 1:19</cite>
+  </div>
+  <p>Escuchar con el corazón significa: estar presente y atento, validar los sentimientos del otro, mostrar empatía, buscar entender antes que responder.</p>
+
+  <div class="section-label">Plan de los 7 hábitos</div>
+  <ul class="list-yes">
+    <li>Salúdense con afecto (abrazo o beso) al llegar y salir de casa</li>
+    <li>Digan "te amo" todos los días</li>
+    <li>Pregunten: "¿Cómo estuvo tu día?" y escuchen activamente</li>
+    <li>Eviten discutir asuntos delicados cuando estén cansados</li>
+    <li>Tengan un "espacio semanal de conversación profunda" (30 min sin celular)</li>
+    <li>No se duerman enojados (Efesios 4:26)</li>
+    <li>Oren juntos, pidiendo a Dios que bendiga su comunicación</li>
+  </ul>
+
+  <div class="frase"><p>"Escuchar con el corazón abre puertas que mil argumentos no pueden abrir."</p></div>
+
+  <div class="actividad">
+    <h4>Actividad para el matrimonio</h4>
+    <ol>
+      <li>Lean juntos Efesios 4:29-32 y Proverbios 15:1</li>
+      <li>Cada uno escriba 3 frases que le gustaría escuchar más de su cónyuge</li>
+      <li>Elijan 2 hábitos de comunicación que van a practicar esta semana</li>
+    </ol>
+    <div class="oracion">"Señor, queremos que nuestra boca sea fuente de bendición en nuestro hogar. Ayúdanos a comunicar con amor y respeto. En el nombre de Jesús. Amén."</div>
+  </div>
+</section>
+
+<!-- CAP 3 -->
+<section class="chapter" id="cap3">
+  <div class="ch-num">Capítulo Tres</div>
+  <h2 class="ch-title">Roles en el matrimonio</h2>
+  <div class="ch-sub">según la Biblia</div>
+  <div class="ch-divider"></div>
+  <div class="quote">
+    <p>"Cada uno de vosotros ame también a su mujer como a sí mismo; y la mujer respete a su marido."</p>
+    <cite>Efesios 5:33</cite>
+  </div>
+  <p>Los roles en el matrimonio no son para oprimir, sino para <strong>bendecir</strong>. Son un diseño perfecto que refleja el carácter de Dios y genera armonía cuando se viven en el amor de Cristo. Dios no creó al hombre y a la mujer iguales en función, pero sí <strong>iguales en valor y en dignidad</strong>.</p>
+
+  <div class="section-label">El rol del esposo — Liderazgo con amor</div>
+  <p>El esposo es llamado a ser el líder espiritual del hogar. No se trata de autoritarismo, sino de un liderazgo como el de Cristo: servicial, sacrificado, compasivo y protector.</p>
+  <ul class="list-yes">
+    <li>Orar por su esposa y familia</li>
+    <li>Tomar la iniciativa espiritual</li>
+    <li>Proveer seguridad emocional, no solo económica</li>
+    <li>Escuchar las opiniones de su esposa con humildad</li>
+  </ul>
+
+  <div class="section-label">El rol de la esposa — Apoyo con respeto</div>
+  <p>La sujeción bíblica no es esclavitud ni sumisión ciega. Es un llamado a reconocer el liderazgo del esposo cuando este sigue a Cristo, apoyarlo y caminar juntos en unidad.</p>
+  <div class="compare">
+    <div class="compare-box bad">
+      <h4>Sumisión NO es</h4>
+      <ul><li>Callar ante el pecado o abuso</li><li>Renunciar a la propia personalidad</li><li>Dejar de pensar o decidir</li></ul>
+    </div>
+    <div class="compare-box good">
+      <h4>Sumisión SÍ es</h4>
+      <ul><li>Reconocer el orden de Dios</li><li>Apoyar el liderazgo espiritual</li><li>Orar y edificar con actitud humilde</li></ul>
+    </div>
+  </div>
+  <div class="quote">
+    <p>"Y el uno al otro someteos en el temor de Dios."</p>
+    <cite>Efesios 5:21 — La sumisión bíblica es MUTUA en amor.</cite>
+  </div>
+  <div class="frase"><p>"Cuando los esposos caminan en unidad, el hogar avanza con poder."</p></div>
+
+  <div class="actividad">
+    <h4>Actividad para el matrimonio</h4>
+    <ol>
+      <li>Lean juntos Efesios 5:21-33 y 1 Pedro 3:1-7</li>
+      <li>¿Qué aspectos de mi rol como esposo/esposa necesito fortalecer?</li>
+      <li>¿Cómo puedo apoyar mejor a mi cónyuge en su rol?</li>
+    </ol>
+    <div class="oracion">"Señor, queremos vivir nuestros roles conforme a tu Palabra. Ayúdanos a servirnos mutuamente. En el nombre de Jesús. Amén."</div>
+  </div>
+</section>
+
+<!-- CAP 4 -->
+<section class="chapter" id="cap4">
+  <div class="ch-num">Capítulo Cuatro</div>
+  <h2 class="ch-title">Resolución de conflictos</h2>
+  <div class="ch-sub">con sabiduría y amor</div>
+  <div class="ch-divider"></div>
+  <div class="quote">
+    <p>"Airaos, pero no pequéis; no se ponga el sol sobre vuestro enojo."</p>
+    <cite>Efesios 4:26</cite>
+  </div>
+  <p>Toda pareja tendrá momentos de diferencias, porque somos dos personas con historias, temperamentos y expectativas distintas. <strong>El problema no es el conflicto, sino cómo se maneja.</strong></p>
+
+  <div class="section-label">Enfrentar los desacuerdos con madurez</div>
+  <ul class="list-yes">
+    <li>Si estás muy alterado, respira y pide tiempo antes de discutir</li>
+    <li>No permitas que el enojo se prolongue por días</li>
+    <li>Busca entender el punto de vista de tu cónyuge antes de defender el tuyo</li>
+    <li>Ora antes de responder</li>
+  </ul>
+
+  <div class="section-label">El perdón como estilo de vida</div>
+  <div class="quote">
+    <p>"De la manera que Cristo os perdonó, así también hacedlo vosotros."</p>
+    <cite>Colosenses 3:13</cite>
+  </div>
+  <p>El perdón no significa justificar el error ni olvidar automáticamente. Significa <strong>liberar a la otra persona de la condena</strong> y abrir el camino para la restauración.</p>
+
+  <div class="section-label">Errores que debemos evitar</div>
+  <ul class="list-no">
+    <li>Gritar o insultar</li>
+    <li>Sacar errores del pasado</li>
+    <li>Despreciar los sentimientos del otro</li>
+    <li>Cortar la comunicación ("ley del hielo")</li>
+    <li>Involucrar a terceros innecesariamente</li>
+  </ul>
+
+  <div class="frase"><p>"Cada crisis bien resuelta fortalece la base del matrimonio."</p></div>
+
+  <div class="actividad">
+    <h4>Actividad para el matrimonio</h4>
+    <ol>
+      <li>Lean juntos Colosenses 3:12-14 y Efesios 4:26-32</li>
+      <li>¿Qué patrones negativos hemos usado en los conflictos?</li>
+      <li>Cada uno escriba una cosa que agradece del otro y una que desea mejorar</li>
+    </ol>
+    <div class="oracion">"Señor, enséñanos a resolver nuestros conflictos con sabiduría y amor. Líbranos del orgullo y de la dureza de corazón. En el nombre de Jesús. Amén."</div>
+  </div>
+</section>
+
+<!-- CAP 5 -->
+<section class="chapter" id="cap5">
+  <div class="ch-num">Capítulo Cinco</div>
+  <h2 class="ch-title">Cultivar el amor</h2>
+  <div class="ch-sub">y la intimidad</div>
+  <div class="ch-divider"></div>
+  <div class="quote">
+    <p>"El amor es sufrido, es benigno; el amor no tiene envidia, no es jactancioso, no se vanece."</p>
+    <cite>1 Corintios 13:4-5</cite>
+  </div>
+  <p>El matrimonio no es un estado automático. El amor no se mantiene solo por el hecho de estar casados. <strong>El amor se cultiva. La intimidad se construye. El romanticismo debe ser intencional.</strong></p>
+
+  <div class="section-label">Pequeños gestos, grandes resultados</div>
+  <ul class="list-yes">
+    <li>Un mensaje de amor inesperado</li>
+    <li>Un abrazo largo al final del día</li>
+    <li>Un café preparado con cariño</li>
+    <li>Una nota en el espejo con un versículo de ánimo</li>
+    <li>Un tiempo de conversación sin apuro</li>
+  </ul>
+
+  <div class="section-label">La sexualidad dentro del matrimonio</div>
+  <p>La intimidad sexual es un regalo de Dios para fortalecer el vínculo matrimonial. Es santa, es una expresión de amor, debe ser mutua y consensuada, y nunca debe usarse como arma de manipulación.</p>
+
+  <div class="section-label">Momentos significativos</div>
+  <ul class="list-yes">
+    <li>Tener una cita semanal</li>
+    <li>Tener un devocional en pareja</li>
+    <li>Celebrar aniversarios y fechas especiales</li>
+    <li>Crear tradiciones propias</li>
+  </ul>
+
+  <div class="frase"><p>"Los pequeños actos de amor son el pegamento diario del matrimonio."</p></div>
+
+  <div class="actividad">
+    <h4>Actividad para el matrimonio</h4>
+    <ol>
+      <li>Lean juntos 1 Corintios 13:4-8 y Efesios 5:25-33</li>
+      <li>Cada uno escriba 3 gestos diarios para expresar amor</li>
+      <li>Elijan una fecha para un "día especial de la pareja" este mes</li>
+    </ol>
+    <div class="oracion">"Señor, queremos cultivar un amor profundo y duradero. Ayúdanos a cuidarnos y a honrarnos. En el nombre de Jesús. Amén."</div>
+  </div>
+</section>
+
+<!-- CAP 6 -->
+<section class="chapter" id="cap6">
+  <div class="ch-num">Capítulo Seis</div>
+  <h2 class="ch-title">La oración en pareja</h2>
+  <div class="ch-sub">el lazo que sostiene todo</div>
+  <div class="ch-divider"></div>
+  <div class="quote">
+    <p>"Si dos de vosotros se pusieren de acuerdo en la tierra acerca de cualquier cosa que pidieren, les será hecho por mi Padre."</p>
+    <cite>Mateo 18:19</cite>
+  </div>
+  <p>Orar en pareja es una de las disciplinas espirituales más poderosas que pueden fortalecer el matrimonio. Cuando una pareja ora unida, se abren los cielos sobre el hogar, se fortalecen los lazos espirituales y se siembra humildad y dependencia de Dios.</p>
+
+  <div class="section-label">Beneficios de orar juntos</div>
+  <ul class="list-yes">
+    <li>Fomenta la unidad espiritual</li>
+    <li>Sana heridas emocionales</li>
+    <li>Crea un espacio de vulnerabilidad y confianza</li>
+    <li>Refuerza la visión compartida para la familia</li>
+    <li>Fortalece la fe de ambos</li>
+  </ul>
+
+  <div class="section-label">Modelos de oración por etapas</div>
+  <div class="compare">
+    <div class="compare-box bad"><h4>Matrimonios jóvenes</h4><ul><li>Sabiduría en decisiones</li><li>Buenos hábitos como pareja</li><li>Protección espiritual del hogar</li></ul></div>
+    <div class="compare-box good"><h4>Matrimonios en crisis</h4><ul><li>Sanidad de heridas pasadas</li><li>Restauración del amor</li><li>Fuerzas para perseverar</li></ul></div>
+  </div>
+
+  <div class="frase"><p>"La pareja que ora unida, permanece unida."</p></div>
+
+  <div class="actividad">
+    <h4>Actividad para el matrimonio</h4>
+    <ol>
+      <li>Lean juntos Mateo 18:19-20 y Filipenses 4:6-7</li>
+      <li>¿Qué nos impide orar juntos con regularidad?</li>
+      <li>Definan un horario mínimo: 10 min al acostarse, 3 veces por semana</li>
+      <li>Hagan una primera oración sencilla juntos hoy mismo</li>
+    </ol>
+    <div class="oracion">"Por nada estéis afanosos, sino sean conocidas vuestras peticiones delante de Dios en toda oración y ruego, con acción de gracias." — Filipenses 4:6</div>
+  </div>
+</section>
+
+<!-- CAP 7 -->
+<section class="chapter" id="cap7">
+  <div class="ch-num">Capítulo Siete</div>
+  <h2 class="ch-title">Construyendo</h2>
+  <div class="ch-sub">un legado</div>
+  <div class="ch-divider"></div>
+  <div class="quote">
+    <p>"Instruye al niño en su camino, y aun cuando fuere viejo no se apartará de él."</p>
+    <cite>Proverbios 22:6</cite>
+  </div>
+  <p>El propósito del matrimonio cristiano no termina en la felicidad de los esposos. Dios nos llama a dejar una <strong>huella eterna</strong> que impacte a nuestros hijos, nuestra familia extendida, otras parejas, nuestra iglesia y comunidad.</p>
+
+  <div class="section-label">Educar hijos en un ambiente de fe</div>
+  <p>Nuestros hijos aprenden más de lo que ven en casa que de lo que escuchan en la iglesia. Hijos que crecen viendo padres que oran juntos, que se respetan y aman, que piden perdón y que sirven a otros, tendrán un patrón de fe que los marcará para siempre.</p>
+
+  <div class="section-label">Ser ejemplo para otras parejas</div>
+  <ul class="list-yes">
+    <li>Inviten a otras parejas jóvenes a su casa</li>
+    <li>Sean mentores espirituales</li>
+    <li>Compartan sus testimonios de superación en la fe</li>
+    <li>No se necesita ser "perfectos", se necesita ser auténticos</li>
+  </ul>
+
+  <div class="section-label">Perseverar en el amor a largo plazo</div>
+  <ul class="list-yes">
+    <li>No dejen de tener citas, incluso con los años</li>
+    <li>Renueven sus votos matrimoniales</li>
+    <li>Escriban una carta de legado espiritual para sus hijos</li>
+    <li>Oren para terminar la carrera juntos, con fe y amor</li>
+  </ul>
+
+  <div class="quote">
+    <p>"He peleado la buena batalla, he acabado la carrera, he guardado la fe."</p>
+    <cite>2 Timoteo 4:7</cite>
+  </div>
+
+  <div class="frase"><p>"El mejor legado que podemos dejar es un matrimonio fiel y lleno del amor de Cristo."</p></div>
+
+  <div class="actividad">
+    <h4>Actividad para el matrimonio</h4>
+    <ol>
+      <li>Lean juntos Deuteronomio 6:6-9 y 2 Timoteo 4:7</li>
+      <li>¿Qué legado queremos dejar como matrimonio?</li>
+      <li>Escriban juntos una carta de visión familiar (valores y deseos para el futuro)</li>
+    </ol>
+    <div class="oracion">"Señor, queremos edificar un legado que glorifique tu Nombre. Ayúdanos a ser padres sabios, esposos fieles, y luz para nuestra generación. En el nombre de Jesús. Amén."</div>
+  </div>
+</section>
+
+</main>
+
+<!-- EPÍLOGO -->
+<section class="epilogo">
+  <span class="big">FIRME</span>
+  <h2>¿Quieres un matrimonio más fuerte?</h2>
+  <p>Redescubre el diseño original de Dios para el matrimonio. Mejora la comunicación, resuelve conflictos con sabiduría, cultiva el amor y construye un legado que glorifique al Señor.</p>
+  <div class="quote" style="max-width:480px;margin:32px auto;">
+    <p>"Si Jehová no edificare la casa, en vano trabajan los que la edifican."</p>
+    <cite>Salmo 127:1</cite>
+  </div>
+  <div class="firma">Matrimonio Firme · Osmar Lugo Orozco · Primera Edición 2025</div>
+</section>
+
+<script>
+const obs = new IntersectionObserver(e=>{
+  e.forEach(el=>{if(el.isIntersecting)el.target.classList.add('visible');});
+},{threshold:.1});
+document.querySelectorAll('.chapter').forEach(e=>obs.observe(e));
+
+function toggleNav(){
+  document.getElementById('sidenav').classList.toggle('show');
+}
+document.querySelectorAll('nav a').forEach(a=>{
+  a.addEventListener('click',()=>{
+    document.getElementById('sidenav').classList.remove('show');
+    document.querySelectorAll('nav a').forEach(x=>x.classList.remove('active'));
+    a.classList.add('active');
+  });
+});
+document.addEventListener('click',e=>{
+  const nav=document.getElementById('sidenav');
+  if(nav.classList.contains('show')&&!nav.contains(e.target)&&!e.target.closest('.nav-toggle')){
+    nav.classList.remove('show');
+  }
+});
+</script>
+</body>
+</html>

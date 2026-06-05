@@ -1,0 +1,1236 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>REFAM — Reuniones Familiares de Amistad</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Raleway:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --azul:    #009FDA;
+    --marino:  #003B6F;
+    --oro:     #F0AB00;
+    --oro2:    #FFD166;
+    --rojo:    #C0392B;
+    --verde:   #27AE60;
+    --morado:  #8E44AD;
+    --fondo:   #040e1c;
+    --fondo2:  #071628;
+    --fondo3:  #0a1e38;
+    --texto:   #e8e0d0;
+    --suave:   #a89f90;
+    --linea:   rgba(240,171,0,.22);
+  }
+
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--fondo);
+    color: var(--texto);
+    font-family: 'Crimson Pro', Georgia, serif;
+    font-size: 17px;
+    line-height: 1.8;
+    overflow-x: hidden;
+  }
+
+  /* ── SIDEBAR ── */
+  nav#sidebar {
+    position: fixed;
+    left:0; top:0; bottom:0;
+    width: 270px;
+    background: linear-gradient(180deg, var(--marino) 0%, #011529 100%);
+    border-right: 1px solid var(--linea);
+    z-index: 100;
+    overflow-y: auto;
+    padding: 28px 0 24px;
+    transition: transform .35s ease;
+  }
+  nav#sidebar::-webkit-scrollbar { width: 4px; }
+  nav#sidebar::-webkit-scrollbar-thumb { background: var(--linea); }
+
+  .nav-logo {
+    padding: 0 22px 22px;
+    border-bottom: 1px solid var(--linea);
+    margin-bottom: 16px;
+    text-align: center;
+  }
+  .nav-logo .titulo {
+    font-family: 'Cinzel', serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--oro);
+    letter-spacing: .06em;
+    display: block;
+  }
+  .nav-logo .subtitulo {
+    font-family: 'Raleway', sans-serif;
+    font-size: 10px;
+    letter-spacing: .18em;
+    text-transform: uppercase;
+    color: var(--azul);
+    margin-top: 2px;
+  }
+
+  .nivel-bloque { margin-bottom: 8px; }
+  .nivel-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 18px;
+    cursor: pointer;
+    transition: background .2s;
+    border-radius: 6px;
+    margin: 0 8px;
+  }
+  .nivel-header:hover { background: rgba(0,159,218,.1); }
+  .nivel-badge {
+    width: 26px; height: 26px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Cinzel', serif;
+    font-size: 11px;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+  .n1 .nivel-badge { background: var(--azul); color: #fff; }
+  .n2 .nivel-badge { background: var(--verde); color: #fff; }
+  .n3 .nivel-badge { background: var(--morado); color: #fff; }
+  .n4 .nivel-badge { background: var(--rojo); color: #fff; }
+
+  .nivel-name {
+    font-family: 'Raleway', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: .06em;
+    color: var(--texto);
+  }
+  .nivel-sub {
+    font-size: 10px;
+    color: var(--suave);
+    margin-top: 1px;
+  }
+
+  .nivel-links { display: none; padding: 4px 0 8px 52px; }
+  .nivel-links.open { display: block; }
+  .nivel-links a {
+    display: block;
+    padding: 5px 10px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-family: 'Raleway', sans-serif;
+    font-size: 11px;
+    color: var(--suave);
+    transition: all .2s;
+    border-left: 2px solid transparent;
+  }
+  .nivel-links a:hover {
+    color: var(--oro);
+    border-left-color: var(--oro);
+    padding-left: 14px;
+    background: rgba(240,171,0,.06);
+  }
+
+  /* ── BTN MENÚ ── */
+  #menu-btn {
+    display: none;
+    position: fixed;
+    top:14px; left:14px; z-index:200;
+    background: var(--marino);
+    border: 1px solid var(--linea);
+    color: var(--oro);
+    width:42px; height:42px;
+    border-radius:8px;
+    cursor:pointer; font-size:20px;
+    align-items:center; justify-content:center;
+  }
+
+  /* ── MAIN ── */
+  main { margin-left: 270px; position: relative; z-index:1; }
+
+  /* ── PORTADA ── */
+  .portada {
+    min-height: 100vh;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    text-align: center;
+    padding: 80px 40px;
+    background: radial-gradient(ellipse 80% 70% at 50% 40%, rgba(0,59,111,.7) 0%, transparent 70%);
+    position: relative;
+  }
+  .portada-icono { font-size: 52px; margin-bottom: 20px; filter: drop-shadow(0 0 20px rgba(240,171,0,.5)); animation: flotar 4s ease-in-out infinite; }
+  @keyframes flotar { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-10px)} }
+  .portada-eyebrow {
+    font-family: 'Raleway', sans-serif;
+    font-size: 11px; letter-spacing: .22em; text-transform: uppercase;
+    color: var(--azul); margin-bottom: 16px;
+  }
+  .portada h1 {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(42px, 7vw, 80px);
+    font-weight: 700; color: var(--oro);
+    line-height: 1; text-shadow: 0 0 60px rgba(240,171,0,.3);
+    margin-bottom: 8px;
+  }
+  .portada-full {
+    font-family: 'Raleway', sans-serif;
+    font-size: 13px; letter-spacing: .1em; text-transform: uppercase;
+    color: var(--azul); margin-bottom: 24px;
+  }
+  .portada-divider { display:flex; align-items:center; gap:14px; margin:18px 0; }
+  .portada-divider::before,.portada-divider::after { content:''; flex:1; height:1px; background:linear-gradient(90deg,transparent,var(--oro),transparent); max-width:120px; }
+  .portada-divider span { color:var(--oro); font-size:16px; }
+  .portada-desc {
+    font-size: 20px; font-style: italic; color: var(--suave);
+    max-width: 500px; margin-bottom: 40px;
+  }
+  .niveles-grid {
+    display: grid; grid-template-columns: repeat(2,1fr);
+    gap: 14px; max-width: 560px; width: 100%;
+  }
+  .nivel-card {
+    padding: 20px 18px; border-radius: 12px;
+    border: 1px solid var(--linea);
+    text-decoration: none;
+    background: linear-gradient(135deg, var(--fondo3), var(--fondo2));
+    transition: transform .2s, border-color .2s;
+    text-align: left;
+  }
+  .nivel-card:hover { transform: translateY(-3px); }
+  .nivel-card.c1 { border-top: 3px solid var(--azul); }
+  .nivel-card.c2 { border-top: 3px solid var(--verde); }
+  .nivel-card.c3 { border-top: 3px solid var(--morado); }
+  .nivel-card.c4 { border-top: 3px solid var(--rojo); }
+  .nc-num { font-family:'Cinzel',serif; font-size:11px; letter-spacing:.14em; text-transform:uppercase; margin-bottom:4px; }
+  .c1 .nc-num { color:var(--azul); }
+  .c2 .nc-num { color:var(--verde); }
+  .c3 .nc-num { color:var(--morado); }
+  .c4 .nc-num { color:var(--rojo); }
+  .nc-title { font-family:'Raleway',sans-serif; font-size:13px; font-weight:700; color:#fff; }
+  .nc-sub { font-size:13px; color:var(--suave); margin-top:2px; }
+
+  /* ── SECCIONES NIVEL ── */
+  .nivel-section { padding: 0; }
+  .nivel-banner {
+    padding: 64px 60px 48px;
+    position: relative; overflow: hidden;
+  }
+  .nb1 { background: linear-gradient(135deg, rgba(0,159,218,.15), rgba(0,59,111,.3)); border-bottom: 1px solid rgba(0,159,218,.2); }
+  .nb2 { background: linear-gradient(135deg, rgba(39,174,96,.12), rgba(0,59,111,.25)); border-bottom: 1px solid rgba(39,174,96,.2); }
+  .nb3 { background: linear-gradient(135deg, rgba(142,68,173,.15), rgba(0,59,111,.25)); border-bottom: 1px solid rgba(142,68,173,.2); }
+  .nb4 { background: linear-gradient(135deg, rgba(192,57,43,.15), rgba(0,59,111,.25)); border-bottom: 1px solid rgba(192,57,43,.2); }
+
+  .nivel-banner-num {
+    font-family:'Raleway',sans-serif; font-size:11px; font-weight:600;
+    letter-spacing:.2em; text-transform:uppercase; margin-bottom:8px;
+  }
+  .nb1 .nivel-banner-num { color:var(--azul); }
+  .nb2 .nivel-banner-num { color:var(--verde); }
+  .nb3 .nivel-banner-num { color:var(--morado); }
+  .nb4 .nivel-banner-num { color:var(--rojo); }
+
+  .nivel-banner h2 {
+    font-family:'Cinzel',serif;
+    font-size: clamp(28px,4vw,46px);
+    font-weight:700; color:#fff; line-height:1.15;
+    margin-bottom:12px;
+  }
+  .nivel-banner h2 span { color:var(--oro); }
+  .nivel-banner-desc { font-size:18px; font-style:italic; color:var(--suave); max-width:600px; }
+  .nivel-big-bg {
+    position:absolute; right:-20px; top:50%; transform:translateY(-50%);
+    font-family:'Cinzel',serif; font-size:180px; font-weight:900;
+    color:rgba(255,255,255,.025); pointer-events:none; line-height:1;
+  }
+
+  /* ── ENSEÑANZAS ÍNDICE ── */
+  .ensz-index {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(220px,1fr));
+    gap: 12px; padding: 32px 60px 48px;
+    border-bottom: 1px solid var(--linea);
+  }
+  .ensz-card {
+    background: var(--fondo3);
+    border: 1px solid var(--linea);
+    border-radius: 10px;
+    padding: 16px 18px;
+    cursor: pointer;
+    transition: all .2s;
+    text-decoration:none;
+  }
+  .ensz-card:hover { border-color: rgba(240,171,0,.5); transform:translateY(-2px); }
+  .ensz-num { font-family:'Raleway',sans-serif; font-size:10px; font-weight:600; letter-spacing:.12em; text-transform:uppercase; color:var(--suave); margin-bottom:4px; }
+  .ensz-name { font-family:'Cinzel',serif; font-size:14px; color:var(--oro2); font-weight:600; line-height:1.3; }
+  .ensz-rompehielo { font-size:13px; color:var(--suave); margin-top:6px; font-style:italic; }
+
+  /* ── CONTENIDO ENSEÑANZA ── */
+  .ensz-content { padding: 48px 60px; max-width: 900px; border-bottom: 1px solid var(--linea); }
+  .ensz-header { margin-bottom: 36px; }
+  .ensz-eyebrow {
+    font-family:'Raleway',sans-serif; font-size:10px; font-weight:600;
+    letter-spacing:.18em; text-transform:uppercase; color:var(--azul); margin-bottom:8px;
+  }
+  .ensz-titulo {
+    font-family:'Cinzel',serif;
+    font-size: clamp(22px,3.5vw,34px); font-weight:700;
+    color:#fff; line-height:1.2; margin-bottom:10px;
+  }
+  .ensz-titulo span { color:var(--oro); }
+  .ensz-linea { width:56px; height:3px; background:linear-gradient(90deg,var(--oro),transparent); border-radius:2px; margin-bottom:20px; }
+
+  .rompehielo-box {
+    background: linear-gradient(135deg,rgba(0,59,111,.4),rgba(0,59,111,.2));
+    border-left: 4px solid var(--azul);
+    border-radius: 0 10px 10px 0;
+    padding: 16px 20px; margin-bottom: 28px;
+  }
+  .rompehielo-label { font-family:'Raleway',sans-serif; font-size:10px; font-weight:600; letter-spacing:.14em; text-transform:uppercase; color:var(--azul); margin-bottom:6px; }
+  .rompehielo-box p { font-style:italic; color:var(--suave); font-size:16px; margin:0; }
+
+  h3 { font-family:'Cinzel',serif; font-size:18px; font-weight:600; color:var(--oro2); margin:32px 0 12px; padding-bottom:8px; border-bottom:1px solid var(--linea); }
+  h4 { font-family:'Raleway',sans-serif; font-size:12px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:var(--azul); margin:22px 0 8px; }
+  p { margin-bottom:14px; color:var(--texto); }
+  strong { color:#fff; font-weight:600; }
+  em { color:var(--oro2); font-style:italic; }
+
+  .versiculo {
+    background: linear-gradient(135deg,rgba(0,59,111,.35),rgba(0,59,111,.15));
+    border-left: 4px solid var(--oro);
+    border-radius: 0 10px 10px 0;
+    padding: 18px 22px; margin: 20px 0; position:relative; overflow:hidden;
+  }
+  .versiculo::before { content:'"'; position:absolute; top:-8px; left:10px; font-family:'Cinzel',serif; font-size:70px; color:var(--oro); opacity:.1; line-height:1; pointer-events:none; }
+  .vref { font-family:'Raleway',sans-serif; font-size:10px; letter-spacing:.12em; text-transform:uppercase; color:var(--azul); margin-bottom:6px; }
+  .versiculo p { font-style:italic; font-size:17px; color:#f0e8d8; margin:0; }
+
+  .preguntas-box {
+    background: linear-gradient(135deg,rgba(240,171,0,.08),rgba(0,59,111,.15));
+    border: 1px solid rgba(240,171,0,.2);
+    border-radius: 12px; padding: 20px 24px; margin-top: 28px;
+  }
+  .preguntas-label { font-family:'Raleway',sans-serif; font-size:10px; font-weight:600; letter-spacing:.16em; text-transform:uppercase; color:var(--oro); margin-bottom:12px; }
+  .preg-item { display:flex; gap:10px; align-items:flex-start; margin-bottom:8px; }
+  .preg-icon { color:var(--oro); flex-shrink:0; margin-top:3px; }
+  .preg-item p { font-size:15px; color:var(--suave); margin:0; font-style:italic; }
+  .preg-tipo { font-family:'Raleway',sans-serif; font-size:10px; font-weight:600; letter-spacing:.1em; text-transform:uppercase; color:var(--azul); }
+
+  ul.lista { list-style:none; margin:10px 0 16px; }
+  ul.lista li { display:flex; gap:12px; padding:8px 0; border-bottom:1px solid rgba(240,171,0,.07); font-size:16px; color:var(--texto); align-items:flex-start; }
+  ul.lista li:last-child { border-bottom:none; }
+  ul.lista li::before { content:'✦'; color:var(--oro); flex-shrink:0; margin-top:4px; font-size:10px; }
+
+  .tabla-comparativa {
+    width:100%; border-collapse:collapse; margin:16px 0; font-size:15px;
+  }
+  .tabla-comparativa th {
+    background:var(--marino); font-family:'Raleway',sans-serif;
+    font-size:11px; font-weight:600; letter-spacing:.1em; text-transform:uppercase;
+    color:var(--azul); padding:10px 14px; text-align:left; border-bottom:2px solid var(--linea);
+  }
+  .tabla-comparativa td { padding:10px 14px; border-bottom:1px solid rgba(240,171,0,.08); vertical-align:top; color:var(--suave); }
+  .tabla-comparativa tr:hover td { background:rgba(0,59,111,.25); }
+
+  footer { text-align:center; padding:40px; font-family:'Raleway',sans-serif; font-size:11px; color:var(--suave); letter-spacing:.1em; }
+  footer span { color:var(--oro); }
+
+  @media(max-width:900px) {
+    nav#sidebar { transform:translateX(-100%); }
+    nav#sidebar.open { transform:translateX(0); }
+    main { margin-left:0; }
+    #menu-btn { display:flex; }
+    .nivel-banner, .ensz-content { padding: 52px 22px 36px; }
+    .ensz-index { padding: 24px 22px 36px; }
+    .niveles-grid { grid-template-columns:1fr; }
+    .portada { padding:80px 22px 60px; }
+  }
+
+  .reveal { opacity:0; transform:translateY(18px); transition:opacity .6s ease, transform .6s ease; }
+  .reveal.visible { opacity:1; transform:translateY(0); }
+</style>
+</head>
+<body>
+
+<button id="menu-btn" onclick="toggleNav()">☰</button>
+
+<nav id="sidebar">
+  <div class="nav-logo">
+    <span class="titulo">REFAM</span>
+    <span class="subtitulo">Reuniones Familiares de Amistad</span>
+  </div>
+
+  <!-- Nivel 1 -->
+  <div class="nivel-bloque n1">
+    <div class="nivel-header" onclick="toggleNivel('n1')">
+      <div class="nivel-badge">1</div>
+      <div>
+        <div class="nivel-name">Nivel 1</div>
+        <div class="nivel-sub">De Amigo a Simpatizante</div>
+      </div>
+    </div>
+    <div class="nivel-links" id="links-n1">
+      <a href="#n1-e1">E1 · La Biblia I</a>
+      <a href="#n1-e2">E2 · La Biblia II</a>
+      <a href="#n1-e3">E3 · Dios es Espíritu</a>
+      <a href="#n1-e4">E4 · Manifestaciones de Dios</a>
+      <a href="#n1-e5">E5 · La Manifestación más Grande</a>
+      <a href="#n1-e6">E6 · ¿Por qué debemos ser salvos?</a>
+      <a href="#n1-e7">E7 · Cristo el Único Salvador</a>
+      <a href="#n1-e8">E8 · ¿Qué debo hacer? I</a>
+      <a href="#n1-e9">E9 · ¿Qué debo hacer? II</a>
+      <a href="#n1-e10">E10 · La Nueva Vida en Cristo</a>
+    </div>
+  </div>
+
+  <!-- Nivel 2 -->
+  <div class="nivel-bloque n2">
+    <div class="nivel-header" onclick="toggleNivel('n2')">
+      <div class="nivel-badge">2</div>
+      <div>
+        <div class="nivel-name">Nivel 2</div>
+        <div class="nivel-sub">De Simpatizante a Asistente</div>
+      </div>
+    </div>
+    <div class="nivel-links" id="links-n2">
+      <a href="#n2-e1">E1 · La Iglesia y el Lugar de Reunión</a>
+      <a href="#n2-e2">E2 · Organización Local</a>
+      <a href="#n2-e3">E3 · El Culto</a>
+      <a href="#n2-e4">E4 · La Importancia de Congregarnos</a>
+      <a href="#n2-e5">E5 · La Oración</a>
+      <a href="#n2-e6">E6 · La Alabanza</a>
+      <a href="#n2-e7">E7 · La Adoración</a>
+      <a href="#n2-e8">E8 · Aclaración de Términos</a>
+    </div>
+  </div>
+
+  <!-- Nivel 3 -->
+  <div class="nivel-bloque n3">
+    <div class="nivel-header" onclick="toggleNivel('n3')">
+      <div class="nivel-badge">3</div>
+      <div>
+        <div class="nivel-name">Nivel 3</div>
+        <div class="nivel-sub">De Asistente a Creyente</div>
+      </div>
+    </div>
+    <div class="nivel-links" id="links-n3">
+      <a href="#n3-e1">E1 · Veracidad de la Salvación</a>
+      <a href="#n3-e2">E2 · Una Decisión a Tiempo</a>
+      <a href="#n3-e3">E3 · ¿Cómo hago esa decisión?</a>
+      <a href="#n3-e4">E4 · El Bautismo en el Nombre de Jesús</a>
+      <a href="#n3-e5">E5 · Recibiendo el Espíritu Santo</a>
+      <a href="#n3-e6">E6 · Perseverando Hasta el Fin</a>
+      <a href="#n3-e7">E7 · Bendiciones para el Creyente</a>
+      <a href="#n3-e8">E8 · La Morada del Creyente</a>
+    </div>
+  </div>
+
+  <!-- Nivel 4 -->
+  <div class="nivel-bloque n4">
+    <div class="nivel-header" onclick="toggleNivel('n4')">
+      <div class="nivel-badge">4</div>
+      <div>
+        <div class="nivel-name">Nivel 4</div>
+        <div class="nivel-sub">De Creyente a Servidor</div>
+      </div>
+    </div>
+    <div class="nivel-links" id="links-n4">
+      <a href="#n4-e1">E1 · Salvos para Servir</a>
+      <a href="#n4-e2">E2 · Preparados para Servir</a>
+      <a href="#n4-e3">E3 · Dios Llama, Capacita y Envía</a>
+      <a href="#n4-e4">E4 · Servidores y Mayordomos</a>
+      <a href="#n4-e5">E5 · Un Servicio Especial</a>
+      <a href="#n4-e6">E6 · Servidores Constantes</a>
+      <a href="#n4-e7">E7 · Galardones y Recompensas I</a>
+      <a href="#n4-e8">E8 · Galardones y Recompensas II</a>
+    </div>
+  </div>
+</nav>
+
+<main>
+
+<!-- ══ PORTADA ══ -->
+<section id="portada">
+  <div class="portada">
+    <div class="portada-icono">🏠</div>
+    <div class="portada-eyebrow">Programa de Discipulado — IPUC Algarrobo</div>
+    <h1>REFAM</h1>
+    <div class="portada-full">Reuniones Familiares de Amistad</div>
+    <div class="portada-divider"><span>✦</span></div>
+    <p class="portada-desc">Un camino de 4 niveles para llevar personas desde el primer contacto hasta convertirse en servidores de Dios.</p>
+    <div class="niveles-grid">
+      <a href="#nivel1" class="nivel-card c1">
+        <div class="nc-num">Nivel 1 · 10 enseñanzas</div>
+        <div class="nc-title">De Amigo a Simpatizante</div>
+        <div class="nc-sub">Fundamentos del evangelio</div>
+      </a>
+      <a href="#nivel2" class="nivel-card c2">
+        <div class="nc-num">Nivel 2 · 8 enseñanzas</div>
+        <div class="nc-title">De Simpatizante a Asistente</div>
+        <div class="nc-sub">La iglesia y la vida cristiana</div>
+      </a>
+      <a href="#nivel3" class="nivel-card c3">
+        <div class="nc-num">Nivel 3 · 8 enseñanzas</div>
+        <div class="nc-title">De Asistente a Creyente</div>
+        <div class="nc-sub">Salvación y decisión</div>
+      </a>
+      <a href="#nivel4" class="nivel-card c4">
+        <div class="nc-num">Nivel 4 · 8 enseñanzas</div>
+        <div class="nc-title">De Creyente a Servidor</div>
+        <div class="nc-sub">Formación para el servicio</div>
+      </a>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════ NIVEL 1 ══════════════════════════════ -->
+<section class="nivel-section" id="nivel1">
+  <div class="nivel-banner nb1">
+    <div class="nivel-big-bg">1</div>
+    <div class="nivel-banner-num">Nivel 1 — 10 enseñanzas</div>
+    <h2>De <span>Amigo</span><br>a Simpatizante</h2>
+    <p class="nivel-banner-desc">El primer contacto con el evangelio. Fundamentos bíblicos sobre la Biblia, Dios, el pecado, Cristo y el plan de salvación. Duración aproximada: 2 meses.</p>
+  </div>
+
+  <!-- Índice Nivel 1 -->
+  <div class="ensz-index reveal">
+    <a href="#n1-e1" class="ensz-card"><div class="ensz-num">Enseñanza 1</div><div class="ensz-name">La Biblia I</div><div class="ensz-rompehielo">¿Qué es la Biblia?</div></a>
+    <a href="#n1-e2" class="ensz-card"><div class="ensz-num">Enseñanza 2</div><div class="ensz-name">La Biblia II</div><div class="ensz-rompehielo">¿Cómo está compuesta?</div></a>
+    <a href="#n1-e3" class="ensz-card"><div class="ensz-num">Enseñanza 3</div><div class="ensz-name">Dios es Espíritu</div><div class="ensz-rompehielo">¿Quién es Dios?</div></a>
+    <a href="#n1-e4" class="ensz-card"><div class="ensz-num">Enseñanza 4</div><div class="ensz-name">Manifestaciones de Dios</div><div class="ensz-rompehielo">¿Cómo se revela Dios?</div></a>
+    <a href="#n1-e5" class="ensz-card"><div class="ensz-num">Enseñanza 5</div><div class="ensz-name">La Manifestación más Grande</div><div class="ensz-rompehielo">Cristo: Dios en carne</div></a>
+    <a href="#n1-e6" class="ensz-card"><div class="ensz-num">Enseñanza 6</div><div class="ensz-name">¿Por qué ser salvos?</div><div class="ensz-rompehielo">El pecado y sus consecuencias</div></a>
+    <a href="#n1-e7" class="ensz-card"><div class="ensz-num">Enseñanza 7</div><div class="ensz-name">Cristo el Único Salvador</div><div class="ensz-rompehielo">Vida, muerte y resurrección</div></a>
+    <a href="#n1-e8" class="ensz-card"><div class="ensz-num">Enseñanza 8</div><div class="ensz-name">¿Qué debo hacer? (I)</div><div class="ensz-rompehielo">Oír y creer</div></a>
+    <a href="#n1-e9" class="ensz-card"><div class="ensz-num">Enseñanza 9</div><div class="ensz-name">¿Qué debo hacer? (II)</div><div class="ensz-rompehielo">Arrepentirse y bautizarse</div></a>
+    <a href="#n1-e10" class="ensz-card"><div class="ensz-num">Enseñanza 10</div><div class="ensz-name">La Nueva Vida en Cristo</div><div class="ensz-rompehielo">Vivir en santidad</div></a>
+  </div>
+
+  <!-- E1 -->
+  <div class="ensz-content reveal" id="n1-e1">
+    <div class="ensz-header">
+      <div class="ensz-eyebrow">Nivel 1 · Enseñanza 1</div>
+      <div class="ensz-titulo">La <span>Biblia</span> I</div>
+      <div class="ensz-linea"></div>
+    </div>
+    <div class="rompehielo-box"><div class="rompehielo-label">🧊 Rompehielo</div><p>De lo que conoces de La Biblia, ¿qué es lo que más recuerdas?</p></div>
+    <h3>¿Qué es La Biblia?</h3>
+    <p>La Biblia es la Palabra de Dios (2 Timoteo 3:17, 2 Pedro 1:19-21). Dios quiso dejarnos un manual de instrucción para conocerlo a Él, conocer su voluntad y también para que conociéramos nuestro origen, nuestra razón de ser y nuestro destino. Contiene la solución de la vida, pero ante todo cuenta del mejor amigo que el hombre pueda tener.</p>
+    <h3>¿Qué significa "Biblia"?</h3>
+    <p>La palabra Biblia viene del griego <em>Biblios</em>, que significa <strong>"Libros" o "Colección de Libros pequeños"</strong>.</p>
+    <h3>¿Quién la escribió?</h3>
+    <p>Fue escrita por hombres: reyes, pescadores, gente humilde y gente poderosa. Muchos de sus autores no se conocieron entre sí, fueron de épocas distintas; sin embargo, todos guardaron una línea de pensamiento porque <strong>fue Inspirada por Dios</strong>.</p>
+    <h3>¿Por qué y para qué fue escrita?</h3>
+    <p>La Biblia es la carta de navegación para que los hombres que quieren agradar a Dios no se extravíen del camino, sino que lleguen al conocimiento del Señor y alcancen el mayor regalo de la historia: <strong>La Salvación</strong>.</p>
+    <div class="versiculo"><div class="vref">2 Timoteo 3:16-17</div><p>"Toda la escritura es inspirada por Dios y útil para enseñar, para redargüir, para corregir, para instruir en justicia, a fin de que el hombre de Dios sea perfecto, enteramente preparado para toda buena obra."</p></div>
+    <h4>Fragmentos del Salmo 119</h4>
+    <ul class="lista">
+      <li>"Bienaventurados los que guardan sus testimonios y con todo el corazón lo buscan." (vr. 2-3)</li>
+      <li>"Estas bendiciones tuve porque guardé tus mandamientos." (vr. 56)</li>
+      <li>"Ella (La Palabra) es mi consuelo en mi aflicción, porque tu dicho me ha vivificado." (vr. 50)</li>
+    </ul>
+    <div class="preguntas-box">
+      <div class="preguntas-label">✦ Preguntas de reflexión</div>
+      <div class="preg-item"><span class="preg-icon">→</span><div><span class="preg-tipo">General:</span><p>¿Qué experiencia has tenido al leer La Biblia?</p></div></div>
+      <div class="preg-item"><span class="preg-icon">→</span><div><span class="preg-tipo">Personal:</span><p>¿Qué verdad en La Biblia te ha hecho reflexionar?</p></div></div>
+    </div>
+  </div>
+
+  <!-- E2 -->
+  <div class="ensz-content reveal" id="n1-e2">
+    <div class="ensz-header">
+      <div class="ensz-eyebrow">Nivel 1 · Enseñanza 2</div>
+      <div class="ensz-titulo">La <span>Biblia</span> II</div>
+      <div class="ensz-linea"></div>
+    </div>
+    <div class="rompehielo-box"><div class="rompehielo-label">🧊 Rompehielo</div><p>¿Tienes en tu casa algún texto bíblico?</p></div>
+    <h3>¿Cómo está compuesta La Biblia?</h3>
+    <p>La Biblia está compuesta por dos grandes secciones: el <strong>Antiguo Testamento</strong> (39 libros) y el <strong>Nuevo Testamento</strong> (27 libros), para un total de <strong>66 libros</strong>.</p>
+    <h4>El Antiguo Testamento contiene</h4>
+    <ul class="lista">
+      <li>Libros de La Ley — Pentateuco (los primeros 5 libros)</li>
+      <li>Libros Históricos — Josué hasta Ester</li>
+      <li>Libros Poéticos — Job hasta Cantar de los Cantares</li>
+      <li>Profetas Mayores — Isaías hasta Daniel</li>
+      <li>Profetas Menores — Oseas hasta Malaquías</li>
+    </ul>
+    <h4>El Nuevo Testamento contiene</h4>
+    <ul class="lista">
+      <li>4 Evangelios — Nacimiento, muerte, sepultura y resurrección de Cristo</li>
+      <li>Hechos — Histórico: nacimiento de La Iglesia</li>
+      <li>Cartas Paulinas y Cartas Generales</li>
+      <li>Libro Profético — Apocalipsis</li>
+    </ul>
+    <p><strong>Cristo es el centro de La Biblia.</strong> El A.T. prepara el camino para su venida. Los Evangelios cuentan su vida terrenal, las epístolas explican sus enseñanzas y el Apocalipsis su triunfo.</p>
+    <h3>Símbolos de La Biblia</h3>
+    <ul class="lista">
+      <li><strong>Espada de dos filos</strong> — Hebreos 4:12</li>
+      <li><strong>Martillo que quebranta el corazón</strong> — Jeremías 23:29</li>
+      <li><strong>Luz</strong> — 2 Pedro 1:19</li>
+      <li><strong>Agua</strong> — Juan 7:38</li>
+      <li><strong>Leche</strong> — 1 Pedro 2:2</li>
+      <li><strong>Espejo</strong> — Santiago 1:22-24</li>
+      <li><strong>Fuego</strong> — Jeremías 23:29</li>
+    </ul>
+    <div class="preguntas-box">
+      <div class="preguntas-label">✦ Preguntas de reflexión</div>
+      <div class="preg-item"><span class="preg-icon">→</span><div><span class="preg-tipo">General:</span><p>¿Cuáles son los mejores argumentos para creer que la Biblia es la Palabra de Dios?</p></div></div>
+      <div class="preg-item"><span class="preg-icon">→</span><div><span class="preg-tipo">Personal:</span><p>¿Cómo crees que sería tu vida si te dejaras guiar plenamente por la Palabra de Dios?</p></div></div>
+    </div>
+  </div>
+
+  <!-- E3 -->
+  <div class="ensz-content reveal" id="n1-e3">
+    <div class="ensz-header">
+      <div class="ensz-eyebrow">Nivel 1 · Enseñanza 3</div>
+      <div class="ensz-titulo">Dios es <span>Espíritu</span></div>
+      <div class="ensz-linea"></div>
+    </div>
+    <div class="rompehielo-box"><div class="rompehielo-label">🧊 Rompehielo</div><p>¿Cómo nos imaginábamos a Dios cuando éramos niños?</p></div>
+    <h3>¿Quién es Dios?</h3>
+    <p>La inmensidad del ser divino sobrepasa nuestra mente finita; pero Dios tiene una forma de Ser, una sustancia, unas características que lo definen como Dios. <strong>Dios es Espíritu</strong>: un ser sobrenatural, incorpóreo y racional, invisible a los seres humanos, pero con la capacidad de hacerse visible a voluntad.</p>
+    <div class="versiculo"><div class="vref">Juan 4:24</div><p>"Dios es Espíritu; y los que le adoran, en espíritu y en verdad es necesario que adoren."</p></div>
+    <h3>Ruwach — Pneuma</h3>
+    <p>Los hebreos usaban la palabra <em>Ruwach</em> y los griegos <em>Pneuma</em> para definir el Espíritu. Este Espíritu puede oír, hablar, pensar, amar y tiene voluntad — es mucho más que una fuerza activa.</p>
+    <h3>Atributos de Dios</h3>
+    <ul class="lista">
+      <li><strong>Omnipresente</strong> — está en todas partes (Sal. 139:7)</li>
+      <li><strong>Omnisciente</strong> — lo sabe todo</li>
+      <li><strong>Todopoderoso</strong> — para Él no hay nada imposible</li>
+      <li><strong>Invisible</strong> — 1 Juan 4:12</li>
+      <li><strong>Eterno</strong> — sin principio ni fin</li>
+      <li><strong>Único e Indivisible</strong> — no se puede dividir</li>
+      <li><strong>Santo</strong> — absolutamente perfecto, sin error</li>
+      <li><strong>Amor y Vida</strong> — ante todo, Dios es Amor</li>
+    </ul>
+    <div class="versiculo"><div class="vref">Deuteronomio 6:4</div><p>"Oye Israel: Jehová, nuestro Dios, Jehová uno es."</p></div>
+    <div class="preguntas-box">
+      <div class="preguntas-label">✦ Preguntas de reflexión</div>
+      <div class="preg-item"><span class="preg-icon">→</span><div><span class="preg-tipo">General:</span><p>En este momento de tu vida, ¿qué significa Dios para ti?</p></div></div>
+      <div class="preg-item"><span class="preg-icon">→</span><div><span class="preg-tipo">Personal:</span><p>¿Cuánto conoces tú a Dios?</p></div></div>
+    </div>
+  </div>
+
+  <!-- E4 -->
+  <div class="ensz-content reveal" id="n1-e4">
+    <div class="ensz-header">
+      <div class="ensz-eyebrow">Nivel 1 · Enseñanza 4</div>
+      <div class="ensz-titulo">Manifestaciones<br>de <span>Dios</span></div>
+      <div class="ensz-linea"></div>
+    </div>
+    <div class="rompehielo-box"><div class="rompehielo-label">🧊 Rompehielo</div><p>¿Qué pensarías si Dios te hablara desde una zarza?</p></div>
+    <div class="versiculo"><div class="vref">Hebreos 1:1-2</div><p>"Dios, habiendo hablado muchas veces y de muchas maneras en otro tiempo a los padres por los profetas, en estos últimos días nos ha hablado por el Hijo."</p></div>
+    <p>Como Dios es invisible y el Todopoderoso, para poder tratar con el hombre debía hacerse visible. A esto llamamos <strong>manifestaciones de Dios</strong>.</p>
+    <h3>Principales Manifestaciones</h3>
+    <ul class="lista">
+      <li><strong>Como una voz</strong> — Dios le habló a Abraham (Gén. 12:1; 15:1; 17:1-3)</li>
+      <li><strong>Como el ángel de Jehová</strong> — En su trato con Abraham (Gén. 18:22; 22:10-12)</li>
+      <li><strong>Como un varón</strong> — Se le apareció a Jacob, quien luchó con él (Gén. 32:24)</li>
+      <li><strong>Desde una zarza</strong> — A Moisés como llama de fuego (Éxodo 3:2)</li>
+      <li><strong>Como columna de nube y de fuego</strong> — Israel en el desierto (Éxodo 13:21)</li>
+    </ul>
+    <div class="preguntas-box">
+      <div class="preguntas-label">✦ Preguntas de reflexión</div>
+      <div class="preg-item"><span class="preg-icon">→</span><div><span class="preg-tipo">General:</span><p>¿Cuál de todas las manifestaciones que hemos visto te llama más la atención?</p></div></div>
+      <div class="preg-item"><span class="preg-icon">→</span><div><span class="preg-tipo">Personal:</span><p>¿Crees que Dios puede hablar de alguna manera a tu corazón?</p></div></div>
+    </div>
+  </div>
+
+  <!-- E5 -->
+  <div class="ensz-content reveal" id="n1-e5">
+    <div class="ensz-header">
+      <div class="ensz-eyebrow">Nivel 1 · Enseñanza 5</div>
+      <div class="ensz-titulo">La Manifestación<br>más <span>Grande</span></div>
+      <div class="ensz-linea"></div>
+    </div>
+    <div class="rompehielo-box"><div class="rompehielo-label">🧊 Rompehielo</div><p>¿Qué pensarías si el Rey de un país se hiciera un sirviente?</p></div>
+    <p>La manifestación de Dios más grande es <strong>Cristo</strong>, quien es Dios manifestado en carne.</p>
+    <div class="versiculo"><div class="vref">1 Timoteo 3:16</div><p>"Grande es el misterio de la piedad: Dios fue manifestado en carne, justificado en el Espíritu, visto de los ángeles, predicado a los gentiles, creído en el mundo, recibido arriba en gloria."</p></div>
+    <div class="versiculo"><div class="vref">Colosenses 2:9</div><p>"Porque en él (Cristo) habita corporalmente toda la plenitud de la divinidad."</p></div>
+    <div class="versiculo"><div class="vref">Juan 1:14</div><p>"Y el Verbo se hizo carne, y habitó entre nosotros, lleno de gracia y de verdad."</p></div>
+    <h3>Las Tres Manifestaciones de Dios</h3>
+    <ul class="lista">
+      <li><strong>Padre</strong> — en la creación de todas las cosas</li>
+      <li><strong>Hijo</strong> — en la redención del hombre</li>
+      <li><strong>Espíritu Santo</strong> — en la regeneración de los redimidos</li>
+    </ul>
+    <p>La Biblia es un libro <strong>monoteísta</strong>: habla de la existencia de un solo Dios, y este Dios fue quien vino a salvarnos. Jesucristo en muchos pasajes actúa y habla como el Padre (Juan 14:8-9), y en otras ocasiones como el Hijo. Es por eso que Él oraba (como hombre) pero a la vez Él es quien responde la oración (como Dios).</p>
+    <div class="preguntas-box">
+      <div class="preguntas-label">✦ Preguntas de reflexión</div>
+      <div class="preg-item"><span class="preg-icon">→</span><div><span class="preg-tipo">General:</span><p>¿Qué llevó a Cristo a hacer el sacrificio que hizo?</p></div></div>
+      <div class="preg-item"><span class="preg-icon">→</span><div><span class="preg-tipo">Personal:</span><p>¿Cómo puedes responder al amor de Dios por ti?</p></div></div>
+    </div>
+  </div>
+
+  <!-- E6 -->
+  <div class="ensz-content reveal" id="n1-e6">
+    <div class="ensz-header">
+      <div class="ensz-eyebrow">Nivel 1 · Enseñanza 6</div>
+      <div class="ensz-titulo">¿Por qué debemos<br>ser <span>Salvos</span>?</div>
+      <div class="ensz-linea"></div>
+    </div>
+    <div class="rompehielo-box"><div class="rompehielo-label">🧊 Rompehielo</div><p>¿Cuál ha sido la travesura de niño que más recuerdas?</p></div>
+    <p>Cuando Dios creó al hombre lo hizo perfecto, a su imagen y semejanza. Cuando el hombre desobedeció a Dios es cuando se convirtió en pecador — el pecado es una infracción de la ley.</p>
+    <div class="versiculo"><div class="vref">Romanos 5:12</div><p>"Por tanto, como el pecado entró en el mundo por un hombre, y por el pecado la muerte, así la muerte pasó a todos los hombres, por cuanto todos pecaron."</p></div>
+    <div class="versiculo"><div class="vref">Romanos 3:10</div><p>"Como está escrito: No hay justo, ni aún uno."</p></div>
+    <p>Esto nos lleva a la realidad más grande que todo hombre debe reconocer: <strong>que necesita ser salvo</strong>.</p>
+    <div class="preguntas-box">
+      <div class="preguntas-label">✦ Preguntas de reflexión</div>
+      <div class="preg-item"><span class="preg-icon">→</span><div><span class="preg-tipo">General:</span><p>¿Qué opinión tienes del pecado?</p></div></div>
+      <div class="preg-item"><span class="preg-icon">→</span><div><span class="preg-tipo">Personal:</span><p>Piensa qué es lo que debes dejar en tu vida para agradar a Dios.</p></div></div>
+    </div>
+  </div>
+
+  <!-- E7 -->
+  <div class="ensz-content reveal" id="n1-e7">
+    <div class="ensz-header">
+      <div class="ensz-eyebrow">Nivel 1 · Enseñanza 7</div>
+      <div class="ensz-titulo">Cristo es el<br><span>Único Salvador</span></div>
+      <div class="ensz-linea"></div>
+    </div>
+    <div class="rompehielo-box"><div class="rompehielo-label">🧊 Rompehielo</div><p>¿Has estado en peligro y alguien te ha salvado?</p></div>
+    <p>No hay ninguna esperanza para el ser humano por sus propios medios:</p>
+    <ul class="lista">
+      <li>Al hombre no lo podía salvar el hombre</li>
+      <li>Ni sus obras lo podían salvar (Efesios 2:8)</li>
+      <li>La ley tampoco — vino para mostrar el pecado y condenar (Gálatas 3:21-22)</li>
+    </ul>
+    <p>Dios, el único que puede salvar al mundo (Isaías 43:10-11), se manifestó en carne como Jesús (Mateo 1:21). <strong>El nombre de Jesús significa: Salvador, Jehová salva.</strong></p>
+    <div class="versiculo"><div class="vref">Juan 3:16</div><p>"Porque de tal manera amó Dios al mundo, que ha dado a su Hijo unigénito, para que todo aquel que en él cree, no se pierda, mas tenga vida eterna."</p></div>
+    <h3>En su Vida, Muerte y Resurrección</h3>
+    <ul class="lista">
+      <li><strong>En su vida terrenal</strong> — libre de pecado, con palabras de vida eterna (Juan 6:68)</li>
+      <li><strong>En su muerte</strong> — murió para pagar el precio por nuestros pecados (Romanos 5:8)</li>
+      <li><strong>En su resurrección</strong> — resucitó para sellar y confirmar nuestra salvación (Romanos 4:25)</li>
+    </ul>
+    <div class="preguntas-box">
+      <div class="preguntas-label">✦ Preguntas de reflexión</div>
+      <div class="preg-item"><span class="preg-icon">→</span><div><span class="preg-tipo">General:</span><p>¿Qué opinas ahora de Cristo?</p></div></div>
+      <div class="preg-item"><span class="preg-icon">→</span><div><span class="preg-tipo">Personal:</span><p>¿Qué le vas a responder ahora a Cristo?</p></div></div>
+    </div>
+  </div>
+
+  <!-- E8 -->
+  <div class="ensz-content reveal" id="n1-e8">
+    <div class="ensz-header">
+      <div class="ensz-eyebrow">Nivel 1 · Enseñanza 8</div>
+      <div class="ensz-titulo">¿Qué debo hacer<br>para ser <span>Salvo</span>? (I)</div>
+      <div class="ensz-linea"></div>
+    </div>
+    <div class="rompehielo-box"><div class="rompehielo-label">🧊 Rompehielo</div><p>¿Qué requisitos te solicitaron para aceptarte en tu último trabajo o estudio?</p></div>
+    <p>Lo que todos debemos hacer es nacer de nuevo (Juan 3:3). El nuevo nacimiento es un proceso que Dios hace a través de su Palabra y su Espíritu. Los pasos indispensables son:</p>
+    <h3>1. Oír</h3>
+    <p>No es oír cualquier mensaje, sino oír la <strong>Palabra de Dios</strong>. La fe viene por el oír, y el oír por la Palabra de Dios. Ella produce esperanza, descanso, confianza y seguridad.</p>
+    <div class="versiculo"><div class="vref">Juan 5:24</div><p>"El que oye mi Palabra y cree al que me envió, tiene vida eterna y no vendrá a condenación."</p></div>
+    <h3>2. Creer</h3>
+    <p>Es la respuesta que debe tener el hombre hacia el mensaje de Jesucristo. Una cosa es <em>creer en Dios</em> y otra es <em>creerle a Dios</em> — creer lo que dice, lo que hizo y lo que promete.</p>
+    <div class="versiculo"><div class="vref">Juan 1:12</div><p>"Mas a todos los que le recibieron, a los que creen en su nombre, les dio potestad de ser hechos hijos de Dios."</p></div>
+    <div class="preguntas-box">
+      <div class="preguntas-label">✦ Preguntas de reflexión</div>
+      <div class="preg-item"><span class="preg-icon">→</span><div><span class="preg-tipo">General:</span><p>¿Qué opinas de los pasos que hemos visto para alcanzar la salvación?</p></div></div>
+      <div class="preg-item"><span class="preg-icon">→</span><div><span class="preg-tipo">Personal:</span><p>¿En qué paso te encuentras?</p></div></div>
+    </div>
+  </div>
+
+  <!-- E9 -->
+  <div class="ensz-content reveal" id="n1-e9">
+    <div class="ensz-header">
+      <div class="ensz-eyebrow">Nivel 1 · Enseñanza 9</div>
+      <div class="ensz-titulo">¿Qué debo hacer<br>para ser <span>Salvo</span>? (II)</div>
+      <div class="ensz-linea"></div>
+    </div>
+    <div class="rompehielo-box"><div class="rompehielo-label">🧊 Rompehielo</div><p>¿Alguna vez has sentido mucha tristeza por haber ofendido a alguien?</p></div>
+    <h3>3. Arrepentirse y Convertirse</h3>
+    <p>El arrepentimiento implica un giro de 180° — reconocer que se va en la dirección equivocada. Involucra el <strong>reconocimiento del pecado</strong>, el <strong>dolor emocional</strong> genuino y la <strong>decisión de la voluntad</strong>: "Deje el impío su camino" (Isaías 55:7).</p>
+    <h3>4. Bautismo</h3>
+    <p><em>Baptisma</em> del verbo <em>baptizo</em>: sumergir, zambullir. El bautismo es por inmersión, ligado al perdón de los pecados. La Biblia dice claramente:</p>
+    <div class="versiculo"><div class="vref">Hechos 2:38</div><p>"Arrepentíos, y bautícese cada uno de vosotros en el nombre de Jesucristo para perdón de los pecados; y recibiréis el don del Espíritu Santo."</p></div>
+    <div class="versiculo"><div class="vref">Marcos 16:16</div><p>"El que creyere y fuere bautizado, será salvo; pero el que no creyere, será condenado."</p></div>
+    <p><strong>¿Por qué en el Nombre de Jesús?</strong> Hechos 4:11-12: "No hay otro nombre bajo el cielo, dado a los hombres, en que podamos ser salvos." Todos los bautismos del libro de los Hechos se realizaron <em>en el Nombre de Jesús</em> (Hch. 8:16; 10:48; 19:5; 22:16).</p>
+    <div class="preguntas-box">
+      <div class="preguntas-label">✦ Preguntas de reflexión</div>
+      <div class="preg-item"><span class="preg-icon">→</span><div><span class="preg-tipo">General:</span><p>Si La Biblia es la Palabra de Dios, ¿es posible que se contradiga?</p></div></div>
+      <div class="preg-item"><span class="preg-icon">→</span><div><span class="preg-tipo">Personal:</span><p>¿Qué opinas del bautismo en el nombre de Jesús?</p></div></div>
+    </div>
+  </div>
+
+  <!-- E10 -->
+  <div class="ensz-content reveal" id="n1-e10">
+    <div class="ensz-header">
+      <div class="ensz-eyebrow">Nivel 1 · Enseñanza 10</div>
+      <div class="ensz-titulo">La Nueva <span>Vida</span><br>en Cristo</div>
+      <div class="ensz-linea"></div>
+    </div>
+    <div class="rompehielo-box"><div class="rompehielo-label">🧊 Rompehielo</div><p>¿Alguna vez has visto un nacimiento?</p></div>
+    <p>Se requiere que todo el que ha pasado por el proceso de la salvación <strong>persevere hasta el fin</strong> en una vida de santidad y obediencia. No debemos pensar que solo con el bautismo somos salvos — esta nueva vida debe reflejarse en todo acto y palabra del creyente.</p>
+    <div class="versiculo"><div class="vref">Romanos 8:37-39</div><p>"Al ser perdonados, libres y transformados podemos ser victoriosos y nada nos podrá separar del amor de Dios."</p></div>
+    <p>Es importante ser llenos del <strong>Espíritu Santo</strong> para ser verdaderos testigos de Jesucristo (Hechos 1:8), ya que Él es quien nos capacita para triunfar sobre el pecado y dar el fruto del Espíritu Santo (Gálatas 5:22).</p>
+    <p><strong>La nueva vida en Cristo está diseñada para impactar otras vidas</strong> — dar testimonio de nuestro Señor Jesucristo.</p>
+    <div class="preguntas-box">
+      <div class="preguntas-label">✦ Preguntas de reflexión</div>
+      <div class="preg-item"><span class="preg-icon">→</span><div><span class="preg-tipo">General:</span><p>¿Cómo sería el mundo si todos fuéramos nuevas criaturas en Cristo?</p></div></div>
+      <div class="preg-item"><span class="preg-icon">→</span><div><span class="preg-tipo">Personal:</span><p>¿Has notado algún cambio en tu vida al estudiar la Palabra de Dios?</p></div></div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════ NIVEL 2 ══════════════════════════════ -->
+<section class="nivel-section" id="nivel2">
+  <div class="nivel-banner nb2">
+    <div class="nivel-big-bg">2</div>
+    <div class="nivel-banner-num">Nivel 2 — 8 enseñanzas</div>
+    <h2>De Simpatizante<br>a <span>Asistente</span></h2>
+    <p class="nivel-banner-desc">Despejar inquietudes, mitos y conceptos sobre la iglesia y el culto, para que las personas sientan el deseo de congregarse. Duración: 2 meses.</p>
+  </div>
+  <div class="ensz-index reveal">
+    <a href="#n2-e1" class="ensz-card"><div class="ensz-num">Enseñanza 1</div><div class="ensz-name">La Iglesia y el Lugar de Reunión</div></a>
+    <a href="#n2-e2" class="ensz-card"><div class="ensz-num">Enseñanza 2</div><div class="ensz-name">Organización Local</div></a>
+    <a href="#n2-e3" class="ensz-card"><div class="ensz-num">Enseñanza 3</div><div class="ensz-name">El Culto</div></a>
+    <a href="#n2-e4" class="ensz-card"><div class="ensz-num">Enseñanza 4</div><div class="ensz-name">La Importancia de Congregarnos</div></a>
+    <a href="#n2-e5" class="ensz-card"><div class="ensz-num">Enseñanza 5</div><div class="ensz-name">La Oración</div></a>
+    <a href="#n2-e6" class="ensz-card"><div class="ensz-num">Enseñanza 6</div><div class="ensz-name">La Alabanza</div></a>
+    <a href="#n2-e7" class="ensz-card"><div class="ensz-num">Enseñanza 7</div><div class="ensz-name">La Adoración</div></a>
+    <a href="#n2-e8" class="ensz-card"><div class="ensz-num">Enseñanza 8</div><div class="ensz-name">Aclaración de Términos</div></a>
+  </div>
+
+  <div class="ensz-content reveal" id="n2-e1">
+    <div class="ensz-header"><div class="ensz-eyebrow">Nivel 2 · Enseñanza 1</div><div class="ensz-titulo">La Iglesia y el Lugar<br>de <span>Reunión</span></div><div class="ensz-linea"></div></div>
+    <div class="rompehielo-box"><div class="rompehielo-label">🧊 Rompehielo</div><p>¿En alguna ocasión ha asistido a un templo cristiano? ¿Qué entiende por la palabra "iglesia"?</p></div>
+    <h3>¿Qué es la Iglesia?</h3>
+    <p>La iglesia es <strong>una compañía o grupo de personas llamados del mundo</strong> que creen en Cristo y han sido bautizados, asociados para fines de adoración, animación y consolación (Hechos 2:41-42). Nació por el Espíritu Santo en Jerusalén el día de Pentecostés (Hechos 2).</p>
+    <h4>La Iglesia es llamada en la Biblia</h4>
+    <ul class="lista">
+      <li>Cuerpo de Cristo — Efesios 1:23</li>
+      <li>Edificio de Dios — 1 Corintios 3:9</li>
+      <li>Familia — Efesios 3:14-15</li>
+      <li>Sacerdocio real — 1 Pedro 2:9</li>
+      <li>Sal de la tierra — Mateo 5:13</li>
+      <li>Novia de Cristo — 2 Corintios 11:2-3</li>
+    </ul>
+    <h3>El Lugar de Reunión a través de la Historia</h3>
+    <ul class="lista">
+      <li><strong>El Tabernáculo</strong> — "Templo Portátil" (Éxodo 29:42)</li>
+      <li><strong>El Templo de Salomón</strong> — (2 Crónicas 7:11-16)</li>
+      <li><strong>Las Sinagogas</strong> — (Mateo 4:23)</li>
+    </ul>
+    <div class="preguntas-box">
+      <div class="preguntas-label">✦ Reflexión</div>
+      <div class="preg-item"><span class="preg-icon">→</span><div><p>¿Le gustaría ser parte de la iglesia? ¿Iría al lugar de reunión?</p></div></div>
+    </div>
+  </div>
+
+  <div class="ensz-content reveal" id="n2-e2">
+    <div class="ensz-header"><div class="ensz-eyebrow">Nivel 2 · Enseñanza 2</div><div class="ensz-titulo">Organización<br><span>Local</span></div><div class="ensz-linea"></div></div>
+    <div class="rompehielo-box"><div class="rompehielo-label">🧊 Rompehielo</div><p>¿Conoce la organización de alguna empresa? ¿Anheló participar de algún grupo?</p></div>
+    <p>La iglesia tiene una <strong>organización</strong> para la buena administración de todos sus miembros. El ejemplo viene desde Jesús al llamar, capacitar y delegar a los doce discípulos.</p>
+    <h3>Grupos y Comités en la Iglesia</h3>
+    <ul class="lista">
+      <li><strong>Pastor</strong> — lidera en bien de todos</li>
+      <li><strong>Junta Local</strong> — hermanos que cuidan el buen desarrollo</li>
+      <li><strong>Comité de Damas</strong> — lidera y cuida a las mujeres</li>
+      <li><strong>Comité de Jóvenes</strong> — cuida a los jóvenes de la congregación</li>
+      <li><strong>Escuela Dominical</strong> — enseñanza de niños y adolescentes</li>
+      <li><strong>Evangelismo</strong> — gana más feligreses para Dios</li>
+      <li><strong>Asistencia Social</strong> — asiste necesidades de los miembros</li>
+    </ul>
+    <h4>Requisitos para participar en un comité</h4>
+    <ul class="lista">
+      <li>Ser bautizado en agua en el Nombre de Jesús</li>
+      <li>Ser de buen testimonio</li>
+      <li>Tener un tiempo como asistente en la iglesia</li>
+      <li>Ser lleno del Espíritu Santo</li>
+      <li>Ser persona sujeta y dispuesta a servir</li>
+    </ul>
+    <div class="preguntas-box"><div class="preguntas-label">✦ Reflexión</div><div class="preg-item"><span class="preg-icon">→</span><div><p>¿Le gustaría participar de algún grupo en la iglesia? ¿Cuál comité le llamó más la atención?</p></div></div></div>
+  </div>
+
+  <div class="ensz-content reveal" id="n2-e3">
+    <div class="ensz-header"><div class="ensz-eyebrow">Nivel 2 · Enseñanza 3</div><div class="ensz-titulo">El <span>Culto</span></div><div class="ensz-linea"></div></div>
+    <div class="rompehielo-box"><div class="rompehielo-label">🧊 Rompehielo</div><p>Al escuchar la palabra "culto" ¿qué se imagina?</p></div>
+    <p>El culto es el <strong>reverente y amoroso homenaje que el hombre tributa a Dios</strong>. Conjunto de actos con que el hombre tributa este homenaje. (Romanos 12:1)</p>
+    <h3>¿Qué compone el culto?</h3>
+    <ul class="lista">
+      <li><strong>Cantos, himnos y coros</strong> — expresión del corazón a Dios (Efesios 5:19)</li>
+      <li><strong>Lectura Bíblica</strong> — es privilegio leer la Palabra de Dios</li>
+      <li><strong>Las oraciones</strong> — de pie o de rodillas con diferentes propósitos</li>
+      <li><strong>La ofrenda</strong> — testificamos de la bendición de Dios (1 Crónicas 29:13-14)</li>
+      <li><strong>La predicación</strong> — mensaje de la Biblia poderoso y transformador (Hebreos 4:12)</li>
+    </ul>
+    <div class="preguntas-box"><div class="preguntas-label">✦ Reflexión</div><div class="preg-item"><span class="preg-icon">→</span><div><p>¿Qué piensa ahora de nuestros cultos? ¿Desearía participar?</p></div></div></div>
+  </div>
+
+  <div class="ensz-content reveal" id="n2-e4">
+    <div class="ensz-header"><div class="ensz-eyebrow">Nivel 2 · Enseñanza 4</div><div class="ensz-titulo">La Importancia de<br><span>Congregarnos</span></div><div class="ensz-linea"></div></div>
+    <div class="rompehielo-box"><div class="rompehielo-label">🧊 Rompehielo</div><p>¿Cómo se sintió cuando faltó a una reunión importante?</p></div>
+    <div class="versiculo"><div class="vref">Hebreos 10:25</div><p>"No dejando de congregarnos, como algunos tienen por costumbre, sino exhortándonos; y tanto más, cuanto veis que aquel día se acerca."</p></div>
+    <h3>Beneficios de Congregarnos</h3>
+    <ul class="lista">
+      <li><strong>Crecimiento Espiritual</strong> — escuchamos la Palabra y adquirimos conocimiento (Neh. 8:1-6)</li>
+      <li><strong>Comunión entre hermanos</strong> — es bueno y delicioso habitar unidos (Salmo 133)</li>
+      <li><strong>Seguridad de encontrarnos con Dios</strong> — "donde están dos o tres congregados en mi nombre, allí estoy yo" (Mateo 18:20)</li>
+      <li><strong>Desarrollo de la iglesia</strong> — los proyectos y anuncios llegan a todos</li>
+    </ul>
+    <h4>Recomendaciones para asistir al culto</h4>
+    <ul class="lista">
+      <li>Llegar a tiempo — Salmos 26:8</li>
+      <li>Sentarse cerca del altar — Eclesiastés 5:1</li>
+      <li>Llegar con buen tiempo de orar — Efesios 6:18</li>
+      <li>Poner los ojos en Jesús, no en los hombres — Hebreos 12:2</li>
+    </ul>
+    <div class="preguntas-box"><div class="preguntas-label">✦ Reflexión</div><div class="preg-item"><span class="preg-icon">→</span><div><p>¿Cuáles son sus prioridades? ¿Entre sus prioridades está el asistir a los cultos?</p></div></div></div>
+  </div>
+
+  <div class="ensz-content reveal" id="n2-e5">
+    <div class="ensz-header"><div class="ensz-eyebrow">Nivel 2 · Enseñanza 5</div><div class="ensz-titulo">La <span>Oración</span></div><div class="ensz-linea"></div></div>
+    <div class="rompehielo-box"><div class="rompehielo-label">🧊 Rompehielo</div><p>¿Tiene familiares o amigos que viven lejos? ¿Qué medios utiliza para comunicarse con ellos?</p></div>
+    <p>La oración es un <strong>acto de adoración y comunicación que incluye la presentación de nuestro deseo a Dios</strong>. Es la comunicación del corazón con Dios, el aliento del alma.</p>
+    <h3>Estructura de la Oración (Mateo 6:9-15)</h3>
+    <ul class="lista">
+      <li>Comenzar con <strong>exaltación</strong> — "Padre nuestro que estás..."</li>
+      <li>Pedir por nuestras <strong>necesidades</strong> — "El pan nuestro de cada día..."</li>
+      <li>Suplicar <strong>perdón</strong> — "Perdónanos nuestras deudas..."</li>
+      <li>Rogar su <strong>protección</strong> — "No nos metas en tentación..."</li>
+    </ul>
+    <h3>Características de la Oración</h3>
+    <ul class="lista">
+      <li><strong>Sinceridad</strong> — Jeremías 29:13</li>
+      <li><strong>Fe</strong> — Marcos 11:24</li>
+      <li><strong>Justicia</strong> — Santiago 5:16</li>
+      <li><strong>Obediencia</strong> — 1 Juan 3:22</li>
+      <li><strong>Contrición</strong> — 2 Crónicas 7:14</li>
+    </ul>
+    <div class="preguntas-box"><div class="preguntas-label">✦ Reflexión</div><div class="preg-item"><span class="preg-icon">→</span><div><p>¿Desearía ahora mismo hablar u orar a Dios? ¿Cuál sería su petición?</p></div></div></div>
+  </div>
+
+  <div class="ensz-content reveal" id="n2-e6">
+    <div class="ensz-header"><div class="ensz-eyebrow">Nivel 2 · Enseñanza 6</div><div class="ensz-titulo">La <span>Alabanza</span></div><div class="ensz-linea"></div></div>
+    <div class="rompehielo-box"><div class="rompehielo-label">🧊 Rompehielo</div><p>¿A quién admira y aprecia usted?</p></div>
+    <p>La alabanza es una <strong>expresión de admiración y aprecio</strong>. Se alaba a Dios por lo que <em>hace</em> — exaltando sus virtudes (1 Pedro 2:9). Debe ser espontánea, natural, salir de lo profundo del corazón.</p>
+    <h3>¿Cómo alabamos a Dios?</h3>
+    <ul class="lista">
+      <li>Con nuestros <strong>labios y boca</strong> cuando cantamos (Sal. 40:3)</li>
+      <li>Con nuestras <strong>manos</strong> cuando las levantamos o aplaudimos (Sal. 63:4)</li>
+      <li>Con nuestros <strong>cuerpos</strong> — de pie, de rodillas o inclinados (Sal. 95)</li>
+      <li>Con nuestra <strong>vida</strong> cuando damos buen testimonio</li>
+    </ul>
+    <div class="preguntas-box"><div class="preguntas-label">✦ Reflexión</div><div class="preg-item"><span class="preg-icon">→</span><div><p>¿Qué forma de alabar a Dios escogería? ¿Estaría dispuesto a unirse en una canción para alabar a Dios?</p></div></div></div>
+  </div>
+
+  <div class="ensz-content reveal" id="n2-e7">
+    <div class="ensz-header"><div class="ensz-eyebrow">Nivel 2 · Enseñanza 7</div><div class="ensz-titulo">La <span>Adoración</span></div><div class="ensz-linea"></div></div>
+    <div class="rompehielo-box"><div class="rompehielo-label">🧊 Rompehielo</div><p>¿Ha apreciado a alguien por lo que hace y no por lo que es?</p></div>
+    <p>La adoración es una <strong>expresión de amor y veneración</strong>. Se adora a Dios por lo que <em>es</em>. No es una fórmula o un ceremonial, sino una realidad espiritual en armonía con la naturaleza de Dios.</p>
+    <div class="versiculo"><div class="vref">Juan 4:23-24</div><p>"Los verdaderos adoradores adorarán al Padre en espíritu y en verdad; porque también el Padre tales adoradores busca que lo adoren. Dios es Espíritu, y los que lo adoran, en espíritu y en verdad es necesario que lo adoren."</p></div>
+    <h3>¿Cómo adoramos a Dios?</h3>
+    <ul class="lista">
+      <li>Cuando <strong>cantamos</strong> salmos, himnos y cánticos espirituales (Efesios 5:19)</li>
+      <li>Cuando <strong>oramos</strong> con acción de gracias (Efesios 5:20)</li>
+      <li>Cuando <strong>confesamos</strong> nuestros pecados a Dios</li>
+      <li>Cuando <strong>leemos</strong> la Palabra de Dios</li>
+      <li>Cuando <strong>servimos</strong> a Dios y a los santos (Hebreos 9:14)</li>
+    </ul>
+  </div>
+
+  <div class="ensz-content reveal" id="n2-e8">
+    <div class="ensz-header"><div class="ensz-eyebrow">Nivel 2 · Enseñanza 8</div><div class="ensz-titulo">Aclaración de<br><span>Términos</span></div><div class="ensz-linea"></div></div>
+    <div class="rompehielo-box"><div class="rompehielo-label">🧊 Rompehielo</div><p>¿Cuáles términos o palabras le fueron extraños al visitar la iglesia?</p></div>
+    <ul class="lista">
+      <li><strong>Aleluya</strong> — Exclamación de regocijo y alabanza, grito de júbilo</li>
+      <li><strong>Dios le Bendiga</strong> — Saludo que significa desear la bendición de Dios a la persona</li>
+      <li><strong>Amén</strong> — "Así sea" o "Efectivamente" — afirmación de lo que se predica</li>
+      <li><strong>Dorcas</strong> — Mujer de buenas obras; las "Damas Dorcas" son las mujeres de la iglesia</li>
+      <li><strong>Hermanos</strong> — Los que hemos conocido y recibido a Dios; todos somos hijos del mismo Padre</li>
+      <li><strong>Alborada</strong> — Oración que se hace a la madrugada o en horas muy tempranas</li>
+      <li><strong>Ayuno</strong> — Del griego NESTELA: voluntaria abstinencia de comer con un propósito definido a Dios</li>
+      <li><strong>Vigilia</strong> — Reunión durante toda la noche o hasta medianoche de oración, alabanza y enseñanza</li>
+    </ul>
+    <div class="preguntas-box"><div class="preguntas-label">✦ Reflexión</div><div class="preg-item"><span class="preg-icon">→</span><div><p>¿Qué experiencias ha tenido con algunas de estas palabras?</p></div></div></div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════ NIVEL 3 ══════════════════════════════ -->
+<section class="nivel-section" id="nivel3">
+  <div class="nivel-banner nb3">
+    <div class="nivel-big-bg">3</div>
+    <div class="nivel-banner-num">Nivel 3 — 8 enseñanzas</div>
+    <h2>De Asistente<br>a <span>Creyente</span></h2>
+    <p class="nivel-banner-desc">Motivar y aclarar que es indispensable tomar la decisión de arrepentirse, bautizarse en el Nombre de Jesús, recibir el Espíritu Santo y perseverar. Al terminar este nivel el alumno completa 6 meses en REFAM.</p>
+  </div>
+  <div class="ensz-index reveal">
+    <a href="#n3-e1" class="ensz-card"><div class="ensz-num">Enseñanza 1</div><div class="ensz-name">Veracidad de la Salvación</div></a>
+    <a href="#n3-e2" class="ensz-card"><div class="ensz-num">Enseñanza 2</div><div class="ensz-name">Una Decisión a Tiempo</div></a>
+    <a href="#n3-e3" class="ensz-card"><div class="ensz-num">Enseñanza 3</div><div class="ensz-name">¿Cómo hago esa decisión?</div></a>
+    <a href="#n3-e4" class="ensz-card"><div class="ensz-num">Enseñanza 4</div><div class="ensz-name">El Bautismo en el Nombre de Jesús</div></a>
+    <a href="#n3-e5" class="ensz-card"><div class="ensz-num">Enseñanza 5</div><div class="ensz-name">Recibiendo el Espíritu Santo</div></a>
+    <a href="#n3-e6" class="ensz-card"><div class="ensz-num">Enseñanza 6</div><div class="ensz-name">Perseverando Hasta el Fin</div></a>
+    <a href="#n3-e7" class="ensz-card"><div class="ensz-num">Enseñanza 7</div><div class="ensz-name">Bendiciones para el Creyente</div></a>
+    <a href="#n3-e8" class="ensz-card"><div class="ensz-num">Enseñanza 8</div><div class="ensz-name">La Morada del Creyente</div></a>
+  </div>
+
+  <div class="ensz-content reveal" id="n3-e1">
+    <div class="ensz-header"><div class="ensz-eyebrow">Nivel 3 · Enseñanza 1</div><div class="ensz-titulo">Veracidad de la<br><span>Salvación y la Condenación</span></div><div class="ensz-linea"></div></div>
+    <div class="rompehielo-box"><div class="rompehielo-label">🧊 Rompehielo</div><p>¿Se ha salvado de un accidente o peligro? ¿Qué sintió al librarse de ese peligro?</p></div>
+    <p><strong>Salvación:</strong> es rescatar y preservar de un peligro inminente — la liberación espiritual del hombre del dominio del pecado y la muerte, y el goce de una vida eterna.</p>
+    <p><strong>Condenación:</strong> sentencia que se impone al hombre por sus malos hechos, alejado de la paz de Dios y cautivo a un tormento eterno.</p>
+    <h3>Paralelo: Generación de Noé vs. Generación Actual</h3>
+    <table class="tabla-comparativa">
+      <thead><tr><th>Generación de Noé</th><th>Generación Actual</th></tr></thead>
+      <tbody>
+        <tr><td>Por el pecado, Dios determina destrucción (Gén. 6:5-7)</td><td>El hombre que peca es condenado (Romanos 6:23)</td></tr>
+        <tr><td>Noé halló gracia y obedeció (Gén. 6:8-22)</td><td>Dios sigue llamando y espera obediencia (Hechos 17:31-32)</td></tr>
+        <tr><td>Noé fue advertido y preparó el arca (Hebreos 11:7)</td><td>Debemos prepararnos con nuestras familias (Marcos 16:15-16)</td></tr>
+        <tr><td>Dios salvó solo a Noé y su familia (2 Pedro 2:4-9)</td><td>Dios libra al hombre de condenación real (Juan 3:16)</td></tr>
+      </tbody>
+    </table>
+    <div class="preguntas-box"><div class="preguntas-label">✦ Reflexión</div><div class="preg-item"><span class="preg-icon">→</span><div><p>¿Cuál de las dos realidades le gustaría vivir?</p></div></div></div>
+  </div>
+
+  <div class="ensz-content reveal" id="n3-e2">
+    <div class="ensz-header"><div class="ensz-eyebrow">Nivel 3 · Enseñanza 2</div><div class="ensz-titulo">Una Decisión<br>a <span>Tiempo</span></div><div class="ensz-linea"></div></div>
+    <div class="rompehielo-box"><div class="rompehielo-label">🧊 Rompehielo</div><p>¿Se ha arrepentido de no haber tomado una decisión a tiempo? ¿Qué perdió?</p></div>
+    <p>La decisión es urgente porque el tiempo es corto. Vivimos en el <strong>tiempo de la Gracia</strong> (Efesios 2:8), que va desde la iglesia primitiva hasta la venida de Jesucristo.</p>
+    <div class="versiculo"><div class="vref">2 Corintios 6:1-2</div><p>"He aquí ahora el tiempo aceptable; he aquí ahora el día de salvación."</p></div>
+    <p>Nadie sabe cuando Jesús vuelva (Mateo 24:36) ni cuando morirá (Eclesiastés 8:8). Por eso la decisión hay que tomarla <strong>ahora</strong>.</p>
+    <div class="versiculo"><div class="vref">Apocalipsis 3:20</div><p>"He aquí, yo estoy a la puerta y llamo; si alguno oye mi voz y abre la puerta, entraré a él, y cenaré con él, y él conmigo."</p></div>
+    <div class="preguntas-box"><div class="preguntas-label">✦ Reflexión</div><div class="preg-item"><span class="preg-icon">→</span><div><p>¿Quiere hacer una decisión a tiempo? ¿Desearía aprovechar esta oportunidad y entregarse a Dios?</p></div></div></div>
+  </div>
+
+  <div class="ensz-content reveal" id="n3-e3">
+    <div class="ensz-header"><div class="ensz-eyebrow">Nivel 3 · Enseñanza 3</div><div class="ensz-titulo">¿Cómo hago<br>esa <span>Decisión</span>?</div><div class="ensz-linea"></div></div>
+    <div class="rompehielo-box"><div class="rompehielo-label">🧊 Rompehielo</div><p>¿Ha decidido hacer algo pero no sabe cómo llevarlo a cabo?</p></div>
+    <p>Tres personajes bíblicos nos muestran las tres formas de hacer la decisión de seguir a Jesús:</p>
+    <h3>I. Saulo de Tarso — Reconociendo</h3>
+    <p>Saulo, perseguidor de los cristianos, hizo su decisión <strong>reconociendo su pecado</strong> y su condición ante la experiencia gloriosa con Jesús: "¿Quién eres, Señor? ¿Qué quieres que yo haga?" (Hechos 9:1-17)</p>
+    <h3>II. El Etíope Eunuco — Aceptando</h3>
+    <p>El Etíope hizo su decisión <strong>aceptando la explicación de la Palabra</strong> que le brindó Felipe. Al entenderla, obedeció inmediatamente (Hechos 8:26-35).</p>
+    <h3>III. Lidia — Abriendo el corazón</h3>
+    <p>Lidia hizo su decisión <strong>abriendo el corazón</strong>, dejando que la Palabra de Dios tocara sus sentimientos y su vida. Si la Palabra te toca y sientes algo en el corazón, no te resistas (Hechos 16:11-14).</p>
+    <div class="preguntas-box"><div class="preguntas-label">✦ Reflexión</div><div class="preg-item"><span class="preg-icon">→</span><div><p>¿Cuál considera que sea su forma para tomar la decisión — <strong>reconociendo</strong> como Saulo, <strong>aceptando</strong> como el Etíope, <strong>abriendo el corazón</strong> como Lidia?</p></div></div></div>
+  </div>
+
+  <div class="ensz-content reveal" id="n3-e4">
+    <div class="ensz-header"><div class="ensz-eyebrow">Nivel 3 · Enseñanza 4</div><div class="ensz-titulo">El Bautismo en el<br>Nombre de <span>Jesús</span></div><div class="ensz-linea"></div></div>
+    <div class="rompehielo-box"><div class="rompehielo-label">🧊 Rompehielo</div><p>Si le regalaran un traje y la única condición es que lo lleves completo, ¿qué partes escogería?</p></div>
+    <p>El plan de salvación es un <strong>regalo completo</strong> — no se puede tomar solo una parte. Luego del arrepentimiento, el siguiente paso natural es el bautismo en el Nombre de Jesús.</p>
+    <div class="versiculo"><div class="vref">Hechos 2:37-38</div><p>"¿Varones hermanos, qué haremos? Pedro les dijo: Arrepentíos, y bautícese cada uno de vosotros en el nombre de Jesucristo para perdón de los pecados; y recibiréis el don del Espíritu Santo."</p></div>
+    <h3>El resultado en Saulo, el Etíope y Lidia</h3>
+    <ul class="lista">
+      <li><strong>Saulo</strong> — luego de su experiencia fue bautizado (Hechos 9:18; 22:16)</li>
+      <li><strong>El Etíope</strong> — mandó parar el carro y fue bautizado de inmediato (Hechos 8:36-40)</li>
+      <li><strong>Lidia</strong> — fue bautizada junto con toda su familia (Hechos 16:15)</li>
+    </ul>
+    <div class="preguntas-box"><div class="preguntas-label">✦ Reflexión</div><div class="preg-item"><span class="preg-icon">→</span><div><p>¿Desearía tener el mismo resultado? ¿Qué piensa acerca del bautismo?</p></div></div></div>
+  </div>
+
+  <div class="ensz-content reveal" id="n3-e5">
+    <div class="ensz-header"><div class="ensz-eyebrow">Nivel 3 · Enseñanza 5</div><div class="ensz-titulo">Recibiendo el<br><span>Espíritu Santo</span></div><div class="ensz-linea"></div></div>
+    <div class="rompehielo-box"><div class="rompehielo-label">🧊 Rompehielo</div><p>¿Conoce a alguien que haya tenido una experiencia sobrenatural?</p></div>
+    <p>La persona que se arrepiente y es bautizada en el nombre de Jesús tiene la <strong>promesa de ser llena del Espíritu de Dios</strong> (Hechos 2:38-39).</p>
+    <div class="versiculo"><div class="vref">Juan 7:37-39</div><p>"Si alguno tiene sed, venga a mí y beba. El que cree en mí, de su interior correrán ríos de agua viva." (Dijo del Espíritu que habían de recibir los que creyesen en él.)</p></div>
+    <h3>¿Cómo recibir el Espíritu Santo?</h3>
+    <ul class="lista">
+      <li><strong>Tener sed</strong> — buscar, orar, desear con anhelo la llenura</li>
+      <li><strong>Venir a Jesús</strong> — estar en obediencia; solo Él puede llenarnos</li>
+      <li><strong>Creer según la Escritura</strong> — sin dudas, creyendo que Dios va a llenar</li>
+    </ul>
+    <p><strong>¿Cómo sé que recibí el Espíritu Santo?</strong> Cuando el creyente es lleno del Espíritu Santo, habla en lenguas — un idioma que él mismo no conoce ni entiende, un fenómeno sobrenatural originado por Dios (1 Corintios 14:22).</p>
+    <div class="preguntas-box"><div class="preguntas-label">✦ Reflexión</div><div class="preg-item"><span class="preg-icon">→</span><div><p>¿Anhelaría recibir el Espíritu Santo?</p></div></div></div>
+  </div>
+
+  <div class="ensz-content reveal" id="n3-e6">
+    <div class="ensz-header"><div class="ensz-eyebrow">Nivel 3 · Enseñanza 6</div><div class="ensz-titulo">Perseverando<br>hasta el <span>Fin</span></div><div class="ensz-linea"></div></div>
+    <div class="rompehielo-box"><div class="rompehielo-label">🧊 Rompehielo</div><p>¿Ha iniciado algo en su vida que no ha terminado? ¿Cuál es la experiencia de lograrlo?</p></div>
+    <p>El éxito de perseverar hasta el fin depende de cómo estemos fundamentados en Cristo. La parábola de los dos cimientos (Lucas 6:46-49) lo ilustra perfectamente:</p>
+    <ul class="lista">
+      <li><strong>Casa sobre roca</strong> — el que oye y obedece; al venir problemas, se sostiene</li>
+      <li><strong>Casa sobre arena</strong> — el que oye y no practica; al venir la tormenta, cae</li>
+    </ul>
+    <div class="versiculo"><div class="vref">2 Timoteo 4:6-8 — Pablo</div><p>"He peleado la buena batalla, he acabado la carrera, he guardado la fe. Por lo demás, me está reservada la corona de justicia."</p></div>
+    <div class="preguntas-box"><div class="preguntas-label">✦ Reflexión</div><div class="preg-item"><span class="preg-icon">→</span><div><p>¿Cree que Dios puede ayudarle a perseverar hasta el fin?</p></div></div></div>
+  </div>
+
+  <div class="ensz-content reveal" id="n3-e7">
+    <div class="ensz-header"><div class="ensz-eyebrow">Nivel 3 · Enseñanza 7</div><div class="ensz-titulo">Bendiciones para<br>el <span>Creyente</span></div><div class="ensz-linea"></div></div>
+    <div class="rompehielo-box"><div class="rompehielo-label">🧊 Rompehielo</div><p>¿Cuántos tienen casa propia? ¿La consiguieron con sacrificio?</p></div>
+    <h3>Promesas de Dios para sus hijos</h3>
+    <ul class="lista">
+      <li><strong>Sanidad</strong> — "Por su llaga fuimos nosotros curados" (Isaías 53:4-5)</li>
+      <li><strong>Protección divina</strong> — "El ángel de Jehová acampa alrededor de los que le temen" (Sal. 34:7)</li>
+      <li><strong>Provisión</strong> — "Mi Dios, pues, suplirá todo lo que os falta" (Filipenses 4:19)</li>
+      <li><strong>Gozo, paz y alegría</strong> — "La paz os dejo, mi paz os doy" (Juan 14:27)</li>
+    </ul>
+    <div class="preguntas-box"><div class="preguntas-label">✦ Reflexión</div><div class="preg-item"><span class="preg-icon">→</span><div><p>¿De cuál de estas bendiciones está necesitado? ¿Vale la pena ser creyente de Él?</p></div></div></div>
+  </div>
+
+  <div class="ensz-content reveal" id="n3-e8">
+    <div class="ensz-header"><div class="ensz-eyebrow">Nivel 3 · Enseñanza 8</div><div class="ensz-titulo">La Morada<br>del <span>Creyente</span></div><div class="ensz-linea"></div></div>
+    <div class="rompehielo-box"><div class="rompehielo-label">🧊 Rompehielo</div><p>¿Qué pasaría si conociéramos hoy que tenemos casa?</p></div>
+    <div class="versiculo"><div class="vref">2 Corintios 5:1</div><p>"Sabemos que si nuestra morada terrestre, este tabernáculo, se deshace, tenemos de Dios un edificio, una casa no hecha de manos, eterna, en los cielos."</p></div>
+    <p>Los creyentes tendremos una <strong>habitación celestial</strong> — una ciudad deslumbrante llamada <em>La Nueva Jerusalén</em>. Esta ciudad será el hogar permanente de todos los redimidos en la eternidad.</p>
+    <div class="versiculo"><div class="vref">Juan 14:1-2</div><p>"En la casa de mi Padre muchas moradas hay; si así no fuera, yo os lo hubiera dicho; voy, pues, a preparar lugar para vosotros."</p></div>
+    <div class="preguntas-box"><div class="preguntas-label">✦ Reflexión</div><div class="preg-item"><span class="preg-icon">→</span><div><p>¿Le gustaría asegurar esa morada hoy? ¿Le gustaría ser creyente para tener casa en la Nueva Jerusalén?</p></div></div></div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════ NIVEL 4 ══════════════════════════════ -->
+<section class="nivel-section" id="nivel4">
+  <div class="nivel-banner nb4">
+    <div class="nivel-big-bg">4</div>
+    <div class="nivel-banner-num">Nivel 4 — 8 enseñanzas</div>
+    <h2>De Creyente<br>a <span>Servidor</span></h2>
+    <p class="nivel-banner-desc">Motivar al nuevo creyente a ser un luchador, un soldado y servidor en Cristo Jesús. El último nivel — formación para el servicio activo en la iglesia.</p>
+  </div>
+  <div class="ensz-index reveal">
+    <a href="#n4-e1" class="ensz-card"><div class="ensz-num">Enseñanza 1</div><div class="ensz-name">Salvos para Servir</div></a>
+    <a href="#n4-e2" class="ensz-card"><div class="ensz-num">Enseñanza 2</div><div class="ensz-name">Preparados para Servir</div></a>
+    <a href="#n4-e3" class="ensz-card"><div class="ensz-num">Enseñanza 3</div><div class="ensz-name">Dios Llama, Capacita y Envía</div></a>
+    <a href="#n4-e4" class="ensz-card"><div class="ensz-num">Enseñanza 4</div><div class="ensz-name">Servidores y Mayordomos</div></a>
+    <a href="#n4-e5" class="ensz-card"><div class="ensz-num">Enseñanza 5</div><div class="ensz-name">Un Servicio Especial</div></a>
+    <a href="#n4-e6" class="ensz-card"><div class="ensz-num">Enseñanza 6</div><div class="ensz-name">Servidores Constantes</div></a>
+    <a href="#n4-e7" class="ensz-card"><div class="ensz-num">Enseñanza 7</div><div class="ensz-name">Galardones y Recompensas I</div></a>
+    <a href="#n4-e8" class="ensz-card"><div class="ensz-num">Enseñanza 8</div><div class="ensz-name">Galardones y Recompensas II</div></a>
+  </div>
+
+  <div class="ensz-content reveal" id="n4-e1">
+    <div class="ensz-header"><div class="ensz-eyebrow">Nivel 4 · Enseñanza 1</div><div class="ensz-titulo">Salvos para<br><span>Servir</span></div><div class="ensz-linea"></div></div>
+    <div class="rompehielo-box"><div class="rompehielo-label">🧊 Rompehielo</div><p>¿Ha querido recompensar un favor que le han hecho? ¿En qué forma?</p></div>
+    <p>Luego de ser salvos, Dios espera de nosotros un <strong>servicio especial en agradecimiento</strong>. No podemos conformarnos solo con entregarnos a Él — debemos entender cuál es el propósito de Dios para con nuestra nueva vida.</p>
+    <p>Servir es <strong>ofrendarme para que otras personas sean bendecidas</strong>, de tal forma que lo que se haga sea directamente para Dios y no buscando aplausos.</p>
+    <div class="versiculo"><div class="vref">Efesios 6:7-8</div><p>"Servid de buena voluntad, como al Señor y no a los hombres, sabiendo que el bien que cada uno haga, ese recibirá del Señor."</p></div>
+    <div class="preguntas-box"><div class="preguntas-label">✦ Reflexión</div><div class="preg-item"><span class="preg-icon">→</span><div><p>¿Qué entiende por servir a Dios? ¿Cómo le gustaría servir?</p></div></div></div>
+  </div>
+
+  <div class="ensz-content reveal" id="n4-e2">
+    <div class="ensz-header"><div class="ensz-eyebrow">Nivel 4 · Enseñanza 2</div><div class="ensz-titulo">Preparados para<br><span>Servir</span></div><div class="ensz-linea"></div></div>
+    <div class="rompehielo-box"><div class="rompehielo-label">🧊 Rompehielo</div><p>¿Le han exigido cualidades especiales para un trabajo?</p></div>
+    <p>Todo creyente que busque las siguientes cualidades logrará que Dios lo capacite y hará un servicio excelente:</p>
+    <ul class="lista">
+      <li><strong>Fidelidad</strong> — "Mis ojos pondré en los fieles de la tierra" (Salmos 101:6). Dios no usa personas infieles.</li>
+      <li><strong>Conocimiento de la Palabra</strong> — "Mi pueblo fue destruido porque le faltó conocimiento" (Oseas 4:6). Debemos conocer la Biblia.</li>
+      <li><strong>Sujeción</strong> — "Obedeced a vuestros pastores y sujetaos a ellos" (Hebreos 13:17). Nuestro Dios es ordenado.</li>
+      <li><strong>Disposición</strong> — Estar listos y con ánimo favorable para toda buena obra (Tito 3:1).</li>
+    </ul>
+    <div class="preguntas-box"><div class="preguntas-label">✦ Reflexión</div><div class="preg-item"><span class="preg-icon">→</span><div><p>¿Qué cualidad le falta? ¿En cuál tiene más fallas?</p></div></div></div>
+  </div>
+
+  <div class="ensz-content reveal" id="n4-e3">
+    <div class="ensz-header"><div class="ensz-eyebrow">Nivel 4 · Enseñanza 3</div><div class="ensz-titulo">Dios Llama,<br><span>Capacita y Envía</span></div><div class="ensz-linea"></div></div>
+    <div class="rompehielo-box"><div class="rompehielo-label">🧊 Rompehielo</div><p>¿Alguna vez ha querido realizar un trabajo y no ha podido por falta de herramientas?</p></div>
+    <ul class="lista">
+      <li><strong>Llamamiento</strong> — Una invitación a servir con un propósito específico. Con el llamamiento viene la carga, la visión y la dotación. (Moisés: Éxodo 3; Samuel: 1 Samuel 3)</li>
+      <li><strong>Nombramiento</strong> — Dios nombra y establece: no es donde yo quiero ir, sino donde Dios quiere que vaya. (Jeremías 1:1-10)</li>
+      <li><strong>Dones y Capacidades</strong> — La manera sobrenatural como Dios a través de su Espíritu nos equipa para la tarea (1 Corintios 12:4-12)</li>
+    </ul>
+    <h3>Talento vs. Don</h3>
+    <table class="tabla-comparativa">
+      <thead><tr><th>Talento</th><th>Don</th></tr></thead>
+      <tbody>
+        <tr><td>Heredado de los padres</td><td>Dado por el Espíritu Santo</td></tr>
+        <tr><td>Presente desde el nacimiento</td><td>Presente en la manifestación del Espíritu</td></tr>
+        <tr><td>Dado a la raza humana</td><td>Dado a los miembros de la iglesia</td></tr>
+        <tr><td>Puede operar sin el Espíritu Santo</td><td>Depende del Espíritu Santo</td></tr>
+        <tr><td>Sus efectos son temporales</td><td>Sus efectos son eternos</td></tr>
+      </tbody>
+    </table>
+    <div class="preguntas-box"><div class="preguntas-label">✦ Reflexión</div><div class="preg-item"><span class="preg-icon">→</span><div><p>¿Le gustaría ser llamado, capacitado y enviado por Dios? Si escuchara el llamado, ¿cómo respondería?</p></div></div></div>
+  </div>
+
+  <div class="ensz-content reveal" id="n4-e4">
+    <div class="ensz-header"><div class="ensz-eyebrow">Nivel 4 · Enseñanza 4</div><div class="ensz-titulo">Servidores y<br><span>Mayordomos</span></div><div class="ensz-linea"></div></div>
+    <div class="rompehielo-box"><div class="rompehielo-label">🧊 Rompehielo</div><p>¿Ha llegado a administrar o cuidar bienes ajenos? ¿De todo lo que tienes, qué crees que le pertenece a Dios?</p></div>
+    <p>Todo servidor del Señor es <strong>mayordomo o administrador de los bienes de Dios</strong>. Todo le pertenece a Él (Salmos 24:1).</p>
+    <h3>Formas de servir a Dios</h3>
+    <ul class="lista">
+      <li><strong>Ofrendas</strong> — Aporte voluntario para el sostenimiento del templo (Éxodo 25:1-9)</li>
+      <li><strong>Diezmos</strong> — La décima parte para sostener la obra y extender el evangelio (Núm. 18:21)</li>
+      <li><strong>Tiempo</strong> — Para asistir a la iglesia y asumir responsabilidades (He. 10:25)</li>
+      <li><strong>Testimonio</strong> — Testificar con mi vida y conducta la obra de Cristo (Mateo 5:14-16)</li>
+      <li><strong>Talentos</strong> — Habilidades propias al servicio de Dios y su iglesia (Romanos 12:11)</li>
+      <li><strong>Dones</strong> — Facultades dadas por el Espíritu Santo para un trabajo específico (1 Co. 14:12)</li>
+    </ul>
+  </div>
+
+  <div class="ensz-content reveal" id="n4-e5">
+    <div class="ensz-header"><div class="ensz-eyebrow">Nivel 4 · Enseñanza 5</div><div class="ensz-titulo">Un Servicio<br><span>Especial</span></div><div class="ensz-linea"></div></div>
+    <div class="rompehielo-box"><div class="rompehielo-label">🧊 Rompehielo</div><p>¿Le gusta lo monótono o innovar, ser alguien especial?</p></div>
+    <p>Siempre existirá un servicio más exigente, de mayor liderazgo. La iglesia necesita <strong>líderes especiales</strong> para la obra:</p>
+    <ul class="lista">
+      <li><strong>Moisés</strong> — llamado para dirigir al pueblo a la libertad. Aunque intentó rehusar, Dios le demostró que estaría con él (Éxodo 3)</li>
+      <li><strong>Isaías</strong> — algo distinto vio Dios en él. Al ver su condición, Dios lo limpió y lo hizo apto para un trabajo especial (Isaías 6)</li>
+      <li><strong>David</strong> — el menor de los hermanos, pero recibió un llamado especial para ser rey. Tenía el corazón conforme al corazón de Dios (1 Samuel 16)</li>
+    </ul>
+    <div class="preguntas-box"><div class="preguntas-label">✦ Reflexión</div><div class="preg-item"><span class="preg-icon">→</span><div><p>¿Con cuál de los líderes anteriores se identifica y por qué?</p></div></div></div>
+  </div>
+
+  <div class="ensz-content reveal" id="n4-e6">
+    <div class="ensz-header"><div class="ensz-eyebrow">Nivel 4 · Enseñanza 6</div><div class="ensz-titulo">Servidores<br><span>Constantes</span></div><div class="ensz-linea"></div></div>
+    <div class="rompehielo-box"><div class="rompehielo-label">🧊 Rompehielo</div><p>¿Qué es para usted ser constante? ¿Ha tenido alguna experiencia con la perseverancia?</p></div>
+    <p>El servicio no es por temporadas — debe ser <strong>constante</strong>. No podemos dejar a medio camino nuestro ministerio.</p>
+    <ul class="lista">
+      <li><strong>Juan Marcos</strong> — Se retiró en el primer viaje misionero (Hechos 13:13), pero regresó y fue tan fiel que Pablo lo pidió: "Es útil para el ministerio" (2 Timoteo 4:11)</li>
+      <li><strong>Pablo</strong> — Pese a sufrimientos extremos (2 Corintios 11:22-33), declaró hasta el final: "He peleado la buena batalla, he acabado la carrera." (2 Timoteo 4:7-8)</li>
+    </ul>
+    <div class="versiculo"><div class="vref">Jeremías 20:9</div><p>"Y dije: No me acordaré más de él, ni hablaré más en su nombre; no obstante, había en mi corazón como un fuego ardiente metido en mis huesos."</p></div>
+    <div class="preguntas-box"><div class="preguntas-label">✦ Reflexión</div><div class="preg-item"><span class="preg-icon">→</span><div><p>¿Cuál servicio cree usted que haría toda su vida?</p></div></div></div>
+  </div>
+
+  <div class="ensz-content reveal" id="n4-e7">
+    <div class="ensz-header"><div class="ensz-eyebrow">Nivel 4 · Enseñanza 7</div><div class="ensz-titulo">Galardones y<br><span>Recompensas</span> (I)</div><div class="ensz-linea"></div></div>
+    <div class="rompehielo-box"><div class="rompehielo-label">🧊 Rompehielo</div><p>¿Qué trofeos conoce en el ámbito nacional e internacional?</p></div>
+    <p>Dios no es injusto — es el mejor patrón. Luego de presentarnos ante el tribunal de Cristo (2 Corintios 5:10), recibiremos galardones:</p>
+    <ul class="lista">
+      <li><strong>Corona Incorruptible</strong> — para los que han luchado y se abstienen, siendo fieles desde el principio (1 Corintios 9:25)</li>
+      <li><strong>Corona de Vida</strong> — para los servidores valientes que resistieron la prueba sin retroceder (Santiago 1:12). Job y Asaf son ejemplos de quienes soportaron y fueron recompensados.</li>
+    </ul>
+    <div class="preguntas-box"><div class="preguntas-label">✦ Reflexión</div><div class="preg-item"><span class="preg-icon">→</span><div><p>¿Crees que ganarás alguna de las coronas mencionadas?</p></div></div></div>
+  </div>
+
+  <div class="ensz-content reveal" id="n4-e8">
+    <div class="ensz-header"><div class="ensz-eyebrow">Nivel 4 · Enseñanza 8</div><div class="ensz-titulo">Galardones y<br><span>Recompensas</span> (II)</div><div class="ensz-linea"></div></div>
+    <div class="rompehielo-box"><div class="rompehielo-label">🧊 Rompehielo</div><p>¿Qué hace alguien cuando obtiene un gran premio?</p></div>
+    <ul class="lista">
+      <li><strong>Corona para Ganadores de Almas</strong> — para los que evangelizan y ganan almas. "¿No lo sois vosotros, delante de nuestro Señor Jesucristo, en su venida?" (1 Tesalonicenses 2:19)</li>
+      <li><strong>Corona de Gloria</strong> — para los pastores que apacientan la grey de Dios. "Cuando aparezca el Príncipe de los pastores, recibiréis la corona incorruptible de gloria." (1 Pedro 5:4)</li>
+      <li><strong>Corona de Justicia</strong> — para los mártires y los que amaron la venida de Cristo. "He peleado la buena batalla, he guardado la fe. Por lo demás me está reservada la corona de justicia." (2 Timoteo 4:7-8)</li>
+    </ul>
+    <div class="versiculo"><div class="vref">Mateo 25:23</div><p>"Bien, buen siervo y fiel; sobre poco has sido fiel, sobre mucho te pondré. Entra en el gozo de tu Señor."</p></div>
+    <div class="preguntas-box">
+      <div class="preguntas-label">✦ Reflexión Final</div>
+      <div class="preg-item"><span class="preg-icon">✦</span><div><p>¿Cuántas coronas vimos en total? ¿Cuál te gustó más? ¿Desearías iniciar desde hoy para ganar esa corona?</p></div></div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>✦ &nbsp;<span>REFAM — Reuniones Familiares de Amistad</span>&nbsp; ✦</p>
+  <p style="margin-top:8px;">IPUC Algarrobo · Biblioteca ComuniApp · 4 Niveles · 34 Enseñanzas</p>
+</footer>
+
+</main>
+
+<script>
+  function toggleNav() {
+    document.getElementById('sidebar').classList.toggle('open');
+  }
+  function toggleNivel(id) {
+    const el = document.getElementById('links-' + id);
+    el.classList.toggle('open');
+  }
+
+  // Scroll reveal
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); }
+    });
+  }, { threshold: 0.07 });
+  document.querySelectorAll('.reveal').forEach(r => obs.observe(r));
+
+  // Nav links close on mobile
+  document.querySelectorAll('.nivel-links a').forEach(a => a.addEventListener('click', () => {
+    document.getElementById('sidebar').classList.remove('open');
+  }));
+</script>
+</body>
+</html>

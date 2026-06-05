@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mujer Virtuosa — Estudio de Proverbios 31</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Raleway:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--azul:#009FDA;--marino:#003B6F;--oro:#F0AB00;--oro-claro:#FFD166;--fondo:#040e1c;--texto:#e8e0d0;--texto-suave:#a89f90;--linea:rgba(240,171,0,.2);}
+*{margin:0;padding:0;box-sizing:border-box;}html{scroll-behavior:smooth;}
+body{background:var(--fondo);color:var(--texto);font-family:'Crimson Pro',Georgia,serif;font-size:18px;line-height:1.85;overflow-x:hidden;}
+::-webkit-scrollbar{width:4px;}::-webkit-scrollbar-track{background:var(--fondo);}::-webkit-scrollbar-thumb{background:var(--azul);border-radius:2px;}
+.nav-toggle{position:fixed;top:16px;left:16px;z-index:300;background:var(--marino);border:1px solid var(--linea);color:var(--oro);width:44px;height:44px;border-radius:8px;cursor:pointer;font-size:20px;display:flex;align-items:center;justify-content:center;transition:all .2s;box-shadow:0 2px 12px rgba(0,0,0,.4);}
+.nav-toggle:hover{background:var(--azul);color:#fff;}
+nav{position:fixed;left:0;top:0;bottom:0;width:265px;background:linear-gradient(180deg,var(--marino) 0%,#011529 100%);border-right:1px solid var(--linea);z-index:200;overflow-y:auto;transform:translateX(0);transition:transform .35s ease;padding:32px 0;}
+nav.hidden{transform:translateX(-100%);}
+nav .nav-brand{font-family:'Cinzel',serif;font-size:12px;font-weight:700;color:var(--oro);padding:0 20px 20px;border-bottom:1px solid var(--linea);margin-bottom:8px;letter-spacing:1px;line-height:1.5;}
+nav .nav-section{font-family:'Cinzel',serif;font-size:9px;letter-spacing:3px;color:var(--azul);padding:12px 20px 4px;text-transform:uppercase;opacity:.8;}
+nav a{display:flex;align-items:center;gap:10px;padding:7px 20px;font-family:'Raleway',sans-serif;font-size:11px;font-weight:500;letter-spacing:.5px;color:var(--texto-suave);text-decoration:none;border-left:2px solid transparent;transition:all .2s;}
+nav a:hover,nav a.active{color:var(--oro);border-left-color:var(--oro);background:rgba(240,171,0,.06);}
+nav a .nav-num{font-family:'Cinzel',serif;font-size:10px;color:var(--azul);min-width:20px;}
+.page-wrap{margin-left:265px;transition:margin .35s ease;}
+.page-wrap.full{margin-left:0;}
+
+/* PORTADA */
+.cover{min-height:100vh;background:linear-gradient(160deg,#041830 0%,var(--fondo) 65%);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:80px 32px 60px;position:relative;overflow:hidden;}
+.cover::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 50% at 50% 10%,rgba(0,159,218,.15) 0%,transparent 70%),radial-gradient(ellipse 40% 40% at 80% 85%,rgba(240,171,0,.12) 0%,transparent 60%);pointer-events:none;}
+.cover-icon{font-size:64px;margin-bottom:24px;animation:fadeDown .8s ease both;}
+.cover-tag{font-family:'Cinzel',serif;font-size:10px;letter-spacing:5px;color:var(--azul);text-transform:uppercase;margin-bottom:16px;animation:fadeDown .9s ease .1s both;}
+.cover-pregunta{font-family:'Crimson Pro',serif;font-style:italic;font-size:clamp(16px,2.5vw,22px);color:var(--texto-suave);margin-bottom:12px;animation:fadeDown .95s ease .15s both;}
+.cover-title{font-family:'Cinzel',serif;font-size:clamp(44px,10vw,100px);font-weight:900;line-height:1;margin-bottom:8px;animation:fadeDown 1s ease .2s both;color:var(--oro);}
+.cover-sub{font-family:'Cinzel',serif;font-size:clamp(13px,2vw,17px);color:var(--azul);letter-spacing:2px;margin-bottom:32px;animation:fadeDown 1s ease .25s both;}
+.cover-line{width:60px;height:1px;background:linear-gradient(to right,transparent,var(--oro),transparent);margin:0 auto 24px;}
+.cover-author{font-family:'Raleway',sans-serif;font-size:13px;letter-spacing:4px;color:var(--texto-suave);text-transform:uppercase;}
+.cover-verse{position:absolute;bottom:40px;font-family:'Crimson Pro',serif;font-style:italic;font-size:14px;color:var(--texto-suave);max-width:460px;text-align:center;line-height:1.6;}
+
+main{max-width:740px;margin:0 auto;padding:0 24px;}
+.chapter{padding:72px 0 56px;border-bottom:1px solid rgba(240,171,0,.1);opacity:0;transform:translateY(30px);transition:opacity .7s ease,transform .7s ease;}
+.chapter.visible{opacity:1;transform:none;}
+.ch-num{font-family:'Cinzel',serif;font-size:11px;letter-spacing:4px;color:var(--azul);text-transform:uppercase;margin-bottom:12px;}
+.ch-title{font-family:'Cinzel',serif;font-size:clamp(20px,3.5vw,32px);font-weight:700;color:var(--oro);line-height:1.2;margin-bottom:8px;}
+.ch-sub{font-family:'Cinzel',serif;font-size:clamp(13px,2vw,18px);color:var(--azul);margin-bottom:28px;}
+.ch-divider{width:40px;height:2px;background:linear-gradient(to right,var(--oro),var(--azul));margin-bottom:32px;border-radius:2px;}
+p{margin-bottom:20px;}
+strong{color:var(--oro);font-weight:600;}
+em{color:var(--azul);font-style:italic;}
+
+.quote{border-left:3px solid var(--oro);padding:16px 24px;margin:28px 0;background:rgba(240,171,0,.05);border-radius:0 8px 8px 0;}
+.quote p{font-family:'Crimson Pro',serif;font-style:italic;font-size:1.05em;color:var(--oro-claro);margin-bottom:6px;}
+.quote cite{font-family:'Raleway',sans-serif;font-size:12px;letter-spacing:2px;color:var(--texto-suave);}
+
+.section-label{font-family:'Cinzel',serif;font-size:11px;letter-spacing:3px;color:var(--azul);text-transform:uppercase;margin:36px 0 12px;}
+
+.list-yes{list-style:none;margin:16px 0 24px;padding:0;}
+.list-yes li{padding:6px 0 6px 28px;position:relative;font-size:.97em;color:var(--texto-suave);border-bottom:1px solid rgba(255,255,255,.05);}
+.list-yes li::before{content:'✦';position:absolute;left:0;top:6px;font-size:14px;color:var(--oro);}
+
+.compare{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:28px 0;}
+.compare-box{padding:20px;border-radius:8px;border:1px solid;}
+.compare-box.a{border-color:rgba(0,159,218,.3);background:rgba(0,159,218,.05);}
+.compare-box.b{border-color:rgba(240,171,0,.3);background:rgba(240,171,0,.05);}
+.compare-box h4{font-family:'Cinzel',serif;font-size:10px;letter-spacing:3px;margin-bottom:12px;text-transform:uppercase;}
+.compare-box.a h4{color:var(--azul);}
+.compare-box.b h4{color:var(--oro);}
+.compare-box ul{list-style:none;}
+.compare-box ul li{font-size:14px;padding:4px 0;color:var(--texto-suave);border-bottom:1px solid rgba(255,255,255,.06);}
+
+.frase{text-align:center;padding:40px 24px;margin:32px 0;position:relative;}
+.frase::before{content:'"';font-family:'Cinzel',serif;font-size:100px;color:rgba(240,171,0,.07);position:absolute;top:-10px;left:16px;line-height:1;}
+.frase p{font-family:'Cinzel',serif;font-size:clamp(15px,2.2vw,20px);color:var(--texto);line-height:1.5;position:relative;z-index:1;margin:0;}
+
+.tip-box{background:linear-gradient(135deg,rgba(0,59,111,.4) 0%,rgba(4,14,28,.8) 100%);border:1px solid rgba(0,159,218,.25);border-radius:12px;padding:24px;margin:28px 0;}
+.tip-box h4{font-family:'Cinzel',serif;font-size:11px;letter-spacing:4px;color:var(--azul);text-transform:uppercase;margin-bottom:14px;}
+.tip-box p,.tip-box li{color:var(--texto-suave);font-size:.95em;margin-bottom:8px;}
+.tip-box ol,.tip-box ul{padding-left:20px;}
+.tip-box li{margin-bottom:8px;}
+
+.gold-box{background:rgba(240,171,0,.06);border:1px solid rgba(240,171,0,.2);border-radius:12px;padding:24px;margin:28px 0;}
+.gold-box h4{font-family:'Cinzel',serif;font-size:11px;letter-spacing:4px;color:var(--oro);text-transform:uppercase;margin-bottom:14px;}
+.gold-box p{color:var(--texto-suave);font-size:.95em;margin-bottom:10px;}
+.gold-box strong{color:var(--oro);}
+
+.etimo{background:rgba(240,171,0,.04);border:1px solid rgba(240,171,0,.15);border-radius:8px;padding:20px 24px;margin:20px 0;}
+.etimo .e-palabra{font-family:'Cinzel',serif;font-size:22px;color:var(--oro);margin-bottom:4px;}
+.etimo .e-origen{font-family:'Raleway',sans-serif;font-size:12px;color:var(--azul);letter-spacing:2px;margin-bottom:8px;}
+.etimo p{color:var(--texto-suave);font-size:.95em;margin:0;}
+
+/* VERSÍCULO ACROSTICO */
+.acrostico{background:rgba(4,14,28,.8);border:1px solid rgba(240,171,0,.15);border-radius:10px;overflow:hidden;margin:28px 0;}
+.acrostico-header{background:rgba(240,171,0,.08);padding:14px 20px;font-family:'Cinzel',serif;font-size:10px;letter-spacing:4px;color:var(--oro);text-transform:uppercase;}
+.acrostico-item{display:flex;gap:16px;padding:12px 20px;border-bottom:1px solid rgba(255,255,255,.04);align-items:flex-start;}
+.acrostico-item:last-child{border-bottom:none;}
+.ac-letra{font-family:'Cinzel',serif;font-size:22px;font-weight:900;color:var(--oro);min-width:32px;line-height:1.2;}
+.ac-verso{font-family:'Crimson Pro',serif;font-size:15px;color:var(--texto-suave);flex:1;line-height:1.5;}
+.ac-verso strong{color:var(--oro);}
+
+.pasos{counter-reset:paso;list-style:none;padding:0;margin:24px 0;}
+.pasos li{counter-increment:paso;display:flex;gap:16px;margin-bottom:22px;align-items:flex-start;}
+.pasos li::before{content:counter(paso);font-family:'Cinzel',serif;font-size:20px;font-weight:700;color:var(--oro);min-width:32px;line-height:1.3;}
+.pasos li .paso-content h5{font-family:'Cinzel',serif;font-size:14px;color:var(--azul);margin-bottom:5px;letter-spacing:1px;}
+.pasos li .paso-content p{color:var(--texto-suave);font-size:.95em;margin:0;}
+
+.actividad{background:linear-gradient(135deg,rgba(0,59,111,.35) 0%,rgba(4,14,28,.9) 100%);border:1px solid rgba(0,159,218,.2);border-radius:12px;padding:24px;margin:28px 0;}
+.actividad h4{font-family:'Cinzel',serif;font-size:10px;letter-spacing:4px;color:var(--azul);text-transform:uppercase;margin-bottom:14px;}
+.actividad ol{padding-left:20px;color:var(--texto-suave);font-size:.95em;}
+.actividad ol li{margin-bottom:8px;}
+.actividad .oracion{margin-top:16px;padding:14px 18px;background:rgba(240,171,0,.06);border-left:2px solid var(--oro);border-radius:0 8px 8px 0;font-style:italic;color:var(--texto-suave);font-size:.93em;}
+
+.epilogo{text-align:center;padding:80px 32px 120px;}
+.epilogo .big{font-family:'Cinzel',serif;font-size:clamp(32px,7vw,68px);font-weight:900;color:transparent;-webkit-text-stroke:1px rgba(240,171,0,.35);letter-spacing:6px;display:block;margin-bottom:40px;}
+.epilogo h2{font-family:'Cinzel',serif;font-size:clamp(18px,3vw,28px);color:var(--oro);margin-bottom:24px;}
+.epilogo p{max-width:540px;margin:0 auto 16px;color:var(--texto-suave);}
+.epilogo .firma{margin-top:48px;font-family:'Cinzel',serif;font-size:13px;letter-spacing:4px;color:var(--azul);}
+
+@keyframes fadeDown{from{opacity:0;transform:translateY(-20px);}to{opacity:1;transform:none;}}
+@keyframes fadeIn{from{opacity:0;}to{opacity:1;}}
+@media(max-width:768px){nav{transform:translateX(-100%);}nav.show{transform:translateX(0);}.page-wrap{margin-left:0!important;}}
+@media(max-width:600px){.compare{grid-template-columns:1fr;}nav{width:220px;}.pasos li{flex-direction:column;gap:8px;}.acrostico-item{flex-direction:column;gap:4px;}}
+</style>
+</head>
+<body>
+<button class="nav-toggle" id="navToggle" onclick="toggleNav()">☰</button>
+<nav id="sidenav">
+  <div class="nav-brand">👑 Mujer Virtuosa<br>Proverbios 31</div>
+  <div class="nav-section">Índice</div>
+  <a href="#portada"><span class="nav-num">·</span>Portada</a>
+  <div class="nav-section">Lecciones</div>
+  <a href="#c1"><span class="nav-num">01</span>Etimología — Eshet Jayil</a>
+  <a href="#c2"><span class="nav-num">02</span>El contexto del poema</a>
+  <a href="#c3"><span class="nav-num">03</span>Su estima — más que piedras preciosas</a>
+  <a href="#c4"><span class="nav-num">04</span>Mujer de fortaleza</a>
+  <a href="#c5"><span class="nav-num">05</span>Mujer de trabajo y diligencia</a>
+  <a href="#c6"><span class="nav-num">06</span>Mujer de sabiduría</a>
+  <a href="#c7"><span class="nav-num">07</span>Mujer de compasión</a>
+  <a href="#c8"><span class="nav-num">08</span>Mujer que teme a Dios</a>
+  <a href="#c9"><span class="nav-num">09</span>El elogio que viene</a>
+  <a href="#c10"><span class="nav-num">10</span>La mujer virtuosa hoy</a>
+</nav>
+
+<div class="page-wrap" id="pageWrap">
+
+<!-- PORTADA -->
+<section class="cover" id="portada">
+  <div class="cover-icon">👑</div>
+  <div class="cover-tag">Estudio · Proverbios 31:10-31</div>
+  <div class="cover-pregunta">"Mujer virtuosa, ¿quién la hallará?"</div>
+  <h1 class="cover-title">Mujer Virtuosa</h1>
+  <div class="cover-sub">Porque su estima sobrepasa largamente la de las piedras preciosas</div>
+  <div class="cover-line"></div>
+  <div class="cover-author">Predicador IPUC</div>
+  <div class="cover-verse">"Engañosa es la gracia, y vana la hermosura; la mujer que teme a Jehová, ésa será alabada." — Proverbios 31:30</div>
+</section>
+
+<main>
+
+<!-- CAP 1 — ETIMOLOGÍA -->
+<section class="chapter" id="c1">
+  <div class="ch-num">Lección 1</div>
+  <h2 class="ch-title">Etimología — Eshet Jayil</h2>
+  <div class="ch-sub">La mujer de fuerza — no solo de virtud</div>
+  <div class="ch-divider"></div>
+
+  <p>La traducción "mujer virtuosa" en la Reina-Valera es hermosa — pero no captura todo lo que el hebreo dice. Para entender quién es esta mujer, hay que escucharla en su idioma original.</p>
+
+  <div class="etimo">
+    <div class="e-palabra">אֵשֶׁת חַיִל — Eshet Jayil</div>
+    <div class="e-origen">Hebreo · Proverbios 31:10</div>
+    <p><em>Eshet</em> = mujer, esposa. <em>Jayil</em> es la palabra que lo cambia todo: no significa simplemente "virtuosa" en el sentido de pudorosa o modesta. <em>Jayil</em> significa: <strong>fuerza, poder, capacidad, valor, riqueza, excelencia, fortaleza de guerrero</strong>. Es la misma palabra usada para describir a los "hombres valientes" del ejército en el Antiguo Testamento. La mujer de Proverbios 31 no es una figura pasiva y decorativa — es una mujer de fuerza extraordinaria, de capacidad extraordinaria, de valor extraordinario.</p>
+  </div>
+
+  <div class="tip-box">
+    <h4>¿Dónde más aparece "Jayil" en la Biblia?</h4>
+    <ul>
+      <li><strong>Josué 1:14</strong> — "todos los valientes y fuertes" — los guerreros de Israel</li>
+      <li><strong>Rut 3:11</strong> — Booz le dice a Rut: "toda la ciudad sabe que eres mujer virtuosa (eshet jayil)." Rut recibió el mismo título.</li>
+      <li><strong>Proverbios 12:4</strong> — "La mujer virtuosa (eshet jayil) es corona de su marido."</li>
+    </ul>
+    <p>En cada caso, <em>jayil</em> describe una excelencia que abarca carácter, capacidad y fortaleza — no solo moralidad pasiva.</p>
+  </div>
+
+  <div class="etimo">
+    <div class="e-palabra">מִי יִמְצָא — Mi yimtsa</div>
+    <div class="e-origen">"¿Quién la hallará?" — la pregunta retórica</div>
+    <p>La pregunta no es un lamento de imposibilidad — es una declaración de valor incomparable. En hebreo, preguntar "¿quién hallará?" equivale a decir "¡su valor es inestimable!" Es la misma estructura que Proverbios 20:6: "¿Quién hallará un hombre fiel?" No imposible — pero raro y precioso.</p>
+  </div>
+
+  <div class="frase"><p>"La Biblia no llama a esta mujer delicada, sumisa o decorativa. La llama poderosa, valiente y excelente. Eso es Eshet Jayil."</p></div>
+</section>
+
+<!-- CAP 2 — CONTEXTO -->
+<section class="chapter" id="c2">
+  <div class="ch-num">Lección 2</div>
+  <h2 class="ch-title">El contexto del poema</h2>
+  <div class="ch-sub">Quién lo escribió, para quién y cómo está estructurado</div>
+  <div class="ch-divider"></div>
+
+  <p>Proverbios 31:10-31 no es una lista de reglas para la mujer — es un <strong>poema de alabanza</strong>. Y su estructura es extraordinariamente sofisticada: es un acróstico alfabético hebreo — cada uno de los 22 versículos comienza con una letra sucesiva del alfabeto hebreo, desde Aleph hasta Tav.</p>
+
+  <div class="section-label">¿Quién escribió este poema?</div>
+  <p>Proverbios 31:1 dice que son "las palabras del rey Lemuel; la profecía con que le enseñó su madre." El poema fue escrito — o al menos transmitido — por una <strong>madre a su hijo rey</strong>. Es una mujer describiendo a una mujer extraordinaria. No es una lista de requisitos impuestos desde afuera — es una celebración escrita desde adentro.</p>
+
+  <div class="section-label">El acróstico — la estructura sagrada</div>
+  <p>En la cultura hebrea, escribir un poema acróstico (usando cada letra del alfabeto en orden) era la manera de decir: <strong>esta mujer lo tiene todo — de la A a la Z.</strong> Es una declaración de totalidad y perfección. No hay área de su vida que no sea excelente.</p>
+
+  <div class="acrostico">
+    <div class="acrostico-header">Las facetas del poema — Proverbios 31:10-31</div>
+    <div class="acrostico-item"><span class="ac-letra">v.10</span><span class="ac-verso"><strong>Su valor:</strong> "¿Quién la hallará? Su estima sobrepasa las piedras preciosas."</span></div>
+    <div class="acrostico-item"><span class="ac-letra">v.11</span><span class="ac-verso"><strong>Su confiabilidad:</strong> "El corazón de su marido está en ella confiado."</span></div>
+    <div class="acrostico-item"><span class="ac-letra">v.12</span><span class="ac-verso"><strong>Su beneficio:</strong> "Le da ella bien y no mal todos los días de su vida."</span></div>
+    <div class="acrostico-item"><span class="ac-letra">v.13</span><span class="ac-verso"><strong>Su diligencia:</strong> "Busca lana y lino, y con voluntad trabaja con sus manos."</span></div>
+    <div class="acrostico-item"><span class="ac-letra">v.14</span><span class="ac-verso"><strong>Su provisión:</strong> "Es como nave de mercader; trae su pan de lejos."</span></div>
+    <div class="acrostico-item"><span class="ac-letra">v.15</span><span class="ac-verso"><strong>Su disciplina:</strong> "Se levanta aun de noche, y da comida a su familia."</span></div>
+    <div class="acrostico-item"><span class="ac-letra">v.16</span><span class="ac-verso"><strong>Su visión empresarial:</strong> "Considera la heredad, y la compra; planta viña del fruto de sus manos."</span></div>
+    <div class="acrostico-item"><span class="ac-letra">v.17</span><span class="ac-verso"><strong>Su fortaleza:</strong> "Ciñe de fuerza sus lomos, y esfuerza sus brazos."</span></div>
+    <div class="acrostico-item"><span class="ac-letra">v.18</span><span class="ac-verso"><strong>Su discernimiento:</strong> "Ve que van bien sus negocios; su lámpara no se apaga de noche."</span></div>
+    <div class="acrostico-item"><span class="ac-letra">v.19</span><span class="ac-verso"><strong>Su trabajo manual:</strong> "Aplica su mano al huso, y sus manos a la rueca."</span></div>
+    <div class="acrostico-item"><span class="ac-letra">v.20</span><span class="ac-verso"><strong>Su compasión:</strong> "Alarga su mano al pobre, y extiende sus manos al menesteroso."</span></div>
+    <div class="acrostico-item"><span class="ac-letra">v.21</span><span class="ac-verso"><strong>Su previsión:</strong> "No tiene temor de la nieve por su familia, porque toda su familia está vestida de ropas dobles."</span></div>
+    <div class="acrostico-item"><span class="ac-letra">v.22</span><span class="ac-verso"><strong>Su elegancia:</strong> "Ella se hace tapices; de lino fino y púrpura es su vestido."</span></div>
+    <div class="acrostico-item"><span class="ac-letra">v.23</span><span class="ac-verso"><strong>Su influencia:</strong> "Su marido es conocido en las puertas, cuando se sienta con los ancianos de la tierra."</span></div>
+    <div class="acrostico-item"><span class="ac-letra">v.24</span><span class="ac-verso"><strong>Su empresa:</strong> "Hace telas, y vende, y da cintas al mercader."</span></div>
+    <div class="acrostico-item"><span class="ac-letra">v.25</span><span class="ac-verso"><strong>Su dignidad:</strong> "Fuerza y honor son su vestidura; y se ríe de lo por venir."</span></div>
+    <div class="acrostico-item"><span class="ac-letra">v.26</span><span class="ac-verso"><strong>Su sabiduría:</strong> "Abre su boca con sabiduría, y la ley de clemencia está en su lengua."</span></div>
+    <div class="acrostico-item"><span class="ac-letra">v.27</span><span class="ac-verso"><strong>Su administración:</strong> "Considera los caminos de su casa, y no come el pan de balde."</span></div>
+    <div class="acrostico-item"><span class="ac-letra">v.28</span><span class="ac-verso"><strong>Su reconocimiento:</strong> "Se levantan sus hijos y la llaman bienaventurada; y su marido también la alaba."</span></div>
+    <div class="acrostico-item"><span class="ac-letra">v.29</span><span class="ac-verso"><strong>Su superioridad:</strong> "Muchas mujeres hicieron el bien; mas tú las sobrepasas a todas."</span></div>
+    <div class="acrostico-item"><span class="ac-letra">v.30</span><span class="ac-verso"><strong>Su fuente:</strong> "La mujer que teme a Jehová, ésa será alabada."</span></div>
+    <div class="acrostico-item"><span class="ac-letra">v.31</span><span class="ac-verso"><strong>Su herencia:</strong> "Dadle del fruto de sus manos, y alábenla en las puertas sus hechos."</span></div>
+  </div>
+</section>
+
+<!-- CAP 3 — SU ESTIMA -->
+<section class="chapter" id="c3">
+  <div class="ch-num">Lección 3</div>
+  <h2 class="ch-title">Su estima sobrepasa las piedras preciosas</h2>
+  <div class="ch-sub">El valor que el mundo no sabe calcular</div>
+  <div class="ch-divider"></div>
+
+  <div class="quote">
+    <p>"Mujer virtuosa, ¿quién la hallará? Porque su estima sobrepasa largamente la de las piedras preciosas."</p>
+    <cite>Proverbios 31:10</cite>
+  </div>
+
+  <div class="section-label">Las piedras preciosas — el estándar de comparación</div>
+  <p>En el mundo antiguo, las piedras preciosas — rubíes, zafiros, perlas — representaban la máxima expresión de valor material. Solo los reyes y los muy ricos las poseían. Decir que algo vale <em>más</em> que las piedras preciosas era la forma más alta de elogio posible en ese contexto.</p>
+
+  <p>La Biblia usa esta comparación en pocas ocasiones — y siempre para describir algo de valor eterno:</p>
+
+  <div class="tip-box">
+    <h4>Las comparaciones con piedras preciosas en Proverbios</h4>
+    <ul>
+      <li><strong>Proverbios 3:15</strong> — "Es más preciosa que las piedras preciosas." ¿De quién habla? De la <em>sabiduría</em>.</li>
+      <li><strong>Proverbios 8:11</strong> — "Porque mejor es la sabiduría que las piedras preciosas."</li>
+      <li><strong>Proverbios 31:10</strong> — "Su estima sobrepasa largamente la de las piedras preciosas." La mujer virtuosa.</li>
+    </ul>
+    <p>La conclusión es poderosa: <strong>la mujer virtuosa tiene el valor de la sabiduría misma.</strong> Porque su vida es la expresión viviente de la sabiduría de Dios.</p>
+  </div>
+
+  <div class="section-label">¿Por qué es tan valiosa?</div>
+  <p>Las piedras preciosas son valiosas por lo que son — por su composición. La mujer de Proverbios 31 es valiosa por lo que hace, por lo que es y por quién teme. Su valor no viene de su apariencia — viene de su carácter. Y eso, a diferencia de las piedras, <strong>no puede ser robado, destruido ni envejecido.</strong></p>
+
+  <div class="frase"><p>"Las piedras preciosas se compran con dinero. La mujer virtuosa no tiene precio — porque el dinero no puede comprar lo que ella es."</p></div>
+</section>
+
+<!-- CAP 4 — MUJER DE FORTALEZA -->
+<section class="chapter" id="c4">
+  <div class="ch-num">Lección 4</div>
+  <h2 class="ch-title">Mujer de fortaleza</h2>
+  <div class="ch-sub">v.17 y v.25 — la fuerza que viene de adentro</div>
+  <div class="ch-divider"></div>
+
+  <p>Dos versículos en el poema describen la fortaleza de esta mujer — y no hablan de fuerza física sino de algo más profundo.</p>
+
+  <div class="quote">
+    <p>"Ciñe de fuerza sus lomos, y esfuerza sus brazos."</p>
+    <cite>Proverbios 31:17</cite>
+  </div>
+
+  <div class="quote">
+    <p>"Fuerza y honor son su vestidura; y se ríe de lo por venir."</p>
+    <cite>Proverbios 31:25</cite>
+  </div>
+
+  <div class="section-label">Dos tipos de fortaleza</div>
+
+  <div class="compare">
+    <div class="compare-box a">
+      <h4>Fortaleza activa — v.17</h4>
+      <ul>
+        <li>"Ciñe de fuerza sus lomos" — se prepara deliberadamente</li>
+        <li>Esfuerza sus brazos — no espera que llegue la fuerza</li>
+        <li>Fortaleza para el trabajo y la responsabilidad diaria</li>
+        <li>No se quiebra ante la carga — la carga la fortalece</li>
+      </ul>
+    </div>
+    <div class="compare-box b">
+      <h4>Fortaleza interior — v.25</h4>
+      <ul>
+        <li>"Fuerza y honor son su vestidura" — su identidad</li>
+        <li>"Se ríe de lo por venir" — confianza en el futuro</li>
+        <li>Fortaleza ante la incertidumbre</li>
+        <li>No le teme al mañana porque conoce a Dios hoy</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="section-label">"Se ríe de lo por venir" — la confianza profética</div>
+  <p>Esta frase es una de las más poderosas del poema. <em>"Vatischaq le'yom acharon"</em> — literalmente "ríe al día de después." No es ingenuidad ni ignorancia del futuro — es una confianza tan profunda en Dios que el futuro incierto no produce ansiedad sino sonrisa.</p>
+
+  <p>Es el mismo espíritu de Habacuc 3:17-18 — "aunque la higuera no florezca... con todo, yo me alegraré en Jehová." La mujer virtuosa no es fuerte porque no enfrenta dificultades — es fuerte porque su identidad no depende de las circunstancias.</p>
+
+  <div class="frase"><p>"Una mujer que se ríe del futuro no es ingenua — es libre. Solo quien confía en quien controla el futuro puede reír ante lo desconocido."</p></div>
+</section>
+
+<!-- CAP 5 — TRABAJO Y DILIGENCIA -->
+<section class="chapter" id="c5">
+  <div class="ch-num">Lección 5</div>
+  <h2 class="ch-title">Mujer de trabajo y diligencia</h2>
+  <div class="ch-sub">La empresaria, la administradora, la proveedora</div>
+  <div class="ch-divider"></div>
+
+  <p>Uno de los aspectos más sorprendentes de Proverbios 31 para el lector moderno es la descripción de esta mujer como una persona de gran actividad económica y administrativa. Esto no es una descripción moderna de empoderamiento femenino — es el texto bíblico del siglo X antes de Cristo.</p>
+
+  <div class="section-label">Las actividades económicas de la mujer virtuosa</div>
+  <ul class="list-yes">
+    <li><strong>v.13 — Trabaja con sus manos:</strong> "con voluntad trabaja" — no por obligación sino con disposición de corazón. La excelencia nace del amor al trabajo, no del miedo.</li>
+    <li><strong>v.14 — Provee de lejos:</strong> "es como nave de mercader" — tiene visión amplia, no se limita a lo inmediato. Va donde sea necesario para proveer lo mejor para su familia.</li>
+    <li><strong>v.15 — Se levanta antes del amanecer:</strong> "se levanta aun de noche" — su disciplina precede al día. Lo que da a su familia no es solo sustento material sino el ejemplo de la diligencia.</li>
+    <li><strong>v.16 — Invierte con sabiduría:</strong> "considera la heredad y la compra; planta viña del fruto de sus manos." Evalúa, decide, invierte, produce. Es una administradora activa del capital familiar.</li>
+    <li><strong>v.18 — Supervisa sus negocios:</strong> "ve que van bien sus negocios; su lámpara no se apaga de noche." Vigilante, atenta, comprometida con la excelencia en todo lo que hace.</li>
+    <li><strong>v.24 — Vende en el mercado:</strong> "hace telas, y vende, y da cintas al mercader." Tiene actividad comercial propia, genera ingresos, negocia directamente.</li>
+  </ul>
+
+  <div class="section-label">Lo que esto revela sobre la visión bíblica de la mujer</div>
+  <p>El ideal bíblico de la mujer no es la pasividad ni la dependencia total. Es la <strong>excelencia activa orientada al bien de su familia y su comunidad</strong>. La mujer de Proverbios 31 no es la que no hace nada fuera de la casa — es la que hace todo con excelencia, dentro y fuera, siempre con propósito.</p>
+
+  <div class="quote">
+    <p>"Considera los caminos de su casa, y no come el pan de balde."</p>
+    <cite>Proverbios 31:27 — Comprometida, no ociosa</cite>
+  </div>
+
+  <div class="frase"><p>"La mujer virtuosa no espera que la vida le llegue. Sale a buscarla, la administra con sabiduría y la ofrece como servicio a los suyos."</p></div>
+</section>
+
+<!-- CAP 6 — SABIDURÍA -->
+<section class="chapter" id="c6">
+  <div class="ch-num">Lección 6</div>
+  <h2 class="ch-title">Mujer de sabiduría</h2>
+  <div class="ch-sub">v.26 — lo que sale de su boca</div>
+  <div class="ch-divider"></div>
+
+  <div class="quote">
+    <p>"Abre su boca con sabiduría, y la ley de clemencia está en su lengua."</p>
+    <cite>Proverbios 31:26</cite>
+  </div>
+
+  <p>En todo el poema, hay un solo versículo sobre lo que esta mujer <em>dice</em>. Pero ese versículo es extraordinariamente revelador. No describe una mujer callada — describe una mujer que cuando habla, lo hace con dos calidades inseparables: <strong>sabiduría y clemencia.</strong></p>
+
+  <div class="section-label">Dos palabras que definen su lengua</div>
+
+  <div class="etimo">
+    <div class="e-palabra">Chokmah — חׇכְמָה</div>
+    <div class="e-origen">"Sabiduría" — la misma palabra de Proverbios 1-9</div>
+    <p>La sabiduría de Proverbios no es conocimiento académico — es la <strong>habilidad práctica de vivir bien</strong>. Viene del temor de Dios (Proverbios 9:10). La mujer virtuosa habla con esta sabiduría — sus palabras no son solo inteligentes sino correctas, oportunas y edificantes.</p>
+  </div>
+
+  <div class="etimo">
+    <div class="e-palabra">Torat Hesed — תּוֹרַת חֶסֶד</div>
+    <div class="e-origen">"Ley de clemencia / amor leal"</div>
+    <p><em>Hesed</em> es una de las palabras más ricas del hebreo: amor leal, misericordia fiel, bondad que no abandona. "La ley de hesed está en su lengua" — sus palabras están gobernadas por un amor que no cambia según el humor. <strong>Habla sabiamente y habla con amor.</strong> Las dos juntas.</p>
+  </div>
+
+  <p>Santiago 3:17 describe la sabiduría de lo alto con características similares: "pura, pacífica, amable, benigna, llena de misericordia." La mujer virtuosa de Proverbios 31 vive en el Antiguo Testamento lo que Santiago describe en el Nuevo.</p>
+
+  <div class="frase"><p>"Hay mujeres que hablan con sabiduría pero sin amor — y duele. Hay otras que hablan con amor pero sin sabiduría — y confunden. La mujer virtuosa tiene los dos."</p></div>
+</section>
+
+<!-- CAP 7 — COMPASIÓN -->
+<section class="chapter" id="c7">
+  <div class="ch-num">Lección 7</div>
+  <h2 class="ch-title">Mujer de compasión</h2>
+  <div class="ch-sub">v.20 — las manos que alcanzan más allá del hogar</div>
+  <div class="ch-divider"></div>
+
+  <div class="quote">
+    <p>"Alarga su mano al pobre, y extiende sus manos al menesteroso."</p>
+    <cite>Proverbios 31:20</cite>
+  </div>
+
+  <p>En medio de toda la descripción de su actividad doméstica y comercial, el poema hace una pausa para señalar algo que el autor considera esencial: <strong>esta mujer tiene los ojos abiertos a la necesidad fuera de su hogar.</strong></p>
+
+  <div class="section-label">Dos verbos, dos alcances</div>
+  <p>"Alarga su mano" — <em>parestah</em> — extender hacia afuera, llegar hasta. "Extiende sus manos" — <em>shillecha</em> — dejar ir, enviar. El poema usa dos verbos distintos para describir que su compasión tiene alcance activo: no espera que el pobre llegue a su puerta — ella se alcanza hacia él.</p>
+
+  <p>La mujer virtuosa no es solo una excelente administradora del hogar — es un agente de gracia en su comunidad. Su excelencia nunca se vuelve egoísmo. La abundancia que su diligencia produce fluye hacia quienes no tienen.</p>
+
+  <div class="section-label">La compasión como parte de la virtud</div>
+  <p>No es accidental que este versículo esté en el centro del poema. El autor está diciéndonos algo: la excelencia sin compasión es solo eficiencia. La mujer que acumula sin dar, que trabaja sin servir, que prospera sin compartir — no es la mujer de Proverbios 31. <strong>La virtud completa incluye las manos abiertas.</strong></p>
+
+  <div class="quote">
+    <p>"El que cierra su oído al clamor del pobre, también él clamará, y no será oído."</p>
+    <cite>Proverbios 21:13 — El mismo libro que celebra a la mujer virtuosa también advierte sobre la indiferencia</cite>
+  </div>
+</section>
+
+<!-- CAP 8 — TEME A DIOS -->
+<section class="chapter" id="c8">
+  <div class="ch-num">Lección 8</div>
+  <h2 class="ch-title">La mujer que teme a Dios</h2>
+  <div class="ch-sub">v.30 — el versículo que lo explica todo</div>
+  <div class="ch-divider"></div>
+
+  <div class="quote">
+    <p>"Engañosa es la gracia, y vana la hermosura; la mujer que teme a Jehová, ésa será alabada."</p>
+    <cite>Proverbios 31:30 — El versículo más importante del poema</cite>
+  </div>
+
+  <p>Después de 20 versículos celebrando las capacidades, los logros y la excelencia de esta mujer, el poema llega a su punto culminante — y sorpresivamente no es ninguna de sus actividades. Es su relación con Dios.</p>
+
+  <div class="section-label">Lo que el versículo descarta</div>
+  <p><strong>"Engañosa es la gracia"</strong> — <em>sheker hachen</em> — "gracia de mentira". La gracia que se refiere aquí es el encanto, el atractivo, la agraciada presencia social. No dice que sea mala — dice que es <em>engañosa</em>: puede existir sin carácter real debajo.</p>
+
+  <p><strong>"Vana la hermosura"</strong> — <em>hevel hayofi</em> — "vapor la belleza". La misma palabra que Eclesiastés usa para "vanidad" — vapor, humo que se disipa. La belleza física no es permanente. No puede ser el fundamento de quien es una mujer.</p>
+
+  <div class="section-label">Lo que el versículo afirma</div>
+  <p><strong>"La mujer que teme a Jehová, ésa será alabada."</strong> Después de todo — la diligencia, la sabiduría, la compasión, la fortaleza — la fuente de toda virtud es el temor de Dios. Todo lo que este poema celebra fluye de esa raíz.</p>
+
+  <div class="etimo">
+    <div class="e-palabra">Yir'at Yahweh — יִרְאַת יְהוָה</div>
+    <div class="e-origen">"El temor de Jehová"</div>
+    <p>El "temor de Jehová" en Proverbios no es terror — es <strong>reverencia, asombro, sometimiento a la realidad de quien es Dios</strong>. Es el reconocimiento de que Dios es Dios y yo no lo soy. Es vivir con la conciencia constante de la presencia, la santidad y la soberanía de Dios. Proverbios 9:10 lo llama "el principio de la sabiduría" — y la mujer virtuosa lo vive en cada aspecto de su vida.</p>
+  </div>
+
+  <div class="gold-box">
+    <h4>La arquitectura del poema</h4>
+    <p>El poema comienza con el valor incomparable de la mujer (v.10) y termina con la fuente de ese valor (v.30). La estructura nos enseña: todo lo que esta mujer es fluye de quién es su Dios. Su excelencia no es autologrando — es consecuencia del temor de Dios vivido en cada área de la vida.</p>
+    <p><strong>Sin el v.30, el poema es una lista de logros impresionantes. Con el v.30, es el retrato de una mujer transformada por Dios.</strong></p>
+  </div>
+
+  <div class="frase"><p>"La gracia encanta por un tiempo. La hermosura dura una temporada. Pero la mujer que teme a Dios — esa es alabada para siempre."</p></div>
+</section>
+
+<!-- CAP 9 — EL ELOGIO QUE VIENE -->
+<section class="chapter" id="c9">
+  <div class="ch-num">Lección 9</div>
+  <h2 class="ch-title">El elogio que viene</h2>
+  <div class="ch-sub">v.28-29 y v.31 — el reconocimiento que no se mendiga</div>
+  <div class="ch-divider"></div>
+
+  <div class="quote">
+    <p>"Se levantan sus hijos y la llaman bienaventurada; y su marido también la alaba: Muchas mujeres hicieron el bien, mas tú las sobrepasas a todas."</p>
+    <cite>Proverbios 31:28-29</cite>
+  </div>
+
+  <p>Al final del poema, llega el reconocimiento. Y nótese: <strong>no lo buscó.</strong> Todo el poema describió lo que esta mujer hace, es y da — nunca menciona que busca aprobación. Y sin embargo, el reconocimiento llega solo, de las personas más cercanas a ella.</p>
+
+  <div class="section-label">Tres voces de reconocimiento</div>
+
+  <ul class="pasos">
+    <li>
+      <div class="paso-content">
+        <h5>Sus hijos — "la llaman bienaventurada"</h5>
+        <p>Los hijos son los testigos más honestos del carácter de una madre. No pueden ser engañados por la actuación pública — conocen la vida privada. Cuando los hijos que conocen tu vida real te llaman bienaventurada, es el elogio más genuino posible.</p>
+      </div>
+    </li>
+    <li>
+      <div class="paso-content">
+        <h5>Su marido — "también la alaba"</h5>
+        <p>El esposo que vivió con ella todos los días — que conoce sus fallos, sus luchas, sus momentos difíciles — es el que dice: "muchas mujeres hicieron el bien, mas tú las sobrepasas a todas." Es el elogio del que más sabe.</p>
+      </div>
+    </li>
+    <li>
+      <div class="paso-content">
+        <h5>Sus hechos — "alábenla en las puertas sus hechos"</h5>
+        <p>v.31 — "las puertas" era el lugar de juicio y reconocimiento público en Israel. Sus obras hablan por sí solas. No necesita autopublicitarse — sus hechos la preceden y la presentan.</p>
+      </div>
+    </li>
+  </ul>
+
+  <div class="quote">
+    <p>"Dadle del fruto de sus manos, y alábenla en las puertas sus hechos."</p>
+    <cite>Proverbios 31:31 — El reconocimiento justo que ella merece</cite>
+  </div>
+
+  <div class="frase"><p>"La mujer virtuosa no construye su reputación con palabras sobre sí misma — la construye con sus hechos. Y los hechos siempre hablan más alto."</p></div>
+</section>
+
+<!-- CAP 10 — HOY -->
+<section class="chapter" id="c10">
+  <div class="ch-num">Lección 10</div>
+  <h2 class="ch-title">La mujer virtuosa hoy</h2>
+  <div class="ch-sub">Un ideal eterno para una mujer real</div>
+  <div class="ch-divider"></div>
+
+  <p>Proverbios 31 ha sido usado de dos maneras opuestas — ninguna de las cuales refleja su propósito original. Por un lado, se ha usado para cargar a las mujeres con una lista de requisitos imposibles que las hace sentir insuficientes. Por otro lado, se ha descartado como un ideal cultural irrelevante. Ninguna de las dos lecturas es correcta.</p>
+
+  <div class="section-label">Lo que Proverbios 31 NO es</div>
+  <ul class="list-yes">
+    <li>No es una lista de tareas que toda mujer debe cumplir simultáneamente</li>
+    <li>No es un estándar de perfección que produce condena</li>
+    <li>No es un argumento en contra del trabajo o la influencia de la mujer fuera del hogar</li>
+    <li>No es un retrato de una mujer que nunca falla ni tiene días difíciles</li>
+  </ul>
+
+  <div class="section-label">Lo que Proverbios 31 SÍ es</div>
+  <p>Es un <strong>poema de celebración</strong> — no de prescripción. No dice "toda mujer debe hacer todas estas cosas" — celebra una mujer en quien florece la sabiduría de Dios en cada área de su vida. Es un retrato de la plenitud a la que Dios llama a la mujer — no una lista de verificación sino una visión de lo que es posible.</p>
+
+  <div class="section-label">Lo que permanece eterno</div>
+  <div class="compare">
+    <div class="compare-box a">
+      <h4>Contexto cultural (cambia)</h4>
+      <ul>
+        <li>Trabajar la lana y el lino</li>
+        <li>Comercio en las puertas de la ciudad</li>
+        <li>Lámpara que no se apaga</li>
+        <li>Heredad que se compra</li>
+      </ul>
+    </div>
+    <div class="compare-box b">
+      <h4>Principios eternos (permanecen)</h4>
+      <ul>
+        <li>Diligencia y excelencia en el trabajo</li>
+        <li>Sabiduría en los negocios y la administración</li>
+        <li>Servicio a los necesitados</li>
+        <li>Temor de Dios como fuente de todo</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="section-label">Para la mujer que lee esto hoy</div>
+  <p>No tienes que hacer todo lo que hace esta mujer en un día. Pero sí puedes orientar tu vida hacia lo que ella representa: <strong>excelencia con humildad, diligencia con compasión, sabiduría con amor, fortaleza con fe.</strong> Y sobre todo, el temor de Dios que es la raíz de todo lo demás.</p>
+
+  <div class="section-label">Para el hombre que lee esto hoy</div>
+  <p>Este poema fue escrito por una madre para enseñarle a su hijo cómo reconocer y honrar a una mujer extraordinaria. El hombre que tiene una mujer de este carácter a su lado tiene el mayor tesoro posible. El versículo 11 dice que "el corazón de su marido está en ella confiado." La confianza total — eso no se compra, no se exige ni se fabrican en un día. Se gana con años de carácter consistente.</p>
+
+  <div class="actividad">
+    <h4>Reflexión personal</h4>
+    <ol>
+      <li>¿Cuál de las facetas de la mujer virtuosa te inspira más? ¿Por qué?</li>
+      <li>¿Cuál es la que más necesitas desarrollar en esta etapa de tu vida?</li>
+      <li>¿Cuál es la "fuente" de tu vida? ¿El v.30 es la realidad de tu corazón?</li>
+    </ol>
+    <div class="oracion">"Señor, que el temor de ti sea la raíz de todo lo que soy. Que de esa raíz florezca la fortaleza, la sabiduría, la compasión y la excelencia. No para ser alabada por los hombres — sino para que mis hechos te glorifiquen a ti. Amén."</div>
+  </div>
+
+  <div class="frase"><p>"La pregunta no es '¿puedo ser como ella?' La pregunta es '¿estoy creciendo hacia lo que Dios diseñó que yo fuera?' Eso es suficiente para empezar."</p></div>
+</section>
+
+</main>
+
+<section class="epilogo">
+  <span class="big">JAYIL</span>
+  <h2>Mujer de fortaleza — ¿quién la hallará?</h2>
+  <p>Quien la encuentre habrá encontrado un tesoro que ninguna piedra preciosa puede igualar. Quien la sea, habrá cumplido el propósito más profundo que Dios diseñó para una mujer: ser expresión visible de su sabiduría en el mundo.</p>
+  <p>Su estima sobrepasa. Su influencia perdura. Su nombre es celebrado. No por su gracia ni por su hermosura — sino porque teme a Jehová.</p>
+  <div class="quote" style="max-width:480px;margin:32px auto;">
+    <p>"Dadle del fruto de sus manos, y alábenla en las puertas sus hechos."</p>
+    <cite>Proverbios 31:31</cite>
+  </div>
+  <div class="firma">Mujer Virtuosa · Proverbios 31 · Predicador IPUC</div>
+</section>
+
+</div>
+
+<script>
+const obs=new IntersectionObserver(e=>{e.forEach(el=>{if(el.isIntersecting)el.target.classList.add('visible');});},{threshold:.08});
+document.querySelectorAll('.chapter').forEach(e=>obs.observe(e));
+const nav=document.getElementById('sidenav');
+const wrap=document.getElementById('pageWrap');
+const isMobile=()=>window.innerWidth<=768;
+function toggleNav(){
+  if(isMobile()){nav.classList.toggle('show');}
+  else{nav.classList.toggle('hidden');wrap.classList.toggle('full');}
+}
+const secs=document.querySelectorAll('section[id]');
+const links=document.querySelectorAll('nav a');
+window.addEventListener('scroll',()=>{
+  let cur='';
+  secs.forEach(s=>{if(window.scrollY>=s.offsetTop-200)cur=s.id;});
+  links.forEach(a=>{a.classList.remove('active');if(a.getAttribute('href')==='#'+cur)a.classList.add('active');});
+});
+links.forEach(a=>{a.addEventListener('click',()=>{if(isMobile())nav.classList.remove('show');});});
+document.addEventListener('click',e=>{
+  if(isMobile()&&nav.classList.contains('show')&&!nav.contains(e.target)&&!e.target.closest('.nav-toggle')){nav.classList.remove('show');}
+});
+</script>
+</body>
+</html>

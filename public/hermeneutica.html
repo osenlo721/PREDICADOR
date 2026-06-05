@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hermenéutica Bíblica — Manual del Predicador</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Raleway:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--azul:#009FDA;--marino:#003B6F;--oro:#F0AB00;--oro-claro:#FFD166;--fondo:#040e1c;--fondo2:#071628;--texto:#e8e0d0;--texto-suave:#a89f90;--linea:rgba(240,171,0,.2);}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{background:var(--fondo);color:var(--texto);font-family:'Crimson Pro',Georgia,serif;font-size:18px;line-height:1.85;overflow-x:hidden;}
+::-webkit-scrollbar{width:4px;}::-webkit-scrollbar-track{background:var(--fondo);}::-webkit-scrollbar-thumb{background:var(--azul);border-radius:2px;}
+.nav-toggle{position:fixed;top:16px;left:16px;z-index:200;background:var(--marino);border:1px solid var(--linea);color:var(--oro);width:40px;height:40px;border-radius:8px;cursor:pointer;font-size:18px;display:flex;align-items:center;justify-content:center;transition:all .2s;}
+.nav-toggle:hover{background:var(--azul);color:#fff;}
+nav{position:fixed;left:0;top:0;bottom:0;width:250px;background:linear-gradient(180deg,var(--marino) 0%,#011529 100%);border-right:1px solid var(--linea);z-index:100;overflow-y:auto;transform:translateX(-100%);transition:transform .35s ease;padding:32px 0;}
+nav.show{transform:translateX(0);}
+nav .nav-title{font-family:'Cinzel',serif;font-size:10px;letter-spacing:4px;color:var(--oro);padding:0 20px 16px;border-bottom:1px solid var(--linea);margin-bottom:12px;}
+nav a{display:block;padding:7px 20px;font-family:'Raleway',sans-serif;font-size:11px;font-weight:500;letter-spacing:1px;color:var(--texto-suave);text-decoration:none;border-left:2px solid transparent;transition:all .2s;}
+nav a:hover,nav a.active{color:var(--oro);border-left-color:var(--oro);background:rgba(240,171,0,.06);}
+.cover{min-height:100vh;background:linear-gradient(160deg,#041830 0%,var(--fondo) 65%);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:80px 32px 60px;position:relative;overflow:hidden;}
+.cover::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 50% at 50% 10%,rgba(0,159,218,.18) 0%,transparent 70%),radial-gradient(ellipse 40% 40% at 80% 85%,rgba(240,171,0,.1) 0%,transparent 60%);pointer-events:none;}
+.cover-icon{font-size:64px;margin-bottom:24px;animation:fadeDown .8s ease both;}
+.cover-tag{font-family:'Cinzel',serif;font-size:10px;letter-spacing:5px;color:var(--azul);text-transform:uppercase;margin-bottom:20px;animation:fadeDown .9s ease .1s both;}
+.cover-title{font-family:'Cinzel',serif;font-size:clamp(38px,9vw,88px);font-weight:900;line-height:1;margin-bottom:8px;animation:fadeDown 1s ease .2s both;}
+.cover-title span{color:var(--oro);}
+.cover-sub{font-family:'Cinzel',serif;font-size:clamp(13px,2vw,17px);color:var(--azul);letter-spacing:2px;margin-bottom:32px;animation:fadeDown 1s ease .25s both;}
+.cover-line{width:60px;height:1px;background:linear-gradient(to right,transparent,var(--oro),transparent);margin:0 auto 24px;animation:fadeIn 1.1s ease .35s both;}
+.cover-author{font-family:'Raleway',sans-serif;font-size:13px;letter-spacing:4px;color:var(--texto-suave);text-transform:uppercase;animation:fadeDown 1.1s ease .4s both;}
+.cover-verse{position:absolute;bottom:40px;font-family:'Crimson Pro',serif;font-style:italic;font-size:14px;color:var(--texto-suave);max-width:440px;text-align:center;line-height:1.6;}
+main{max-width:740px;margin:0 auto;padding:0 24px;}
+.chapter{padding:80px 0 60px;border-bottom:1px solid rgba(240,171,0,.1);opacity:0;transform:translateY(30px);transition:opacity .7s ease,transform .7s ease;}
+.chapter.visible{opacity:1;transform:none;}
+.ch-num{font-family:'Cinzel',serif;font-size:11px;letter-spacing:4px;color:var(--azul);text-transform:uppercase;margin-bottom:12px;}
+.ch-title{font-family:'Cinzel',serif;font-size:clamp(22px,4vw,36px);font-weight:700;color:var(--oro);line-height:1.2;margin-bottom:8px;}
+.ch-sub{font-family:'Cinzel',serif;font-size:clamp(14px,2.5vw,20px);color:var(--azul);margin-bottom:28px;}
+.ch-divider{width:40px;height:2px;background:linear-gradient(to right,var(--oro),var(--azul));margin-bottom:32px;border-radius:2px;}
+p{margin-bottom:20px;}
+strong{color:var(--oro);font-weight:600;}
+em{color:var(--azul);font-style:italic;}
+.quote{border-left:3px solid var(--oro);padding:16px 24px;margin:28px 0;background:rgba(240,171,0,.05);border-radius:0 8px 8px 0;}
+.quote p{font-family:'Crimson Pro',serif;font-style:italic;font-size:1.05em;color:var(--oro-claro);margin-bottom:6px;}
+.quote cite{font-family:'Raleway',sans-serif;font-size:12px;letter-spacing:2px;color:var(--texto-suave);}
+.section-label{font-family:'Cinzel',serif;font-size:11px;letter-spacing:3px;color:var(--azul);text-transform:uppercase;margin:36px 0 12px;}
+.list-yes,.list-no{list-style:none;margin:16px 0 24px;padding:0;}
+.list-yes li,.list-no li{padding:6px 0 6px 28px;position:relative;font-size:.97em;color:var(--texto-suave);border-bottom:1px solid rgba(255,255,255,.05);}
+.list-yes li::before{content:'✅';position:absolute;left:0;top:6px;font-size:14px;}
+.list-no li::before{content:'❌';position:absolute;left:0;top:6px;font-size:14px;}
+.compare{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:28px 0;}
+.compare-box{padding:20px;border-radius:8px;border:1px solid;}
+.compare-box.a{border-color:rgba(0,159,218,.3);background:rgba(0,159,218,.05);}
+.compare-box.b{border-color:rgba(240,171,0,.3);background:rgba(240,171,0,.05);}
+.compare-box.c{border-color:rgba(45,122,90,.3);background:rgba(45,122,90,.05);}
+.compare-box h4{font-family:'Cinzel',serif;font-size:10px;letter-spacing:3px;margin-bottom:12px;text-transform:uppercase;}
+.compare-box.a h4{color:var(--azul);}
+.compare-box.b h4{color:var(--oro);}
+.compare-box.c h4{color:#4ecb8d;}
+.compare-box ul{list-style:none;}
+.compare-box ul li{font-size:14px;padding:4px 0;color:var(--texto-suave);border-bottom:1px solid rgba(255,255,255,.06);}
+.frase{text-align:center;padding:40px 24px;margin:32px 0;position:relative;}
+.frase::before{content:'"';font-family:'Cinzel',serif;font-size:100px;color:rgba(240,171,0,.07);position:absolute;top:-10px;left:16px;line-height:1;}
+.frase p{font-family:'Cinzel',serif;font-size:clamp(15px,2.2vw,20px);color:var(--texto);line-height:1.5;position:relative;z-index:1;margin:0;}
+.tip-box{background:linear-gradient(135deg,rgba(0,59,111,.4) 0%,rgba(4,14,28,.8) 100%);border:1px solid rgba(0,159,218,.25);border-radius:12px;padding:24px;margin:28px 0;}
+.tip-box h4{font-family:'Cinzel',serif;font-size:11px;letter-spacing:4px;color:var(--azul);text-transform:uppercase;margin-bottom:14px;}
+.tip-box p,.tip-box li{color:var(--texto-suave);font-size:.95em;margin-bottom:8px;}
+.tip-box ol,.tip-box ul{padding-left:20px;}
+.tip-box li{margin-bottom:8px;}
+.gold-box{background:rgba(240,171,0,.06);border:1px solid rgba(240,171,0,.2);border-radius:12px;padding:24px;margin:28px 0;}
+.gold-box h4{font-family:'Cinzel',serif;font-size:11px;letter-spacing:4px;color:var(--oro);text-transform:uppercase;margin-bottom:14px;}
+.gold-box p{color:var(--texto-suave);font-size:.95em;margin-bottom:8px;}
+.ejemplo{background:rgba(4,14,28,.9);border:1px solid rgba(240,171,0,.15);border-radius:8px;padding:24px;margin:24px 0;font-family:'Raleway',sans-serif;font-size:14px;}
+.ejemplo .ej-label{font-family:'Cinzel',serif;font-size:10px;letter-spacing:3px;color:var(--oro);text-transform:uppercase;margin-bottom:12px;}
+.ejemplo .ej-texto{color:var(--azul);font-style:italic;font-size:16px;margin-bottom:16px;font-family:'Crimson Pro',serif;}
+.ejemplo p{color:var(--texto-suave);margin-bottom:8px;}
+.ejemplo strong{color:var(--oro);}
+.pasos{counter-reset:paso;list-style:none;padding:0;margin:24px 0;}
+.pasos li{counter-increment:paso;display:flex;gap:16px;margin-bottom:20px;align-items:flex-start;}
+.pasos li::before{content:counter(paso);font-family:'Cinzel',serif;font-size:20px;font-weight:700;color:var(--oro);min-width:32px;line-height:1.4;}
+.pasos li .paso-content h5{font-family:'Cinzel',serif;font-size:14px;color:var(--azul);margin-bottom:4px;letter-spacing:1px;}
+.pasos li .paso-content p{color:var(--texto-suave);font-size:.95em;margin:0;}
+.principio{background:rgba(0,59,111,.25);border:1px solid rgba(0,159,218,.2);border-radius:8px;padding:20px;margin:16px 0;}
+.principio .p-num{font-family:'Cinzel',serif;font-size:11px;letter-spacing:3px;color:var(--azul);text-transform:uppercase;margin-bottom:8px;}
+.principio .p-titulo{font-family:'Cinzel',serif;font-size:16px;color:var(--oro);margin-bottom:8px;}
+.principio p{color:var(--texto-suave);font-size:.95em;margin:0;}
+.epilogo{text-align:center;padding:80px 32px 120px;}
+.epilogo .big{font-family:'Cinzel',serif;font-size:clamp(36px,8vw,72px);font-weight:900;color:transparent;-webkit-text-stroke:1px rgba(240,171,0,.35);letter-spacing:6px;display:block;margin-bottom:40px;}
+.epilogo h2{font-family:'Cinzel',serif;font-size:clamp(18px,3vw,28px);color:var(--oro);margin-bottom:24px;}
+.epilogo p{max-width:540px;margin:0 auto 16px;color:var(--texto-suave);}
+.epilogo .firma{margin-top:48px;font-family:'Cinzel',serif;font-size:13px;letter-spacing:4px;color:var(--azul);}
+@keyframes fadeDown{from{opacity:0;transform:translateY(-20px);}to{opacity:1;transform:none;}}
+@keyframes fadeIn{from{opacity:0;}to{opacity:1;}}
+@media(max-width:600px){.compare{grid-template-columns:1fr;}nav{width:210px;}.pasos li{flex-direction:column;gap:8px;}}
+</style>
+</head>
+<body>
+<button class="nav-toggle" onclick="toggleNav()">☰</button>
+<nav id="sidenav">
+  <div class="nav-title">Contenido</div>
+  <a href="#portada">Portada</a>
+  <a href="#etimologia">1. Etimología</a>
+  <a href="#que-es">2. ¿Qué es?</a>
+  <a href="#vs-exegesis">3. Relación con exégesis</a>
+  <a href="#principios">4. Principios fundamentales</a>
+  <a href="#generos">5. Géneros literarios</a>
+  <a href="#errores">6. Errores de interpretación</a>
+  <a href="#metodo">7. Método paso a paso</a>
+  <a href="#ejemplo">8. Ejemplo práctico</a>
+</nav>
+
+<section class="cover" id="portada">
+  <div class="cover-icon">🔍</div>
+  <div class="cover-tag">Estudio · Serie Predicador</div>
+  <h1 class="cover-title"><span>Hermenéutica</span><br>Bíblica</h1>
+  <div class="cover-sub">Las reglas para interpretar la Palabra de Dios</div>
+  <div class="cover-line"></div>
+  <div class="cover-author">Manual del Predicador · IPUC</div>
+  <div class="cover-verse">"Ninguna profecía de la Escritura es de interpretación privada." — 2 Pedro 1:20</div>
+</section>
+
+<main>
+
+<!-- ETIMOLOGÍA -->
+<section class="chapter" id="etimologia">
+  <div class="ch-num">Lección 1</div>
+  <h2 class="ch-title">Etimología</h2>
+  <div class="ch-sub">El origen de la palabra</div>
+  <div class="ch-divider"></div>
+
+  <p>Para entender qué es la hermenéutica, hay que conocer de dónde viene. Como siempre, el nombre revela el propósito.</p>
+
+  <div class="gold-box">
+    <h4>La palabra Hermenéutica</h4>
+    <p>Viene del griego <strong>ἑρμηνεύω</strong> (hermēneúō) que significa: <strong>"interpretar", "traducir", "explicar"</strong>.</p>
+    <p>Está relacionada con <strong>Hermes</strong>, el mensajero de los dioses en la mitología griega — aquel que llevaba los mensajes del mundo divino al mundo humano y los hacía comprensibles.</p>
+    <p>En el Nuevo Testamento, la misma raíz aparece cuando se dice que Jesús "les interpretaba (diērmēneuen) en todas las Escrituras" — Lucas 24:27.</p>
+  </div>
+
+  <p>La hermenéutica es entonces el arte y la ciencia de <strong>hacer que el mensaje divino sea comprensible para el ser humano</strong>. No cambia el mensaje — lo hace accesible.</p>
+
+  <div class="quote">
+    <p>"Y comenzando desde Moisés, y siguiendo por todos los profetas, les declaraba en todas las Escrituras lo que de él decían."</p>
+    <cite>Lucas 24:27 — Jesús fue el primer y mejor hermeneuta.</cite>
+  </div>
+
+  <p>Hay un personaje en el Antiguo Testamento que también practica hermenéutica perfecta: Esdras.</p>
+
+  <div class="quote">
+    <p>"Y leían en el libro de la ley de Dios claramente, y ponían el sentido, de modo que entendiesen la lectura."</p>
+    <cite>Nehemías 8:8 — Leer + poner el sentido + hacer entender. Eso es hermenéutica.</cite>
+  </div>
+
+  <div class="frase"><p>"La hermenéutica no añade ni quita a la Palabra — la hace comprensible sin traicionarla."</p></div>
+</section>
+
+<!-- QUÉ ES -->
+<section class="chapter" id="que-es">
+  <div class="ch-num">Lección 2</div>
+  <h2 class="ch-title">¿Qué es la hermenéutica?</h2>
+  <div class="ch-sub">La ciencia de interpretar correctamente</div>
+  <div class="ch-divider"></div>
+
+  <p>La hermenéutica bíblica es la <strong>disciplina que establece los principios y reglas para interpretar correctamente la Biblia</strong>. Es el conjunto de métodos que guían al lector desde el texto hasta su significado correcto.</p>
+
+  <p>Si la exégesis pregunta <em>"¿qué dice este texto?"</em>, la hermenéutica pregunta <em>"¿cómo sé que lo estoy interpretando bien?"</em>. Son hermanas inseparables — la exégesis aplica, la hermenéutica regula.</p>
+
+  <div class="compare">
+    <div class="compare-box a">
+      <h4>Hermenéutica</h4>
+      <ul>
+        <li>Las reglas de interpretación</li>
+        <li>El "cómo" interpretar</li>
+        <li>Marco teórico</li>
+        <li>Principios universales</li>
+      </ul>
+    </div>
+    <div class="compare-box b">
+      <h4>Exégesis</h4>
+      <ul>
+        <li>La aplicación de esas reglas</li>
+        <li>El "qué dice" el texto</li>
+        <li>Trabajo práctico</li>
+        <li>Análisis específico</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="section-label">¿Por qué necesitamos hermenéutica?</div>
+  <p>La Biblia fue escrita hace más de 2,000 años, en idiomas que ya no se hablan, en culturas completamente diferentes a la nuestra, dirigida a personas que enfrentaban problemas específicos de su época. Sin hermenéutica, la distancia entre el texto y el lector moderno produce confusión, error y herejía.</p>
+
+  <ul class="list-yes">
+    <li>Porque hay una distancia de <strong>tiempo</strong> — siglos entre el texto y nosotros</li>
+    <li>Porque hay una distancia de <strong>idioma</strong> — hebreo, griego y arameo</li>
+    <li>Porque hay una distancia de <strong>cultura</strong> — costumbres del mundo antiguo</li>
+    <li>Porque hay una distancia de <strong>geografía</strong> — un mundo completamente diferente</li>
+    <li>Porque hay una distancia de <strong>situación</strong> — problemas específicos de esa época</li>
+  </ul>
+
+  <div class="quote">
+    <p>"Ninguna profecía de la Escritura es de interpretación privada."</p>
+    <cite>2 Pedro 1:20 — Pedro establece que interpretar la Biblia tiene reglas, no es libre albedrío.</cite>
+  </div>
+</section>
+
+<!-- RELACIÓN CON EXÉGESIS -->
+<section class="chapter" id="vs-exegesis">
+  <div class="ch-num">Lección 3</div>
+  <h2 class="ch-title">Relación con la exégesis</h2>
+  <div class="ch-sub">Dos disciplinas, un mismo objetivo</div>
+  <div class="ch-divider"></div>
+
+  <p>Muchos predicadores confunden hermenéutica y exégesis, o creen que son lo mismo. No lo son — pero son inseparables. Entender la diferencia te hace mejor intérprete.</p>
+
+  <div class="tip-box">
+    <h4>La analogía del constructor</h4>
+    <p><strong>La hermenéutica</strong> es como el <em>reglamento de construcción</em> — las normas, principios y estándares que dicen cómo debe construirse.</p>
+    <p><strong>La exégesis</strong> es como el <em>trabajo de construcción</em> en sí — la aplicación concreta de esas normas en un terreno específico.</p>
+    <p>Sin reglamento, el constructor improvisa y puede arruinar el edificio. Sin trabajo, el reglamento es solo teoría.</p>
+  </div>
+
+  <div class="section-label">El proceso completo</div>
+  <ul class="pasos">
+    <li>
+      <div class="paso-content">
+        <h5>Hermenéutica</h5>
+        <p>Estudias los principios. Aprendes las reglas de interpretación. Entiendes los géneros literarios, el contexto histórico, la gramática bíblica. Esto es el entrenamiento.</p>
+      </div>
+    </li>
+    <li>
+      <div class="paso-content">
+        <h5>Exégesis</h5>
+        <p>Aplicas esos principios a un texto específico. Analizas Juan 3:16, Romanos 8, el Salmo 23. Esto es la práctica.</p>
+      </div>
+    </li>
+    <li>
+      <div class="paso-content">
+        <h5>Homilética</h5>
+        <p>Conviertes lo que encontraste en el texto en un sermón predicable. Esto es la comunicación.</p>
+      </div>
+    </li>
+  </ul>
+
+  <div class="frase"><p>"Hermenéutica sin exégesis es teoría. Exégesis sin hermenéutica es caos. Las dos juntas producen predicación fiel."</p></div>
+</section>
+
+<!-- PRINCIPIOS -->
+<section class="chapter" id="principios">
+  <div class="ch-num">Lección 4</div>
+  <h2 class="ch-title">Principios fundamentales</h2>
+  <div class="ch-sub">Las reglas que protegen la interpretación</div>
+  <div class="ch-divider"></div>
+
+  <p>La hermenéutica no es una opinión — es una disciplina con principios probados a lo largo de siglos de estudio bíblico. Estos son los más importantes.</p>
+
+  <div class="principio">
+    <div class="p-num">Principio 1</div>
+    <div class="p-titulo">La Biblia se interpreta con la Biblia</div>
+    <p>Ningún texto bíblico contradice a otro. Cuando un texto parece oscuro, busca otros textos que hablen del mismo tema para que la luz de uno ilumine al otro. El mejor comentario de la Biblia es la misma Biblia.</p>
+  </div>
+
+  <div class="principio">
+    <div class="p-num">Principio 2</div>
+    <div class="p-titulo">Lo claro interpreta lo oscuro</div>
+    <p>Nunca bases una doctrina solo en un texto difícil o ambiguo. Los textos claros y directos deben guiar la interpretación de los complicados. Construye sobre lo que está claro, no sobre lo que está en duda.</p>
+  </div>
+
+  <div class="principio">
+    <div class="p-num">Principio 3</div>
+    <div class="p-titulo">El sentido literal primero</div>
+    <p>A menos que el contexto obligue a una interpretación figurada, el significado natural y directo de las palabras es el correcto. No busques significados ocultos ni alegorías donde el texto habla claro.</p>
+  </div>
+
+  <div class="principio">
+    <div class="p-num">Principio 4</div>
+    <div class="p-titulo">Cada texto tiene un solo significado</div>
+    <p>Un texto puede tener múltiples aplicaciones, pero solo tiene un significado. El significado es lo que el autor original quiso decir. Las aplicaciones varían según el contexto del lector.</p>
+  </div>
+
+  <div class="principio">
+    <div class="p-num">Principio 5</div>
+    <div class="p-titulo">El contexto es supremo</div>
+    <p>Un versículo aislado de su contexto puede significar cualquier cosa. El contexto literario, histórico y cultural siempre define el significado. No hay excepciones a esta regla.</p>
+  </div>
+
+  <div class="principio">
+    <div class="p-num">Principio 6</div>
+    <div class="p-titulo">Respetar el género literario</div>
+    <p>La Biblia contiene poesía, historia, profecía, epístolas, apocalipsis y ley. Cada género tiene sus propias reglas de interpretación. No interpretes un poema como si fuera una crónica histórica.</p>
+  </div>
+
+  <div class="principio">
+    <div class="p-num">Principio 7</div>
+    <div class="p-titulo">El Espíritu Santo es el intérprete final</div>
+    <p>La hermenéutica es una herramienta humana. Sin la iluminación del Espíritu Santo, el mejor método académico produce conocimiento sin vida. El mismo Espíritu que inspiró el texto debe inspirar su interpretación.</p>
+  </div>
+
+  <div class="quote">
+    <p>"Pero cuando venga el Espíritu de verdad, él os guiará a toda la verdad."</p>
+    <cite>Juan 16:13 — La hermenéutica prepara el corazón; el Espíritu lo ilumina.</cite>
+  </div>
+</section>
+
+<!-- GÉNEROS LITERARIOS -->
+<section class="chapter" id="generos">
+  <div class="ch-num">Lección 5</div>
+  <h2 class="ch-title">Géneros literarios</h2>
+  <div class="ch-sub">Cada tipo de texto tiene sus propias reglas</div>
+  <div class="ch-divider"></div>
+
+  <p>Uno de los errores más comunes al interpretar la Biblia es tratar todos los textos de la misma manera. La Biblia es una biblioteca de 66 libros con distintos géneros literarios, y cada uno tiene sus propias reglas de interpretación.</p>
+
+  <div class="section-label">Los grandes géneros bíblicos</div>
+
+  <ul class="pasos">
+    <li>
+      <div class="paso-content">
+        <h5>Narrativa histórica</h5>
+        <p>Génesis, Éxodo, los Evangelios, Hechos. Se interpreta como historia — los eventos sucedieron realmente. No todo lo que se describe es aprobado por Dios (la Biblia narra también los pecados de los personajes sin aprobarlos). Pregunta: ¿qué sucedió y qué enseña ese evento?</p>
+      </div>
+    </li>
+    <li>
+      <div class="paso-content">
+        <h5>Poesía y literatura sapiencial</h5>
+        <p>Salmos, Proverbios, Job, Cantares. Usa lenguaje figurado, hipérbole, paralelismo y metáforas intensamente. No se interpreta de manera literal estricta. El Salmo 91 dice "sobre el león pisarás" — es metáfora de protección divina, no una promesa de pisar leones literales.</p>
+      </div>
+    </li>
+    <li>
+      <div class="paso-content">
+        <h5>Profecía</h5>
+        <p>Isaías, Jeremías, Ezequiel, los doce profetas menores. Mezcla cumplimiento histórico inmediato con cumplimiento futuro mesiánico. Requiere conocer la situación histórica del profeta y el contexto del pasaje para distinguir entre ambos.</p>
+      </div>
+    </li>
+    <li>
+      <div class="paso-content">
+        <h5>Epístolas</h5>
+        <p>Las cartas de Pablo, Pedro, Juan, Santiago. Son las más directamente aplicables porque fueron escritas para resolver problemas concretos de las iglesias. Sin embargo, hay que entender el problema que el autor estaba abordando para aplicarlas correctamente.</p>
+      </div>
+    </li>
+    <li>
+      <div class="paso-content">
+        <h5>Literatura apocalíptica</h5>
+        <p>Daniel, Apocalipsis, partes de Ezequiel. Usa simbolismo intenso, números simbólicos, imágenes visionarias. Es el género que más se presta al abuso hermenéutico. Regla: busca primero el significado simbólico en el contexto del libro antes de hacer interpretaciones literales.</p>
+      </div>
+    </li>
+    <li>
+      <div class="paso-content">
+        <h5>Ley y pacto</h5>
+        <p>Levítico, Deuteronomio, partes del Éxodo. Hay que distinguir entre ley moral (universal y permanente), ley ceremonial (cumplida en Cristo) y ley civil (específica para Israel). No toda ley del Antiguo Testamento aplica directamente al creyente del Nuevo Pacto.</p>
+      </div>
+    </li>
+  </ul>
+
+  <div class="ejemplo">
+    <div class="ej-label">Error clásico de género — Proverbios 22:6</div>
+    <div class="ej-texto">"Instruye al niño en su camino, y aun cuando fuere viejo no se apartará de él."</div>
+    <p><strong>Error hermenéutico:</strong> Tratar este proverbio como una promesa absoluta. "Si eduqué a mi hijo en la fe y se alejó, Dios falló."</p>
+    <p><strong>Corrección hermenéutica:</strong> Los proverbios son principios generales de sabiduría, no promesas incondicionales. Describen lo que generalmente sucede, no garantías absolutas. El género poético-sapiencial no funciona igual que una promesa profética.</p>
+  </div>
+</section>
+
+<!-- ERRORES -->
+<section class="chapter" id="errores">
+  <div class="ch-num">Lección 6</div>
+  <h2 class="ch-title">Errores de interpretación</h2>
+  <div class="ch-sub">Las trampas que distorsionan la Palabra</div>
+  <div class="ch-divider"></div>
+
+  <p>La historia de la iglesia está llena de herejías que nacieron de interpretaciones incorrectas de la Biblia. Conocer los errores más comunes es la mejor defensa contra ellos.</p>
+
+  <div class="section-label">Los 7 errores más peligrosos</div>
+
+  <ul class="pasos">
+    <li>
+      <div class="paso-content">
+        <h5>Prooftexting — textos prueba</h5>
+        <p>Usar versículos fuera de contexto para probar lo que ya quieres decir. Es el error más común. Se puede "probar" casi cualquier cosa con la Biblia si se ignora el contexto. Hasta el diablo usó versículos para tentar a Jesús (Mateo 4:6).</p>
+      </div>
+    </li>
+    <li>
+      <div class="paso-content">
+        <h5>Alegorizar en exceso</h5>
+        <p>Encontrar significados ocultos y espirituales en cada detalle cuando el texto habla literalmente. Algunos predicadores convierten cada número, cada nombre y cada evento histórico en un código simbólico que el texto nunca sugiere.</p>
+      </div>
+    </li>
+    <li>
+      <div class="paso-content">
+        <h5>Literalizar lo figurado</h5>
+        <p>El error opuesto: tratar como literal lo que claramente es metáfora o imagen poética. "Dios tiene alas" (Salmo 91:4) no significa que Dios tenga alas físicas — es una imagen de protección y refugio.</p>
+      </div>
+    </li>
+    <li>
+      <div class="paso-content">
+        <h5>Ignorar el progreso de la revelación</h5>
+        <p>El Antiguo Testamento es la sombra; el Nuevo Testamento es la realidad. Lo que Dios reveló en Cristo supera y completa lo anterior. Interpretar el Nuevo Testamento con categorías exclusivamente veterotestamentarias produce confusión.</p>
+      </div>
+    </li>
+    <li>
+      <div class="paso-content">
+        <h5>Aplicar a todos lo que fue dicho a uno</h5>
+        <p>"Jeremiah 29:11 — porque yo sé los pensamientos que tengo acerca de vosotros..." fue escrito a los israelitas en el exilio babilónico, en una situación específica. El principio puede aplicarse, pero la promesa directa pertenece a ese contexto.</p>
+      </div>
+    </li>
+    <li>
+      <div class="paso-content">
+        <h5>Doctrina de un solo texto</h5>
+        <p>Construir una doctrina completa sobre un solo versículo sin confirmarla con el resto de la Biblia. Las doctrinas sólidas están confirmadas por múltiples textos en diferentes libros y épocas.</p>
+      </div>
+    </li>
+    <li>
+      <div class="paso-content">
+        <h5>Interpretar según experiencia personal</h5>
+        <p>Dejar que lo que me pasó a mí determine lo que el texto significa. "Yo oré por sanidad y Dios me sanó, por lo tanto Dios siempre sana si tienes fe." Mi experiencia no puede gobernar la interpretación — el texto gobierna mi experiencia.</p>
+      </div>
+    </li>
+  </ul>
+
+  <div class="frase"><p>"El mayor peligro no es el predicador que ignora la Biblia — es el que la usa mal con convicción."</p></div>
+</section>
+
+<!-- MÉTODO -->
+<section class="chapter" id="metodo">
+  <div class="ch-num">Lección 7</div>
+  <h2 class="ch-title">Método paso a paso</h2>
+  <div class="ch-sub">Cómo interpretar cualquier texto bíblico</div>
+  <div class="ch-divider"></div>
+
+  <p>Aquí está el método hermenéutico completo que puedes aplicar a cualquier texto. Es el mismo proceso que han seguido los grandes predicadores de la historia.</p>
+
+  <ul class="pasos">
+    <li>
+      <div class="paso-content">
+        <h5>Observación — ¿Qué veo?</h5>
+        <p>Lee el texto lentamente y anota todo lo que observas: ¿quiénes aparecen?, ¿qué acciones ocurren?, ¿qué palabras se repiten?, ¿hay preguntas o respuestas?, ¿hay mandatos o promesas? No interpretes todavía — solo observa.</p>
+      </div>
+    </li>
+    <li>
+      <div class="paso-content">
+        <h5>Identificación del género</h5>
+        <p>¿Qué tipo de texto es? ¿Historia, poesía, profecía, epístola, ley, apocalipsis? Esta pregunta determina todas las reglas de interpretación que usarás. Es el segundo paso, no el último.</p>
+      </div>
+    </li>
+    <li>
+      <div class="paso-content">
+        <h5>Análisis del contexto</h5>
+        <p>Lee el contexto inmediato (versículos anteriores y siguientes), el contexto del capítulo y el del libro completo. Investiga el contexto histórico: ¿quién escribió?, ¿a quién?, ¿cuándo?, ¿qué situación enfrentaban?</p>
+      </div>
+    </li>
+    <li>
+      <div class="paso-content">
+        <h5>Estudio del vocabulario</h5>
+        <p>Identifica las palabras clave y busca su significado en el idioma original usando la Concordancia de Strong. Las palabras griegas y hebreas frecuentemente tienen matices que las traducciones no pueden capturar.</p>
+      </div>
+    </li>
+    <li>
+      <div class="paso-content">
+        <h5>Interpretación — ¿Qué significa?</h5>
+        <p>Con toda la información anterior, formula el significado del texto. ¿Qué quiso decir el autor? ¿Cuál es la idea central? Exprésala en una sola oración. Consulta comentarios para confirmar o corregir tu interpretación.</p>
+      </div>
+    </li>
+    <li>
+      <div class="paso-content">
+        <h5>Verificación con el resto de la Biblia</h5>
+        <p>¿Tu interpretación es consistente con el resto de las Escrituras? ¿Otros textos la confirman? Si tu interpretación hace que la Biblia se contradiga a sí misma, la interpretación está equivocada.</p>
+      </div>
+    </li>
+    <li>
+      <div class="paso-content">
+        <h5>Aplicación — ¿Qué debo hacer?</h5>
+        <p>¿Qué cambia en mi vida con esta verdad? La hermenéutica no termina en el conocimiento — termina en la transformación. Un texto bien interpretado siempre produce una respuesta: creer algo, cambiar algo, hacer algo.</p>
+      </div>
+    </li>
+  </ul>
+
+  <div class="gold-box">
+    <h4>La pregunta que lo une todo</h4>
+    <p>Después de cada paso pregúntate: <strong>"¿Estoy dejando que el texto me diga lo que significa, o le estoy diciendo al texto lo que quiero que signifique?"</strong></p>
+    <p>Si puedes responder honestamente la primera opción, estás haciendo buena hermenéutica.</p>
+  </div>
+</section>
+
+<!-- EJEMPLO PRÁCTICO -->
+<section class="chapter" id="ejemplo">
+  <div class="ch-num">Lección 8</div>
+  <h2 class="ch-title">Ejemplo práctico</h2>
+  <div class="ch-sub">Hermenéutica aplicada a Romanos 8:28</div>
+  <div class="ch-divider"></div>
+
+  <p>Apliquemos el método completo a uno de los versículos más citados — y más mal interpretados — de toda la Biblia.</p>
+
+  <div class="quote">
+    <p>"Y sabemos que a los que aman a Dios, todas las cosas les ayudan a bien, esto es, a los que conforme a su propósito son llamados."</p>
+    <cite>Romanos 8:28 — RV1960</cite>
+  </div>
+
+  <div class="section-label">Paso 1 — Observación</div>
+  <div class="ejemplo">
+    <div class="ej-label">¿Qué veo en el texto?</div>
+    <p><strong>Sujeto:</strong> "a los que aman a Dios" — hay una condición.</p>
+    <p><strong>Acción:</strong> "todas las cosas les ayudan a bien" — colaboración universal hacia un propósito.</p>
+    <p><strong>Condición adicional:</strong> "a los que conforme a su propósito son llamados" — hay un llamado divino específico.</p>
+    <p><strong>Palabra clave:</strong> "sabemos" — no esperanza, no deseo — certeza.</p>
+  </div>
+
+  <div class="section-label">Paso 2 — Contexto</div>
+  <div class="ejemplo">
+    <div class="ej-label">Contexto de Romanos 8</div>
+    <p><strong>Contexto inmediato:</strong> El versículo 26-27 habla del Espíritu intercediendo por nosotros en nuestra debilidad. El versículo 29-30 habla de la cadena de salvación: llamados → justificados → glorificados.</p>
+    <p><strong>Contexto del capítulo:</strong> Romanos 8 habla de la vida en el Espíritu, la adopción como hijos, el sufrimiento presente y la gloria futura. El capítulo reconoce explícitamente que los creyentes sufren (v.17-18).</p>
+    <p><strong>Contexto del libro:</strong> Pablo escribe a creyentes en Roma que enfrentan persecución. El "bien" del que habla no es comodidad — es el propósito eterno de Dios.</p>
+  </div>
+
+  <div class="section-label">Paso 3 — Vocabulario</div>
+  <div class="ejemplo">
+    <div class="ej-label">Palabras clave en griego</div>
+    <p><strong>"Ayudan a bien"</strong> — griego: <em>synergei eis agathon</em>. Synergei = trabajan juntas (cooperan). No dice que todo es bueno, sino que Dios hace que todo trabaje cooperativamente hacia un resultado bueno.</p>
+    <p><strong>"Bien"</strong> — griego: <em>agathon</em>. No es placer ni comodidad. En el contexto bíblico, "bien" es lo que conforma a la imagen de Cristo (ver v.29: "para que fuesen hechos conformes a la imagen de su Hijo").</p>
+  </div>
+
+  <div class="section-label">Paso 4 — Errores hermenéuticos comunes</div>
+  <div class="compare">
+    <div class="compare-box a">
+      <h4>Interpretación incorrecta</h4>
+      <ul>
+        <li>"Todo lo que me pase va a salir bien"</li>
+        <li>"Dios quiere que yo esté feliz siempre"</li>
+        <li>"No habrá consecuencias negativas"</li>
+        <li>Promesa para cualquier persona</li>
+      </ul>
+    </div>
+    <div class="compare-box b">
+      <h4>Interpretación correcta</h4>
+      <ul>
+        <li>Para los que aman a Dios y son llamados</li>
+        <li>Dios usa todo — incluso el dolor — para conformarnos a Cristo</li>
+        <li>El "bien" es ser transformados, no ser protegidos del sufrimiento</li>
+        <li>Promesa de propósito eterno, no de comodidad temporal</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="section-label">Proposición final</div>
+  <div class="gold-box">
+    <h4>Lo que el texto realmente dice</h4>
+    <p>Para el creyente verdadero que ama a Dios y ha respondido a su llamado, Dios soberanamente dirige todas las circunstancias de su vida — incluyendo el sufrimiento, la pérdida y el fracaso — hacia el propósito eterno de conformarle a la imagen de Jesucristo.</p>
+    <p><strong>Esto no elimina el dolor. Lo redime.</strong></p>
+  </div>
+
+  <div class="frase"><p>"La hermenéutica correcta no te quita las promesas de Dios — te da las verdaderas en lugar de las imaginarias."</p></div>
+</section>
+
+</main>
+
+<section class="epilogo">
+  <span class="big">VERDAD</span>
+  <h2>Intérpretes aprobados</h2>
+  <p>La hermenéutica no es el fin — es el camino. El fin es conocer a Dios a través de su Palabra, predicarla con fidelidad y ver vidas transformadas por su poder.</p>
+  <p>Cuando interpretas bien, no solo predicas mejor — honras a Dios y proteges a tu congregación.</p>
+  <div class="quote" style="max-width:480px;margin:32px auto;">
+    <p>"Procura con diligencia presentarte a Dios aprobado, como obrero que no tiene de qué avergonzarse."</p>
+    <cite>2 Timoteo 2:15</cite>
+  </div>
+  <div class="firma">Hermenéutica Bíblica · Serie Predicador · IPUC</div>
+</section>
+
+<script>
+const obs=new IntersectionObserver(e=>{e.forEach(el=>{if(el.isIntersecting)el.target.classList.add('visible');});},{threshold:.1});
+document.querySelectorAll('.chapter').forEach(e=>obs.observe(e));
+function toggleNav(){document.getElementById('sidenav').classList.toggle('show');}
+document.querySelectorAll('nav a').forEach(a=>{a.addEventListener('click',()=>{document.getElementById('sidenav').classList.remove('show');document.querySelectorAll('nav a').forEach(x=>x.classList.remove('active'));a.classList.add('active');});});
+document.addEventListener('click',e=>{const nav=document.getElementById('sidenav');if(nav.classList.contains('show')&&!nav.contains(e.target)&&!e.target.closest('.nav-toggle')){nav.classList.remove('show');}});
+</script>
+</body>
+</html>

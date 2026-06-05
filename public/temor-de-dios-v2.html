@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>El Temor de Dios — Estudio Teológico Profundo</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Raleway:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--azul:#009FDA;--marino:#003B6F;--oro:#F0AB00;--oro-claro:#FFD166;--fondo:#040e1c;--texto:#e8e0d0;--texto-suave:#a89f90;--linea:rgba(240,171,0,.2);}
+*{margin:0;padding:0;box-sizing:border-box;}html{scroll-behavior:smooth;}
+body{background:var(--fondo);color:var(--texto);font-family:'Crimson Pro',Georgia,serif;font-size:18px;line-height:1.85;overflow-x:hidden;}
+::-webkit-scrollbar{width:4px;}::-webkit-scrollbar-track{background:var(--fondo);}::-webkit-scrollbar-thumb{background:var(--azul);border-radius:2px;}
+.nav-toggle{position:fixed;top:16px;left:16px;z-index:300;background:var(--marino);border:1px solid var(--linea);color:var(--oro);width:44px;height:44px;border-radius:8px;cursor:pointer;font-size:20px;display:flex;align-items:center;justify-content:center;transition:all .2s;box-shadow:0 2px 12px rgba(0,0,0,.4);}
+.nav-toggle:hover{background:var(--azul);color:#fff;}
+nav{position:fixed;left:0;top:0;bottom:0;width:265px;background:linear-gradient(180deg,var(--marino) 0%,#011529 100%);border-right:1px solid var(--linea);z-index:200;overflow-y:auto;transform:translateX(0);transition:transform .35s ease;padding:32px 0;}
+nav.hidden{transform:translateX(-100%);}
+nav .nav-brand{font-family:'Cinzel',serif;font-size:12px;font-weight:700;color:var(--oro);padding:0 20px 20px;border-bottom:1px solid var(--linea);margin-bottom:8px;letter-spacing:1px;line-height:1.5;}
+nav .nav-section{font-family:'Cinzel',serif;font-size:9px;letter-spacing:3px;color:var(--azul);padding:12px 20px 4px;text-transform:uppercase;opacity:.8;}
+nav a{display:flex;align-items:center;gap:10px;padding:7px 20px;font-family:'Raleway',sans-serif;font-size:11px;font-weight:500;letter-spacing:.5px;color:var(--texto-suave);text-decoration:none;border-left:2px solid transparent;transition:all .2s;}
+nav a:hover,nav a.active{color:var(--oro);border-left-color:var(--oro);background:rgba(240,171,0,.06);}
+nav a .nav-num{font-family:'Cinzel',serif;font-size:10px;color:var(--azul);min-width:20px;}
+.page-wrap{margin-left:265px;transition:margin .35s ease;}
+.page-wrap.full{margin-left:0;}
+
+.cover{min-height:100vh;background:linear-gradient(160deg,#041830 0%,var(--fondo) 65%);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:80px 32px 60px;position:relative;overflow:hidden;}
+.cover::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 50% at 50% 10%,rgba(0,159,218,.15) 0%,transparent 70%),radial-gradient(ellipse 40% 40% at 80% 85%,rgba(240,171,0,.1) 0%,transparent 60%);pointer-events:none;}
+.cover-icon{font-size:64px;margin-bottom:24px;animation:fadeDown .8s ease both;}
+.cover-tag{font-family:'Cinzel',serif;font-size:10px;letter-spacing:5px;color:var(--azul);text-transform:uppercase;margin-bottom:20px;animation:fadeDown .9s ease .1s both;}
+.cover-title{font-family:'Cinzel',serif;font-size:clamp(36px,8vw,84px);font-weight:900;line-height:1;margin-bottom:8px;animation:fadeDown 1s ease .2s both;}
+.cover-title .t1{color:var(--texto);}
+.cover-title .t2{color:var(--oro);}
+.cover-sub{font-family:'Cinzel',serif;font-size:clamp(13px,2vw,17px);color:var(--azul);letter-spacing:2px;margin-bottom:32px;animation:fadeDown 1s ease .25s both;}
+.cover-line{width:60px;height:1px;background:linear-gradient(to right,transparent,var(--oro),transparent);margin:0 auto 24px;}
+.cover-author{font-family:'Raleway',sans-serif;font-size:13px;letter-spacing:4px;color:var(--texto-suave);text-transform:uppercase;}
+.cover-verse{position:absolute;bottom:40px;font-family:'Crimson Pro',serif;font-style:italic;font-size:14px;color:var(--texto-suave);max-width:460px;text-align:center;line-height:1.6;}
+
+main{max-width:740px;margin:0 auto;padding:0 24px;}
+.chapter{padding:72px 0 56px;border-bottom:1px solid rgba(240,171,0,.1);opacity:0;transform:translateY(30px);transition:opacity .7s ease,transform .7s ease;}
+.chapter.visible{opacity:1;transform:none;}
+.ch-num{font-family:'Cinzel',serif;font-size:11px;letter-spacing:4px;color:var(--azul);text-transform:uppercase;margin-bottom:12px;}
+.ch-title{font-family:'Cinzel',serif;font-size:clamp(20px,3.5vw,32px);font-weight:700;color:var(--oro);line-height:1.2;margin-bottom:8px;}
+.ch-sub{font-family:'Cinzel',serif;font-size:clamp(13px,2vw,18px);color:var(--azul);margin-bottom:28px;}
+.ch-divider{width:40px;height:2px;background:linear-gradient(to right,var(--oro),var(--azul));margin-bottom:32px;border-radius:2px;}
+p{margin-bottom:20px;}
+strong{color:var(--oro);font-weight:600;}
+em{color:var(--azul);font-style:italic;}
+
+.quote{border-left:3px solid var(--oro);padding:16px 24px;margin:28px 0;background:rgba(240,171,0,.05);border-radius:0 8px 8px 0;}
+.quote p{font-family:'Crimson Pro',serif;font-style:italic;font-size:1.05em;color:var(--oro-claro);margin-bottom:6px;}
+.quote cite{font-family:'Raleway',sans-serif;font-size:12px;letter-spacing:2px;color:var(--texto-suave);}
+
+.section-label{font-family:'Cinzel',serif;font-size:11px;letter-spacing:3px;color:var(--azul);text-transform:uppercase;margin:36px 0 12px;}
+
+.list-yes{list-style:none;margin:16px 0 24px;padding:0;}
+.list-yes li{padding:7px 0 7px 28px;position:relative;font-size:.97em;color:var(--texto-suave);border-bottom:1px solid rgba(255,255,255,.05);}
+.list-yes li::before{content:'✦';position:absolute;left:0;top:7px;font-size:13px;color:var(--oro);}
+
+.compare{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:28px 0;}
+.compare-box{padding:20px;border-radius:8px;border:1px solid;}
+.compare-box.a{border-color:rgba(0,159,218,.3);background:rgba(0,159,218,.05);}
+.compare-box.b{border-color:rgba(240,171,0,.3);background:rgba(240,171,0,.05);}
+.compare-box h4{font-family:'Cinzel',serif;font-size:10px;letter-spacing:3px;margin-bottom:12px;text-transform:uppercase;}
+.compare-box.a h4{color:var(--azul);}
+.compare-box.b h4{color:var(--oro);}
+.compare-box ul{list-style:none;}
+.compare-box ul li{font-size:14px;padding:5px 0;color:var(--texto-suave);border-bottom:1px solid rgba(255,255,255,.06);}
+
+.frase{text-align:center;padding:40px 24px;margin:32px 0;position:relative;}
+.frase::before{content:'"';font-family:'Cinzel',serif;font-size:100px;color:rgba(240,171,0,.07);position:absolute;top:-10px;left:16px;line-height:1;}
+.frase p{font-family:'Cinzel',serif;font-size:clamp(15px,2.2vw,20px);color:var(--texto);line-height:1.5;position:relative;z-index:1;margin:0;}
+
+.tip-box{background:linear-gradient(135deg,rgba(0,59,111,.4) 0%,rgba(4,14,28,.8) 100%);border:1px solid rgba(0,159,218,.25);border-radius:12px;padding:24px;margin:28px 0;}
+.tip-box h4{font-family:'Cinzel',serif;font-size:11px;letter-spacing:4px;color:var(--azul);text-transform:uppercase;margin-bottom:14px;}
+.tip-box p,.tip-box li{color:var(--texto-suave);font-size:.95em;margin-bottom:8px;}
+.tip-box ol,.tip-box ul{padding-left:20px;}
+.tip-box li{margin-bottom:8px;}
+
+.gold-box{background:rgba(240,171,0,.06);border:1px solid rgba(240,171,0,.2);border-radius:12px;padding:24px;margin:28px 0;}
+.gold-box h4{font-family:'Cinzel',serif;font-size:11px;letter-spacing:4px;color:var(--oro);text-transform:uppercase;margin-bottom:14px;}
+.gold-box p{color:var(--texto-suave);font-size:.95em;margin-bottom:10px;}
+.gold-box strong{color:var(--oro);}
+
+.etimo{background:rgba(240,171,0,.04);border:1px solid rgba(240,171,0,.15);border-radius:8px;padding:20px 24px;margin:20px 0;}
+.etimo .e-palabra{font-family:'Cinzel',serif;font-size:22px;color:var(--oro);margin-bottom:4px;}
+.etimo .e-origen{font-family:'Raleway',sans-serif;font-size:12px;color:var(--azul);letter-spacing:2px;margin-bottom:8px;}
+.etimo p{color:var(--texto-suave);font-size:.95em;margin:0;}
+
+.evento{background:rgba(0,59,111,.2);border:1px solid rgba(0,159,218,.2);border-radius:10px;padding:20px 24px;margin:16px 0;}
+.evento .ev-titulo{font-family:'Cinzel',serif;font-size:15px;color:var(--azul);margin-bottom:4px;letter-spacing:1px;}
+.evento .ev-ref{font-family:'Raleway',sans-serif;font-size:11px;color:var(--oro);letter-spacing:2px;margin-bottom:10px;text-transform:uppercase;}
+.evento p{color:var(--texto-suave);font-size:.95em;margin:0;}
+
+.pasos{counter-reset:paso;list-style:none;padding:0;margin:24px 0;}
+.pasos li{counter-increment:paso;display:flex;gap:16px;margin-bottom:22px;align-items:flex-start;}
+.pasos li::before{content:counter(paso);font-family:'Cinzel',serif;font-size:20px;font-weight:700;color:var(--oro);min-width:32px;line-height:1.3;}
+.pasos li .paso-content h5{font-family:'Cinzel',serif;font-size:14px;color:var(--azul);margin-bottom:5px;letter-spacing:1px;}
+.pasos li .paso-content p{color:var(--texto-suave);font-size:.95em;margin:0;}
+
+.epilogo{text-align:center;padding:80px 32px 120px;}
+.epilogo .big{font-family:'Cinzel',serif;font-size:clamp(32px,7vw,68px);font-weight:900;color:transparent;-webkit-text-stroke:1px rgba(240,171,0,.35);letter-spacing:6px;display:block;margin-bottom:40px;}
+.epilogo h2{font-family:'Cinzel',serif;font-size:clamp(18px,3vw,28px);color:var(--oro);margin-bottom:24px;}
+.epilogo p{max-width:540px;margin:0 auto 16px;color:var(--texto-suave);}
+.epilogo .firma{margin-top:48px;font-family:'Cinzel',serif;font-size:13px;letter-spacing:4px;color:var(--azul);}
+
+@keyframes fadeDown{from{opacity:0;transform:translateY(-20px);}to{opacity:1;transform:none;}}
+@keyframes fadeIn{from{opacity:0;}to{opacity:1;}}
+@media(max-width:768px){nav{transform:translateX(-100%);}nav.show{transform:translateX(0);}.page-wrap{margin-left:0!important;}}
+@media(max-width:600px){.compare{grid-template-columns:1fr;}nav{width:220px;}.pasos li{flex-direction:column;gap:8px;}}
+</style>
+</head>
+<body>
+<button class="nav-toggle" id="navToggle" onclick="toggleNav()">☰</button>
+<nav id="sidenav">
+  <div class="nav-brand">🔥 El Temor de Dios<br>Estudio Teológico</div>
+  <div class="nav-section">Índice</div>
+  <a href="#portada"><span class="nav-num">·</span>Portada</a>
+  <div class="nav-section">Lecciones</div>
+  <a href="#c1"><span class="nav-num">01</span>Etimología — Yir'ah</a>
+  <a href="#c2"><span class="nav-num">02</span>El Dios que infunde temor</a>
+  <a href="#c3"><span class="nav-num">03</span>Sinaí — el temor como fundamento del pacto</a>
+  <a href="#c4"><span class="nav-num">04</span>El Temor en la Torah</a>
+  <a href="#c5"><span class="nav-num">05</span>El Temor en los Salmos</a>
+  <a href="#c6"><span class="nav-num">06</span>El Temor en la Sabiduría</a>
+  <a href="#c7"><span class="nav-num">07</span>El Temor en los Profetas</a>
+  <a href="#c8"><span class="nav-num">08</span>Temor vs terror — la distinción crucial</a>
+  <a href="#c9"><span class="nav-num">09</span>Los frutos del temor de Dios</a>
+  <a href="#c10"><span class="nav-num">10</span>Del AT al NT — el mismo temor</a>
+</nav>
+
+<div class="page-wrap" id="pageWrap">
+
+<section class="cover" id="portada">
+  <div class="cover-icon">🔥</div>
+  <div class="cover-tag">Estudio Teológico · Antiguo Testamento</div>
+  <h1 class="cover-title">
+    <div class="t1">El Temor</div>
+    <div class="t2">de Dios</div>
+  </h1>
+  <div class="cover-sub">El concepto que definió a Israel — y sigue definiendo al creyente</div>
+  <div class="cover-line"></div>
+  <div class="cover-author">Predicador IPUC</div>
+  <div class="cover-verse">"El principio de la sabiduría es el temor de Jehová." — Proverbios 9:10</div>
+</section>
+
+<main>
+
+<!-- CAP 1 — ETIMOLOGÍA -->
+<section class="chapter" id="c1">
+  <div class="ch-num">Lección 1</div>
+  <h2 class="ch-title">Etimología — Yir'ah</h2>
+  <div class="ch-sub">La palabra que el mundo antiguo usó para nombrar lo innombrable</div>
+  <div class="ch-divider"></div>
+
+  <p>Antes de estudiar el concepto, hay que escuchar la palabra. Porque el hebreo no es solo un idioma — es una cosmovisión. La manera en que Israel nombraba al temor de Dios revela la manera en que lo experimentaba.</p>
+
+  <div class="etimo">
+    <div class="e-palabra">יִרְאָה — Yir'ah</div>
+    <div class="e-origen">Hebreo · del verbo yare יָרֵא</div>
+    <p>El verbo raíz <em>yare</em> tiene un rango semántico extraordinariamente amplio: <strong>temer, estar aterrado, reverenciar, respetar con asombro profundo</strong>. En el Antiguo Testamento aparece más de 300 veces. No es una sola emoción — es una familia de respuestas ante la presencia de lo que excede al ser humano. La <em>yir'ah</em> ante Dios describe la respuesta total del ser humano ante la irrupción de lo divino en lo humano.</p>
+  </div>
+
+  <div class="etimo">
+    <div class="e-palabra">פַּחַד — Pachad</div>
+    <div class="e-origen">Hebreo · terror, espanto físico ante el peligro</div>
+    <p>Pachad es el miedo instintivo, visceral, ante una amenaza inmediata. Es el pánico del soldado ante el ejército enemigo. Es diferente de <em>yir'ah</em> en que es principalmente reactivo y físico. Ambas palabras aparecen en el AT, pero cuando se habla del temor de Dios como virtud o disciplina espiritual, se usa <em>yir'ah</em> — no pachad.</p>
+  </div>
+
+  <div class="etimo">
+    <div class="e-palabra">אֵימָה — Eimah</div>
+    <div class="e-origen">Hebreo · horror, terror sobrenatural, espanto sagrado</div>
+    <p>Eimah describe el terror específico ante la presencia sobrenatural — el horror sagrado que paraliza cuando Dios irrumpe en el mundo. Aparece en Génesis 15:12 cuando Dios hace el pacto con Abraham: "un terror y una oscuridad grande cayeron sobre él." Es la respuesta instintiva ante la presencia directa de lo divino.</p>
+  </div>
+
+  <div class="section-label">La familia semántica completa</div>
+  <p>El concepto del temor de Dios en el Antiguo Testamento no es unidimensional — es una constelación de experiencias que van desde el <strong>terror físico ante la teofanía</strong> hasta la <strong>reverencia cotidiana que orienta la vida moral</strong>. Los teólogos del AT identifican al menos tres dimensiones:</p>
+
+  <ul class="list-yes">
+    <li><strong>Temor numinoso:</strong> el estremecimiento ante la presencia directa y abrumadora de Dios — lo que Rudolf Otto llamó el <em>mysterium tremendum et fascinans</em>: misterioso, aterrador y al mismo tiempo irresistiblemente atractivo</li>
+    <li><strong>Temor reverencial:</strong> el respeto profundo y sostenido ante la majestad de Dios que se convierte en postura de vida — adoración, obediencia, dependencia constante</li>
+    <li><strong>Temor ético:</strong> la orientación moral que nace de saber que Dios ve, juzga y actúa en justicia — el fundamento de la ética israelita</li>
+  </ul>
+
+  <div class="frase"><p>"El temor de Dios no es una emoción que se siente ocasionalmente — es una orientación del ser que define quién eres ante la realidad de quién es Dios."</p></div>
+</section>
+
+<!-- CAP 2 — EL DIOS QUE INFUNDE TEMOR -->
+<section class="chapter" id="c2">
+  <div class="ch-num">Lección 2</div>
+  <h2 class="ch-title">El Dios que infunde temor</h2>
+  <div class="ch-sub">La santidad divina como origen del temor legítimo</div>
+  <div class="ch-divider"></div>
+
+  <p>El temor de Dios no es una respuesta arbitraria inventada por la religión para controlar a las masas. Es la <strong>respuesta apropiada del ser humano finito ante la realidad del Dios infinito y santo</strong>. Para entender el temor, hay que entender primero al Dios que lo infunde.</p>
+
+  <div class="section-label">El Dios del Antiguo Testamento — radicalmente santo</div>
+  <div class="quote">
+    <p>"¡Santo, santo, santo, Jehová de los ejércitos! Toda la tierra está llena de su gloria."</p>
+    <cite>Isaías 6:3 — Los serafines no pueden cesar de proclamar su santidad</cite>
+  </div>
+
+  <p>La respuesta de Isaías ante esta visión es inmediata e inequívoca: <strong>"¡Ay de mí! que soy muerto; porque siendo hombre inmundo de labios... han visto mis ojos al Rey, Jehová de los ejércitos."</strong> (v.5). No es una respuesta ensayada ni exagerada — es la reacción natural del ser humano ante la santidad absoluta. La presencia de Dios revela la distancia infinita entre lo santo y lo pecaminoso.</p>
+
+  <div class="section-label">Los atributos que generan temor legítimo</div>
+
+  <ul class="pasos">
+    <li>
+      <div class="paso-content">
+        <h5>La omnisciencia — Él lo ve todo</h5>
+        <p>Salmo 139:1-4 — "Jehová, tú me has examinado y conocido... Aun antes que haya palabra en mi lengua, tú, Jehová, la conoces toda." El Dios que conoce cada pensamiento, cada motivación, cada secreto — ante ese Dios no hay posibilidad de actuación ni engaño. Eso genera un temor que purifica: si Dios lo ve todo, debo vivir como quien vive ante sus ojos.</p>
+      </div>
+    </li>
+    <li>
+      <div class="paso-content">
+        <h5>La omnipotencia — Él puede todo</h5>
+        <p>Job 38-41 — la respuesta de Dios a Job desde el torbellino es un catálogo de poder incomparable: ¿dónde estabas cuando fundé la tierra? ¿Conoces los límites del mar? ¿Puedes atar las Pléyades? Ante ese poder sin límite, Job responde (40:4): "He aquí que yo soy vil." La omnipotencia de Dios produce humildad profunda — el reconocimiento de que toda fortaleza humana es prestada.</p>
+      </div>
+    </li>
+    <li>
+      <div class="paso-content">
+        <h5>La justicia — Él juzga con rectitud</h5>
+        <p>Deuteronomio 32:4 — "Dios de verdad, y sin ninguna iniquidad en él; es justo y recto." El Dios justo no puede ignorar el pecado. Su justicia perfecta genera temor ético: vivir sabiendo que cada acto, cada palabra, cada motivo será evaluado por un Juez que no puede ser corrompido, sobornado ni engañado.</p>
+      </div>
+    </li>
+    <li>
+      <div class="paso-content">
+        <h5>La majestad — Él es radicalmente "otro"</h5>
+        <p>Isaías 40:25 — "¿A quién pues me haréis semejante o me compararéis? dice el Santo." La <em>Heiligkeit</em> — la santidad de Dios — no es solo pureza moral sino <em>alteridad absoluta</em>: Dios es fundamentalmente diferente de todo lo creado. Esa diferencia radical genera asombro, vértigo y reverencia.</p>
+      </div>
+    </li>
+  </ul>
+
+  <div class="frase"><p>"El temor de Dios no es miedo de un Dios pequeño y caprichoso. Es la respuesta correcta ante un Dios infinitamente santo, infinitamente poderoso e infinitamente justo."</p></div>
+</section>
+
+<!-- CAP 3 — SINAÍ -->
+<section class="chapter" id="c3">
+  <div class="ch-num">Lección 3</div>
+  <h2 class="ch-title">Sinaí — el temor como fundamento del pacto</h2>
+  <div class="ch-sub">Éxodo 19-20 — el momento constitutivo de Israel</div>
+  <div class="ch-divider"></div>
+
+  <p>Si hay un evento en el Antiguo Testamento que define el temor de Dios en su dimensión más concreta e histórica, es la teofanía del Sinaí. Aquí no es solo un concepto — es una experiencia colectiva que formó la identidad de Israel como nación.</p>
+
+  <div class="quote">
+    <p>"Y el aspecto de la gloria de Jehová era como un fuego abrasador en la cumbre del monte, a los ojos de los hijos de Israel."</p>
+    <cite>Éxodo 24:17</cite>
+  </div>
+
+  <div class="section-label">Lo que Israel experimentó en Sinaí</div>
+
+  <div class="evento">
+    <div class="ev-titulo">Preparación de tres días — Éxodo 19:10-15</div>
+    <div class="ev-ref">El preludio al encuentro</div>
+    <p>Antes de que Dios descendiera, Israel debía santificarse tres días: lavar ropa, abstenerse de relaciones conyugales, no tocar el monte. La preparación misma era una enseñanza: la presencia de Dios no se puede abordar a la ligera. El acceso requiere preparación, separación y reverencia.</p>
+  </div>
+
+  <div class="evento">
+    <div class="ev-titulo">La teofanía — Éxodo 19:16-19</div>
+    <div class="ev-ref">El Dios que desciende en fuego</div>
+    <p>"Aconteció que al tercer día, cuando vino la mañana, vinieron truenos y relámpagos, y espesa nube sobre el monte, y sonido de bocina muy fuerte; y se estremeció todo el pueblo que estaba en el campamento." Truenos, relámpagos, nube densa, voz de trompeta, humo, fuego, el monte entero temblando — la manifestación física del Dios santo que desciende a hablar con su pueblo.</p>
+  </div>
+
+  <div class="evento">
+    <div class="ev-titulo">La reacción del pueblo — Éxodo 20:18-19</div>
+    <div class="ev-ref">El temor que aleja y el temor que acerca</div>
+    <p>"Todo el pueblo observaba los truenos y relámpagos... y al ver esto el pueblo, temblaron, y se pusieron lejos. Y dijeron a Moisés: Habla tú con nosotros, y nosotros oiremos; pero no hable Dios con nosotros, para que no muramos." Israel pidió intermediario. El temor fue tan intenso que prefirieron no acercarse directamente.</p>
+  </div>
+
+  <div class="section-label">La respuesta de Moisés — la distinción teológica fundamental</div>
+  <div class="quote">
+    <p>"No temáis; porque para probaros vino Dios, y para que su temor esté delante de vosotros, para que no pequéis."</p>
+    <cite>Éxodo 20:20 — La frase más paradójica del Pentateuco</cite>
+  </div>
+
+  <p>Aquí está el núcleo de toda la teología del temor en el Antiguo Testamento. Moisés dice dos cosas aparentemente contradictorias en la misma oración: <strong>"No temáis"</strong> y <strong>"para que su temor esté delante de vosotros."</strong></p>
+
+  <div class="tip-box">
+    <h4>La paradoja de Éxodo 20:20</h4>
+    <p><strong>"No temáis" (al-tira'u):</strong> el temor que paraliza, que produce pánico irracional, que hace que el ser humano huya de la presencia de Dios — ese temor no es el objetivo.</p>
+    <p><strong>"Para que su temor esté" (yir'ato):</strong> el temor reverencial que produce obediencia, que orienta la vida moral, que hace que el ser humano cuide sus acciones ante la presencia de Dios — ese temor es exactamente el propósito de toda la experiencia del Sinaí.</p>
+    <p><strong>La conclusión:</strong> Dios no produjo el terror del Sinaí para asustar a Israel — lo produjo para implantarles una conciencia permanente de su presencia que funcionara como freno del pecado y orientación de la vida. El terror fue temporal; el temor reverencial debía ser permanente.</p>
+  </div>
+
+  <div class="section-label">Sinaí como evento constitutivo</div>
+  <p>El Sinaí no fue solo el momento en que Israel recibió la Ley. Fue el momento en que Israel fue constituido como pueblo del pacto mediante una experiencia de la presencia de Dios tan abrumadora que dejó una marca generacional. Deuteronomio 4:10 lo recordaría para siempre: <em>"El día que estuviste delante de Jehová tu Dios en Horeb... para que aprendiesen a temerme todos los días que viviesen sobre la tierra."</em></p>
+
+  <div class="frase"><p>"Israel no aprendió el temor de Dios en un salón de clases — lo aprendió temblando al pie de una montaña en llamas. El cuerpo recuerda lo que la mente olvida."</p></div>
+</section>
+
+<!-- CAP 4 — TEMOR EN LA TORAH -->
+<section class="chapter" id="c4">
+  <div class="ch-num">Lección 4</div>
+  <h2 class="ch-title">El Temor en la Torah</h2>
+  <div class="ch-sub">Deuteronomio — el libro que más lo enseña</div>
+  <div class="ch-divider"></div>
+
+  <p>Deuteronomio es el libro de la Torah que más concentra la enseñanza sobre el temor de Dios como práctica de vida. Aparece más de 14 veces en formas directas. Esto no es accidental — Deuteronomio es el sermón de despedida de Moisés antes de que Israel entre a la tierra prometida. Antes de entrar, necesitaban entender qué significa vivir ante Dios.</p>
+
+  <div class="section-label">El Shemá — el fundamento del temor</div>
+  <div class="quote">
+    <p>"Oye, Israel: Jehová nuestro Dios, Jehová uno es. Y amarás a Jehová tu Dios de todo tu corazón, y de toda tu alma, y con todas tus fuerzas."</p>
+    <cite>Deuteronomio 6:4-5 — El Shemá: el credo de Israel</cite>
+  </div>
+
+  <p>El Shemá es inseparable del temor de Dios. La unicidad de Dios — <em>Yhwh Echad</em> — es la base teológica del temor. Si Jehová es uno, no hay otro dios que temer, ninguna otra lealtad que compita, ningún otro señorío que reclame la vida. <strong>El monoteísmo de Israel no es solo doctrina — es la base de su temor exclusivo al único Dios.</strong></p>
+
+  <div class="section-label">Las instrucciones de Moisés sobre el temor</div>
+
+  <div class="evento">
+    <div class="ev-titulo">Deuteronomio 4:10</div>
+    <div class="ev-ref">El propósito del Sinaí recordado</div>
+    <p>"El día que estuviste delante de Jehová tu Dios en Horeb... para que aprendiesen a temerme todos los días que viviesen sobre la tierra, y lo enseñasen a sus hijos." El temor de Dios no es una respuesta espontánea — es algo que se <em>aprende</em> y se <em>enseña</em>. Es intergeneracional.</p>
+  </div>
+
+  <div class="evento">
+    <div class="ev-titulo">Deuteronomio 6:13</div>
+    <div class="ev-ref">El temor como lealtad exclusiva</div>
+    <p>"A Jehová tu Dios temerás, y a él solo servirás." El temor de Dios en el contexto del pacto es lealtad exclusiva — el mismo idioma del matrimonio. Como la mujer que "teme a Jehová" en Proverbios 31, Israel está llamado a una lealtad total que no divide su devoción con ningún ídolo.</p>
+  </div>
+
+  <div class="evento">
+    <div class="ev-titulo">Deuteronomio 10:12-13</div>
+    <div class="ev-ref">La síntesis de todo lo que Dios pide</div>
+    <p>"¿Qué pide Jehová tu Dios de ti, sino que temas a Jehová tu Dios, que andes en todos sus caminos, y que le ames, y sirvas a Jehová tu Dios con todo tu corazón y con toda tu alma; que guardes los mandamientos de Jehová y sus estatutos?" — El temor de Dios es presentado aquí como el <em>resumen de toda la demanda divina</em>. Incluye amor, obediencia, servicio — todo nace del temor.</p>
+  </div>
+
+  <div class="section-label">El temor y la prosperidad en la tierra</div>
+  <p>Deuteronomio conecta sistemáticamente el temor de Dios con la vida en la tierra prometida. No es prosperidad mágica — es la lógica del pacto: un pueblo que teme a Dios vive según sus leyes, y vivir según sus leyes produce shalom — bienestar integral — en la comunidad.</p>
+
+  <div class="quote">
+    <p>"¿Quién es el hombre que teme a Jehová? Él le enseñará el camino que ha de escoger. Gozará él de bienestar, y su descendencia heredará la tierra."</p>
+    <cite>Salmo 25:12-13 — El camino del que teme</cite>
+  </div>
+
+  <div class="frase"><p>"Deuteronomio no enseña el temor de Dios como religión — lo enseña como la manera correcta de vivir en un mundo donde Dios es real y activo."</p></div>
+</section>
+
+<!-- CAP 5 — TEMOR EN LOS SALMOS -->
+<section class="chapter" id="c5">
+  <div class="ch-num">Lección 5</div>
+  <h2 class="ch-title">El Temor en los Salmos</h2>
+  <div class="ch-sub">La experiencia doxológica del temor — la alabanza que nace del asombro</div>
+  <div class="ch-divider"></div>
+
+  <p>Si Deuteronomio enseña el temor de Dios como mandato, los Salmos lo <em>viven</em>. El Salterio es el diario espiritual de Israel — y en sus páginas el temor de Dios aparece no como obligación externa sino como respuesta espontánea del corazón que ha conocido a Dios de cerca.</p>
+
+  <div class="section-label">La comunidad de los que temen a Dios</div>
+  <p>En los Salmos aparece repetidamente una expresión: <em>yir'ei Yahweh</em> — "los que temen a Jehová." No es una clase sacerdotal ni un grupo de élite espiritual — es la descripción de todo creyente genuino en Israel. Es la identidad del pueblo fiel.</p>
+
+  <div class="quote">
+    <p>"Temed a Jehová, vosotros sus santos, pues nada les falta a los que le temen."</p>
+    <cite>Salmo 34:9</cite>
+  </div>
+
+  <div class="section-label">Los Salmos que revelan la profundidad del temor</div>
+
+  <div class="evento">
+    <div class="ev-titulo">Salmo 19 — El temor como respuesta a la Palabra</div>
+    <div class="ev-ref">La Ley que produce temor reverencial</div>
+    <p>"El precepto de Jehová es puro, que alumbra los ojos... El temor de Jehová es limpio, que permanece para siempre." (v.8-9). Aquí el "temor de Jehová" es colocado en paralelo con la Torah misma — es casi sinónimo. El temor de Dios no es separable del conocimiento de su Palabra. Quien conoce profundamente la Ley de Dios, inevitablemente desarrolla el temor de Dios.</p>
+  </div>
+
+  <div class="evento">
+    <div class="ev-titulo">Salmo 22 — El temor en el sufrimiento</div>
+    <div class="ev-ref">David en el abandono</div>
+    <p>El Salmo que Jesús citó en la cruz. David clama desde el abandono aparente de Dios y aun así dice (v.23): "Los que le teméis, alabadle... porque no ha despreciado ni menospreciado la aflicción del afligido." El temor de Dios no se disuelve en el sufrimiento — es lo que sostiene la fe cuando Dios parece ausente.</p>
+  </div>
+
+  <div class="evento">
+    <div class="ev-titulo">Salmo 111 — El temor como principio del conocimiento</div>
+    <div class="ev-ref">La base de toda comprensión</div>
+    <p>"El principio de la sabiduría es el temor de Jehová; buen entendimiento tienen todos los que practican sus mandamientos." (v.10). El temor no es el final del camino — es el <em>principio</em>. Es la puerta de entrada a todo conocimiento verdadero. Sin el temor de Dios, la inteligencia más brillante carece del eje que da sentido a todo lo que sabe.</p>
+  </div>
+
+  <div class="evento">
+    <div class="ev-titulo">Salmo 128 — El temor como forma de vida familiar</div>
+    <div class="ev-ref">El hogar del que teme a Dios</div>
+    <p>"Bienaventurado todo aquel que teme a Jehová, que anda en sus caminos... tu mujer será como vid que lleva fruto a los lados de tu casa; tus hijos como plantas de olivo alrededor de tu mesa." El temor de Dios no es solo una postura religiosa individual — se expresa en el tipo de hogar, de familia y de comunidad que el creyente construye.</p>
+  </div>
+
+  <div class="section-label">El asombro — la dimensión doxológica</div>
+  <p>Los Salmos conectan constantemente el temor de Dios con la alabanza. El Salmo 96 llama a "temblar ante su presencia" (v.9) en el contexto de la adoración congregacional. El temor no es solo ética — es también doxología: el estremecimiento gozoso ante la grandeza de Dios que se expresa en adoración.</p>
+
+  <div class="frase"><p>"En los Salmos, el temor de Dios no es una obligación de la religión — es el grito del corazón que ha visto a Dios y no puede guardar silencio."</p></div>
+</section>
+
+<!-- CAP 6 — TEMOR EN LA SABIDURÍA -->
+<section class="chapter" id="c6">
+  <div class="ch-num">Lección 6</div>
+  <h2 class="ch-title">El Temor en la Literatura de Sabiduría</h2>
+  <div class="ch-sub">Proverbios, Job y Eclesiastés — tres ángulos del mismo temor</div>
+  <div class="ch-divider"></div>
+
+  <p>La literatura sapiencial de Israel aborda el temor de Dios desde una perspectiva diferente a la Torah o los Salmos. No habla de teofanías ni de historia de la salvación — habla de la vida cotidiana, de las decisiones prácticas, de la experiencia de vivir en un mundo creado y gobernado por Dios. Y su conclusión es siempre la misma: <strong>el temor de Dios es el eje de todo.</strong></p>
+
+  <div class="section-label">Proverbios — el temor como sabiduría práctica</div>
+
+  <div class="etimo">
+    <div class="e-palabra">Rê'shît chokmah — רֵאשִׁית חׇכְמָה</div>
+    <div class="e-origen">Proverbios 9:10 · "El principio de la sabiduría"</div>
+    <p><em>Rê'shît</em> significa: principio, comienzo, pero también <strong>la parte más importante, lo fundamental, lo que define todo lo demás</strong>. No es solo "primer paso" — es el fundamento sin el cual todo lo que se construya encima carece de base real. El temor de Dios en Proverbios no es una de muchas virtudes — es el suelo del que brotan todas las demás.</p>
+  </div>
+
+  <div class="tip-box">
+    <h4>Las apariciones del temor en Proverbios</h4>
+    <ul>
+      <li><strong>1:7</strong> — "El principio de la sabiduría es el temor de Jehová" — primer versículo programático del libro</li>
+      <li><strong>3:7</strong> — "No seas sabio en tu propia opinión; teme a Jehová, y apártate del mal"</li>
+      <li><strong>8:13</strong> — "El temor de Jehová es aborrecer el mal" — definición ética</li>
+      <li><strong>10:27</strong> — "El temor de Jehová aumenta los días"</li>
+      <li><strong>14:26-27</strong> — "En el temor de Jehová está la fuerte confianza... es manantial de vida"</li>
+      <li><strong>15:33</strong> — "El temor de Jehová es enseñanza de sabiduría"</li>
+      <li><strong>19:23</strong> — "El temor de Jehová es para vida"</li>
+      <li><strong>31:30</strong> — "La mujer que teme a Jehová, ésa será alabada"</li>
+    </ul>
+  </div>
+
+  <div class="section-label">Job — el temor probado en el sufrimiento</div>
+  <div class="quote">
+    <p>"Y Jehová dijo a Satanás: ¿No has considerado a mi siervo Job, que no hay otro como él en la tierra, varón perfecto y recto, temeroso de Dios y apartado del mal?"</p>
+    <cite>Job 1:8 — El temor de Dios como la descripción más alta de un ser humano</cite>
+  </div>
+
+  <p>Job es el estudio de caso más extremo del temor de Dios en toda la literatura bíblica. Dios mismo identifica a Job por su temor — <em>yere Elohim</em> — como su más alta cualidad. Y luego permite que ese temor sea probado hasta el límite. La pregunta del libro de Job es: ¿el temor de Dios genuino subsiste cuando pierde todos sus beneficios? La respuesta de Job es que sí — aunque con lucha, dolor y cuestionamiento honesto. El temor verdadero no es transaccional.</p>
+
+  <div class="section-label">Eclesiastés — el temor como conclusión de la experiencia</div>
+  <div class="quote">
+    <p>"El fin de todo el discurso oído es este: Teme a Dios, y guarda sus mandamientos; porque esto es el todo del hombre."</p>
+    <cite>Eclesiastés 12:13 — Después de explorar todo lo que el mundo ofrece</cite>
+  </div>
+
+  <p>Qohelet (el Predicador) exploró la sabiduría humana, el placer, el trabajo, la filosofía, la muerte — y después de todo, llega a una sola conclusión: <strong>el temor de Dios es el todo del hombre.</strong> No una entre muchas conclusiones — la única conclusión. Todo lo demás es vanidad. Solo el temor de Dios da peso y permanencia a la existencia humana.</p>
+
+  <div class="frase"><p>"Eclesiastés preguntó todo lo que el ser humano puede preguntarse. La respuesta fue una sola palabra: teme a Dios. No porque no encontró nada mejor — sino porque no existe nada mejor."</p></div>
+</section>
+
+<!-- CAP 7 — TEMOR EN LOS PROFETAS -->
+<section class="chapter" id="c7">
+  <div class="ch-num">Lección 7</div>
+  <h2 class="ch-title">El Temor en los Profetas</h2>
+  <div class="ch-sub">La crítica profética a un temor sin corazón</div>
+  <div class="ch-divider"></div>
+
+  <p>Los profetas de Israel no negaron el temor de Dios — lo exigieron con más intensidad que nadie. Pero también hicieron algo igualmente importante: <strong>denunciaron la falsificación del temor.</strong> Israel podía practicar los rituales del temor sin que el temor genuino habitara en su corazón.</p>
+
+  <div class="section-label">La denuncia de Isaías — el temor de labios</div>
+  <div class="quote">
+    <p>"Porque este pueblo se acerca a mí con su boca, y con sus labios me honra, pero su corazón está lejos de mí, y su temor de mí no es más que un mandamiento de hombres que les ha sido enseñado."</p>
+    <cite>Isaías 29:13 — El texto que Jesús citó contra los fariseos (Mateo 15:8-9)</cite>
+  </div>
+
+  <p>Isaías identifica aquí la perversión más sutil del temor de Dios: un temor que es solo conducta aprendida sin convicción interna. Un temor heredado culturalmente sin ser apropiado personalmente. Israel hacía los gestos del temor — los rituales, las fiestas, los sacrificios — pero su corazón estaba lejos. <strong>La forma sin la substancia es idolatría disfrazada de piedad.</strong></p>
+
+  <div class="section-label">Isaías 11 — el Mesías y el temor perfecto</div>
+  <div class="quote">
+    <p>"Y reposará sobre él el Espíritu de Jehová... espíritu de conocimiento y de temor de Jehová. Y le hará entender diligente en el temor de Jehová."</p>
+    <cite>Isaías 11:2-3 — El temor de Dios es una de las siete gracias del Espíritu sobre el Mesías</cite>
+  </div>
+
+  <p>Aquí el temor de Dios no es una respuesta humana débil — es una gracia del Espíritu Santo. El Mesías mismo tendrá el espíritu de temor de Jehová como parte de su dotación divina. Esto revela que el temor perfecto no es producto del esfuerzo humano — es don del Espíritu. Israel esperaba un Mesías que por fin viviría el temor de Dios en su forma más pura.</p>
+
+  <div class="section-label">Jeremías y el nuevo pacto — el temor interiorizado</div>
+  <div class="quote">
+    <p>"Y les daré un corazón, y un camino, para que me teman perpetuamente, para que tengan bien ellos, y sus hijos después de ellos."</p>
+    <cite>Jeremías 32:39 — El temor que Dios mismo implantará</cite>
+  </div>
+
+  <p>El nuevo pacto prometido por Jeremías resuelve el problema que Isaías denunció. El temor de Dios que Israel no pudo sostener en su corazón será dado por Dios mismo — será interiorizado, no impuesto. Esto apunta hacia la obra del Espíritu Santo en el creyente del nuevo pacto.</p>
+
+  <div class="section-label">Malaquías — el temor al final del AT</div>
+  <div class="quote">
+    <p>"Entonces los que temían a Jehová hablaron cada uno a su compañero; y Jehová escuchó y oyó, y fue escrito libro de memoria delante de él para los que temen a Jehová, y para los que piensan en su nombre."</p>
+    <cite>Malaquías 3:16 — El libro de memoria de los que temen</cite>
+  </div>
+
+  <p>El último libro profético del canon hebreo termina con esta imagen preciosa: en medio de un Israel que mayormente se había alejado, hay un remanente — <em>los que temen a Jehová</em> — que se reúnen, que hablan entre sí, que piensan en su nombre. Y Dios los escucha y los registra. El temor de Dios siempre produce una comunidad fiel, aunque sea minoritaria.</p>
+
+  <div class="frase"><p>"Los profetas no denunciaron el temor de Dios — denunciaron su falsificación. La diferencia entre ambos es la diferencia entre la religión y la fe."</p></div>
+</section>
+
+<!-- CAP 8 — TEMOR VS TERROR -->
+<section class="chapter" id="c8">
+  <div class="ch-num">Lección 8</div>
+  <h2 class="ch-title">Temor vs terror — la distinción crucial</h2>
+  <div class="ch-sub">Lo que los rabinos y los teólogos del AT identificaron</div>
+  <div class="ch-divider"></div>
+
+  <p>Los rabinos judíos desarrollaron una distinción teológica que es fundamental para entender el temor de Dios: la diferencia entre <em>yir'at ha'onesh</em> — el temor del castigo — y <em>yir'at ha'romemut</em> — el temor de la majestad. Ambas son formas del temor de Dios, pero en nivel espiritual completamente diferente.</p>
+
+  <div class="compare">
+    <div class="compare-box a">
+      <h4>Yir'at ha'onesh — Temor del castigo</h4>
+      <ul>
+        <li>Miedo a las consecuencias del pecado</li>
+        <li>Motivado por el interés propio</li>
+        <li>Evita el mal para no ser castigado</li>
+        <li>Nivel inferior pero válido como inicio</li>
+        <li>Se disuelve cuando no hay amenaza inmediata</li>
+        <li>El esclavo que obedece para no ser golpeado</li>
+      </ul>
+    </div>
+    <div class="compare-box b">
+      <h4>Yir'at ha'romemut — Temor de la majestad</h4>
+      <ul>
+        <li>Asombro ante quien es Dios</li>
+        <li>Motivado por el reconocimiento de su grandeza</li>
+        <li>Evita el mal porque ofende a un Dios amado</li>
+        <li>Nivel superior — meta de la vida espiritual</li>
+        <li>Crece cuanto más se conoce a Dios</li>
+        <li>El hijo que honra al padre por amor, no por miedo</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="section-label">La evidencia bíblica de los dos niveles</div>
+  <p>Esta distinción no es solo rabínica — está en el texto. Éxodo 20:20 ya la insinúa: el terror de Sinaí (pachad) debía transformarse en temor reverencial (yir'ah) que permaneciera. El terror fue el detonante — la reverencia es el destino.</p>
+
+  <div class="quote">
+    <p>"No hay temor en el amor; antes el perfecto amor echa fuera el temor; porque el temor lleva en sí castigo. De donde el que teme, no ha sido perfeccionado en el amor."</p>
+    <cite>1 Juan 4:18 — Juan distingue el temor del castigo del amor maduro</cite>
+  </div>
+
+  <p>Juan en el Nuevo Testamento confirma la misma distinción. El amor maduro expulsa el temor del castigo. Pero el temor reverencial — el asombro ante la majestad de Dios — no solo coexiste con el amor sino que es su expresión más profunda. Temer a Dios en su majestad es la respuesta correcta del ser que ha sido amado por un Dios infinitamente mayor que él.</p>
+
+  <div class="section-label">Job — el hombre que llegó al nivel superior</div>
+  <p>La trayectoria de Job en el libro es exactamente este movimiento: comenzó con un temor legítimo pero que tenía elementos transaccionales (Job 1:5 — ofrecía sacrificios preventivos). Al final del libro, después de ver a Dios desde el torbellino, Job dice: "De oídas te había oído; mas ahora mis ojos te ven." (42:5). El temor previo era válido pero incompleto. El que viene después de la visión directa de Dios es el temor de la majestad.</p>
+
+  <div class="frase"><p>"El temor que huye del castigo produce religión. El temor que se inclina ante la majestad produce adoración. El primero es el inicio del camino; el segundo es la meta."</p></div>
+</section>
+
+<!-- CAP 9 — FRUTOS DEL TEMOR -->
+<section class="chapter" id="c9">
+  <div class="ch-num">Lección 9</div>
+  <h2 class="ch-title">Los frutos del temor de Dios</h2>
+  <div class="ch-sub">Lo que produce en Israel — y en cualquier creyente</div>
+  <div class="ch-divider"></div>
+
+  <p>El temor de Dios no es un estado pasivo de reverencia interna. Produce frutos concretos, visibles y transformadores. El Antiguo Testamento los describe con gran detalle — son la evidencia de que el temor es genuino.</p>
+
+  <div class="section-label">Frutos teológicos</div>
+
+  <ul class="pasos">
+    <li>
+      <div class="paso-content">
+        <h5>Sabiduría — Proverbios 9:10</h5>
+        <p>El temor es el principio de la sabiduría. No la primera de muchas etapas — el fundamento sin el cual la sabiduría no puede construirse. El que teme a Dios tiene el eje correcto para evaluar la realidad: Dios es real, su Palabra es verdad, su justicia es cierta. Desde ese eje, todo lo demás se puede evaluar correctamente.</p>
+      </div>
+    </li>
+    <li>
+      <div class="paso-content">
+        <h5>Conocimiento de Dios — Proverbios 2:5</h5>
+        <p>"Entonces entenderás el temor de Jehová, y hallarás el conocimiento de Dios." El temor y el conocimiento de Dios son inseparables — el uno produce el otro. No se puede conocer verdaderamente a Dios sin el temor, y no se puede temer genuinamente sin conocerlo.</p>
+      </div>
+    </li>
+    <li>
+      <div class="paso-content">
+        <h5>Odio al mal — Proverbios 8:13</h5>
+        <p>"El temor de Jehová es aborrecer el mal." El temor genuino de Dios produce una aversión activa al pecado — no solo como comportamiento externo sino como disposición del corazón. El que teme a Dios no solo evita el mal porque le conviene — lo aborrece porque ama lo que Dios ama y odia lo que Dios odia.</p>
+      </div>
+    </li>
+    <li>
+      <div class="paso-content">
+        <h5>Confianza y seguridad — Proverbios 14:26</h5>
+        <p>"En el temor de Jehová está la fuerte confianza." La seguridad del creyente no nace de sus propias fuerzas ni de las circunstancias favorables — nace de saber que está orientado hacia el único Dios soberano. Paradójicamente, el temor de Dios produce ausencia de temor a todo lo demás.</p>
+      </div>
+    </li>
+  </ul>
+
+  <div class="section-label">Frutos éticos</div>
+  <ul class="list-yes">
+    <li><strong>Honestidad en el comercio:</strong> Levítico 19:14 — "delante del ciego no pondrás tropiezo, sino que temerás a tu Dios." El temor de Dios es el fundamento de la ética en los negocios.</li>
+    <li><strong>Trato justo a los vulnerables:</strong> Levítico 19:32 — "delante de las canas te levantarás, y honrarás el rostro del anciano, y de tu Dios tendrás temor." El respeto a los mayores y a los débiles nace del temor de Dios.</li>
+    <li><strong>Integridad cuando nadie mira:</strong> Nehemías 5:15 — Nehemías dice no abusar del poder "a causa del temor de Dios." El temor de Dios produce integridad en el ejercicio de la autoridad.</li>
+    <li><strong>Valentía para hacer lo correcto:</strong> Las parteras hebreas de Éxodo 1:17 desobedecieron al Faraón "porque las parteras temían a Dios." El temor de Dios produce valentía ante los poderes humanos — porque la única autoridad que realmente importa ya fue reconocida.</li>
+  </ul>
+
+  <div class="section-label">Frutos relacionales y comunitarios</div>
+  <div class="quote">
+    <p>"Bienaventurado todo aquel que teme a Jehová, que anda en sus caminos. Cuando comieres el trabajo de tus manos, bienaventurado serás, y te irá bien."</p>
+    <cite>Salmo 128:1-2 — El temor de Dios produce shalom en todas las dimensiones de la vida</cite>
+  </div>
+
+  <div class="frase"><p>"El temor de Dios no produce creyentes temerosos del mundo — produce personas libres para vivir correctamente porque el único juicio que importa ya está claro."</p></div>
+</section>
+
+<!-- CAP 10 — DEL AT AL NT -->
+<section class="chapter" id="c10">
+  <div class="ch-num">Lección 10</div>
+  <h2 class="ch-title">Del Antiguo al Nuevo Testamento</h2>
+  <div class="ch-sub">El mismo temor — profundizado en Cristo</div>
+  <div class="ch-divider"></div>
+
+  <p>El temor de Dios no es una doctrina obsoleta del Antiguo Testamento que el Nuevo Testamento superó. Es una realidad que el Nuevo Testamento profundiza, enriquece y coloca en el contexto de la revelación plena en Jesucristo.</p>
+
+  <div class="section-label">Continuidad — el Nuevo Testamento continúa el mandato</div>
+
+  <div class="quote">
+    <p>"Así que, amados, puesto que tenemos tales promesas, limpiémonos de toda contaminación de carne y de espíritu, perfeccionando la santidad en el temor de Dios."</p>
+    <cite>2 Corintios 7:1 — Pablo usa el temor de Dios como motivación de santidad</cite>
+  </div>
+
+  <div class="quote">
+    <p>"Ocupaos en vuestra salvación con temor y temblor."</p>
+    <cite>Filipenses 2:12 — El temor como postura de toda la vida cristiana</cite>
+  </div>
+
+  <div class="quote">
+    <p>"Y si invocáis por Padre a aquel que sin acepción de personas juzga según la obra de cada uno, conducíos en temor todo el tiempo de vuestra peregrinación."</p>
+    <cite>1 Pedro 1:17 — El temor de Dios como orientación permanente del creyente</cite>
+  </div>
+
+  <div class="section-label">Profundidad — el NT añade dimensiones nuevas</div>
+
+  <div class="tip-box">
+    <h4>Lo que el NT añade al temor del AT</h4>
+    <p><strong>El Espíritu Santo como dador del temor:</strong> Isaías 11:2-3 prometía que el Espíritu traería el temor sobre el Mesías. Pentecostés cumple esto en toda la iglesia — el temor de Dios ya no es solo mandato externo sino fruto del Espíritu interior (Hechos 9:31 — "la iglesia andaba en el temor del Señor").</p>
+    <p><strong>El Padre revelado en Cristo:</strong> Jesucristo reveló la paternidad de Dios con una profundidad que el AT no alcanzó. El temor se enriquece: es el temor del hijo que ama al Padre, no solo el temor del siervo ante el amo.</p>
+    <p><strong>La propiciación como base:</strong> La ira de Dios que justificaba el temor más profundo fue satisfecha en Cristo. El creyente del NT puede temer a Dios con confianza plena — porque la propiciación garantiza que ese temor no termina en condena.</p>
+  </div>
+
+  <div class="section-label">La iglesia primitiva y el temor de Dios</div>
+  <div class="quote">
+    <p>"Entonces las iglesias tenían paz por toda Judea, Galilea y Samaria; y eran edificadas, andando en el temor del Señor, y se acrecentaban fortalecidas por el Espíritu Santo."</p>
+    <cite>Hechos 9:31 — El temor del Señor como característica de la iglesia que crece</cite>
+  </div>
+
+  <p>El texto de Hechos 9:31 es extraordinariamente rico: la iglesia en crecimiento tiene tres características simultáneas — <strong>paz, temor del Señor y fortaleza del Espíritu Santo</strong>. No son contradictorias. La paz y el temor coexisten perfectamente en el creyente maduro: paz porque está reconciliado con Dios, temor porque reconoce quién es ese Dios con quien está reconciliado.</p>
+
+  <div class="section-label">El temor final — Apocalipsis</div>
+  <div class="quote">
+    <p>"Temed a Dios, y dadle gloria, porque la hora de su juicio ha llegado; y adorad a aquel que hizo el cielo y la tierra, el mar y las fuentes de las aguas."</p>
+    <cite>Apocalipsis 14:7 — El evangelio eterno que el ángel proclama al mundo</cite>
+  </div>
+
+  <p>El último libro de la Biblia vuelve al primero en este punto: el "evangelio eterno" que debe ser proclamado a toda nación incluye el mandato de temer a Dios. Desde Sinaí hasta el Apocalipsis, desde Moisés hasta Juan en Patmos — <strong>el temor de Dios es el inicio y el marco de toda relación genuina con el Dios viviente.</strong></p>
+
+  <div class="gold-box">
+    <h4>El temor de Dios — síntesis teológica completa</h4>
+    <p><strong>Su naturaleza:</strong> respuesta total del ser humano (mente, corazón, voluntad) ante la realidad del Dios santo, poderoso y justo</p>
+    <p><strong>Su origen:</strong> teofanías que revelan quién es Dios — Sinaí como evento constitutivo de Israel</p>
+    <p><strong>Su esencia:</strong> no terror del castigo (yir'at ha'onesh) sino reverencia ante la majestad (yir'at ha'romemut)</p>
+    <p><strong>Su función en Israel:</strong> fundamento del pacto, eje de la ética, principio de la sabiduría, motivación de la obediencia</p>
+    <p><strong>Su pervivencia:</strong> desde Génesis hasta Apocalipsis, desde Moisés hasta Pablo — el mismo temor profundizado en cada etapa de la revelación</p>
+    <p><strong>Su destino:</strong> no es abolido en el NT — es perfeccionado en el contexto del amor y la paternidad de Dios revelados en Cristo</p>
+  </div>
+
+  <div class="frase"><p>"El temor de Dios no es el primer paso de la fe que eventualmente se abandona. Es la postura permanente del que sabe quién es Dios — y que ningún otro dios lo es."</p></div>
+</section>
+
+</main>
+
+<section class="epilogo">
+  <span class="big">TEMED</span>
+  <h2>El principio que no tiene final</h2>
+  <p>Israel aprendió el temor de Dios al pie del Sinaí en llamas. Lo cantó en los Salmos. Lo vivió en Proverbios. Lo perdió en la idolatría. Los profetas lo reclamaron. Y el Mesías lo cumplió perfectamente.</p>
+  <p>La iglesia del siglo XXI no necesita menos temor de Dios — necesita el temor correcto: el asombro ante quien Él es, la reverencia que orienta cada decisión, la conciencia de su presencia que transforma lo cotidiano en sagrado.</p>
+  <div class="quote" style="max-width:480px;margin:32px auto;">
+    <p>"El principio de la sabiduría es el temor de Jehová; los insensatos desprecian la sabiduría y la enseñanza."</p>
+    <cite>Proverbios 1:7 — Primera y última palabra de Proverbios sobre el tema</cite>
+  </div>
+  <div class="firma">El Temor de Dios · Estudio Teológico · Predicador IPUC</div>
+</section>
+
+</div>
+
+<script>
+const obs=new IntersectionObserver(e=>{e.forEach(el=>{if(el.isIntersecting)el.target.classList.add('visible');});},{threshold:.08});
+document.querySelectorAll('.chapter').forEach(e=>obs.observe(e));
+const nav=document.getElementById('sidenav');
+const wrap=document.getElementById('pageWrap');
+const isMobile=()=>window.innerWidth<=768;
+function toggleNav(){
+  if(isMobile()){nav.classList.toggle('show');}
+  else{nav.classList.toggle('hidden');wrap.classList.toggle('full');}
+}
+const secs=document.querySelectorAll('section[id]');
+const links=document.querySelectorAll('nav a');
+window.addEventListener('scroll',()=>{
+  let cur='';
+  secs.forEach(s=>{if(window.scrollY>=s.offsetTop-200)cur=s.id;});
+  links.forEach(a=>{a.classList.remove('active');if(a.getAttribute('href')==='#'+cur)a.classList.add('active');});
+});
+links.forEach(a=>{a.addEventListener('click',()=>{if(isMobile())nav.classList.remove('show');});});
+document.addEventListener('click',e=>{
+  if(isMobile()&&nav.classList.contains('show')&&!nav.contains(e.target)&&!e.target.closest('.nav-toggle')){nav.classList.remove('show');}
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,1461 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>El Gran Yo Soy — Osmar Lugo</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Cinzel:wght@400;600&family=EB+Garamond:ital,wght@0,400;0,500;1,400;1,500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --gold:    #C9A84C;
+  --gold2:   #E8C97A;
+  --cream:   #FAF6EF;
+  --cream2:  #F0E8D5;
+  --dark:    #0A0E17;
+  --navy:    #0D1B2A;
+  --navy2:   #162035;
+  --teal:    #1A7A8A;
+  --text:    #EDE8DF;
+  --muted:   rgba(237,232,223,0.55);
+  --red:     #8B1A1A;
+  --border:  rgba(201,168,76,0.2);
+}
+
+*{ margin:0; padding:0; box-sizing:border-box; }
+html{ scroll-behavior:smooth; }
+
+body{
+  background: var(--dark);
+  color: var(--text);
+  font-family: 'EB Garamond', Georgia, serif;
+  line-height: 1.8;
+  overflow-x: hidden;
+}
+
+/* ══════════════════════════════
+   PORTADA
+══════════════════════════════ */
+.cover{
+  min-height: 100vh;
+  background: linear-gradient(165deg, #0D1B2A 0%, #0A0E17 55%, #1a0a00 100%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 80px 32px 60px;
+  position: relative;
+  overflow: hidden;
+}
+/* Rayos de luz */
+.cover::before{
+  content:'';
+  position:absolute;
+  top:-10%; left:50%;
+  transform:translateX(-50%);
+  width:600px; height:600px;
+  background: conic-gradient(
+    from -20deg at 50% 0%,
+    transparent 0deg,
+    rgba(201,168,76,0.06) 10deg,
+    transparent 20deg,
+    rgba(201,168,76,0.04) 30deg,
+    transparent 40deg,
+    rgba(201,168,76,0.06) 50deg,
+    transparent 60deg
+  );
+  pointer-events:none;
+}
+.cover::after{
+  content:'';
+  position:absolute;
+  top:0; left:50%;
+  transform:translateX(-50%);
+  width:2px; height:120px;
+  background: linear-gradient(to bottom, var(--gold), transparent);
+}
+
+.cover-dove{
+  font-size: 52px;
+  margin-bottom: 16px;
+  animation: floatDove 4s ease-in-out infinite;
+  filter: drop-shadow(0 0 20px rgba(201,168,76,0.5));
+}
+@keyframes floatDove{
+  0%,100%{ transform:translateY(0); }
+  50%{ transform:translateY(-10px); }
+}
+
+.cover-eyebrow{
+  font-family: 'Cinzel', serif;
+  font-size: 10px;
+  letter-spacing: 6px;
+  color: var(--gold);
+  text-transform: uppercase;
+  margin-bottom: 28px;
+  opacity: 0;
+  animation: fadeUp .8s .2s ease forwards;
+}
+
+.cover-title{
+  font-family: 'Cinzel Decorative', serif;
+  font-size: clamp(36px, 8vw, 72px);
+  font-weight: 700;
+  color: #fff;
+  line-height: 1.05;
+  margin-bottom: 6px;
+  text-shadow: 0 0 60px rgba(201,168,76,0.3);
+  opacity: 0;
+  animation: fadeUp .8s .3s ease forwards;
+}
+.cover-title span{
+  display: block;
+  font-family: 'Cinzel Decorative', serif;
+  font-size: clamp(48px, 12vw, 100px);
+  font-weight: 700;
+  background: linear-gradient(135deg, #E8C97A 0%, #C9A84C 50%, #fff8e0 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  line-height: 1;
+  margin-bottom: 12px;
+}
+
+.cover-subtitle{
+  font-family: 'Cinzel', serif;
+  font-size: clamp(11px, 2vw, 14px);
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: rgba(237,232,223,0.6);
+  margin-bottom: 40px;
+  line-height: 1.6;
+  opacity: 0;
+  animation: fadeUp .8s .4s ease forwards;
+}
+
+.cover-ornament{
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 32px;
+  opacity: 0;
+  animation: fadeUp .8s .45s ease forwards;
+}
+.cover-ornament .oline{
+  height: 1px; width: 60px;
+  background: linear-gradient(to right, transparent, var(--gold));
+}
+.cover-ornament .oline.r{
+  background: linear-gradient(to left, transparent, var(--gold));
+}
+.cover-ornament .cross{ color: var(--gold); font-size: 16px; }
+
+.cover-verse{
+  font-style: italic;
+  font-size: 15px;
+  color: var(--gold2);
+  max-width: 420px;
+  line-height: 1.7;
+  margin-bottom: 48px;
+  opacity: 0;
+  animation: fadeUp .8s .5s ease forwards;
+}
+
+.cover-author{
+  font-family: 'Cinzel', serif;
+  font-size: 13px;
+  letter-spacing: 4px;
+  color: rgba(237,232,223,0.5);
+  text-transform: uppercase;
+  opacity: 0;
+  animation: fadeUp .8s .6s ease forwards;
+}
+.cover-author strong{ color: var(--gold); }
+
+/* Scroll hint */
+.scroll-hint{
+  position: absolute;
+  bottom: 36px; left:50%;
+  transform:translateX(-50%);
+  display:flex; flex-direction:column; align-items:center; gap:8px;
+  opacity:0;
+  animation: fadeUp .8s .9s ease forwards;
+}
+.scroll-hint span{
+  font-family:'Cinzel',serif;
+  font-size:8px; letter-spacing:3px;
+  color:rgba(237,232,223,0.3);
+  text-transform:uppercase;
+}
+.scroll-bar{
+  width:1px; height:44px;
+  background: linear-gradient(to bottom, var(--gold), transparent);
+  animation: scrollAnim 2s infinite;
+}
+@keyframes scrollAnim{
+  0%{ opacity:.2; transform:scaleY(0); transform-origin:top; }
+  50%{ opacity:1; transform:scaleY(1); }
+  100%{ opacity:0; transform:scaleY(1); transform-origin:bottom; }
+}
+
+/* ══════════════════════════════
+   ÍNDICE
+══════════════════════════════ */
+.toc{
+  background: var(--navy);
+  padding: 80px 32px;
+  text-align: center;
+  position: relative;
+}
+.toc::before{
+  content:'';
+  position:absolute;
+  top:0; left:0; right:0;
+  height:2px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+}
+.section-label{
+  font-family:'Cinzel',serif;
+  font-size:9px; letter-spacing:5px; text-transform:uppercase;
+  color:var(--gold);
+  display:block; margin-bottom:16px;
+}
+.toc h2{
+  font-family:'Cinzel Decorative',serif;
+  font-size: clamp(22px,4vw,36px);
+  font-weight:400;
+  color:#fff;
+  margin-bottom:48px;
+}
+.toc-grid{
+  display:grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px,1fr));
+  gap:14px;
+  max-width:900px;
+  margin:0 auto;
+}
+.toc-item{
+  background: rgba(255,255,255,0.03);
+  border:1px solid var(--border);
+  border-left:3px solid var(--gold);
+  border-radius:3px;
+  padding:16px 20px;
+  text-align:left;
+  text-decoration:none;
+  display:block;
+  transition: background .2s, transform .2s;
+}
+.toc-item:hover{
+  background: rgba(201,168,76,0.07);
+  transform: translateX(4px);
+}
+.toc-num{
+  font-family:'Cinzel',serif;
+  font-size:9px; letter-spacing:2px;
+  color:var(--gold); opacity:.6;
+  display:block; margin-bottom:6px;
+  text-transform:uppercase;
+}
+.toc-name{
+  font-family:'EB Garamond',serif;
+  font-size:16px; font-weight:500;
+  color:#fff; line-height:1.3;
+}
+.toc-sub{
+  font-size:12px;
+  color:var(--muted);
+  margin-top:4px;
+  display:block;
+}
+
+/* ══════════════════════════════
+   PRÓLOGO
+══════════════════════════════ */
+.prolog{
+  background: linear-gradient(180deg, var(--navy) 0%, var(--dark) 100%);
+  padding: 100px 32px;
+  text-align:center;
+  position:relative;
+}
+.prolog-inner{
+  max-width:680px;
+  margin:0 auto;
+}
+.prolog h2{
+  font-family:'Cinzel Decorative',serif;
+  font-size: clamp(20px,4vw,32px);
+  font-weight:400;
+  color:#fff;
+  margin-bottom:8px;
+}
+.prolog-sub{
+  font-family:'Cinzel',serif;
+  font-size:11px; letter-spacing:3px;
+  color:var(--gold); opacity:.7;
+  display:block; margin-bottom:32px;
+  text-transform:uppercase;
+}
+.hero-verse{
+  font-family:'EB Garamond',serif;
+  font-size: clamp(20px,3.5vw,28px);
+  font-style:italic;
+  color:var(--gold2);
+  line-height:1.5;
+  margin-bottom:8px;
+}
+.hero-ref{
+  font-family:'Cinzel',serif;
+  font-size:10px; letter-spacing:2px;
+  color:var(--gold); opacity:.6;
+  display:block; margin-bottom:36px;
+}
+.prolog p{
+  font-size:17px;
+  color:rgba(237,232,223,.75);
+  line-height:1.9;
+  margin-bottom:16px;
+  text-align:justify;
+}
+
+/* ══════════════════════════════
+   CAPÍTULOS
+══════════════════════════════ */
+.chapter{
+  padding: 100px 32px;
+  position:relative;
+  max-width:860px;
+  margin:0 auto;
+  border-bottom:1px solid var(--border);
+}
+
+/* Número gigante decorativo */
+.chap-bg-num{
+  position:absolute;
+  top:60px; right:-10px;
+  font-family:'Cinzel Decorative',serif;
+  font-size:180px;
+  font-weight:700;
+  color:rgba(201,168,76,0.04);
+  line-height:1;
+  pointer-events:none;
+  user-select:none;
+}
+
+.chap-eyebrow{
+  font-family:'Cinzel',serif;
+  font-size:9px; letter-spacing:5px;
+  color:var(--gold); opacity:.7;
+  text-transform:uppercase;
+  display:block; margin-bottom:16px;
+}
+.chap-title{
+  font-family:'Cinzel Decorative',serif;
+  font-size: clamp(22px,4vw,38px);
+  font-weight:400;
+  color:#fff;
+  line-height:1.15;
+  margin-bottom:12px;
+}
+.chap-title em{
+  font-family:'EB Garamond',serif;
+  font-style:italic;
+  color:var(--gold2);
+}
+
+.chap-rule{
+  height:1px;
+  background: linear-gradient(to right, var(--gold), transparent);
+  margin-bottom:36px;
+  opacity:.5;
+}
+
+/* Intro capítulo */
+.chap-intro{
+  background: rgba(201,168,76,0.05);
+  border-left:3px solid var(--gold);
+  border-radius:0 4px 4px 0;
+  padding:20px 24px;
+  margin-bottom:36px;
+}
+.chap-intro p{
+  font-size:16.5px;
+  font-style:italic;
+  color:rgba(237,232,223,.85);
+  line-height:1.85;
+  margin:0;
+}
+
+/* Subtítulos */
+.sub-title{
+  font-family:'Cinzel',serif;
+  font-size:11px; letter-spacing:3px;
+  color:var(--teal);
+  text-transform:uppercase;
+  margin:40px 0 16px;
+  display:flex; align-items:center; gap:12px;
+}
+.sub-title::after{
+  content:'';
+  flex:1; height:1px;
+  background:linear-gradient(to right, var(--teal), transparent);
+  opacity:.4;
+}
+
+/* Texto cuerpo */
+.body-p{
+  font-size:16px;
+  color:rgba(237,232,223,.75);
+  line-height:1.9;
+  margin-bottom:16px;
+}
+.body-p strong{ color:rgba(237,232,223,.95); font-weight:500; }
+.body-p em{ font-style:italic; color:rgba(237,232,223,.88); }
+
+/* Versículo */
+.verse-card{
+  border-left:3px solid var(--gold);
+  background:rgba(201,168,76,.06);
+  padding:20px 24px;
+  margin:28px 0;
+  border-radius:0 4px 4px 0;
+}
+.verse-card .vtext{
+  font-family:'EB Garamond',serif;
+  font-size:18px;
+  font-style:italic;
+  color:var(--gold2);
+  line-height:1.6;
+  margin-bottom:8px;
+}
+.verse-card .vref{
+  font-family:'Cinzel',serif;
+  font-size:9px; letter-spacing:2px;
+  color:var(--gold); opacity:.65;
+  display:block;
+}
+
+/* Exégesis */
+.exeg-box{
+  background:rgba(26,122,138,.1);
+  border:1px solid rgba(26,122,138,.3);
+  border-top:2px solid var(--teal);
+  border-radius:3px;
+  padding:22px 26px;
+  margin:24px 0;
+}
+.exeg-box .exeg-label{
+  font-family:'Cinzel',serif;
+  font-size:9px; letter-spacing:3px;
+  color:var(--teal); text-transform:uppercase;
+  display:block; margin-bottom:12px;
+}
+.exeg-box p{
+  font-size:15px;
+  color:rgba(237,232,223,.8);
+  line-height:1.75;
+  margin-bottom:8px;
+}
+.exeg-box p:last-child{ margin:0; }
+.exeg-box ul{
+  padding-left:0; list-style:none;
+  margin-top:8px;
+}
+.exeg-box ul li{
+  font-size:15px;
+  color:rgba(237,232,223,.75);
+  padding:5px 0 5px 18px;
+  position:relative;
+  line-height:1.6;
+  border-bottom:1px solid rgba(255,255,255,.04);
+}
+.exeg-box ul li::before{
+  content:'→';
+  color:var(--teal);
+  position:absolute; left:0;
+  font-size:13px;
+}
+
+/* Lista Yo Soy */
+.yosoy-grid{
+  display:grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px,1fr));
+  gap:12px;
+  margin:24px 0;
+}
+.yosoy-card{
+  background:rgba(255,255,255,.03);
+  border:1px solid var(--border);
+  border-top:2px solid var(--gold);
+  border-radius:3px;
+  padding:16px 18px;
+}
+.yosoy-card .ys-label{
+  font-family:'Cinzel',serif;
+  font-size:9px; letter-spacing:2px;
+  color:var(--gold); text-transform:uppercase;
+  display:block; margin-bottom:8px;
+}
+.yosoy-card .ys-text{
+  font-size:15px;
+  color:rgba(237,232,223,.75);
+  line-height:1.6;
+}
+.yosoy-card .ys-ref{
+  font-family:'Cinzel',serif;
+  font-size:10px; color:var(--muted);
+  display:block; margin-top:6px;
+}
+
+/* Lista Juan Yo Soy */
+.juan-list{
+  counter-reset:juan;
+  list-style:none;
+  margin:20px 0;
+  display:grid;
+  gap:10px;
+}
+.juan-list li{
+  counter-increment:juan;
+  background:rgba(255,255,255,.03);
+  border:1px solid var(--border);
+  border-radius:3px;
+  padding:14px 16px 14px 54px;
+  position:relative;
+  font-size:15.5px;
+  color:rgba(237,232,223,.8);
+  line-height:1.5;
+}
+.juan-list li::before{
+  content:counter(juan);
+  position:absolute; left:16px; top:50%;
+  transform:translateY(-50%);
+  font-family:'Cinzel Decorative',serif;
+  font-size:20px;
+  color:var(--gold); opacity:.5;
+}
+.juan-list li strong{
+  color:var(--gold2);
+}
+.juan-list .jref{
+  font-family:'Cinzel',serif;
+  font-size:10px; color:var(--muted);
+  display:inline-block; margin-left:8px;
+}
+
+/* Nombres Jehová */
+.jehova-grid{
+  display:grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px,1fr));
+  gap:10px;
+  margin:20px 0;
+}
+.jeh-item{
+  background:rgba(201,168,76,.05);
+  border:1px solid var(--border);
+  border-left:3px solid var(--gold);
+  border-radius:0 3px 3px 0;
+  padding:12px 14px;
+}
+.jeh-name{
+  font-family:'Cinzel',serif;
+  font-size:11px; color:var(--gold);
+  font-weight:600; display:block; margin-bottom:4px;
+}
+.jeh-meaning{
+  font-size:13.5px;
+  color:rgba(237,232,223,.7);
+  line-height:1.45;
+}
+.jeh-ref{
+  font-size:11px;
+  color:var(--muted); display:block; margin-top:3px;
+  font-family:'Cinzel',serif;
+}
+
+/* Frase destacada */
+.highlight-phrase{
+  font-family:'Cinzel Decorative',serif;
+  font-size: clamp(18px,3vw,26px);
+  font-weight:400;
+  color:#fff;
+  text-align:center;
+  padding:40px 32px;
+  margin:40px 0;
+  position:relative;
+  line-height:1.4;
+  letter-spacing:.5px;
+}
+.highlight-phrase::before,
+.highlight-phrase::after{
+  content:'';
+  display:block;
+  width:50px; height:1px;
+  background:var(--gold);
+  margin:16px auto;
+}
+.highlight-phrase em{
+  display:block;
+  font-family:'EB Garamond',serif;
+  font-style:italic;
+  font-size: clamp(14px,2vw,17px);
+  color:var(--gold2);
+  margin-top:8px;
+  letter-spacing:0;
+}
+
+/* Aplicación homilética */
+.aplicacion{
+  background: linear-gradient(135deg, var(--navy2) 0%, var(--dark) 100%);
+  border-radius:4px;
+  padding:28px 32px;
+  margin:32px 0;
+  position:relative;
+  overflow:hidden;
+}
+.aplicacion::before{
+  content:'';
+  position:absolute;
+  top:0; left:0; right:0;
+  height:2px;
+  background: linear-gradient(90deg, var(--red), var(--gold), var(--red));
+}
+.aplicacion .ap-label{
+  font-family:'Cinzel',serif;
+  font-size:9px; letter-spacing:3px;
+  color:var(--gold); text-transform:uppercase;
+  display:block; margin-bottom:16px;
+}
+.aplicacion ul{
+  list-style:none; padding:0;
+  display:grid; gap:10px;
+}
+.aplicacion ul li{
+  font-size:15px;
+  color:rgba(237,232,223,.8);
+  padding:10px 12px 10px 42px;
+  background:rgba(255,255,255,.03);
+  border-radius:3px;
+  position:relative;
+  line-height:1.6;
+  border:1px solid rgba(255,255,255,.05);
+}
+.aplicacion ul li .emoji{
+  position:absolute; left:12px; top:10px;
+  font-size:16px;
+}
+.aplicacion ul li strong{
+  color:var(--gold2); font-weight:500;
+}
+
+/* Conclusión capítulo */
+.chap-conclusion{
+  background:rgba(201,168,76,.05);
+  border:1px solid var(--border);
+  border-top:2px solid var(--gold);
+  border-radius:3px;
+  padding:24px 28px;
+  margin:32px 0 0;
+}
+.chap-conclusion .cc-label{
+  font-family:'Cinzel',serif;
+  font-size:9px; letter-spacing:3px;
+  color:var(--gold); text-transform:uppercase;
+  display:block; margin-bottom:14px;
+}
+.chap-conclusion p{
+  font-size:15.5px;
+  color:rgba(237,232,223,.82);
+  line-height:1.75;
+  margin-bottom:10px;
+}
+.chap-conclusion p:last-child{ margin:0; }
+
+/* ══════════════════════════════
+   PÁGINA FINAL
+══════════════════════════════ */
+.final-page{
+  min-height:100vh;
+  background: linear-gradient(160deg, #1a0a00 0%, var(--dark) 50%, var(--navy) 100%);
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  padding:80px 32px;
+  position:relative;
+  overflow:hidden;
+}
+.final-page::before{
+  content:'';
+  position:absolute;
+  inset:0;
+  background: radial-gradient(ellipse 60% 60% at 50% 50%, rgba(201,168,76,.08), transparent 70%);
+  pointer-events:none;
+}
+.final-page h2{
+  font-family:'Cinzel Decorative',serif;
+  font-size: clamp(28px,6vw,56px);
+  font-weight:700;
+  background: linear-gradient(135deg, #E8C97A 0%, #C9A84C 50%, #fff8e0 100%);
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  background-clip:text;
+  margin-bottom:28px;
+  line-height:1.1;
+}
+.final-page .final-verse{
+  max-width:540px;
+  margin:0 auto 40px;
+}
+.final-page .final-verse p{
+  font-family:'EB Garamond',serif;
+  font-size: clamp(16px,3vw,22px);
+  font-style:italic;
+  color:var(--gold2);
+  line-height:1.6;
+  margin-bottom:10px;
+}
+.final-page .final-verse span{
+  font-family:'Cinzel',serif;
+  font-size:10px; letter-spacing:2px;
+  color:var(--gold); opacity:.6;
+  display:block;
+}
+.final-declaration{
+  font-family:'Cinzel',serif;
+  font-size: clamp(16px,3vw,22px);
+  letter-spacing:4px;
+  color:#fff;
+  margin-bottom:8px;
+  text-transform:uppercase;
+}
+.final-sub{
+  font-family:'Cinzel',serif;
+  font-size:12px; letter-spacing:3px;
+  color:var(--gold); opacity:.6;
+  text-transform:uppercase;
+}
+
+footer{
+  text-align:center;
+  padding:36px;
+  background:var(--dark);
+  font-family:'Cinzel',serif;
+  font-size:9px; letter-spacing:4px;
+  color:rgba(237,232,223,.15);
+  text-transform:uppercase;
+  border-top:1px solid var(--border);
+}
+
+/* ══════════════════════════════
+   ANIMACIONES / SCROLL
+══════════════════════════════ */
+@keyframes fadeUp{
+  from{opacity:0;transform:translateY(20px);}
+  to{opacity:1;transform:translateY(0);}
+}
+
+.reveal{
+  opacity:0;
+  transform:translateY(24px);
+  transition: opacity .7s ease, transform .7s ease;
+}
+.reveal.visible{
+  opacity:1;
+  transform:translateY(0);
+}
+
+/* NAV PUNTOS */
+.sidenav{
+  position:fixed;
+  right:20px; top:50%;
+  transform:translateY(-50%);
+  z-index:100;
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+  opacity:0;
+  transition:opacity .3s;
+}
+.sidenav.show{ opacity:1; }
+.sidenav a{
+  width:6px; height:6px;
+  border-radius:50%;
+  background:rgba(237,232,223,.2);
+  border:1px solid rgba(237,232,223,.3);
+  display:block;
+  text-decoration:none;
+  transition:all .3s;
+  position:relative;
+}
+.sidenav a:hover,.sidenav a.active{
+  background:var(--gold);
+  border-color:var(--gold);
+  transform:scale(1.6);
+}
+.sidenav a::after{
+  content:attr(data-tip);
+  position:absolute;
+  right:16px; top:50%;
+  transform:translateY(-50%);
+  font-family:'Cinzel',serif;
+  font-size:8px; letter-spacing:2px;
+  color:var(--gold2);
+  white-space:nowrap;
+  opacity:0;
+  transition:opacity .2s;
+  pointer-events:none;
+}
+.sidenav a:hover::after{ opacity:1; }
+
+@media(max-width:640px){
+  .sidenav{display:none;}
+  .chapter{padding:60px 20px;}
+  .yosoy-grid,.jehova-grid,.toc-grid{ grid-template-columns:1fr; }
+  .juan-list li{ padding-left:42px; }
+}
+@media print{
+  body{background:white;color:black;}
+  .sidenav,.scroll-hint{display:none;}
+  .reveal{opacity:1;transform:none;}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV LATERAL -->
+<nav class="sidenav" id="sidenav">
+  <a href="#portada"     data-tip="Portada"></a>
+  <a href="#toc"         data-tip="Índice"></a>
+  <a href="#prologo"     data-tip="Prólogo"></a>
+  <a href="#exegesis"    data-tip="Exégesis"></a>
+  <a href="#cap1"        data-tip="Cap. 1 · Eterno"></a>
+  <a href="#cap2"        data-tip="Cap. 2 · Creador"></a>
+  <a href="#cap3"        data-tip="Cap. 3 · Abraham"></a>
+  <a href="#cap4"        data-tip="Cap. 4 · Liberta"></a>
+  <a href="#cap5"        data-tip="Cap. 5 · Habita"></a>
+  <a href="#cap6"        data-tip="Cap. 6 · Profetas"></a>
+  <a href="#cap7"        data-tip="Cap. 7 · En Carne"></a>
+  <a href="#final"       data-tip="Conclusión"></a>
+</nav>
+
+<!-- ══ PORTADA ══ -->
+<section class="cover" id="portada">
+  <div class="cover-dove">🕊</div>
+  <span class="cover-eyebrow">Osmar Lugo · Ebook Doctrinal</span>
+  <h1 class="cover-title">El Gran<span>Yo Soy</span></h1>
+  <p class="cover-subtitle">La Historia Eterna del Dios Único,<br>Revelado en Jesucristo</p>
+  <div class="cover-ornament">
+    <div class="oline"></div>
+    <span class="cross">✦</span>
+    <div class="oline r"></div>
+  </div>
+  <p class="cover-verse">"YO SOY EL QUE SOY"<br>— Éxodo 3:14</p>
+  <span class="cover-author">por <strong>Osmar Lugo</strong></span>
+  <div class="scroll-hint">
+    <span>Leer</span>
+    <div class="scroll-bar"></div>
+  </div>
+</section>
+
+<!-- ══ ÍNDICE ══ -->
+<section class="toc" id="toc">
+  <span class="section-label">Contenido</span>
+  <h2>Tabla de Capítulos</h2>
+  <div class="toc-grid">
+    <a class="toc-item" href="#prologo">
+      <span class="toc-num">Prólogo</span>
+      <span class="toc-name">Más allá de todo entendimiento</span>
+      <span class="toc-sub">Éxodo 3:14 — El Ser absoluto</span>
+    </a>
+    <a class="toc-item" href="#exegesis">
+      <span class="toc-num">Exégesis</span>
+      <span class="toc-name">Ehyeh Asher Ehyeh</span>
+      <span class="toc-sub">El Nombre en hebreo y griego</span>
+    </a>
+    <a class="toc-item" href="#cap1">
+      <span class="toc-num">Capítulo 1</span>
+      <span class="toc-name">El Gran Yo Soy Eterno</span>
+      <span class="toc-sub">Antes que existiera el universo</span>
+    </a>
+    <a class="toc-item" href="#cap2">
+      <span class="toc-num">Capítulo 2</span>
+      <span class="toc-name">Creador del Universo</span>
+      <span class="toc-sub">Todo lo visible comenzó cuando habló</span>
+    </a>
+    <a class="toc-item" href="#cap3">
+      <span class="toc-num">Capítulo 3</span>
+      <span class="toc-name">Llama a Abraham</span>
+      <span class="toc-sub">El inicio de la revelación del Nombre</span>
+    </a>
+    <a class="toc-item" href="#cap4">
+      <span class="toc-num">Capítulo 4</span>
+      <span class="toc-name">Libera a Israel</span>
+      <span class="toc-sub">El Gran Libertador con mano fuerte</span>
+    </a>
+    <a class="toc-item" href="#cap5">
+      <span class="toc-num">Capítulo 5</span>
+      <span class="toc-name">Habita entre su Pueblo</span>
+      <span class="toc-sub">El tabernáculo: sombra de Cristo</span>
+    </a>
+    <a class="toc-item" href="#cap6">
+      <span class="toc-num">Capítulo 6</span>
+      <span class="toc-name">Habla por los Profetas</span>
+      <span class="toc-sub">Cada profecía: un susurro de su llegada</span>
+    </a>
+    <a class="toc-item" href="#cap7">
+      <span class="toc-num">Capítulo 7</span>
+      <span class="toc-name">Viene en Carne</span>
+      <span class="toc-sub">Jesucristo: el Yo Soy hecho hombre</span>
+    </a>
+  </div>
+</section>
+
+<!-- ══ PRÓLOGO ══ -->
+<section id="prologo" style="background:linear-gradient(180deg,var(--navy) 0%,var(--dark) 100%); padding:100px 32px;">
+  <div class="prolog-inner" style="max-width:700px;margin:0 auto;text-align:center;" class="reveal">
+    <span class="section-label">Prólogo</span>
+    <h2 style="font-family:'Cinzel Decorative',serif;font-size:clamp(20px,4vw,34px);font-weight:400;color:#fff;margin-bottom:8px;">El Gran Yo Soy</h2>
+    <span class="prolog-sub" style="font-family:'Cinzel',serif;font-size:11px;letter-spacing:3px;color:var(--gold);opacity:.7;display:block;margin-bottom:32px;text-transform:uppercase;">Más allá de todo entendimiento</span>
+    <p class="hero-verse" style="font-family:'EB Garamond',serif;font-size:clamp(20px,3.5vw,28px);font-style:italic;color:var(--gold2);line-height:1.5;margin-bottom:8px;">"YO SOY EL QUE SOY"</p>
+    <span class="hero-ref" style="font-family:'Cinzel',serif;font-size:10px;letter-spacing:2px;color:var(--gold);opacity:.6;display:block;margin-bottom:40px;">Éxodo 3:14</span>
+    <p class="body-p">Con estas palabras, Dios no solo se reveló a Moisés, sino que estableció una verdad eterna: Él es el Ser absoluto, autosuficiente, inmutable, incognoscible en Su esencia, pero cercano en Su manifestación. Ningún ser creado puede abarcarlo, definirlo ni encerrarlo en términos humanos.</p>
+    <p class="body-p" style="font-size:20px;font-style:italic;color:var(--gold2);margin:24px 0;font-family:'EB Garamond',serif;">Él simplemente ES.</p>
+    <p class="body-p">Este libro no es solo una cronología bíblica, sino una exploración doctrinal y espiritual del Gran Yo Soy: el único Dios que ha obrado desde la eternidad, ha caminado con Israel, y se ha revelado plenamente en <strong>Jesús el Cristo</strong>.</p>
+  </div>
+</section>
+
+<!-- ══ EXÉGESIS ══ -->
+<section id="exegesis" class="chapter reveal">
+  <div class="chap-bg-num">א</div>
+  <span class="chap-eyebrow">Fundamento · Hebreo y Griego</span>
+  <h2 class="chap-title">Exégesis de Éxodo 3:14</h2>
+  <div class="chap-rule"></div>
+
+  <div class="verse-card">
+    <p class="vtext">"Ehyeh Asher Ehyeh" — אֶהְיֶה אֲשֶׁר אֶהְיֶה</p>
+    <span class="vref">Literalmente: "Seré el que Seré" / "Yo soy el que soy" — Éxodo 3:14</span>
+  </div>
+
+  <div class="exeg-box">
+    <span class="exeg-label">Análisis del término Ehyeh (אֶהְיֶה)</span>
+    <p><strong>Ehyeh</strong> es la primera persona del verbo hebreo <em>hayah</em> (ser/existir). No es un nombre estático sino una declaración de existencia constante, libre y autónoma.</p>
+    <p>Dios no dice simplemente "soy", sino <strong>"Yo Soy EL QUE Soy"</strong> — una declaración de ser absoluto, eterno y relacional.</p>
+  </div>
+
+  <div class="sub-title">Lo que comunica este nombre</div>
+  <div class="yosoy-grid">
+    <div class="yosoy-card">
+      <span class="ys-label">Autoexistencia</span>
+      <p class="ys-text">No depende de nada ni de nadie para ser.</p>
+    </div>
+    <div class="yosoy-card">
+      <span class="ys-label">Inmutabilidad</span>
+      <p class="ys-text">No cambia con el tiempo ni con las circunstancias.</p>
+    </div>
+    <div class="yosoy-card">
+      <span class="ys-label">Eternidad</span>
+      <p class="ys-text">Está fuera del tiempo; no tuvo principio.</p>
+    </div>
+    <div class="yosoy-card">
+      <span class="ys-label">Fidelidad Relacional</span>
+      <p class="ys-text">Será para Israel todo lo que necesiten que Él sea.</p>
+    </div>
+  </div>
+
+  <div class="sub-title">El Gran Yo Soy en el Evangelio de Juan</div>
+  <p class="body-p">En el Evangelio de Juan, Jesús usó la frase <strong>Ego Eimi (ἐγώ εἰμι)</strong> repetidamente para revelar Su divinidad — las mismas palabras con que la Septuaginta traduce el Yo Soy de Éxodo 3:14:</p>
+
+  <ol class="juan-list">
+    <li><strong>Yo Soy el pan de vida</strong> <span class="jref">Juan 6:35</span></li>
+    <li><strong>Yo Soy la luz del mundo</strong> <span class="jref">Juan 8:12</span></li>
+    <li><strong>Yo Soy la puerta</strong> <span class="jref">Juan 10:9</span></li>
+    <li><strong>Yo Soy el buen pastor</strong> <span class="jref">Juan 10:11</span></li>
+    <li><strong>Yo Soy la resurrección y la vida</strong> <span class="jref">Juan 11:25</span></li>
+    <li><strong>Yo Soy el camino, la verdad y la vida</strong> <span class="jref">Juan 14:6</span></li>
+    <li><strong>Yo Soy la vid verdadera</strong> <span class="jref">Juan 15:1</span></li>
+  </ol>
+  <p class="body-p">Cada declaración es una revelación progresiva del Gran Yo Soy para la humanidad.</p>
+
+  <div class="sub-title">¿Qué significa "El Gran Yo Soy" en la predicación?</div>
+  <div class="jehova-grid">
+    <div class="jeh-item">
+      <span class="jeh-name">Creador</span>
+      <span class="jeh-meaning">Cuando estás confundido, Yo Soy tu origen.</span>
+      <span class="jeh-ref">Génesis 1:1</span>
+    </div>
+    <div class="jeh-item">
+      <span class="jeh-name">Libertador</span>
+      <span class="jeh-meaning">Cuando estás esclavizado, Yo Soy tu salida.</span>
+      <span class="jeh-ref">Éxodo 3:7-8</span>
+    </div>
+    <div class="jeh-item">
+      <span class="jeh-name">Sanador</span>
+      <span class="jeh-meaning">Cuando estás enfermo, Yo Soy tu medicina.</span>
+      <span class="jeh-ref">Éxodo 15:26</span>
+    </div>
+    <div class="jeh-item">
+      <span class="jeh-name">Proveedor</span>
+      <span class="jeh-meaning">Cuando no hay recursos, Yo Soy tu provisión.</span>
+      <span class="jeh-ref">Génesis 22:14</span>
+    </div>
+    <div class="jeh-item">
+      <span class="jeh-name">Paz</span>
+      <span class="jeh-meaning">En medio de la guerra, Yo Soy tu descanso.</span>
+      <span class="jeh-ref">Jueces 6:24</span>
+    </div>
+    <div class="jeh-item">
+      <span class="jeh-name">Pastor</span>
+      <span class="jeh-meaning">Cuando estás perdido, Yo Soy tu guía.</span>
+      <span class="jeh-ref">Salmo 23:1</span>
+    </div>
+    <div class="jeh-item">
+      <span class="jeh-name">Redentor</span>
+      <span class="jeh-meaning">Cuando pecaste, Yo Soy tu perdón.</span>
+      <span class="jeh-ref">Isaías 47:4</span>
+    </div>
+    <div class="jeh-item">
+      <span class="jeh-name">El Eterno</span>
+      <span class="jeh-meaning">"Antes que Abraham fuese, YO SOY."</span>
+      <span class="jeh-ref">Juan 8:58</span>
+    </div>
+  </div>
+</section>
+
+<!-- ══ CAP 1 ══ -->
+<section id="cap1" class="chapter reveal" style="background:linear-gradient(180deg,var(--navy) 0%,var(--dark) 100%);">
+  <div class="chap-bg-num">1</div>
+  <span class="chap-eyebrow">Capítulo Uno</span>
+  <h2 class="chap-title">El Gran Yo Soy <em>Eterno</em></h2>
+  <div class="chap-rule"></div>
+
+  <div class="chap-intro">
+    <p>Antes que existiera el universo, Dios ya era. No necesitó del tiempo, ni del espacio, ni de la materia para ser. Él es por Sí mismo, no fue creado, no depende de nada, y jamás cambiará. Esta es la base de todo lo que creemos: <strong>El Gran Yo Soy es eterno, absoluto e infinito.</strong></p>
+  </div>
+
+  <div class="sub-title">El Ser que trasciende el tiempo</div>
+  <div class="verse-card">
+    <p class="vtext">"Y respondió Dios a Moisés: YO SOY EL QUE SOY. Así dirás a los hijos de Israel: YO SOY me envió a vosotros."</p>
+    <span class="vref">Éxodo 3:14 — Ehyeh Asher Ehyeh</span>
+  </div>
+  <div class="exeg-box">
+    <span class="exeg-label">Exégesis</span>
+    <ul>
+      <li>No dice "fui" — no es un Dios solo del pasado.</li>
+      <li>No dice "seré" — no es un Dios solo del futuro.</li>
+      <li>Dice <strong>YO SOY</strong> — constante, presente, cercano, eterno.</li>
+      <li>Esta forma indica acción constante: un Dios vivo y obrando, no estático.</li>
+    </ul>
+  </div>
+
+  <div class="sub-title">El Gran Yo Soy es único</div>
+  <div class="verse-card">
+    <p class="vtext">"Yo soy el primero, y yo soy el postrero, y fuera de mí no hay Dios."</p>
+    <span class="vref">Isaías 44:6 — No hay otro ser eterno. No hay trinidad. Solo Uno.</span>
+  </div>
+  <div class="verse-card">
+    <p class="vtext">"Según nos escogió en él antes de la fundación del mundo…"</p>
+    <span class="vref">Efesios 1:4-5 — El plan eterno del Yo Soy</span>
+  </div>
+
+  <p class="body-p">Desde antes de todo, el Gran Yo Soy ya tenía un plan: <strong>redimir, habitar con el hombre, revelarse plenamente como Salvador.</strong> Ese plan no es posterior al pecado. Es parte de Su naturaleza amorosa y eterna.</p>
+
+  <div class="highlight-phrase">
+    El mismo Yo Soy caminará por las páginas de este libro
+    <em>El que habló desde la zarza ardiente es el mismo que se revelará capítulo tras capítulo hasta mostrarse en carne como Jesús.</em>
+  </div>
+
+  <div class="chap-conclusion">
+    <span class="cc-label">Conclusión del Capítulo</span>
+    <p>El Gran Yo Soy nunca cambió. Solo se reveló. Lo que vamos a descubrir a lo largo de este libro no es la historia de varios dioses actuando en distintas épocas, sino <strong>la historia de un solo Dios eterno, revelándose progresivamente</strong> hasta que Su nombre fue pronunciado en Belén.</p>
+  </div>
+</section>
+
+<!-- ══ CAP 2 ══ -->
+<section id="cap2" class="chapter reveal">
+  <div class="chap-bg-num">2</div>
+  <span class="chap-eyebrow">Capítulo Dos</span>
+  <h2 class="chap-title">El Gran Yo Soy <em>Creador del Universo</em></h2>
+  <div class="chap-rule"></div>
+
+  <div class="chap-intro">
+    <p>Todo lo visible comenzó cuando el Gran Yo Soy habló. No necesitó herramientas, ayuda ni materia previa. Su palabra fue suficiente para formar galaxias, mares, estrellas y vida. El poder de Su voz sigue actuando hasta hoy.</p>
+  </div>
+
+  <div class="sub-title">El Yo Soy que dijo: "Sea…"</div>
+  <div class="verse-card">
+    <p class="vtext">"En el principio creó Dios los cielos y la tierra… Y dijo Dios: Sea la luz; y fue la luz."</p>
+    <span class="vref">Génesis 1:1-3</span>
+  </div>
+  <div class="exeg-box">
+    <span class="exeg-label">Exégesis — El verbo Bara (בָּרָא)</span>
+    <p>El verbo hebreo <strong>bara</strong> se usa exclusivamente para Dios. Ningún otro agente en la Biblia "bara" algo. Él es el único con la capacidad de crear <em>ex nihilo</em> — de la nada absoluta.</p>
+  </div>
+
+  <div class="sub-title">El Verbo como pensamiento activo de Dios</div>
+  <div class="verse-card">
+    <p class="vtext">"En el principio era el Verbo, y el Verbo era con Dios, y el Verbo era Dios… Todas las cosas por Él fueron hechas."</p>
+    <span class="vref">Juan 1:1-3 — Logos: el pensamiento expresado de Dios</span>
+  </div>
+  <p class="body-p">Desde la perspectiva unicitaria, el Logos no es una segunda persona. Es la <strong>mente misma de Dios expresándose activamente</strong>. Cuando Dios dijo: "Sea la luz", no era otra persona actuando — era Dios obrando a través de Su pensamiento manifestado.</p>
+
+  <div class="sub-title">El Gran Yo Soy no delega Su gloria</div>
+  <div class="verse-card">
+    <p class="vtext">"Yo Jehová, que lo hago todo, que extiendo solo los cielos, que extiendo la tierra por mí mismo."</p>
+    <span class="vref">Isaías 44:24 — "Solo" — sin compañía. "Por mí mismo" — sin mediadores divinos.</span>
+  </div>
+
+  <div class="aplicacion">
+    <span class="ap-label">Aplicación Homilética · El Creador es tu Sustentador</span>
+    <ul>
+      <li><span class="emoji">🧭</span>¿Te falta dirección? <strong>Él separó la luz de las tinieblas.</strong></li>
+      <li><span class="emoji">🌱</span>¿Te sientes vacío? <strong>Él formó vida donde no había nada.</strong></li>
+      <li><span class="emoji">💪</span>¿Crees que no puedes más? <strong>Él hizo todo de la nada.</strong></li>
+    </ul>
+  </div>
+
+  <div class="chap-conclusion">
+    <span class="cc-label">Conclusión del Capítulo</span>
+    <p>El Dios que dijo <em>"Sea la luz"</em> es el mismo que dijo <em>"Yo soy la luz del mundo"</em>.</p>
+    <p>El Creador se hizo Salvador. El Gran Yo Soy no solo formó el universo; también vino a redimirlo.</p>
+  </div>
+</section>
+
+<!-- ══ CAP 3 ══ -->
+<section id="cap3" class="chapter reveal" style="background:linear-gradient(180deg,var(--navy) 0%,var(--dark) 100%);">
+  <div class="chap-bg-num">3</div>
+  <span class="chap-eyebrow">Capítulo Tres</span>
+  <h2 class="chap-title">El Gran Yo Soy <em>Llama a Abraham</em></h2>
+  <div class="chap-rule"></div>
+
+  <div class="chap-intro">
+    <p>Dios no solo creó un universo; creó un pueblo. Llamó a un hombre de Ur de los caldeos, sin tierra ni herencia, y le prometió ser su Dios, su guía y su descendencia. Ese llamado fue el comienzo de una revelación del Nombre que se iría desplegando hasta llegar a su plenitud en Jesús.</p>
+  </div>
+
+  <div class="sub-title">El Dios que llama por Su Nombre</div>
+  <div class="verse-card">
+    <p class="vtext">"Yo soy el Dios Todopoderoso (El Shaddai); anda delante de mí y sé perfecto."</p>
+    <span class="vref">Génesis 17:1 — El Shaddai: el Todo suficiente</span>
+  </div>
+
+  <div class="sub-title">Los Nombres Proféticos del Gran Yo Soy</div>
+  <p class="body-p">Desde Abraham en adelante, Dios se fue revelando por títulos que describían Su naturaleza y carácter, pero aún no revelaba Su Nombre completo:</p>
+  <div class="jehova-grid">
+    <div class="jeh-item"><span class="jeh-name">Jehová Jireh</span><span class="jeh-meaning">El Señor proveerá</span><span class="jeh-ref">Génesis 22:14</span></div>
+    <div class="jeh-item"><span class="jeh-name">Jehová Nissi</span><span class="jeh-meaning">El Señor es mi estandarte</span><span class="jeh-ref">Éxodo 17:15</span></div>
+    <div class="jeh-item"><span class="jeh-name">Jehová Shalom</span><span class="jeh-meaning">El Señor es paz</span><span class="jeh-ref">Jueces 6:24</span></div>
+    <div class="jeh-item"><span class="jeh-name">Jehová Tsidkenu</span><span class="jeh-meaning">El Señor justicia nuestra</span><span class="jeh-ref">Jeremías 23:6</span></div>
+  </div>
+
+  <div class="sub-title">Jesús: El Nombre que encarna al Yo Soy</div>
+  <div class="verse-card">
+    <p class="vtext">"Y llamarás su nombre JESÚS, porque él salvará a su pueblo de sus pecados."</p>
+    <span class="vref">Mateo 1:21 — Yeshua = "Yahweh es salvación"</span>
+  </div>
+  <div class="verse-card">
+    <p class="vtext">"Antes que Abraham fuese, YO SOY."</p>
+    <span class="vref">Juan 8:58 — Los judíos entendieron perfectamente: Él declaraba ser el mismo Yo Soy de Moisés.</span>
+  </div>
+
+  <div class="aplicacion">
+    <span class="ap-label">Aplicación · En el Nombre de Jesús está todo</span>
+    <ul>
+      <li><span class="emoji">🙌</span>El Nombre que salva <strong>(Hechos 4:12)</strong></li>
+      <li><span class="emoji">✋</span>El Nombre que sana <strong>(Hechos 3:6)</strong></li>
+      <li><span class="emoji">⚔️</span>El Nombre que reprende demonios <strong>(Lucas 10:17)</strong></li>
+      <li><span class="emoji">🙏</span>El Nombre al que se ora <strong>(Juan 14:13-14)</strong></li>
+      <li><span class="emoji">👑</span>El Nombre sobre todo nombre <strong>(Filipenses 2:9)</strong></li>
+    </ul>
+  </div>
+
+  <div class="chap-conclusion">
+    <span class="cc-label">Conclusión del Capítulo</span>
+    <p>El Dios que llamó a Abraham por fe, hoy te llama a ti por nombre. No necesitamos una revelación adicional. <strong>En Jesús tenemos toda la revelación del Gran Yo Soy.</strong></p>
+    <p style="font-style:italic;color:var(--gold2);margin-top:10px;">"Jesús no es otro dios. Es el mismo Yo Soy que llamó a los patriarcas. Solo que ahora… ¡tiene Nombre!"</p>
+  </div>
+</section>
+
+<!-- ══ CAP 4 ══ -->
+<section id="cap4" class="chapter reveal">
+  <div class="chap-bg-num">4</div>
+  <span class="chap-eyebrow">Capítulo Cuatro</span>
+  <h2 class="chap-title">El Gran Yo Soy <em>Libera a Israel</em></h2>
+  <div class="chap-rule"></div>
+
+  <div class="chap-intro">
+    <p>La esclavitud en Egipto no solo fue una opresión política, sino una figura espiritual del dominio del pecado sobre la humanidad. Ya no solo se presenta como Creador o Dios de pacto: ahora se revela como <strong>Libertador personal, activo, cercano</strong>. El Gran Yo Soy entra en la historia para liberar con mano fuerte.</p>
+  </div>
+
+  <div class="sub-title">El Gran Yo Soy se revela desde la zarza</div>
+  <div class="verse-card">
+    <p class="vtext">"Y respondió Dios: YO SOY EL QUE SOY… Así dirás: YO SOY me envió a vosotros."</p>
+    <span class="vref">Éxodo 3:13-14 — Dios no solo se identifica, sino que autoriza a Moisés a actuar en Su Nombre.</span>
+  </div>
+
+  <div class="sub-title">La Pascua: El Yo Soy como Redentor con sangre</div>
+  <div class="verse-card">
+    <p class="vtext">"Y la sangre os será por señal… y veré la sangre y pasaré de vosotros."</p>
+    <span class="vref">Éxodo 12:13</span>
+  </div>
+  <div class="exeg-box">
+    <span class="exeg-label">La Pascua profetizando a Cristo</span>
+    <ul>
+      <li>Un cordero sin mancha moría por cada casa (Éxodo 12:5).</li>
+      <li>La sangre era aplicada en el marco de la puerta.</li>
+      <li>Dios no examinaba al hombre, sino la <strong>sangre</strong>.</li>
+      <li><em>"…porque nuestra pascua, que es Cristo, ya fue sacrificada por nosotros."</em> — 1 Co 5:7</li>
+    </ul>
+  </div>
+
+  <div class="sub-title">El Yo Soy hecho carne, como Libertador perfecto</div>
+  <div class="verse-card">
+    <p class="vtext">"El Espíritu del Señor está sobre mí… Me ha enviado a proclamar libertad a los cautivos…"</p>
+    <span class="vref">Lucas 4:18 — Jesús vino con la autoridad del Yo Soy</span>
+  </div>
+
+  <div class="aplicacion">
+    <span class="ap-label">Aplicación · El Yo Soy sigue liberando hoy</span>
+    <ul>
+      <li><span class="emoji">⛓️</span>¿Sientes que Egipto te oprime? <strong>El Yo Soy no ha cambiado: Él libera.</strong></li>
+      <li><span class="emoji">🩸</span>¿Hay ataduras que no puedes romper? <strong>El Yo Soy envió sangre en tu lugar.</strong></li>
+      <li><span class="emoji">🛡️</span>¿Estás rodeado por Faraón espiritual? <strong>El Yo Soy pelea por ti.</strong></li>
+    </ul>
+  </div>
+
+  <div class="verse-card">
+    <p class="vtext">"Estad firmes, y ved la salvación que Jehová hará hoy con vosotros… Jehová peleará por vosotros."</p>
+    <span class="vref">Éxodo 14:13-14</span>
+  </div>
+
+  <div class="chap-conclusion">
+    <span class="cc-label">Conclusión del Capítulo</span>
+    <p>Desde la zarza ardiente hasta la cruz, el Gran Yo Soy no ha dejado de actuar.</p>
+    <p><strong>Hoy no necesitas otro libertador: ya vino, se llama Jesús, y Él mismo es Dios con nosotros.</strong></p>
+  </div>
+</section>
+
+<!-- ══ CAP 5 ══ -->
+<section id="cap5" class="chapter reveal" style="background:linear-gradient(180deg,var(--navy) 0%,var(--dark) 100%);">
+  <div class="chap-bg-num">5</div>
+  <span class="chap-eyebrow">Capítulo Cinco</span>
+  <h2 class="chap-title">El Gran Yo Soy <em>Habita entre su Pueblo</em></h2>
+  <div class="chap-rule"></div>
+
+  <div class="chap-intro">
+    <p>Desde el principio, el deseo del Gran Yo Soy no fue solo libertar, sino <strong>habitar</strong>. El tabernáculo fue más que una tienda: fue la revelación viviente de que el Creador eterno quería estar con Su creación caída. Cada detalle del santuario apuntaba al día en que el Gran Yo Soy habitaría corporalmente entre los hombres como Jesús.</p>
+  </div>
+
+  <div class="verse-card">
+    <p class="vtext">"Y harán un santuario para mí, y habitaré en medio de ellos."</p>
+    <span class="vref">Éxodo 25:8 — Shakan: establecerse, residir, hacer morada permanente. De ahí: Shekinah.</span>
+  </div>
+
+  <div class="sub-title">La Gloria del Yo Soy llenando la casa</div>
+  <div class="verse-card">
+    <p class="vtext">"Entonces una nube cubrió el tabernáculo… y la gloria de Jehová llenó el tabernáculo."</p>
+    <span class="vref">Éxodo 40:34-35 — La misma esencia del Yo Soy habitando con su pueblo</span>
+  </div>
+
+  <div class="sub-title">El tabernáculo: sombra del Cristo que venía</div>
+  <div class="exeg-box">
+    <span class="exeg-label">Juan 1:14 — La palabra clave</span>
+    <p>La palabra griega para "habitó" es <strong>σκηνόω (skenoo)</strong>, que significa literalmente: <em>"hacer tabernáculo, acampar, instalarse con intención de permanecer."</em></p>
+    <p>Jesús no vino a visitar la tierra: <strong>vino a ser el tabernáculo viviente del Gran Yo Soy.</strong></p>
+  </div>
+
+  <div class="verse-card">
+    <p class="vtext">"Porque en Él habita corporalmente toda la plenitud de la Deidad."</p>
+    <span class="vref">Colosenses 2:9</span>
+  </div>
+
+  <p class="body-p">Jesús es el verdadero Lugar Santísimo. Él es a la vez:</p>
+  <div class="jehova-grid">
+    <div class="jeh-item"><span class="jeh-name">El Altar</span><span class="jeh-meaning">Donde el sacrificio fue completado.</span></div>
+    <div class="jeh-item"><span class="jeh-name">El Candelabro</span><span class="jeh-meaning">Luz del mundo.</span><span class="jeh-ref">Juan 8:12</span></div>
+    <div class="jeh-item"><span class="jeh-name">El Pan</span><span class="jeh-meaning">Pan de vida.</span><span class="jeh-ref">Juan 6:35</span></div>
+    <div class="jeh-item"><span class="jeh-name">El Propiciatorio</span><span class="jeh-meaning">Donde la sangre fue derramada.</span></div>
+    <div class="jeh-item"><span class="jeh-name">Sumo Sacerdote</span><span class="jeh-meaning">Eterno intercesor.</span><span class="jeh-ref">Hebreos 9:11-12</span></div>
+  </div>
+
+  <div class="aplicacion">
+    <span class="ap-label">Aplicación · Tú eres el tabernáculo del Gran Yo Soy</span>
+    <ul>
+      <li><span class="emoji">🏕️</span>¿Te sientes solo en el desierto? <strong>El Yo Soy camina contigo.</strong></li>
+      <li><span class="emoji">🙇</span>¿Sientes que no eres digno de Su presencia? <strong>Él eligió habitar en medio de un pueblo débil.</strong></li>
+      <li><span class="emoji">❤️‍🔥</span>¿Anhelas Su presencia? <strong>Él ya no habita en templos de piedra, sino en tu corazón.</strong></li>
+    </ul>
+  </div>
+
+  <div class="verse-card">
+    <p class="vtext">"Porque vosotros sois templo del Dios viviente… habitaré y andaré entre ellos…"</p>
+    <span class="vref">2 Corintios 6:16</span>
+  </div>
+</section>
+
+<!-- ══ CAP 6 ══ -->
+<section id="cap6" class="chapter reveal">
+  <div class="chap-bg-num">6</div>
+  <span class="chap-eyebrow">Capítulo Seis</span>
+  <h2 class="chap-title">El Gran Yo Soy <em>Habla por los Profetas</em></h2>
+  <div class="chap-rule"></div>
+
+  <div class="chap-intro">
+    <p>Cada palabra profética fue un susurro del Gran Yo Soy anunciando su llegada. Los profetas no hablaron de una segunda persona: hablaron de un solo Dios, que vendría, salvaría y habitaría.</p>
+  </div>
+
+  <div class="sub-title">Los títulos del Mesías son títulos del Gran Yo Soy</div>
+  <div class="verse-card">
+    <p class="vtext">"Porque un niño nos es nacido… y se llamará su nombre: Admirable, Consejero, Dios Fuerte, Padre Eterno, Príncipe de Paz."</p>
+    <span class="vref">Isaías 9:6 — El niño que nacerá no es un dios menor. Es Dios Fuerte (El Gibbor). Es Padre Eterno (Avi Ad).</span>
+  </div>
+
+  <div class="sub-title">La voz del Yo Soy en la boca de los profetas</div>
+  <div class="verse-card">
+    <p class="vtext">"Yo soy el primero y el último… estuve muerto, y he aquí que vivo…"</p>
+    <span class="vref">Apocalipsis 1:17-18 — ¿Quién es el Primero y el Último que murió y vive? ¡Jesús!</span>
+  </div>
+  <div class="verse-card">
+    <p class="vtext">"Y yo soy Jehová tu Dios desde la tierra de Egipto; no conocerás, pues, otro Dios fuera de mí, ni otro Salvador sino a mí."</p>
+    <span class="vref">Oseas 13:4 — No hay otro Salvador. No hay otro Nombre. No hay otra voz.</span>
+  </div>
+
+  <div class="sub-title">Dios mismo vendría — no un enviado</div>
+  <div class="yosoy-grid">
+    <div class="yosoy-card">
+      <span class="ys-label">Isaías 35:4</span>
+      <p class="ys-text">"Decid a los de corazón apocado… Dios mismo vendrá, y os salvará."</p>
+      <p class="ys-ref" style="color:var(--muted);font-style:italic;">No enviaría a alguien más. Él mismo vendría.</p>
+    </div>
+    <div class="yosoy-card">
+      <span class="ys-label">Mateo 1:23</span>
+      <p class="ys-text">"Y llamarás su nombre Emanuel, que traducido es: Dios con nosotros."</p>
+    </div>
+    <div class="yosoy-card">
+      <span class="ys-label">Zacarías 2:10-11</span>
+      <p class="ys-text">"Canta y alégrate… vengo, y moraré en medio de ti, dice Jehová."</p>
+    </div>
+  </div>
+
+  <div class="chap-conclusion">
+    <span class="cc-label">Conclusión del Capítulo</span>
+    <p>Cada profecía fue Dios diciéndose a sí mismo: <em>"Voy."</em> No anunciaba a otro. Se anunciaba a Él.</p>
+    <p><strong>"Cuando hayáis levantado al Hijo del Hombre, entonces conoceréis que YO SOY…"</strong> — Juan 8:28</p>
+  </div>
+</section>
+
+<!-- ══ CAP 7 ══ -->
+<section id="cap7" class="chapter reveal" style="background:linear-gradient(180deg,var(--navy) 0%,var(--dark) 100%);">
+  <div class="chap-bg-num">7</div>
+  <span class="chap-eyebrow">Capítulo Siete</span>
+  <h2 class="chap-title">El Gran Yo Soy <em>Viene en Carne</em></h2>
+  <div class="chap-rule"></div>
+
+  <div class="chap-intro">
+    <p>Toda la historia bíblica —desde la creación, pasando por Abraham, el Éxodo, el tabernáculo y los profetas— fue un camino hacia este momento supremo: <strong>el Gran Yo Soy, el Dios eterno e invisible, se hizo carne.</strong> No envió a un sustituto. No delegó Su gloria. No creó a otro para hacerlo por Él.</p>
+  </div>
+
+  <div class="verse-card">
+    <p class="vtext">"Yo, yo Jehová, y fuera de mí no hay quien salve."</p>
+    <span class="vref">Isaías 43:11 — Si solo Él salva, Él mismo tuvo que venir.</span>
+  </div>
+
+  <div class="sub-title">El Verbo se hizo carne</div>
+  <div class="verse-card">
+    <p class="vtext">"En el principio era el Verbo… y el Verbo era Dios… y aquel Verbo fue hecho carne, y habitó entre nosotros, y vimos su gloria…"</p>
+    <span class="vref">Juan 1:1, 14</span>
+  </div>
+  <div class="verse-card">
+    <p class="vtext">"E indiscutiblemente, grande es el misterio de la piedad: Dios fue manifestado en carne…"</p>
+    <span class="vref">1 Timoteo 3:16 — No un ángel. No un delegado. Dios.</span>
+  </div>
+
+  <div class="sub-title">Jesús habla como el Gran Yo Soy</div>
+  <div class="yosoy-grid">
+    <div class="yosoy-card">
+      <span class="ys-label">Juan 8:58</span>
+      <p class="ys-text">"Antes que Abraham fuese, YO SOY." — Ego Eimi, exactamente como la Septuaginta traduce Éxodo 3:14.</p>
+    </div>
+    <div class="yosoy-card">
+      <span class="ys-label">Juan 10:30</span>
+      <p class="ys-text">"Yo y el Padre uno somos."</p>
+    </div>
+    <div class="yosoy-card">
+      <span class="ys-label">Juan 14:9</span>
+      <p class="ys-text">"El que me ha visto a mí, ha visto al Padre."</p>
+    </div>
+  </div>
+
+  <div class="sub-title">El Gran Yo Soy en la Cruz</div>
+  <div class="verse-card">
+    <p class="vtext">"Dios estaba en Cristo, reconciliando consigo al mundo…"</p>
+    <span class="vref">2 Corintios 5:19 — En la cruz no murió una segunda persona divina. Estaba el Gran Yo Soy reconciliando al mundo.</span>
+  </div>
+
+  <div class="sub-title">El Gran Yo Soy resucitado y glorificado</div>
+  <div class="verse-card">
+    <p class="vtext">"No temas; Yo soy el primero y el último, y el que vivo, y estuve muerto; mas he aquí que vivo por los siglos de los siglos…"</p>
+    <span class="vref">Apocalipsis 1:17-18 — El mismo que habló a Moisés, murió, resucitó y viene otra vez.</span>
+  </div>
+
+  <div class="aplicacion">
+    <span class="ap-label">Aplicación Final</span>
+    <ul>
+      <li><span class="emoji">👁️</span>¿Buscas a Dios? <strong>Míralo en Jesús.</strong></li>
+      <li><span class="emoji">👂</span>¿Anhelas conocer Su voluntad? <strong>Escucha a Jesús.</strong></li>
+      <li><span class="emoji">✝️</span>¿Dudas de tu salvación? <strong>El mismo Dios que partió el mar y llenó el templo, te salvó en la cruz.</strong></li>
+    </ul>
+  </div>
+
+  <div class="highlight-phrase">
+    Hoy, el Gran Yo Soy no está lejos.
+    <em>Está en ti. Vive en ti. Te llama por nombre. Su Nombre es JESÚS.</em>
+  </div>
+</section>
+
+<!-- ══ PÁGINA FINAL ══ -->
+<section class="final-page" id="final">
+  <span class="section-label" style="margin-bottom:20px;">Cierre del Libro</span>
+  <h2>JESÚS ES<br>EL GRAN YO SOY</h2>
+  <div class="final-verse">
+    <p>"Oye, Israel: Jehová nuestro Dios, Jehová uno es."</p>
+    <span>Deuteronomio 6:4</span>
+  </div>
+  <p class="body-p" style="max-width:560px;text-align:center;margin:0 auto 32px;">Ese único Dios creó, llamó, liberó, habitó, habló, y finalmente se reveló en carne como Jesucristo. Él es el Alfa y la Omega, el que es, y que era, y que ha de venir, el Todopoderoso.</p>
+  <div class="final-verse">
+    <p>"Yo soy el Alfa y la Omega, dice el Señor, el que es y que era y que ha de venir, el Todopoderoso."</p>
+    <span>Apocalipsis 1:8</span>
+  </div>
+  <br>
+  <div class="cover-ornament" style="margin:32px auto;">
+    <div class="oline"></div>
+    <span class="cross">🕊</span>
+    <div class="oline r"></div>
+  </div>
+  <div class="final-declaration">El Gran Yo Soy</div>
+  <div class="final-sub">Osmar Lugo · IPUC Algarrobo</div>
+</section>
+
+<footer>El Gran Yo Soy · La Historia Eterna del Dios Único, Revelado en Jesucristo · Osmar Lugo</footer>
+
+<script>
+// Scroll reveal
+const els = document.querySelectorAll('.reveal');
+const io = new IntersectionObserver(e => {
+  e.forEach(x => { if(x.isIntersecting) x.target.classList.add('visible'); });
+}, { threshold: 0.07 });
+els.forEach(e => io.observe(e));
+
+// Nav lateral
+const nav = document.getElementById('sidenav');
+window.addEventListener('scroll', () => {
+  nav.classList.toggle('show', window.scrollY > 600);
+  const links = nav.querySelectorAll('a');
+  let cur = '';
+  document.querySelectorAll('section[id], section.chapter[id]').forEach(s => {
+    if(window.scrollY >= s.offsetTop - 200) cur = s.id;
+  });
+  links.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#'+cur));
+});
+</script>
+</body>
+</html>

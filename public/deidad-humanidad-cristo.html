@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>La Persona de Cristo — Deidad y Humanidad</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Raleway:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--azul:#009FDA;--marino:#003B6F;--oro:#F0AB00;--oro-claro:#FFD166;--fondo:#040e1c;--texto:#e8e0d0;--texto-suave:#a89f90;--linea:rgba(240,171,0,.2);}
+*{margin:0;padding:0;box-sizing:border-box;}html{scroll-behavior:smooth;}
+body{background:var(--fondo);color:var(--texto);font-family:'Crimson Pro',Georgia,serif;font-size:18px;line-height:1.85;overflow-x:hidden;}
+::-webkit-scrollbar{width:4px;}::-webkit-scrollbar-track{background:var(--fondo);}::-webkit-scrollbar-thumb{background:var(--azul);border-radius:2px;}
+
+.nav-toggle{position:fixed;top:16px;left:16px;z-index:300;background:var(--marino);border:1px solid var(--linea);color:var(--oro);width:44px;height:44px;border-radius:8px;cursor:pointer;font-size:20px;display:flex;align-items:center;justify-content:center;transition:all .2s;box-shadow:0 2px 12px rgba(0,0,0,.4);}
+.nav-toggle:hover{background:var(--azul);color:#fff;}
+
+nav{position:fixed;left:0;top:0;bottom:0;width:265px;background:linear-gradient(180deg,var(--marino) 0%,#011529 100%);border-right:1px solid var(--linea);z-index:200;overflow-y:auto;transform:translateX(0);transition:transform .35s ease;padding:32px 0;}
+nav.hidden{transform:translateX(-100%);}
+nav .nav-brand{font-family:'Cinzel',serif;font-size:12px;font-weight:700;color:var(--oro);padding:0 20px 20px;border-bottom:1px solid var(--linea);margin-bottom:8px;letter-spacing:1px;line-height:1.4;}
+nav .nav-section{font-family:'Cinzel',serif;font-size:9px;letter-spacing:3px;color:var(--azul);padding:14px 20px 4px;text-transform:uppercase;opacity:.8;}
+nav a{display:flex;align-items:center;gap:10px;padding:7px 20px;font-family:'Raleway',sans-serif;font-size:11px;font-weight:500;letter-spacing:.5px;color:var(--texto-suave);text-decoration:none;border-left:2px solid transparent;transition:all .2s;}
+nav a:hover,nav a.active{color:var(--oro);border-left-color:var(--oro);background:rgba(240,171,0,.06);}
+nav a .nav-num{font-family:'Cinzel',serif;font-size:10px;color:var(--azul);min-width:20px;}
+
+.page-wrap{margin-left:265px;transition:margin .35s ease;}
+.page-wrap.full{margin-left:0;}
+
+/* PORTADA */
+.cover{min-height:100vh;background:linear-gradient(160deg,#041830 0%,var(--fondo) 65%);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:80px 32px 60px;position:relative;overflow:hidden;}
+.cover::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 50% at 50% 10%,rgba(0,159,218,.18) 0%,transparent 70%),radial-gradient(ellipse 40% 40% at 80% 85%,rgba(240,171,0,.1) 0%,transparent 60%);pointer-events:none;}
+.cover-icon{font-size:60px;margin-bottom:24px;animation:fadeDown .8s ease both;}
+.cover-tag{font-family:'Cinzel',serif;font-size:10px;letter-spacing:5px;color:var(--azul);text-transform:uppercase;margin-bottom:20px;animation:fadeDown .9s ease .1s both;}
+.cover-title{font-family:'Cinzel',serif;font-size:clamp(38px,8vw,88px);font-weight:900;line-height:1;margin-bottom:10px;animation:fadeDown 1s ease .2s both;}
+.cover-title .t1{color:var(--texto);}
+.cover-title .t2{color:var(--oro);}
+.cover-dual{display:flex;justify-content:center;gap:32px;margin:16px 0 32px;animation:fadeDown 1s ease .3s both;flex-wrap:wrap;}
+.cover-dual .d-box{padding:10px 20px;border-radius:8px;font-family:'Cinzel',serif;font-size:12px;letter-spacing:2px;}
+.cover-dual .d-box.d1{border:1px solid rgba(0,159,218,.4);color:var(--azul);}
+.cover-dual .d-box.d2{border:1px solid rgba(240,171,0,.4);color:var(--oro);}
+.cover-line{width:60px;height:1px;background:linear-gradient(to right,transparent,var(--oro),transparent);margin:0 auto 24px;animation:fadeIn 1.1s ease .35s both;}
+.cover-author{font-family:'Raleway',sans-serif;font-size:13px;letter-spacing:4px;color:var(--texto-suave);text-transform:uppercase;animation:fadeDown 1.1s ease .4s both;}
+.cover-verse{position:absolute;bottom:40px;font-family:'Crimson Pro',serif;font-style:italic;font-size:14px;color:var(--texto-suave);max-width:440px;text-align:center;line-height:1.6;}
+
+/* DIVISOR DE PARTE */
+.parte-banner{padding:60px 24px 0;text-align:center;max-width:740px;margin:0 auto;}
+.parte-banner .pb-num{font-family:'Cinzel',serif;font-size:10px;letter-spacing:5px;color:var(--azul);text-transform:uppercase;margin-bottom:12px;}
+.parte-banner .pb-title{font-family:'Cinzel',serif;font-size:clamp(24px,5vw,44px);font-weight:900;color:var(--oro);margin-bottom:8px;}
+.parte-banner .pb-sub{font-family:'Cinzel',serif;font-size:clamp(14px,2vw,18px);color:var(--azul);margin-bottom:32px;}
+.parte-banner .pb-line{width:80px;height:2px;background:linear-gradient(to right,transparent,var(--oro),transparent);margin:0 auto;}
+
+main{max-width:740px;margin:0 auto;padding:0 24px;}
+.chapter{padding:72px 0 56px;border-bottom:1px solid rgba(240,171,0,.1);opacity:0;transform:translateY(30px);transition:opacity .7s ease,transform .7s ease;}
+.chapter.visible{opacity:1;transform:none;}
+.ch-num{font-family:'Cinzel',serif;font-size:11px;letter-spacing:4px;color:var(--azul);text-transform:uppercase;margin-bottom:12px;}
+.ch-title{font-family:'Cinzel',serif;font-size:clamp(20px,3.5vw,32px);font-weight:700;color:var(--oro);line-height:1.2;margin-bottom:8px;}
+.ch-sub{font-family:'Cinzel',serif;font-size:clamp(13px,2vw,18px);color:var(--azul);margin-bottom:28px;}
+.ch-divider{width:40px;height:2px;background:linear-gradient(to right,var(--oro),var(--azul));margin-bottom:32px;border-radius:2px;}
+p{margin-bottom:20px;}
+strong{color:var(--oro);font-weight:600;}
+em{color:var(--azul);font-style:italic;}
+
+.quote{border-left:3px solid var(--oro);padding:16px 24px;margin:28px 0;background:rgba(240,171,0,.05);border-radius:0 8px 8px 0;}
+.quote p{font-family:'Crimson Pro',serif;font-style:italic;font-size:1.05em;color:var(--oro-claro);margin-bottom:6px;}
+.quote cite{font-family:'Raleway',sans-serif;font-size:12px;letter-spacing:2px;color:var(--texto-suave);}
+
+.section-label{font-family:'Cinzel',serif;font-size:11px;letter-spacing:3px;color:var(--azul);text-transform:uppercase;margin:36px 0 12px;}
+
+.list-yes,.list-no{list-style:none;margin:16px 0 24px;padding:0;}
+.list-yes li,.list-no li{padding:6px 0 6px 28px;position:relative;font-size:.97em;color:var(--texto-suave);border-bottom:1px solid rgba(255,255,255,.05);}
+.list-yes li::before{content:'✅';position:absolute;left:0;top:6px;font-size:14px;}
+.list-no li::before{content:'❌';position:absolute;left:0;top:6px;font-size:14px;}
+
+.compare{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:28px 0;}
+.compare-box{padding:20px;border-radius:8px;border:1px solid;}
+.compare-box.a{border-color:rgba(0,159,218,.3);background:rgba(0,159,218,.05);}
+.compare-box.b{border-color:rgba(240,171,0,.3);background:rgba(240,171,0,.05);}
+.compare-box h4{font-family:'Cinzel',serif;font-size:10px;letter-spacing:3px;margin-bottom:12px;text-transform:uppercase;}
+.compare-box.a h4{color:var(--azul);}
+.compare-box.b h4{color:var(--oro);}
+.compare-box ul{list-style:none;}
+.compare-box ul li{font-size:14px;padding:4px 0;color:var(--texto-suave);border-bottom:1px solid rgba(255,255,255,.06);}
+
+.frase{text-align:center;padding:40px 24px;margin:32px 0;position:relative;}
+.frase::before{content:'"';font-family:'Cinzel',serif;font-size:100px;color:rgba(240,171,0,.07);position:absolute;top:-10px;left:16px;line-height:1;}
+.frase p{font-family:'Cinzel',serif;font-size:clamp(15px,2.2vw,20px);color:var(--texto);line-height:1.5;position:relative;z-index:1;margin:0;}
+
+.tip-box{background:linear-gradient(135deg,rgba(0,59,111,.4) 0%,rgba(4,14,28,.8) 100%);border:1px solid rgba(0,159,218,.25);border-radius:12px;padding:24px;margin:28px 0;}
+.tip-box h4{font-family:'Cinzel',serif;font-size:11px;letter-spacing:4px;color:var(--azul);text-transform:uppercase;margin-bottom:14px;}
+.tip-box p,.tip-box li{color:var(--texto-suave);font-size:.95em;margin-bottom:8px;}
+.tip-box ol,.tip-box ul{padding-left:20px;}
+.tip-box li{margin-bottom:8px;}
+
+.gold-box{background:rgba(240,171,0,.06);border:1px solid rgba(240,171,0,.2);border-radius:12px;padding:24px;margin:28px 0;}
+.gold-box h4{font-family:'Cinzel',serif;font-size:11px;letter-spacing:4px;color:var(--oro);text-transform:uppercase;margin-bottom:14px;}
+.gold-box p{color:var(--texto-suave);font-size:.95em;margin-bottom:10px;}
+.gold-box strong{color:var(--oro);}
+
+.etimo{background:rgba(240,171,0,.04);border:1px solid rgba(240,171,0,.15);border-radius:8px;padding:20px 24px;margin:20px 0;}
+.etimo .e-palabra{font-family:'Cinzel',serif;font-size:20px;color:var(--oro);margin-bottom:4px;}
+.etimo .e-origen{font-family:'Raleway',sans-serif;font-size:12px;color:var(--azul);letter-spacing:2px;margin-bottom:8px;}
+.etimo p{color:var(--texto-suave);font-size:.95em;margin:0;}
+
+.yo-soy{background:rgba(0,59,111,.2);border-left:3px solid var(--azul);border-radius:0 8px 8px 0;padding:16px 20px;margin:12px 0;}
+.yo-soy .ys-titulo{font-family:'Cinzel',serif;font-size:15px;color:var(--azul);margin-bottom:4px;}
+.yo-soy .ys-ref{font-family:'Raleway',sans-serif;font-size:11px;color:var(--texto-suave);letter-spacing:2px;margin-bottom:8px;}
+.yo-soy p{color:var(--texto-suave);font-size:.95em;margin:0;}
+
+.pasos{counter-reset:paso;list-style:none;padding:0;margin:24px 0;}
+.pasos li{counter-increment:paso;display:flex;gap:16px;margin-bottom:22px;align-items:flex-start;}
+.pasos li::before{content:counter(paso);font-family:'Cinzel',serif;font-size:20px;font-weight:700;color:var(--oro);min-width:32px;line-height:1.3;}
+.pasos li .paso-content h5{font-family:'Cinzel',serif;font-size:14px;color:var(--azul);margin-bottom:5px;letter-spacing:1px;}
+.pasos li .paso-content p{color:var(--texto-suave);font-size:.95em;margin:0;}
+
+.epilogo{text-align:center;padding:80px 32px 120px;}
+.epilogo .big{font-family:'Cinzel',serif;font-size:clamp(32px,7vw,68px);font-weight:900;color:transparent;-webkit-text-stroke:1px rgba(240,171,0,.35);letter-spacing:6px;display:block;margin-bottom:40px;}
+.epilogo h2{font-family:'Cinzel',serif;font-size:clamp(18px,3vw,28px);color:var(--oro);margin-bottom:24px;}
+.epilogo p{max-width:540px;margin:0 auto 16px;color:var(--texto-suave);}
+.epilogo .firma{margin-top:48px;font-family:'Cinzel',serif;font-size:13px;letter-spacing:4px;color:var(--azul);}
+
+@keyframes fadeDown{from{opacity:0;transform:translateY(-20px);}to{opacity:1;transform:none;}}
+@keyframes fadeIn{from{opacity:0;}to{opacity:1;}}
+@media(max-width:768px){nav{transform:translateX(-100%);}nav.show{transform:translateX(0);}.page-wrap{margin-left:0!important;}}
+@media(max-width:600px){.compare{grid-template-columns:1fr;}.cover-dual{flex-direction:column;align-items:center;}.pasos li{flex-direction:column;gap:8px;}}
+</style>
+</head>
+<body>
+
+<button class="nav-toggle" id="navToggle" onclick="toggleNav()">☰</button>
+
+<nav id="sidenav">
+  <div class="nav-brand">✝️ La Persona de Cristo<br>Deidad y Humanidad</div>
+
+  <div class="nav-section">Parte I — Deidad</div>
+  <a href="#p1-intro"><span class="nav-num">·</span>Introducción</a>
+  <a href="#p1-c1"><span class="nav-num">01</span>Etimología de los títulos</a>
+  <a href="#p1-c2"><span class="nav-num">02</span>El Dios encarnado</a>
+  <a href="#p1-c3"><span class="nav-num">03</span>Colosenses 2:9</a>
+  <a href="#p1-c4"><span class="nav-num">04</span>Los Yo Soy de Juan</a>
+  <a href="#p1-c5"><span class="nav-num">05</span>El Padre en el Hijo</a>
+
+  <div class="nav-section">Parte II — Humanidad</div>
+  <a href="#p2-intro"><span class="nav-num">·</span>Introducción</a>
+  <a href="#p2-c1"><span class="nav-num">06</span>El Verbo hecho carne</a>
+  <a href="#p2-c2"><span class="nav-num">07</span>Verdadero hombre</a>
+  <a href="#p2-c3"><span class="nav-num">08</span>Por qué la humanidad era necesaria</a>
+
+  <div class="nav-section">Parte III — Unión</div>
+  <a href="#p3-intro"><span class="nav-num">·</span>Introducción</a>
+  <a href="#p3-c1"><span class="nav-num">09</span>Un solo Cristo</a>
+  <a href="#p3-c2"><span class="nav-num">10</span>¿Quién es Jesús?</a>
+</nav>
+
+<div class="page-wrap" id="pageWrap">
+
+<!-- PORTADA -->
+<section class="cover" id="portada">
+  <div class="cover-icon">✝️</div>
+  <div class="cover-tag">Estudio Doctrinal · Serie Cristología</div>
+  <h1 class="cover-title">
+    <div class="t1">La Persona</div>
+    <div class="t2">de Cristo</div>
+  </h1>
+  <div class="cover-dual">
+    <div class="d-box d1">Deidad — Dios manifestado</div>
+    <div class="d-box d2">Humanidad — Verdadero hombre</div>
+  </div>
+  <div class="cover-line"></div>
+  <div class="cover-author">Predicador IPUC · Doctrina Apostólica</div>
+  <div class="cover-verse">"Porque en él habita corporalmente toda la plenitud de la Deidad." — Colosenses 2:9</div>
+</section>
+
+<main>
+
+<!-- ═══════════════════════════ PARTE I ═══════════════════════════ -->
+<div class="parte-banner" id="p1-intro">
+  <div class="pb-num">Parte Primera</div>
+  <div class="pb-title">La Deidad de Cristo</div>
+  <div class="pb-sub">El Dios eterno manifestado en carne</div>
+  <div class="pb-line"></div>
+</div>
+
+<!-- P1-C1 TÍTULOS -->
+<section class="chapter" id="p1-c1">
+  <div class="ch-num">Lección 1 · Parte I</div>
+  <h2 class="ch-title">Etimología de los títulos divinos</h2>
+  <div class="ch-sub">Lo que los nombres de Jesús revelan sobre quién es</div>
+  <div class="ch-divider"></div>
+
+  <p>Los títulos que la Biblia da a Jesús no son etiquetas de honor — son declaraciones de identidad. Cada nombre lleva el peso de la revelación divina y señala hacia quién es realmente aquel que nació en Belén.</p>
+
+  <div class="etimo">
+    <div class="e-palabra">Jesús — Yeshûa יֵשׁוּעַ</div>
+    <div class="e-origen">Hebreo · Mateo 1:21</div>
+    <p>Significa: <strong>Jehová salva</strong>. No "un salvador" ni "el enviado de Dios a salvar". El nombre mismo declara que Jehová — el Dios del Antiguo Testamento, el único Dios de Israel — <em>es</em> el que salva en la persona de Jesús. El ángel dijo: "llamarás su nombre Jesús, porque él salvará a su pueblo." En el Antiguo Testamento, solo Jehová era el Salvador de Israel.</p>
+  </div>
+
+  <div class="etimo">
+    <div class="e-palabra">Cristo — Christós Χριστός</div>
+    <div class="e-origen">Griego · equivalente al hebreo Mashíaj — Mesías</div>
+    <p>Significa: <strong>el Ungido</strong>. En Israel, reyes, sacerdotes y profetas eran ungidos. Pero el Mesías es el Ungido por excelencia — aquel sobre quien el Espíritu reposa sin medida (Juan 3:34). "Jesús el Cristo" es el nombre completo: Jehová-salva, el Ungido de Dios.</p>
+  </div>
+
+  <div class="etimo">
+    <div class="e-palabra">Señor — Kýrios Κύριος</div>
+    <div class="e-origen">Griego · usado en la Septuaginta para traducir YHWH</div>
+    <p>Este es el título más teológicamente cargado. La Septuaginta — la traducción griega del Antiguo Testamento — usa <em>Kýrios</em> para traducir el nombre sagrado <strong>YHWH (Jehová)</strong>. Cuando el Nuevo Testamento llama a Jesús <em>Kýrios</em>, está declarando que Jesús <em>es</em> YHWH encarnado. No un representante de YHWH — YHWH mismo.</p>
+  </div>
+
+  <div class="etimo">
+    <div class="e-palabra">Emmanuel — עִמָּנוּ אֵל</div>
+    <div class="e-origen">Hebreo · Isaías 7:14 · Mateo 1:23</div>
+    <p>Significa: <strong>Dios con nosotros</strong>. No "Dios nos envió a alguien". No "Dios está cerca de nosotros". <em>Con nosotros</em> — Dios mismo presente entre su pueblo en forma humana. Mateo aplica este título a Jesús en el nacimiento y lo concluye con "yo estoy con vosotros todos los días" — el mismo Emmanuel hasta el fin.</p>
+  </div>
+
+  <div class="frase"><p>"Cada nombre de Jesús es una declaración teológica. El que los entiende sabe quién es Jesús antes de leer un solo milagro."</p></div>
+</section>
+
+<!-- P1-C2 DIOS ENCARNADO -->
+<section class="chapter" id="p1-c2">
+  <div class="ch-num">Lección 2 · Parte I</div>
+  <h2 class="ch-title">El Dios encarnado</h2>
+  <div class="ch-sub">El único Dios eterno manifestado en carne</div>
+  <div class="ch-divider"></div>
+
+  <p>La doctrina apostólica-unitaria enseña con claridad lo que el Nuevo Testamento proclama: <strong>Jesucristo es el único Dios del Antiguo Testamento encarnado en forma humana</strong>. No es un ser distinto del Padre. No es una manifestación parcial de Dios. Es el Padre mismo — el único Dios eterno — manifestado en carne de manera plena y completa.</p>
+
+  <div class="quote">
+    <p>"Dios fue manifestado en carne, justificado en el Espíritu, visto de los ángeles, predicado a los gentiles, creído en el mundo, recibido arriba en gloria."</p>
+    <cite>1 Timoteo 3:16 — El misterio de la piedad: Dios manifestado en carne</cite>
+  </div>
+
+  <p>El texto no dice "el Hijo de Dios fue manifestado en carne" — dice <strong>Dios</strong> fue manifestado en carne. El sujeto es el Padre eterno. La manifestación es Jesucristo. No hay intermediario entre el Padre y Jesús — Jesús es el Padre manifestado.</p>
+
+  <div class="section-label">El Antiguo Testamento ya lo anunciaba</div>
+
+  <div class="tip-box">
+    <h4>Las profecías de la encarnación del Padre</h4>
+    <p><strong>Isaías 9:6:</strong> "El niño nos es nacido... y se llamará su nombre Admirable, Consejero, <strong>Dios Fuerte, Padre Eterno</strong>, Príncipe de Paz." Al niño que nació se le llama Padre Eterno. No el Hijo del Padre Eterno — <em>el Padre Eterno mismo</em>.</p>
+    <p><strong>Isaías 7:14:</strong> "La virgen concebirá y dará a luz un hijo, y llamarás su nombre Emmanuel" — Dios con nosotros.</p>
+    <p><strong>Miqueas 5:2:</strong> "De ti me saldrá el que será Señor en Israel; y sus salidas son desde el principio, desde los días de la eternidad." El que nace en Belén tenía origen en la eternidad.</p>
+    <p><strong>Zacarías 12:10:</strong> "Mirarán a mí, a quien traspasaron." Jehová habla en primera persona sobre ser traspasado — crucificado.</p>
+  </div>
+
+  <div class="compare">
+    <div class="compare-box a">
+      <h4>Error — doctrina ajena al NT</h4>
+      <ul>
+        <li>Jesús es solo el Hijo, distinto del Padre</li>
+        <li>El Padre y Jesús son seres distintos</li>
+        <li>Jesús no es el Padre sino su enviado</li>
+        <li>Dios dividido en personas separadas</li>
+      </ul>
+    </div>
+    <div class="compare-box b">
+      <h4>Doctrina apostólica</h4>
+      <ul>
+        <li>Jesús es el único Dios encarnado</li>
+        <li>El Padre se manifestó en el Hijo</li>
+        <li>Jesús es el Padre manifestado en carne</li>
+        <li>Un solo Dios revelado en Jesucristo</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="frase"><p>"La encarnación no fue Dios enviando a alguien. Fue Dios viniendo Él mismo."</p></div>
+</section>
+
+<!-- P1-C3 COLOSENSES 2:9 -->
+<section class="chapter" id="p1-c3">
+  <div class="ch-num">Lección 3 · Parte I</div>
+  <h2 class="ch-title">Colosenses 2:9</h2>
+  <div class="ch-sub">El versículo que lo declara todo</div>
+  <div class="ch-divider"></div>
+
+  <div class="quote">
+    <p>"Porque en él habita corporalmente toda la plenitud de la Deidad."</p>
+    <cite>Colosenses 2:9 — El texto cristológico más directo del NT</cite>
+  </div>
+
+  <div class="section-label">Análisis palabra por palabra</div>
+
+  <ul class="pasos">
+    <li>
+      <div class="paso-content">
+        <h5>"En él" — en Jesucristo</h5>
+        <p>La referencia directa es a Cristo Jesús del versículo 8. No en una doctrina abstracta, no en la iglesia, no en el universo — <strong>en Jesús de Nazaret, el hombre concreto que caminó por Galilea</strong>. La Deidad habita en una persona histórica y real.</p>
+      </div>
+    </li>
+    <li>
+      <div class="paso-content">
+        <h5>"Habita" — katoikéi κατοικεῖ</h5>
+        <p>Tiempo presente — no "habitó" ni "habitará". <strong>Habita</strong>. El verbo expresa una residencia permanente y establecida. La Deidad no visitó a Jesús temporalmente ni descansó sobre Él en ciertos momentos — mora en Él de manera permanente y completa.</p>
+      </div>
+    </li>
+    <li>
+      <div class="paso-content">
+        <h5>"Corporalmente" — sōmatikōs σωματικῶς</h5>
+        <p>Esta palabra es decisiva. No "espiritualmente", no "figuradamente", no "en cierta medida". <strong>Corporalmente</strong> — en forma corporal, encarnada, tangible. La Deidad tomó cuerpo en Jesucristo. No fue una ilusión ni una manifestación parcial.</p>
+      </div>
+    </li>
+    <li>
+      <div class="paso-content">
+        <h5>"Toda la plenitud" — pan to plḗrōma πᾶν τὸ πλήρωμα</h5>
+        <p><em>Pas</em> = todo, sin excepción. <em>Plḗrōma</em> = plenitud, totalidad completa. No una parte de Dios. No un aspecto de la Deidad. <strong>Toda la plenitud</strong> — el Dios completo, sin división, sin reducción, sin representación parcial.</p>
+      </div>
+    </li>
+    <li>
+      <div class="paso-content">
+        <h5>"De la Deidad" — tēs theótētos τῆς θεότητος</h5>
+        <p>Pablo usa <em>theótēs</em> — no <em>theiótes</em>. La diferencia es crucial: <em>theiótes</em> significa "cualidades divinas", pero <em>theótēs</em> significa <strong>la esencia misma de Dios, la Deidad en su ser</strong>. En Jesús no hay cualidades de Dios — hay Dios mismo en toda su esencia.</p>
+      </div>
+    </li>
+  </ul>
+
+  <div class="gold-box">
+    <h4>La conclusión inevitable</h4>
+    <p>Colosenses 2:9 no deja espacio para la ambigüedad: <strong>toda la esencia de Dios habita permanente y corporalmente en Jesucristo</strong>. No en un Padre separado de Jesús. No repartida en distintas manifestaciones. Toda. En Él. Corporalmente.</p>
+    <p>Cuando Pablo escribe esto, cierra la puerta a cualquier teología que separe al Padre del Hijo como seres distintos.</p>
+  </div>
+</section>
+
+<!-- P1-C4 YO SOY -->
+<section class="chapter" id="p1-c4">
+  <div class="ch-num">Lección 4 · Parte I</div>
+  <h2 class="ch-title">Los Yo Soy de Juan</h2>
+  <div class="ch-sub">Jesús reclamando la identidad de Jehová</div>
+  <div class="ch-divider"></div>
+
+  <p>En el Evangelio de Juan, Jesús hace declaraciones que en el contexto judío solo podían significar una cosa: estar reclamando ser <strong>el mismo Dios del Éxodo</strong>. Cuando Moisés preguntó el nombre de Dios en la zarza ardiente, Dios respondió: <em>"Yo soy el que soy"</em> — en hebreo <em>Ehyéh ašer Ehyéh</em>. Jesús usa exactamente la misma construcción.</p>
+
+  <div class="quote">
+    <p>"Antes que Abraham fuese, yo soy."</p>
+    <cite>Juan 8:58 — Los judíos tomaron piedras para apedrearlo inmediatamente</cite>
+  </div>
+
+  <p>No dijo "yo era" — dijo <em>yo soy</em>. Tiempo presente eterno. La misma forma que Dios usó con Moisés. Los judíos no tomaron piedras por arrogancia — las tomaron por blasfemia. Entendieron perfectamente lo que Jesús estaba diciendo.</p>
+
+  <div class="section-label">Los 7 Yo Soy con predicado en Juan</div>
+
+  <div class="yo-soy">
+    <div class="ys-titulo">"Yo soy el pan de vida"</div>
+    <div class="ys-ref">Juan 6:35 — El maná en el desierto fue dado por Jehová. Jesús es el maná definitivo.</div>
+    <p>El que proveyó pan del cielo a Israel en el desierto fue Jehová. Jesús declara ser ese pan — no proveerlo, sino serlo.</p>
+  </div>
+
+  <div class="yo-soy">
+    <div class="ys-titulo">"Yo soy la luz del mundo"</div>
+    <div class="ys-ref">Juan 8:12 — En el AT, Jehová es la luz de Israel (Salmo 27:1; Isaías 60:19)</div>
+    <p>La columna de fuego que guió a Israel era Jehová. Jesús no dice que lleva la luz — dice que Él es la luz.</p>
+  </div>
+
+  <div class="yo-soy">
+    <div class="ys-titulo">"Yo soy la puerta"</div>
+    <div class="ys-ref">Juan 10:9 — El único acceso al Padre. No hay otro camino.</div>
+    <p>"Nadie viene al Padre sino por mí" — Juan 14:6. El mismo Dios al que se accede es el que provee el acceso.</p>
+  </div>
+
+  <div class="yo-soy">
+    <div class="ys-titulo">"Yo soy el buen pastor"</div>
+    <div class="ys-ref">Juan 10:11 — Ezequiel 34:11-12: "Yo mismo iré a buscar mis ovejas"</div>
+    <p>Ezequiel profetizó que Jehová mismo vendría como pastor. Jesús cumple esa profecía declarándose el Buen Pastor.</p>
+  </div>
+
+  <div class="yo-soy">
+    <div class="ys-titulo">"Yo soy la resurrección y la vida"</div>
+    <div class="ys-ref">Juan 11:25 — No "yo doy" — "yo soy". La vida no viene de Él — Él es la vida.</div>
+    <p>Solo Dios tiene vida en sí mismo (Juan 5:26). Jesús declara ser esa vida — no un canal de ella.</p>
+  </div>
+
+  <div class="yo-soy">
+    <div class="ys-titulo">"Yo soy el camino, la verdad y la vida"</div>
+    <div class="ys-ref">Juan 14:6 — Triple declaración de exclusividad divina</div>
+    <p>Tres atributos que en el AT pertenecen a Jehová. Jesús los reúne en sí mismo — no como representante, sino como ser.</p>
+  </div>
+
+  <div class="yo-soy">
+    <div class="ys-titulo">"Yo soy la vid verdadera"</div>
+    <div class="ys-ref">Juan 15:1 — Israel era la vid de Jehová (Salmo 80:8). Jesús es la vid verdadera.</div>
+    <p>Lo que Israel representaba como pueblo de Dios, Jesús lo es en realidad — porque Él es el Dios de Israel encarnado.</p>
+  </div>
+
+  <div class="frase"><p>"Siete veces Jesús dijo 'Yo Soy' en Juan. Siete veces reclamó ser el Jehová del Antiguo Testamento."</p></div>
+</section>
+
+<!-- P1-C5 PADRE EN EL HIJO -->
+<section class="chapter" id="p1-c5">
+  <div class="ch-num">Lección 5 · Parte I</div>
+  <h2 class="ch-title">El Padre en el Hijo</h2>
+  <div class="ch-sub">La unidad que Jesús mismo enseñó</div>
+  <div class="ch-divider"></div>
+
+  <p>La relación entre el Padre y el Hijo no es la relación entre dos personas distintas que cooperan. Jesús mismo enseñó una unidad tan total que ver al Hijo es ver al Padre — no su representante, sino Él mismo.</p>
+
+  <div class="quote">
+    <p>"El que me ha visto a mí, ha visto al Padre."</p>
+    <cite>Juan 14:9 — Respuesta de Jesús a Felipe que pedía ver al Padre</cite>
+  </div>
+
+  <p>Felipe pidió ver al Padre — como si el Padre fuera alguien diferente de Jesús que estaba frente a ellos. Y Jesús le corrige: <em>¿tanto tiempo hace que estoy con vosotros y no me has conocido?</em> Como si dijera: Felipe, si quieres ver al Padre, ya lo estás viendo — soy Yo.</p>
+
+  <div class="tip-box">
+    <h4>Las declaraciones de unión total</h4>
+    <p><strong>Juan 10:30:</strong> "Yo y el Padre uno somos." No "uno en propósito" — <em>uno</em> en esencia. Los judíos tomaron piedras nuevamente — entendieron que reclamaba ser Dios.</p>
+    <p><strong>Juan 14:10:</strong> "¿No crees que yo soy en el Padre, y el Padre en mí?" Mutua inhabitación — no dos personas distintas, sino una presencia dentro de la otra.</p>
+    <p><strong>Juan 17:21:</strong> "Que todos sean uno; como tú, oh Padre, en mí, y yo en ti." La unidad entre el Padre y el Hijo es el modelo de unidad para la iglesia.</p>
+    <p><strong>Juan 12:45:</strong> "El que me ve a mí, ve al que me envió." Ver a Jesús es ver al Padre. No ver al emisario del Padre — ver al Padre mismo.</p>
+  </div>
+
+  <div class="section-label">El Padre habla desde el Hijo</div>
+  <div class="quote">
+    <p>"Las palabras que yo os hablo, no las hablo por mi propia cuenta, sino que el Padre que mora en mí, él hace las obras."</p>
+    <cite>Juan 14:10 — El Padre mora en Jesús y actúa desde allí</cite>
+  </div>
+  <p>Las palabras de Jesús son las palabras del Padre. Las obras de Jesús son las obras del Padre. La voz que habló en el Jordán — <em>"Este es mi Hijo amado"</em> — era Dios confirmando su propia manifestación humana desde su dimensión espiritual. El mismo Dios que se encarnó en el Hijo habló desde el Espíritu para confirmar quien era ante los hombres.</p>
+
+  <div class="frase"><p>"El Padre no está detrás de Jesús mirando. El Padre está dentro de Jesús actuando."</p></div>
+</section>
+
+<!-- ═══════════════════════════ PARTE II ═══════════════════════════ -->
+<div class="parte-banner" id="p2-intro">
+  <div class="pb-num">Parte Segunda</div>
+  <div class="pb-title">La Humanidad de Cristo</div>
+  <div class="pb-sub">El verdadero hombre — no apariencia, sino realidad</div>
+  <div class="pb-line"></div>
+</div>
+
+<!-- P2-C1 VERBO HECHO CARNE -->
+<section class="chapter" id="p2-c1">
+  <div class="ch-num">Lección 6 · Parte II</div>
+  <h2 class="ch-title">El Verbo hecho carne</h2>
+  <div class="ch-sub">El misterio más grande de la historia</div>
+  <div class="ch-divider"></div>
+
+  <div class="quote">
+    <p>"Y aquel Verbo fue hecho carne, y habitó entre nosotros... lleno de gracia y de verdad."</p>
+    <cite>Juan 1:14</cite>
+  </div>
+
+  <div class="etimo">
+    <div class="e-palabra">Logos — Λόγος</div>
+    <div class="e-origen">Griego · Juan 1:1 — el Verbo</div>
+    <p>En el mundo griego, el Logos era el principio racional que ordenaba el universo. En el pensamiento hebreo, la Palabra de Dios era la expresión activa y creadora de Dios mismo — no separada de Él. Juan usa este término para declarar que <strong>la expresión eterna de Dios tomó forma humana en Jesús</strong>. El Logos no es un ser distinto de Dios — es Dios expresándose, y esa expresión eterna se encarnó completamente en Jesucristo.</p>
+  </div>
+
+  <p>"Fue hecho carne" — <em>sarx egéneto</em>. El Dios eterno, sin principio ni fin, tomó voluntariamente una naturaleza humana completa. No una apariencia de cuerpo. No un cuerpo que parecía humano pero no lo era. <strong>Carne real, naturaleza humana genuina</strong>.</p>
+
+  <div class="section-label">La kenosis — el vaciamiento voluntario</div>
+  <div class="quote">
+    <p>"El cual, siendo en forma de Dios, no estimó el ser igual a Dios como cosa a que aferrarse, sino que se despojó a sí mismo, tomando forma de siervo, hecho semejante a los hombres."</p>
+    <cite>Filipenses 2:6-7</cite>
+  </div>
+  <p>La palabra griega <em>ekénōsen</em> — de donde viene "kenosis" — significa <strong>vaciarse, despojarse</strong>. Dios, al encarnarse, voluntariamente limitó el ejercicio de sus atributos divinos. No dejó de ser Dios — pero eligió experimentar la existencia desde adentro de la humanidad: con hambre real, cansancio real, dolor real, tentación real.</p>
+
+  <div class="frase"><p>"El misterio no es que Dios sea grande — eso siempre lo supimos. El misterio es que Dios se hiciera pequeño."</p></div>
+</section>
+
+<!-- P2-C2 VERDADERO HOMBRE -->
+<section class="chapter" id="p2-c2">
+  <div class="ch-num">Lección 7 · Parte II</div>
+  <h2 class="ch-title">Cristo, verdadero hombre</h2>
+  <div class="ch-sub">La humanidad de Jesús no fue una actuación</div>
+  <div class="ch-divider"></div>
+
+  <p>Desde los primeros siglos, una herejía llamada <strong>Docetismo</strong> enseñaba que Jesús solo <em>parecía</em> humano — que su cuerpo era una ilusión o apariencia. El Nuevo Testamento combate esto frontalmente. La humanidad de Jesús fue tan real como su Deidad.</p>
+
+  <div class="section-label">Las evidencias de su humanidad genuina</div>
+
+  <ul class="pasos">
+    <li>
+      <div class="paso-content">
+        <h5>Nació de mujer</h5>
+        <p>"Pero cuando vino el cumplimiento del tiempo, Dios envió a su Hijo, nacido de mujer" — Gálatas 4:4. Concebido por el Espíritu Santo, nacido de María. Tuvo infancia, creció, se desarrolló. "Y Jesús crecía en sabiduría y en estatura" — Lucas 2:52.</p>
+      </div>
+    </li>
+    <li>
+      <div class="paso-content">
+        <h5>Tuvo hambre y sed reales</h5>
+        <p>Después de 40 días de ayuno "tuvo hambre" — Mateo 4:2. En la cruz clamó "tengo sed" — Juan 19:28. No eran señales performativas. Era la necesidad fisiológica real de un cuerpo humano genuino.</p>
+      </div>
+    </li>
+    <li>
+      <div class="paso-content">
+        <h5>Se cansó</h5>
+        <p>"Jesús, cansado del camino, se sentó así junto al pozo" — Juan 4:6. El Dios eterno no se cansa. El hombre Jesús sí. Ambas realidades coexistían en una sola persona.</p>
+      </div>
+    </li>
+    <li>
+      <div class="paso-content">
+        <h5>Lloró</h5>
+        <p>"Jesús lloró" — Juan 11:35. El versículo más corto de la Biblia y uno de los más profundos. El Dios eterno, frente a la tumba de Lázaro, experimentó el dolor del duelo humano. Sus lágrimas eran reales.</p>
+      </div>
+    </li>
+    <li>
+      <div class="paso-content">
+        <h5>Fue tentado</h5>
+        <p>"Porque no tenemos un sumo sacerdote que no pueda compadecerse de nuestras debilidades, sino uno que fue tentado en todo según nuestra semejanza, pero sin pecado" — Hebreos 4:15. La tentación fue real — no simulada. Si hubiera sido solo una actuación, no tendría valor como nuestro intercesor.</p>
+      </div>
+    </li>
+    <li>
+      <div class="paso-content">
+        <h5>Sufrió y murió</h5>
+        <p>Su sufrimiento en Getsemaní fue genuino: "mi alma está muy triste, hasta la muerte" — Mateo 26:38. Su muerte en la cruz fue real: "inclinando la cabeza, entregó el espíritu" — Juan 19:30. No fingió morir — murió.</p>
+      </div>
+    </li>
+  </ul>
+
+  <div class="quote">
+    <p>"Por cuanto los hijos participaron de carne y sangre, él también participó de lo mismo, para destruir por medio de la muerte al que tenía el imperio de la muerte."</p>
+    <cite>Hebreos 2:14 — Participó de lo mismo que nosotros — completamente</cite>
+  </div>
+</section>
+
+<!-- P2-C3 POR QUÉ NECESARIA -->
+<section class="chapter" id="p2-c3">
+  <div class="ch-num">Lección 8 · Parte II</div>
+  <h2 class="ch-title">Por qué la humanidad era necesaria</h2>
+  <div class="ch-sub">Sin humanidad real, no hay salvación real</div>
+  <div class="ch-divider"></div>
+
+  <p>La humanidad de Cristo no fue un detalle incidental de la encarnación. Fue <strong>teológicamente necesaria</strong>. Si Jesús no fue verdaderamente hombre, entonces la salvación no tiene base real.</p>
+
+  <div class="tip-box">
+    <h4>Las 4 razones de la humanidad necesaria</h4>
+    <ol>
+      <li><strong>Para morir:</strong> Dios no puede morir. Para pagar el precio del pecado mediante la muerte, Dios tuvo que hacerse hombre. Solo un ser humano podía morir. El que murió en la cruz era el Dios eterno en forma humana real.</li>
+      <li><strong>Para ser sustituto legítimo:</strong> El pecado entró por un hombre — Adán. La redención debía venir por un hombre — Jesucristo. Pablo llama a Jesús el "postrer Adán" — 1 Corintios 15:45. Un Dios que solo parecía humano no podía ser sustituto de la humanidad.</li>
+      <li><strong>Para ser el sumo sacerdote compasivo:</strong> "Porque no tenemos un sumo sacerdote que no pueda compadecerse de nuestras debilidades" — Hebreos 4:15. Jesús puede interceder por nosotros porque experimentó lo mismo que nosotros. Un sumo sacerdote que no conociera la tentación, el dolor y la debilidad no podría representarnos.</li>
+      <li><strong>Para destruir al diablo:</strong> "Para destruir por medio de la muerte al que tenía el imperio de la muerte" — Hebreos 2:14. Solo alguien que pudiera morir realmente podía conquistar la muerte realmente. La resurrección tiene poder porque la muerte fue real.</li>
+    </ol>
+  </div>
+
+  <div class="quote">
+    <p>"Porque hay un solo Dios, y un solo mediador entre Dios y los hombres, Jesucristo hombre."</p>
+    <cite>1 Timoteo 2:5 — El mediador es específicamente "Jesucristo hombre"</cite>
+  </div>
+
+  <div class="frase"><p>"Si Jesús no fue verdadero hombre, su muerte no pagó nada. Si no fue verdadero Dios, su muerte no alcanzó para nada."</p></div>
+</section>
+
+<!-- ═══════════════════════════ PARTE III ═══════════════════════════ -->
+<div class="parte-banner" id="p3-intro">
+  <div class="pb-num">Parte Tercera</div>
+  <div class="pb-title">La Unión — Un Solo Cristo</div>
+  <div class="pb-sub">Dios perfecto y hombre perfecto en una sola persona</div>
+  <div class="pb-line"></div>
+</div>
+
+<!-- P3-C1 UN SOLO CRISTO -->
+<section class="chapter" id="p3-c1">
+  <div class="ch-num">Lección 9 · Parte III</div>
+  <h2 class="ch-title">Un solo Cristo</h2>
+  <div class="ch-sub">Las dos naturalezas — una sola persona</div>
+  <div class="ch-divider"></div>
+
+  <p>Jesucristo es completamente Dios y completamente hombre. No mitad de cada uno. No Dios en algunas ocasiones y hombre en otras. <strong>Ambas naturalezas completas en una sola persona</strong> — sin mezcla, sin separación, sin confusión.</p>
+
+  <div class="section-label">Entendiendo las dos naturalezas</div>
+  <p>Cuando Jesús tenía hambre — su naturaleza humana experimentaba necesidad. Cuando Jesús calmó la tormenta — su naturaleza divina ejercía autoridad soberana. Cuando Jesús lloró ante la tumba de Lázaro — el hombre genuino experimentaba el dolor del duelo. Cuando Jesús resucitó a Lázaro — el Dios eterno ejercía el poder sobre la muerte.</p>
+
+  <div class="compare">
+    <div class="compare-box a">
+      <h4>Expresiones de su humanidad</h4>
+      <ul>
+        <li>Se cansó — Juan 4:6</li>
+        <li>Tuvo hambre — Mateo 4:2</li>
+        <li>Lloró — Juan 11:35</li>
+        <li>Oró al Padre — Lucas 22:41</li>
+        <li>No sabía el día ni la hora — Mc 13:32</li>
+        <li>Murió — Juan 19:30</li>
+      </ul>
+    </div>
+    <div class="compare-box b">
+      <h4>Expresiones de su deidad</h4>
+      <ul>
+        <li>Calmó la tormenta — Mc 4:39</li>
+        <li>Perdonó pecados — Mc 2:5</li>
+        <li>Resucitó muertos — Juan 11:43</li>
+        <li>Conocía los pensamientos — Mc 2:8</li>
+        <li>Recibió adoración — Mt 14:33</li>
+        <li>Resucitó solo — Juan 2:19</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="section-label">¿Por qué Jesús oraba si era Dios?</div>
+  <p>Esta es una de las preguntas más frecuentes. La respuesta está en entender la encarnación correctamente. En la kenosis, Dios voluntariamente limitó el ejercicio independiente de sus atributos divinos en la forma humana. La naturaleza humana de Jesús dependía del Padre y se comunicaba con Él mediante la oración. La oración de Jesús no prueba que sea una persona distinta del Padre — prueba que su humanidad era genuina y que la forma humana se relacionaba con la dimensión divina.</p>
+
+  <div class="gold-box">
+    <h4>La unión sin confusión</h4>
+    <p><strong>No se mezclan:</strong> Dios no se hizo menos Dios por ser humano. El hombre Jesús no se convirtió en un semidiós.</p>
+    <p><strong>No se separan:</strong> No hay dos personas en Cristo — hay una sola persona con dos naturalezas completas.</p>
+    <p><strong>No se confunden:</strong> Lo divino y lo humano coexisten distinguiblemente. Jesús podía tener hambre (humano) y al mismo tiempo ser omnisciente (divino).</p>
+    <p><strong>Una sola persona:</strong> Jesucristo — el único Dios manifestado en carne — es el sujeto único de ambas naturalezas.</p>
+  </div>
+</section>
+
+<!-- P3-C2 QUIÉN ES JESÚS -->
+<section class="chapter" id="p3-c2">
+  <div class="ch-num">Lección 10 · Parte III</div>
+  <h2 class="ch-title">¿Quién es Jesús?</h2>
+  <div class="ch-sub">La respuesta apostólica definitiva</div>
+  <div class="ch-divider"></div>
+
+  <p>Toda la cristología apostólica converge en una pregunta que el mismo Jesús formuló: <em>"¿Quién decís vosotros que soy yo?"</em> La respuesta de Pedro fue la confesión más importante de la historia: <strong>"Tú eres el Cristo, el Hijo del Dios viviente."</strong></p>
+
+  <p>Pero "Hijo del Dios viviente" en el lenguaje hebreo no significa necesariamente un ser distinto del Padre. "Hijo de" frecuentemente indica naturaleza, carácter o manifestación. Jesús es el <em>Hijo</em> porque es la manifestación humana del Padre eterno — Dios expresado, Dios encarnado, Dios visible.</p>
+
+  <div class="section-label">La respuesta apostólica completa</div>
+
+  <div class="tip-box">
+    <h4>Lo que los apóstoles proclamaron</h4>
+    <p><strong>Pedro:</strong> "Tú eres el Cristo, el Hijo del Dios viviente" — Mateo 16:16. Y en Pentecostés: el mismo Pedro bautizó "en el nombre de Jesucristo" — reconociendo que Jesús porta el nombre de Jehová.</p>
+    <p><strong>Juan:</strong> "En el principio era el Verbo, y el Verbo era con Dios, y el Verbo era Dios... Y aquel Verbo fue hecho carne" — Juan 1:1,14. El Verbo era Dios — y ese Dios se hizo hombre.</p>
+    <p><strong>Pablo:</strong> "En él habita corporalmente toda la plenitud de la Deidad" — Colosenses 2:9. "Dios fue manifestado en carne" — 1 Timoteo 3:16.</p>
+    <p><strong>Tomás:</strong> Al ver al resucitado, exclamó: "¡Señor mío, y Dios mío!" — Juan 20:28. No "Señor y Dios del Padre" — sino <em>mi Dios</em>. Jesús mismo no corrigió esto.</p>
+  </div>
+
+  <div class="section-label">Jesucristo — el nombre que lo contiene todo</div>
+  <div class="quote">
+    <p>"Y todo lo que hagáis, sea de palabra o de hecho, hacedlo todo en el nombre del Señor Jesús."</p>
+    <cite>Colosenses 3:17 — Todo en el nombre de Jesús</cite>
+  </div>
+  <div class="quote">
+    <p>"Por lo cual Dios también le exaltó hasta lo sumo, y le dio un nombre que es sobre todo nombre, para que en el nombre de Jesús se doble toda rodilla."</p>
+    <cite>Filipenses 2:9-10 — El nombre sobre todo nombre es Jesús</cite>
+  </div>
+
+  <p>El nombre que está sobre todo nombre es <strong>Jesús</strong>. No "Padre, Hijo y Espíritu Santo" como nombre — sino Jesús. Porque en ese nombre está contenida la plenitud de la Deidad, la totalidad de quien Dios es y la completitud de lo que hizo por la salvación humana.</p>
+
+  <div class="section-label">El Credo Apostólico resumido</div>
+  <div class="gold-box">
+    <h4>¿Quién es Jesucristo?</h4>
+    <p><strong>Es el único Dios eterno</strong> — el Jehová del Antiguo Testamento</p>
+    <p><strong>Se encarnó voluntariamente</strong> — tomó naturaleza humana completa y genuina</p>
+    <p><strong>Vivió como verdadero hombre</strong> — tentado, sufriente, mortal</p>
+    <p><strong>Murió en la cruz</strong> — pagando el precio completo del pecado humano</p>
+    <p><strong>Resucitó al tercer día</strong> — venciendo la muerte con el poder de su Deidad</p>
+    <p><strong>Ascendió al Padre</strong> — porque Él mismo es el Padre, regresando a su gloria original</p>
+    <p><strong>Derramó el Espíritu Santo</strong> — porque Él mismo es el Espíritu manifestado en los creyentes</p>
+    <p><strong>Un solo Dios · Un solo Salvador · Un solo Nombre: Jesucristo</strong></p>
+  </div>
+
+  <div class="frase"><p>"Jesucristo no es la respuesta de Dios al problema del pecado. Jesucristo es Dios mismo siendo la respuesta."</p></div>
+</section>
+
+</main>
+
+<section class="epilogo">
+  <span class="big">JESÚS</span>
+  <h2>Todo el Dios — todo el hombre</h2>
+  <p>No hay en toda la historia una persona comparable a Jesucristo. Completamente Dios — para que su muerte tuviera valor eterno. Completamente hombre — para que esa muerte fuera legítima sustitución.</p>
+  <p>La cristología no es un debate académico. Es la base de cada esperanza que tienes, de cada oración que elevas, de cada promesa en la que confías.</p>
+  <div class="quote" style="max-width:480px;margin:32px auto;">
+    <p>"Porque en él habita corporalmente toda la plenitud de la Deidad, y vosotros estáis completos en él."</p>
+    <cite>Colosenses 2:9-10</cite>
+  </div>
+  <div class="firma">La Persona de Cristo · Serie Cristología · Predicador IPUC</div>
+</section>
+
+</div><!-- page-wrap -->
+
+<script>
+const obs=new IntersectionObserver(e=>{e.forEach(el=>{if(el.isIntersecting)el.target.classList.add('visible');});},{threshold:.08});
+document.querySelectorAll('.chapter').forEach(e=>obs.observe(e));
+
+const nav=document.getElementById('sidenav');
+const wrap=document.getElementById('pageWrap');
+const isMobile=()=>window.innerWidth<=768;
+
+function toggleNav(){
+  if(isMobile()){nav.classList.toggle('show');}
+  else{nav.classList.toggle('hidden');wrap.classList.toggle('full');}
+}
+
+// Active nav on scroll
+const sections=document.querySelectorAll('section[id], .parte-banner[id]');
+const navLinks=document.querySelectorAll('nav a');
+window.addEventListener('scroll',()=>{
+  let cur='';
+  sections.forEach(s=>{if(window.scrollY>=s.offsetTop-220)cur=s.id;});
+  navLinks.forEach(a=>{a.classList.remove('active');if(a.getAttribute('href')==='#'+cur)a.classList.add('active');});
+});
+
+navLinks.forEach(a=>{a.addEventListener('click',()=>{if(isMobile())nav.classList.remove('show');});});
+document.addEventListener('click',e=>{
+  if(isMobile()&&nav.classList.contains('show')&&!nav.contains(e.target)&&!e.target.closest('.nav-toggle')){nav.classList.remove('show');}
+});
+</script>
+</body>
+</html>

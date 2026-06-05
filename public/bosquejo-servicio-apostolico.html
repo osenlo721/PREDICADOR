@@ -1,0 +1,727 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bosquejo — Servicio al Señor: El Ejemplo Apostólico</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Cinzel:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --gold: #C9A84C;
+    --gold-light: #E8C97A;
+    --dark: #0D0D0D;
+    --navy: #0A1628;
+    --navy2: #112040;
+    --cream: #F5EDD8;
+    --cream2: #EFE4C8;
+    --text: #1a1209;
+    --accent: #8B1A1A;
+    --green: #1a5c2e;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--cream);
+    color: var(--text);
+    font-family: 'EB Garamond', Georgia, serif;
+    min-height: 100vh;
+    position: relative;
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background:
+      radial-gradient(ellipse at 10% 20%, rgba(201,168,76,0.08) 0%, transparent 50%),
+      radial-gradient(ellipse at 90% 80%, rgba(139,26,26,0.06) 0%, transparent 50%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .page {
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 48px 32px 80px;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* ——— CABECERA ——— */
+  .header {
+    text-align: center;
+    margin-bottom: 52px;
+    animation: fadeDown 0.8s ease both;
+  }
+  .serie-label {
+    font-family: 'Cinzel', serif;
+    font-size: 10px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 20px;
+    display: block;
+  }
+  .cross-ornament {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+  .cross-ornament .line {
+    height: 1px;
+    width: 80px;
+    background: linear-gradient(to right, transparent, var(--gold));
+  }
+  .cross-ornament .line.right {
+    background: linear-gradient(to left, transparent, var(--gold));
+  }
+  .cross-ornament svg { width: 28px; height: 28px; fill: var(--gold); }
+
+  h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(26px, 5vw, 42px);
+    font-weight: 900;
+    line-height: 1.15;
+    color: var(--navy);
+    margin-bottom: 14px;
+    letter-spacing: -0.5px;
+  }
+  h1 em { font-style: italic; color: var(--accent); }
+
+  .versiculo-ref {
+    font-family: 'Cinzel', serif;
+    font-size: 13px;
+    letter-spacing: 2px;
+    color: var(--gold);
+    margin-bottom: 28px;
+  }
+  .versiculo-texto {
+    font-size: 17px;
+    font-style: italic;
+    line-height: 1.75;
+    color: #3a2e1a;
+    max-width: 600px;
+    margin: 0 auto 18px;
+    padding: 20px 28px;
+    border-left: 3px solid var(--gold);
+    border-right: 3px solid var(--gold);
+    background: rgba(201,168,76,0.07);
+    border-radius: 2px;
+  }
+  .versiculos-apoyo {
+    font-family: 'Cinzel', serif;
+    font-size: 10px;
+    letter-spacing: 2px;
+    color: var(--accent);
+    opacity: 0.8;
+  }
+
+  /* ——— INTRO CARD ——— */
+  .intro-card {
+    background: var(--navy);
+    color: var(--cream);
+    border-radius: 4px;
+    padding: 32px 36px;
+    margin-bottom: 44px;
+    position: relative;
+    overflow: hidden;
+    animation: fadeUp 0.7s 0.2s ease both;
+  }
+  .intro-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--accent), var(--gold), var(--accent));
+  }
+  .intro-card h2 {
+    font-family: 'Cinzel', serif;
+    font-size: 11px;
+    letter-spacing: 3px;
+    color: var(--gold);
+    margin-bottom: 14px;
+    text-transform: uppercase;
+  }
+  .intro-card p {
+    font-size: 16px;
+    line-height: 1.85;
+    color: #d8ccb8;
+  }
+
+  /* ——— CONTEXTO APOSTÓLICO ——— */
+  .apostles-strip {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin-bottom: 44px;
+    animation: fadeUp 0.6s 0.25s ease both;
+  }
+  .apostle-card {
+    background: white;
+    border: 1px solid rgba(201,168,76,0.25);
+    border-top: 3px solid var(--gold);
+    border-radius: 3px;
+    padding: 16px 14px;
+    text-align: center;
+  }
+  .apostle-name {
+    font-family: 'Cinzel', serif;
+    font-size: 11px;
+    color: var(--navy);
+    font-weight: 700;
+    letter-spacing: 1px;
+    margin-bottom: 6px;
+  }
+  .apostle-fact {
+    font-size: 13px;
+    line-height: 1.55;
+    color: #5a4030;
+    font-style: italic;
+  }
+
+  /* ——— SECCIONES ——— */
+  .section {
+    margin-bottom: 42px;
+    animation: fadeUp 0.6s ease both;
+  }
+  .section:nth-of-type(2) { animation-delay: 0.1s; }
+  .section:nth-of-type(3) { animation-delay: 0.2s; }
+  .section:nth-of-type(4) { animation-delay: 0.3s; }
+
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 20px;
+  }
+  .section-number {
+    font-family: 'Playfair Display', serif;
+    font-size: 38px;
+    font-weight: 900;
+    color: var(--gold-light);
+    opacity: 0.4;
+    line-height: 1;
+    min-width: 40px;
+  }
+  .section-tag {
+    font-family: 'Cinzel', serif;
+    font-size: 9px;
+    letter-spacing: 3px;
+    color: var(--gold);
+    text-transform: uppercase;
+    display: block;
+    margin-bottom: 3px;
+  }
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--navy);
+    line-height: 1.2;
+  }
+  .divider {
+    height: 1px;
+    background: linear-gradient(to right, var(--gold), transparent);
+    margin-bottom: 18px;
+    opacity: 0.5;
+  }
+
+  /* puntos */
+  .punto {
+    display: flex;
+    gap: 14px;
+    margin-bottom: 16px;
+    align-items: flex-start;
+  }
+  .punto-bullet {
+    width: 20px; height: 20px; min-width: 20px;
+    border: 1.5px solid var(--gold);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    margin-top: 2px;
+  }
+  .punto-bullet span {
+    font-family: 'Cinzel', serif;
+    font-size: 8px;
+    color: var(--gold);
+    font-weight: 700;
+  }
+  .punto-texto {
+    font-size: 16px;
+    line-height: 1.75;
+    color: #2a200f;
+  }
+  .punto-texto strong { font-weight: 700; color: var(--navy); }
+  .punto-texto em { font-style: italic; color: var(--accent); }
+
+  .subpuntos {
+    margin-left: 34px;
+    margin-top: 8px;
+    margin-bottom: 4px;
+  }
+  .subpunto {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 9px;
+    align-items: flex-start;
+  }
+  .subpunto::before {
+    content: '—';
+    color: var(--gold);
+    font-size: 14px;
+    line-height: 1.7;
+    flex-shrink: 0;
+  }
+  .subpunto p { font-size: 15px; line-height: 1.65; color: #3a2e1a; }
+
+  .ref {
+    display: inline-block;
+    font-family: 'Cinzel', serif;
+    font-size: 11px;
+    color: var(--accent);
+    background: rgba(139,26,26,0.07);
+    border: 1px solid rgba(139,26,26,0.2);
+    border-radius: 2px;
+    padding: 1px 6px;
+    margin-left: 4px;
+    letter-spacing: 0.5px;
+  }
+
+  /* ——— BLOQUE APOSTOL (testimonio real) ——— */
+  .apostol-bloque {
+    border-left: 4px solid var(--accent);
+    background: rgba(139,26,26,0.04);
+    padding: 18px 22px;
+    margin: 14px 0 14px 0;
+    border-radius: 0 3px 3px 0;
+  }
+  .apostol-bloque .apostol-label {
+    font-family: 'Cinzel', serif;
+    font-size: 10px;
+    letter-spacing: 2.5px;
+    color: var(--accent);
+    text-transform: uppercase;
+    margin-bottom: 8px;
+    display: block;
+  }
+  .apostol-bloque p {
+    font-size: 15.5px;
+    line-height: 1.75;
+    color: #3a2010;
+  }
+  .apostol-bloque .apostol-cita {
+    font-style: italic;
+    font-size: 15px;
+    color: #5a2a10;
+    margin-top: 8px;
+    display: block;
+  }
+
+  .ilustracion {
+    background: var(--cream2);
+    border: 1px solid rgba(201,168,76,0.3);
+    border-radius: 4px;
+    padding: 22px 28px;
+    margin: 14px 0;
+    font-style: italic;
+    font-size: 15px;
+    line-height: 1.75;
+    color: #4a3820;
+    position: relative;
+  }
+  .ilustracion::before {
+    content: '💡 Ilustración';
+    font-family: 'Cinzel', serif;
+    font-style: normal;
+    font-size: 9px;
+    letter-spacing: 2px;
+    color: var(--gold);
+    display: block;
+    margin-bottom: 8px;
+  }
+
+  .aplicacion-box {
+    background: linear-gradient(135deg, var(--navy) 0%, var(--navy2) 100%);
+    border-radius: 4px;
+    padding: 28px 32px;
+    margin-top: 20px;
+    position: relative;
+    overflow: hidden;
+  }
+  .aplicacion-box::after {
+    content: '';
+    position: absolute;
+    bottom: 0; right: 0;
+    width: 100px; height: 100px;
+    background: radial-gradient(circle, rgba(201,168,76,0.15), transparent 70%);
+  }
+  .aplicacion-box h3 {
+    font-family: 'Cinzel', serif;
+    font-size: 10px;
+    letter-spacing: 3px;
+    color: var(--gold);
+    margin-bottom: 14px;
+    text-transform: uppercase;
+  }
+  .aplicacion-box p {
+    font-size: 15.5px;
+    line-height: 1.75;
+    color: #d0c4aa;
+  }
+
+  /* ——— LISTA SUFRIMIENTOS PABLO ——— */
+  .sufrimientos-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin: 16px 0;
+  }
+  .sufr-item {
+    background: white;
+    border: 1px solid rgba(139,26,26,0.15);
+    border-left: 3px solid var(--accent);
+    border-radius: 2px;
+    padding: 10px 13px;
+    font-size: 14px;
+    line-height: 1.5;
+    color: #3a1a0a;
+  }
+  .sufr-item strong {
+    font-family: 'Cinzel', serif;
+    font-size: 10px;
+    display: block;
+    color: var(--accent);
+    letter-spacing: 1px;
+    margin-bottom: 2px;
+    text-transform: uppercase;
+  }
+
+  /* ——— CIERRE ——— */
+  .cierre {
+    text-align: center;
+    margin-top: 56px;
+    padding-top: 36px;
+    border-top: 1px solid rgba(201,168,76,0.3);
+    animation: fadeUp 0.6s 0.5s ease both;
+  }
+  .cierre .ornamento { font-size: 28px; margin-bottom: 16px; display: block; }
+  .cierre h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--navy);
+    font-style: italic;
+    margin-bottom: 12px;
+  }
+  .cierre p {
+    font-size: 15px;
+    line-height: 1.7;
+    color: #5a4a30;
+    max-width: 520px;
+    margin: 0 auto 20px;
+  }
+  .decision-box {
+    display: inline-block;
+    background: var(--accent);
+    color: var(--cream);
+    padding: 14px 32px;
+    border-radius: 2px;
+    font-family: 'Cinzel', serif;
+    font-size: 12px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+
+  .footer {
+    text-align: center;
+    margin-top: 52px;
+    font-family: 'Cinzel', serif;
+    font-size: 10px;
+    letter-spacing: 3px;
+    color: rgba(201,168,76,0.5);
+  }
+
+  @keyframes fadeDown {
+    from { opacity: 0; transform: translateY(-20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  @media (max-width: 600px) {
+    .page { padding: 28px 18px 60px; }
+    .apostles-strip { grid-template-columns: 1fr; }
+    .sufrimientos-grid { grid-template-columns: 1fr; }
+    .intro-card { padding: 22px 18px; }
+  }
+  @media print {
+    body { background: white; }
+    * { animation: none !important; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- CABECERA -->
+  <header class="header">
+    <span class="serie-label">Bosquejo de Predicación · Serie: Servicio al Señor</span>
+    <div class="cross-ornament">
+      <div class="line"></div>
+      <svg viewBox="0 0 24 24"><path d="M11 2h2v7h7v2h-7v11h-2V11H4V9h7z"/></svg>
+      <div class="line right"></div>
+    </div>
+    <h1>Siervos que <em>No se Rindieron</em></h1>
+    <p class="versiculo-ref">1 Corintios 15:58 · Texto Central</p>
+    <p class="versiculo-texto">
+      "Así que, hermanos míos amados, estad firmes y constantes, creciendo en la obra del Señor siempre, sabiendo que vuestro trabajo en el Señor no es en vano."
+    </p>
+    <p class="versiculos-apoyo">Textos de apoyo: 2 Co 11:23-28 · Fil 4:11-13 · Hch 5:40-42 · 2 Ti 4:7</p>
+  </header>
+
+  <!-- INTRO -->
+  <div class="intro-card">
+    <h2>Introducción</h2>
+    <p>
+      Es fácil servir al Señor cuando todo va bien. El verdadero servicio se prueba en la tormenta. Los apóstoles no predicaron desde cómodas oficinas — predicaron desde calabozos, desde barcos naufragando, desde ciudades que los apedreaban. Y sin embargo, <strong style="color:var(--gold-light)">nunca dejaron de servir</strong>. ¿Cuál era su secreto? Esta noche vamos a descubrirlo. El fundamento del servicio verdadero no está en las circunstancias favorables, sino en una certeza inquebrantable: <em style="color:var(--gold-light)">el trabajo en el Señor jamás es en vano.</em>
+    </p>
+  </div>
+
+  <!-- CONTEXTO: QUIÉNES ERAN LOS APÓSTOLES -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-number">◆</div>
+      <div class="section-title-wrap">
+        <span class="section-tag">Contexto histórico</span>
+        <div class="section-title">¿Quiénes Fueron Estos Hombres?</div>
+      </div>
+    </div>
+    <div class="divider"></div>
+
+    <div class="punto">
+      <div class="punto-bullet"><span>→</span></div>
+      <div class="punto-texto">
+        No eran superhéroes ni figuras de cristal. Eran hombres comunes — pescadores, recaudadores de impuestos, zelotes — a quienes el Señor llamó y transformó para un propósito eterno.
+        <span class="ref">1 Co 1:26-27</span>
+      </div>
+    </div>
+
+    <div class="apostles-strip">
+      <div class="apostle-card">
+        <div class="apostle-name">Pedro</div>
+        <div class="apostle-fact">Pescador. Negó a Cristo 3 veces. Predicó en Pentecostés. Crucificado boca abajo.</div>
+      </div>
+      <div class="apostle-card">
+        <div class="apostle-name">Pablo</div>
+        <div class="apostle-fact">Perseguidor de la iglesia. Convertido en el camino. Tres naufragios, cinco veces azotado, decapitado en Roma.</div>
+      </div>
+      <div class="apostle-card">
+        <div class="apostle-name">Juan</div>
+        <div class="apostle-fact">Exiliado en Patmos. Sobrevivió el aceite hirviendo. Escribió el Apocalipsis en prisión.</div>
+      </div>
+    </div>
+
+    <div class="punto">
+      <div class="punto-bullet"><span>→</span></div>
+      <div class="punto-texto">
+        <strong>Pregunta clave:</strong> ¿Qué les hizo perseverar cuando todo parecía ir en contra? La respuesta no está en su carácter —  sino en su <em>fundamento.</em>
+      </div>
+    </div>
+  </div>
+
+  <!-- PUNTO I: EL FUNDAMENTO -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-number">I</div>
+      <div class="section-title-wrap">
+        <span class="section-tag">Primer punto</span>
+        <div class="section-title">El Fundamento del Servicio: Una Fe en Cristo Vivo</div>
+      </div>
+    </div>
+    <div class="divider"></div>
+
+    <div class="punto">
+      <div class="punto-bullet"><span>A</span></div>
+      <div class="punto-texto">
+        <strong>No servían a una idea — servían a una Persona resucitada.</strong>
+        <div class="subpuntos">
+          <div class="subpunto"><p>El servicio apostólico no comenzó con un programa sino con un encuentro: <em>"Yo soy la resurrección y la vida"</em>. <span class="ref">Jn 11:25</span></p></div>
+          <div class="subpunto"><p>Pedro después de la resurrección no volvió a ser el mismo — <em>su servicio nació del amor restaurado.</em> <span class="ref">Jn 21:15-17</span></p></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="apostol-bloque">
+      <span class="apostol-label">Testimonio · Pablo en Filipos</span>
+      <p>Azotados y echados en la cárcel, con los pies en el cepo — a medianoche Pablo y Silas <strong>cantaban himnos a Dios</strong>. No era negación del sufrimiento; era fe que trascendía las circunstancias. <span class="ref">Hch 16:23-25</span></p>
+      <span class="apostol-cita">"El fundamento no era su comodidad. Era su Señor."</span>
+    </div>
+
+    <div class="punto">
+      <div class="punto-bullet"><span>B</span></div>
+      <div class="punto-texto">
+        <strong>El servicio sin ese fundamento se agota.</strong> Solo se puede servir con gozo cuando se conoce a Quien se sirve.
+        <div class="subpuntos">
+          <div class="subpunto"><p>Muchos siervos se cansan porque sirven al ministerio, no al Señor del ministerio.</p></div>
+          <div class="subpunto"><p>El fundamento correcto protege contra la desilusión. <span class="ref">Col 3:23 — "Como para el Señor"</span></p></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="aplicacion-box">
+      <h3>Aplicación</h3>
+      <p>¿Tu servicio está construido sobre el conocimiento personal de Cristo, o sobre el hábito y la rutina religiosa? El que sirve al Señor vivo, nunca sirve solo.</p>
+    </div>
+  </div>
+
+  <!-- PUNTO II: LO QUE VIVIERON -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-number">II</div>
+      <div class="section-title-wrap">
+        <span class="section-tag">Segundo punto</span>
+        <div class="section-title">Lo Que Vivieron: El Precio Real del Servicio</div>
+      </div>
+    </div>
+    <div class="divider"></div>
+
+    <div class="punto">
+      <div class="punto-bullet"><span>A</span></div>
+      <div class="punto-texto">
+        <strong>Pablo enumera su propio currículo de sufrimiento</strong> — no para quejarse, sino para mostrar que el servicio tiene un costo real. <span class="ref">2 Co 11:23-28</span>
+      </div>
+    </div>
+
+    <div class="sufrimientos-grid">
+      <div class="sufr-item"><strong>Prisiones</strong>Encarcelado repetidamente por predicar el evangelio.</div>
+      <div class="sufr-item"><strong>Azotes</strong>5 veces 40 azotes menos uno por las sinagogas judías.</div>
+      <div class="sufr-item"><strong>Naufragios</strong>3 veces naufragó. Una noche y un día en el mar abierto.</div>
+      <div class="sufr-item"><strong>Peligros</strong>En ríos, en desiertos, en ciudades, de falsos hermanos.</div>
+      <div class="sufr-item"><strong>Hambre y sed</strong>Muchas veces en ayuno, en frío y desnudez.</div>
+      <div class="sufr-item"><strong>La carga diaria</strong>"La preocupación por todas las iglesias." No era solo física.</div>
+    </div>
+
+    <div class="apostol-bloque">
+      <span class="apostol-label">Testimonio · Los Apóstoles ante el Sanedrín</span>
+      <p>Azotados y amenazados de muerte, los apóstoles fueron soltados. ¿Cuál fue su reacción? <strong>Se fueron gozosos</strong> de haber sido tenidos por dignos de padecer afrenta por el nombre de Jesús. <span class="ref">Hch 5:40-42</span></p>
+      <span class="apostol-cita">"Y todos los días, en el templo y por las casas, no cesaban de enseñar y predicar a Jesucristo."</span>
+    </div>
+
+    <div class="punto">
+      <div class="punto-bullet"><span>B</span></div>
+      <div class="punto-texto">
+        <strong>El sufrimiento no los desanimó — los convenció más.</strong>
+        <div class="subpuntos">
+          <div class="subpunto"><p>Para el apóstol, sufrir por Cristo era una <em>distinción</em>, no una derrota. <span class="ref">Fil 1:29</span></p></div>
+          <div class="subpunto"><p>El sufrimiento probaba que su mensaje era real — nadie muere por algo que sabe que es mentira.</p></div>
+          <div class="subpunto"><p>Veían más allá del dolor presente hacia la gloria futura. <span class="ref">Ro 8:18</span></p></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="ilustracion">
+      Esteban, apedreado hasta morir, levantó sus ojos y vio a Jesús de pie a la diestra de Dios. En el momento más oscuro de su servicio, el cielo se abrió. El servicio al Señor tiene una dimensión que el ojo humano no ve pero que el siervo fiel siente en su interior. <span class="ref">Hch 7:55-56</span>
+    </div>
+
+    <div class="aplicacion-box">
+      <h3>Aplicación</h3>
+      <p>¿Te has desanimado porque el servicio tuvo un costo que no esperabas? Los apóstoles también pagaron un precio altísimo — y siguieron. El costo del servicio no invalida su valor; lo confirma.</p>
+    </div>
+  </div>
+
+  <!-- PUNTO III: POR QUÉ NO SE DESMOTIVARON -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-number">III</div>
+      <div class="section-title-wrap">
+        <span class="section-tag">Tercer punto</span>
+        <div class="section-title">¿Por Qué No Se Desmotivaron? Las Tres Anclas</div>
+      </div>
+    </div>
+    <div class="divider"></div>
+
+    <div class="punto">
+      <div class="punto-bullet"><span>A</span></div>
+      <div class="punto-texto">
+        <strong>Ancla #1 — Tenían certeza de la resurrección.</strong>
+        <div class="subpuntos">
+          <div class="subpunto"><p>Pablo dice: <em>"Si en esta vida solamente esperamos en Cristo, somos los más dignos de conmiseración"</em> — pero hay más. <span class="ref">1 Co 15:19</span></p></div>
+          <div class="subpunto"><p>La resurrección convierte cada sacrificio en una inversión eterna, no en una pérdida.</p></div>
+          <div class="subpunto"><p>Porque Cristo resucitó, el siervo sabe que tampoco su obra morirá. <span class="ref">1 Co 15:58</span></p></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="punto">
+      <div class="punto-bullet"><span>B</span></div>
+      <div class="punto-texto">
+        <strong>Ancla #2 — Aprendieron el contentamiento.</strong>
+        <div class="subpuntos">
+          <div class="subpunto"><p>Pablo escribe desde la cárcel: <em>"He aprendido a contentarme en cualquier estado en que me encuentre."</em> <span class="ref">Fil 4:11</span></p></div>
+          <div class="subpunto"><p>El contentamiento no es resignación — es la convicción de que el Señor es suficiente independientemente de las circunstancias.</p></div>
+          <div class="subpunto"><p>"Todo lo puedo en Cristo que me fortalece." No decía esto desde un palacio, sino desde una prisión. <span class="ref">Fil 4:13</span></p></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="apostol-bloque">
+      <span class="apostol-label">Testimonio · Pablo al final de su vida</span>
+      <p>Abandonado por muchos, próximo a la muerte, en frío y en cadenas, Pablo le escribe a Timoteo y dice:</p>
+      <span class="apostol-cita">"He peleado la buena batalla, he acabado la carrera, he guardado la fe. Por lo demás me está guardada la corona de justicia…" <span class="ref">2 Ti 4:7-8</span></span>
+    </div>
+
+    <div class="punto">
+      <div class="punto-bullet"><span>C</span></div>
+      <div class="punto-texto">
+        <strong>Ancla #3 — Tenían visión de eternidad, no de inmediatez.</strong>
+        <div class="subpuntos">
+          <div class="subpunto"><p>No medían el éxito por los aplausos del momento sino por la aprobación del Señor. <span class="ref">2 Co 5:9</span></p></div>
+          <div class="subpunto"><p>Sembraban a largo plazo: muchas de las cartas de Pablo fueron escritas para generaciones que aún no habían nacido.</p></div>
+          <div class="subpunto"><p>El siervo que ve con ojos eternos no se desmotiva con fracasos temporales. <span class="ref">2 Co 4:17-18</span></p></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="ilustracion">
+      Un corredor de maratón no abandona la carrera en el kilómetro 30 porque le duelen las piernas — sabe que la meta está cerca. Los apóstoles corrían con la meta a la vista. El dolor del trayecto no podía compararse con la gloria de llegar. <span class="ref">He 12:1-2</span>
+    </div>
+
+    <div class="aplicacion-box">
+      <h3>Aplicación</h3>
+      <p>¿Cuál de estas tres anclas necesitas hoy? ¿La certeza de la eternidad? ¿El contentamiento en tus circunstancias? ¿Una visión más larga que lo inmediato? El mismo Espíritu que sostuvo a los apóstoles vive en ti.</p>
+    </div>
+  </div>
+
+  <!-- CIERRE -->
+  <div class="cierre">
+    <span class="ornamento">✦</span>
+    <h2>Conclusión: Tú También Eres Parte de Esa Historia</h2>
+    <p>
+      Los apóstoles no son figuras de museo. Son el modelo vivo del servicio que Dios llama a cada creyente. Tú, que enseñas en una célula pequeña, que visitas enfermos, que oras en la madrugada, que da de tu tiempo y de tus recursos — estás haciendo lo mismo que hicieron ellos. Y la promesa es la misma:
+    </p>
+    <p style="font-style:italic; font-size:16px; color: var(--navy); font-weight:600;">
+      "Tu trabajo en el Señor no es en vano."
+    </p>
+    <br>
+    <p style="font-size:14px; color:#6b5530;">
+      <strong>Versículos de cierre:</strong>
+      <span class="ref">1 Co 15:58</span> <span class="ref">Gá 6:9</span> <span class="ref">He 12:1-3</span> <span class="ref">Ap 14:13</span>
+    </p>
+    <br><br>
+    <div class="decision-box">Llamado: ¿Servirás Sin Rendirte?</div>
+    <br><br>
+    <p style="font-style:italic; font-size:15px;">
+      "Como Pablo, como Pedro, como Juan — ¿estás dispuesto a pagar el precio del servicio, sabiendo que cada sacrificio tiene peso eterno?"
+    </p>
+  </div>
+
+  <div class="footer">IPUC · Bosquejo de Predicación · Servicio al Señor — El Ejemplo Apostólico</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>El Arrebatamiento — Estudio Doctrinal</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Raleway:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--azul:#009FDA;--marino:#003B6F;--oro:#F0AB00;--oro-claro:#FFD166;--fondo:#040e1c;--texto:#e8e0d0;--texto-suave:#a89f90;--linea:rgba(240,171,0,.2);}
+*{margin:0;padding:0;box-sizing:border-box;}html{scroll-behavior:smooth;}
+body{background:var(--fondo);color:var(--texto);font-family:'Crimson Pro',Georgia,serif;font-size:18px;line-height:1.85;overflow-x:hidden;}
+::-webkit-scrollbar{width:4px;}::-webkit-scrollbar-track{background:var(--fondo);}::-webkit-scrollbar-thumb{background:var(--azul);border-radius:2px;}
+.nav-toggle{position:fixed;top:16px;left:16px;z-index:300;background:var(--marino);border:1px solid var(--linea);color:var(--oro);width:44px;height:44px;border-radius:8px;cursor:pointer;font-size:20px;display:flex;align-items:center;justify-content:center;transition:all .2s;box-shadow:0 2px 12px rgba(0,0,0,.4);}
+.nav-toggle:hover{background:var(--azul);color:#fff;}
+nav{position:fixed;left:0;top:0;bottom:0;width:265px;background:linear-gradient(180deg,var(--marino) 0%,#011529 100%);border-right:1px solid var(--linea);z-index:200;overflow-y:auto;transform:translateX(0);transition:transform .35s ease;padding:32px 0;}
+nav.hidden{transform:translateX(-100%);}
+nav .nav-brand{font-family:'Cinzel',serif;font-size:12px;font-weight:700;color:var(--oro);padding:0 20px 20px;border-bottom:1px solid var(--linea);margin-bottom:8px;letter-spacing:1px;line-height:1.5;}
+nav .nav-section{font-family:'Cinzel',serif;font-size:9px;letter-spacing:3px;color:var(--azul);padding:14px 20px 4px;text-transform:uppercase;opacity:.8;}
+nav a{display:flex;align-items:center;gap:10px;padding:7px 20px;font-family:'Raleway',sans-serif;font-size:11px;font-weight:500;letter-spacing:.5px;color:var(--texto-suave);text-decoration:none;border-left:2px solid transparent;transition:all .2s;}
+nav a:hover,nav a.active{color:var(--oro);border-left-color:var(--oro);background:rgba(240,171,0,.06);}
+nav a .nav-num{font-family:'Cinzel',serif;font-size:10px;color:var(--azul);min-width:20px;}
+.page-wrap{margin-left:265px;transition:margin .35s ease;}
+.page-wrap.full{margin-left:0;}
+
+.cover{min-height:100vh;background:linear-gradient(160deg,#041830 0%,var(--fondo) 65%);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:80px 32px 60px;position:relative;overflow:hidden;}
+.cover::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 50% at 50% 10%,rgba(0,159,218,.18) 0%,transparent 70%),radial-gradient(ellipse 40% 40% at 80% 85%,rgba(240,171,0,.1) 0%,transparent 60%);pointer-events:none;}
+.cover-icon{font-size:64px;margin-bottom:24px;animation:fadeDown .8s ease both;}
+.cover-tag{font-family:'Cinzel',serif;font-size:10px;letter-spacing:5px;color:var(--azul);text-transform:uppercase;margin-bottom:20px;animation:fadeDown .9s ease .1s both;}
+.cover-title{font-family:'Cinzel',serif;font-size:clamp(44px,10vw,100px);font-weight:900;line-height:1;margin-bottom:8px;animation:fadeDown 1s ease .2s both;color:var(--oro);}
+.cover-sub{font-family:'Cinzel',serif;font-size:clamp(13px,2vw,17px);color:var(--azul);letter-spacing:2px;margin-bottom:32px;animation:fadeDown 1s ease .25s both;}
+.cover-line{width:60px;height:1px;background:linear-gradient(to right,transparent,var(--oro),transparent);margin:0 auto 24px;animation:fadeIn 1.1s ease .35s both;}
+.cover-author{font-family:'Raleway',sans-serif;font-size:13px;letter-spacing:4px;color:var(--texto-suave);text-transform:uppercase;animation:fadeDown 1.1s ease .4s both;}
+.cover-verse{position:absolute;bottom:40px;font-family:'Crimson Pro',serif;font-style:italic;font-size:14px;color:var(--texto-suave);max-width:440px;text-align:center;line-height:1.6;}
+
+main{max-width:740px;margin:0 auto;padding:0 24px;}
+.chapter{padding:72px 0 56px;border-bottom:1px solid rgba(240,171,0,.1);opacity:0;transform:translateY(30px);transition:opacity .7s ease,transform .7s ease;}
+.chapter.visible{opacity:1;transform:none;}
+.ch-num{font-family:'Cinzel',serif;font-size:11px;letter-spacing:4px;color:var(--azul);text-transform:uppercase;margin-bottom:12px;}
+.ch-title{font-family:'Cinzel',serif;font-size:clamp(20px,3.5vw,32px);font-weight:700;color:var(--oro);line-height:1.2;margin-bottom:8px;}
+.ch-sub{font-family:'Cinzel',serif;font-size:clamp(13px,2vw,18px);color:var(--azul);margin-bottom:28px;}
+.ch-divider{width:40px;height:2px;background:linear-gradient(to right,var(--oro),var(--azul));margin-bottom:32px;border-radius:2px;}
+p{margin-bottom:20px;}
+strong{color:var(--oro);font-weight:600;}
+em{color:var(--azul);font-style:italic;}
+
+.quote{border-left:3px solid var(--oro);padding:16px 24px;margin:28px 0;background:rgba(240,171,0,.05);border-radius:0 8px 8px 0;}
+.quote p{font-family:'Crimson Pro',serif;font-style:italic;font-size:1.05em;color:var(--oro-claro);margin-bottom:6px;}
+.quote cite{font-family:'Raleway',sans-serif;font-size:12px;letter-spacing:2px;color:var(--texto-suave);}
+
+.section-label{font-family:'Cinzel',serif;font-size:11px;letter-spacing:3px;color:var(--azul);text-transform:uppercase;margin:36px 0 12px;}
+
+.list-yes,.list-no{list-style:none;margin:16px 0 24px;padding:0;}
+.list-yes li,.list-no li{padding:6px 0 6px 28px;position:relative;font-size:.97em;color:var(--texto-suave);border-bottom:1px solid rgba(255,255,255,.05);}
+.list-yes li::before{content:'✅';position:absolute;left:0;top:6px;font-size:14px;}
+.list-no li::before{content:'❌';position:absolute;left:0;top:6px;font-size:14px;}
+
+.compare{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:28px 0;}
+.compare-box{padding:20px;border-radius:8px;border:1px solid;}
+.compare-box.a{border-color:rgba(0,159,218,.3);background:rgba(0,159,218,.05);}
+.compare-box.b{border-color:rgba(240,171,0,.3);background:rgba(240,171,0,.05);}
+.compare-box.c{border-color:rgba(139,80,20,.4);background:rgba(139,80,20,.05);}
+.compare-box h4{font-family:'Cinzel',serif;font-size:10px;letter-spacing:3px;margin-bottom:12px;text-transform:uppercase;}
+.compare-box.a h4{color:var(--azul);}
+.compare-box.b h4{color:var(--oro);}
+.compare-box.c h4{color:#d4845a;}
+.compare-box ul{list-style:none;}
+.compare-box ul li{font-size:14px;padding:4px 0;color:var(--texto-suave);border-bottom:1px solid rgba(255,255,255,.06);}
+
+.frase{text-align:center;padding:40px 24px;margin:32px 0;position:relative;}
+.frase::before{content:'"';font-family:'Cinzel',serif;font-size:100px;color:rgba(240,171,0,.07);position:absolute;top:-10px;left:16px;line-height:1;}
+.frase p{font-family:'Cinzel',serif;font-size:clamp(15px,2.2vw,20px);color:var(--texto);line-height:1.5;position:relative;z-index:1;margin:0;}
+
+.tip-box{background:linear-gradient(135deg,rgba(0,59,111,.4) 0%,rgba(4,14,28,.8) 100%);border:1px solid rgba(0,159,218,.25);border-radius:12px;padding:24px;margin:28px 0;}
+.tip-box h4{font-family:'Cinzel',serif;font-size:11px;letter-spacing:4px;color:var(--azul);text-transform:uppercase;margin-bottom:14px;}
+.tip-box p,.tip-box li{color:var(--texto-suave);font-size:.95em;margin-bottom:8px;}
+.tip-box ol,.tip-box ul{padding-left:20px;}
+.tip-box li{margin-bottom:8px;}
+
+.gold-box{background:rgba(240,171,0,.06);border:1px solid rgba(240,171,0,.2);border-radius:12px;padding:24px;margin:28px 0;}
+.gold-box h4{font-family:'Cinzel',serif;font-size:11px;letter-spacing:4px;color:var(--oro);text-transform:uppercase;margin-bottom:14px;}
+.gold-box p{color:var(--texto-suave);font-size:.95em;margin-bottom:10px;}
+.gold-box strong{color:var(--oro);}
+
+.etimo{background:rgba(240,171,0,.04);border:1px solid rgba(240,171,0,.15);border-radius:8px;padding:20px 24px;margin:20px 0;}
+.etimo .e-palabra{font-family:'Cinzel',serif;font-size:22px;color:var(--oro);margin-bottom:4px;}
+.etimo .e-origen{font-family:'Raleway',sans-serif;font-size:12px;color:var(--azul);letter-spacing:2px;margin-bottom:8px;}
+.etimo p{color:var(--texto-suave);font-size:.95em;margin:0;}
+
+.posicion{border-radius:10px;padding:22px 24px;margin:20px 0;border:1px solid;}
+.posicion.pre{border-color:rgba(0,159,218,.3);background:rgba(0,159,218,.04);}
+.posicion.mid{border-color:rgba(240,171,0,.3);background:rgba(240,171,0,.04);}
+.posicion.post{border-color:rgba(139,80,20,.4);background:rgba(139,80,20,.04);}
+.posicion .pos-header{display:flex;align-items:center;gap:12px;margin-bottom:12px;}
+.posicion .pos-badge{font-family:'Cinzel',serif;font-size:10px;letter-spacing:3px;padding:4px 10px;border-radius:20px;text-transform:uppercase;}
+.posicion.pre .pos-badge{background:rgba(0,159,218,.15);color:var(--azul);}
+.posicion.mid .pos-badge{background:rgba(240,171,0,.15);color:var(--oro);}
+.posicion.post .pos-badge{background:rgba(139,80,20,.15);color:#d4845a;}
+.posicion .pos-titulo{font-family:'Cinzel',serif;font-size:16px;color:var(--texto);font-weight:600;}
+.posicion p{color:var(--texto-suave);font-size:.95em;margin-bottom:8px;}
+.posicion p:last-child{margin:0;}
+.posicion strong{color:var(--oro);}
+
+.pasos{counter-reset:paso;list-style:none;padding:0;margin:24px 0;}
+.pasos li{counter-increment:paso;display:flex;gap:16px;margin-bottom:22px;align-items:flex-start;}
+.pasos li::before{content:counter(paso);font-family:'Cinzel',serif;font-size:20px;font-weight:700;color:var(--oro);min-width:32px;line-height:1.3;}
+.pasos li .paso-content h5{font-family:'Cinzel',serif;font-size:14px;color:var(--azul);margin-bottom:5px;letter-spacing:1px;}
+.pasos li .paso-content p{color:var(--texto-suave);font-size:.95em;margin:0;}
+
+.linea-tiempo{display:flex;flex-direction:column;gap:0;margin:28px 0;}
+.lt-item{display:flex;gap:16px;align-items:flex-start;}
+.lt-dot{width:14px;height:14px;border-radius:50%;margin-top:6px;flex-shrink:0;}
+.lt-dot.d1{background:var(--azul);}
+.lt-dot.d2{background:var(--oro);}
+.lt-dot.d3{background:#d4845a;}
+.lt-dot.d4{background:#4ecb8d;}
+.lt-line{width:2px;flex:1;background:rgba(240,171,0,.15);margin:0 6px;}
+.lt-connector{display:flex;flex-direction:column;align-items:center;width:14px;}
+.lt-content{padding-bottom:20px;flex:1;}
+.lt-content .ltc-label{font-family:'Cinzel',serif;font-size:10px;letter-spacing:3px;color:var(--azul);text-transform:uppercase;margin-bottom:4px;}
+.lt-content .ltc-title{font-family:'Cinzel',serif;font-size:15px;color:var(--oro);margin-bottom:4px;}
+.lt-content p{color:var(--texto-suave);font-size:.93em;margin:0;}
+
+.epilogo{text-align:center;padding:80px 32px 120px;}
+.epilogo .big{font-family:'Cinzel',serif;font-size:clamp(32px,7vw,68px);font-weight:900;color:transparent;-webkit-text-stroke:1px rgba(240,171,0,.35);letter-spacing:6px;display:block;margin-bottom:40px;}
+.epilogo h2{font-family:'Cinzel',serif;font-size:clamp(18px,3vw,28px);color:var(--oro);margin-bottom:24px;}
+.epilogo p{max-width:540px;margin:0 auto 16px;color:var(--texto-suave);}
+.epilogo .firma{margin-top:48px;font-family:'Cinzel',serif;font-size:13px;letter-spacing:4px;color:var(--azul);}
+
+@keyframes fadeDown{from{opacity:0;transform:translateY(-20px);}to{opacity:1;transform:none;}}
+@keyframes fadeIn{from{opacity:0;}to{opacity:1;}}
+@media(max-width:768px){nav{transform:translateX(-100%);}nav.show{transform:translateX(0);}.page-wrap{margin-left:0!important;}}
+@media(max-width:600px){.compare{grid-template-columns:1fr;}nav{width:220px;}.pasos li{flex-direction:column;gap:8px;}}
+</style>
+</head>
+<body>
+<button class="nav-toggle" id="navToggle" onclick="toggleNav()">☰</button>
+<nav id="sidenav">
+  <div class="nav-brand">☁️ El Arrebatamiento<br>Estudio Doctrinal</div>
+  <div class="nav-section">Índice</div>
+  <a href="#portada"><span class="nav-num">·</span>Portada</a>
+  <div class="nav-section">Lecciones</div>
+  <a href="#cap1"><span class="nav-num">01</span>Etimología — Harpazo</a>
+  <a href="#cap2"><span class="nav-num">02</span>El texto central</a>
+  <a href="#cap3"><span class="nav-num">03</span>La secuencia del evento</a>
+  <a href="#cap4"><span class="nav-num">04</span>Textos de apoyo</a>
+  <a href="#cap5"><span class="nav-num">05</span>Las posiciones teológicas</a>
+  <a href="#cap6"><span class="nav-num">06</span>¿La iglesia pasará la tribulación?</a>
+  <a href="#cap7"><span class="nav-num">07</span>La gran tribulación</a>
+  <a href="#cap8"><span class="nav-num">08</span>Señales y preparación</a>
+  <a href="#cap9"><span class="nav-num">09</span>Lo que sí es seguro</a>
+</nav>
+
+<div class="page-wrap" id="pageWrap">
+
+<section class="cover" id="portada">
+  <div class="cover-icon">☁️</div>
+  <div class="cover-tag">Estudio Doctrinal · Escatología</div>
+  <h1 class="cover-title">El Arrebatamiento</h1>
+  <div class="cover-sub">Lo que la Biblia dice — sin especulación</div>
+  <div class="cover-line"></div>
+  <div class="cover-author">Predicador IPUC</div>
+  <div class="cover-verse">"Luego nosotros los que vivimos, los que hayamos quedado, seremos arrebatados juntamente con ellos en las nubes para recibir al Señor en el aire, y así estaremos siempre con el Señor." — 1 Tesalonicenses 4:17</div>
+</section>
+
+<main>
+
+<!-- CAP 1 ETIMOLOGÍA -->
+<section class="chapter" id="cap1">
+  <div class="ch-num">Lección 1</div>
+  <h2 class="ch-title">Etimología — Harpazo</h2>
+  <div class="ch-sub">La palabra que define el evento</div>
+  <div class="ch-divider"></div>
+
+  <p>El arrebatamiento no es un concepto inventado por teólogos modernos. Es un término con raíces directas en el Nuevo Testamento griego. Antes de debatir cuándo ocurrirá, hay que entender qué es exactamente lo que la Biblia describe.</p>
+
+  <div class="etimo">
+    <div class="e-palabra">Harpazo — ἁρπάζω</div>
+    <div class="e-origen">Griego del NT · 1 Tesalonicenses 4:17</div>
+    <p>Significa: <strong>arrebatar, tomar por fuerza, llevar violentamente, arrancar</strong>. No es un movimiento suave ni gradual. Es una acción súbita y poderosa. La misma palabra se usa cuando el Espíritu <em>arrebató</em> a Felipe (Hechos 8:39), cuando Pablo fue <em>arrebatado</em> al tercer cielo (2 Corintios 12:2), y cuando el Apocalipsis dice que el hijo de la mujer fue <em>arrebatado</em> para Dios (Apocalipsis 12:5).</p>
+  </div>
+
+  <div class="etimo">
+    <div class="e-palabra">Rapto — Raptus</div>
+    <div class="e-origen">Latín · traducción de harpazo en la Vulgata</div>
+    <p>Cuando Jerónimo tradujo la Biblia al latín (la Vulgata), tradujo <em>harpazo</em> como <em>rapiemur</em> — de donde viene la palabra española <strong>rapto</strong>. Arrebatamiento y rapto son términos equivalentes que describen el mismo evento bíblico.</p>
+  </div>
+
+  <p>El harpazo implica tres realidades simultáneas: la <strong>soberanía de Dios</strong> que actúa con poder irresistible, la <strong>transformación instantánea</strong> del cuerpo del creyente, y el <strong>traslado físico</strong> de la tierra al encuentro con Cristo en el aire.</p>
+
+  <div class="frase"><p>"El arrebatamiento no es una teoría — es una palabra griega en el texto. Harpazo. Tomar por fuerza. Así de concreto."</p></div>
+</section>
+
+<!-- CAP 2 TEXTO CENTRAL -->
+<section class="chapter" id="cap2">
+  <div class="ch-num">Lección 2</div>
+  <h2 class="ch-title">El texto central</h2>
+  <div class="ch-sub">1 Tesalonicenses 4:13-18 — exégesis completa</div>
+  <div class="ch-divider"></div>
+
+  <p>El pasaje que describe el arrebatamiento con mayor claridad y detalle en todo el Nuevo Testamento es 1 Tesalonicenses 4:13-18. Pablo lo escribe para consolar a creyentes que se preguntaban qué pasaría con sus seres amados que ya habían muerto antes de la venida de Cristo.</p>
+
+  <div class="quote">
+    <p>"Tampoco queremos, hermanos, que ignoréis acerca de los que duermen, para que no os entristezcáis como los otros que no tienen esperanza."</p>
+    <cite>1 Tesalonicenses 4:13 — El propósito del pasaje: consolar, no especular</cite>
+  </div>
+
+  <div class="section-label">El contexto que lo cambia todo</div>
+  <p>Este detalle es fundamental: Pablo no escribe este pasaje para generar debate escatológico. Lo escribe para <strong>consolar a creyentes que lloran</strong>. La doctrina del arrebatamiento no es una especulación académica — es una <em>esperanza viva</em> que cambia cómo el creyente enfrenta la muerte y la pérdida.</p>
+
+  <div class="quote">
+    <p>"Porque el Señor mismo con voz de mando, con voz de arcángel, y con trompeta de Dios, descenderá del cielo; y los muertos en Cristo resucitarán primero. Luego nosotros los que vivimos, los que hayamos quedado, seremos arrebatados juntamente con ellos en las nubes para recibir al Señor en el aire, y así estaremos siempre con el Señor."</p>
+    <cite>1 Tesalonicenses 4:16-17</cite>
+  </div>
+
+  <div class="section-label">Análisis frase por frase</div>
+
+  <ul class="pasos">
+    <li>
+      <div class="paso-content">
+        <h5>"El Señor mismo descenderá del cielo"</h5>
+        <p>No un ángel, no una señal — el Señor mismo. La venida es personal, visible y soberana. El mismo Jesús que ascendió en Hechos 1:11 vendrá de la misma manera.</p>
+      </div>
+    </li>
+    <li>
+      <div class="paso-content">
+        <h5>"Con voz de mando, con voz de arcángel, con trompeta de Dios"</h5>
+        <p>Tres señales sonoras que acompañan el evento. No será silencioso ni secreto. La trompeta en el contexto judío era señal de convocación, victoria y cambio de era.</p>
+      </div>
+    </li>
+    <li>
+      <div class="paso-content">
+        <h5>"Los muertos en Cristo resucitarán primero"</h5>
+        <p>Los creyentes que ya murieron no se quedan atrás. Esta era la preocupación de los tesalonicenses. La respuesta de Pablo: resucitan primero — tienen prioridad en el orden del evento.</p>
+      </div>
+    </li>
+    <li>
+      <div class="paso-content">
+        <h5>"Nosotros los que vivimos seremos arrebatados" — harpazo</h5>
+        <p>Los creyentes vivos en el momento del arrebatamiento serán transformados y llevados sin pasar por la muerte física. Pablo se incluye — esperaba que pudiera ocurrir en su generación, aunque sabemos que murió antes.</p>
+      </div>
+    </li>
+    <li>
+      <div class="paso-content">
+        <h5>"En las nubes para recibir al Señor en el aire"</h5>
+        <p>El encuentro es en el aire — no en la tierra. Esta característica distingue al arrebatamiento de la Segunda Venida, donde Cristo desciende hasta la tierra (Zacarías 14:4, Hechos 1:11).</p>
+      </div>
+    </li>
+    <li>
+      <div class="paso-content">
+        <h5>"Y así estaremos siempre con el Señor"</h5>
+        <p>La promesa final y la más gloriosa. No una experiencia temporal — una unión eterna. Este es el destino del creyente: con el Señor para siempre.</p>
+      </div>
+    </li>
+  </ul>
+
+  <div class="quote">
+    <p>"Por tanto, alentaos los unos a los otros con estas palabras."</p>
+    <cite>1 Tesalonicenses 4:18 — La doctrina del arrebatamiento es para consolar, no para dividir</cite>
+  </div>
+</section>
+
+<!-- CAP 3 SECUENCIA -->
+<section class="chapter" id="cap3">
+  <div class="ch-num">Lección 3</div>
+  <h2 class="ch-title">La secuencia del evento</h2>
+  <div class="ch-sub">Qué ocurre exactamente y en qué orden</div>
+  <div class="ch-divider"></div>
+
+  <p>La Biblia describe el arrebatamiento con suficiente detalle para trazar una secuencia clara. Esto no es especulación — es lo que el texto dice.</p>
+
+  <div class="linea-tiempo">
+    <div class="lt-item">
+      <div class="lt-connector"><div class="lt-dot d1"></div><div class="lt-line"></div></div>
+      <div class="lt-content">
+        <div class="ltc-label">Paso 1</div>
+        <div class="ltc-title">Cristo desciende desde el cielo</div>
+        <p>El Señor mismo sale al encuentro de su iglesia. No delega — viene personalmente. El mismo que ascendió volverá (Hechos 1:11).</p>
+      </div>
+    </div>
+    <div class="lt-item">
+      <div class="lt-connector"><div class="lt-dot d2"></div><div class="lt-line"></div></div>
+      <div class="lt-content">
+        <div class="ltc-label">Paso 2</div>
+        <div class="ltc-title">Los muertos en Cristo resucitan</div>
+        <p>Los creyentes fallecidos son resucitados con cuerpos glorificados. La muerte no tiene la última palabra sobre los que murieron en Cristo.</p>
+      </div>
+    </div>
+    <div class="lt-item">
+      <div class="lt-connector"><div class="lt-dot d3"></div><div class="lt-line"></div></div>
+      <div class="lt-content">
+        <div class="ltc-label">Paso 3</div>
+        <div class="ltc-title">Los vivos son transformados</div>
+        <p>"En un momento, en un abrir y cerrar de ojos" — 1 Corintios 15:52. Los creyentes vivos son transformados instantáneamente. El cuerpo mortal se viste de inmortalidad.</p>
+      </div>
+    </div>
+    <div class="lt-item">
+      <div class="lt-connector"><div class="lt-dot d4"></div></div>
+      <div class="lt-content">
+        <div class="ltc-label">Paso 4</div>
+        <div class="ltc-title">Todos arrebatados al encuentro</div>
+        <p>Muertos resucitados y vivos transformados son llevados juntos en las nubes al encuentro con el Señor en el aire. La iglesia completa — los que ya murieron y los que están vivos — se reúne con Cristo.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-label">La transformación del cuerpo</div>
+  <div class="quote">
+    <p>"He aquí, os digo un misterio: No todos dormiremos; pero todos seremos transformados, en un momento, en un abrir y cerrar de ojos, a la final trompeta."</p>
+    <cite>1 Corintios 15:51-52</cite>
+  </div>
+  <p>La palabra griega es <em>allassō</em> — cambiar completamente. El cuerpo actual, sujeto a enfermedad, envejecimiento y muerte, será reemplazado por un cuerpo glorioso como el de la resurrección de Cristo. No una mejora — una transformación radical.</p>
+</section>
+
+<!-- CAP 4 TEXTOS DE APOYO -->
+<section class="chapter" id="cap4">
+  <div class="ch-num">Lección 4</div>
+  <h2 class="ch-title">Textos bíblicos de apoyo</h2>
+  <div class="ch-sub">El arrebatamiento a través de toda la Biblia</div>
+  <div class="ch-divider"></div>
+
+  <p>El arrebatamiento no descansa en un solo pasaje. Hay una cadena de textos que confirman y enriquecen este evento desde el Evangelio hasta el Apocalipsis.</p>
+
+  <div class="section-label">Juan 14:1-3 — La promesa del Padre</div>
+  <div class="quote">
+    <p>"En la casa de mi Padre muchas moradas hay; si así no fuera, yo os lo hubiera dicho; voy, pues, a preparar lugar para vosotros. Y si me fuere y os preparare lugar, vendré otra vez, y os tomaré a mí mismo."</p>
+    <cite>Juan 14:2-3</cite>
+  </div>
+  <p>Jesús mismo prometió regresar a <em>tomarlos a sí mismo</em>. El verbo griego <em>paralambánō</em> — tomar consigo, recibir — es el lenguaje de alguien que va por lo que le pertenece. Cristo dejó la promesa de volver a buscar a los suyos.</p>
+
+  <div class="section-label">1 Corintios 15:51-54 — El misterio revelado</div>
+  <p>Pablo llama al arrebatamiento un <em>misterio</em> — algo que no había sido revelado completamente en el Antiguo Testamento pero que ahora Dios revela. La transformación del cuerpo, la victoria sobre la muerte, el cambio de mortal a inmortal — todo descrito aquí con precisión.</p>
+
+  <div class="section-label">Filipenses 3:20-21 — Ciudadanos del cielo</div>
+  <div class="quote">
+    <p>"Mas nuestra ciudadanía está en los cielos, de donde también esperamos al Salvador, al Señor Jesucristo; el cual transformará el cuerpo de la humillación nuestra, para que sea semejante al cuerpo de la gloria suya."</p>
+    <cite>Filipenses 3:20-21</cite>
+  </div>
+  <p>Pablo describe al creyente como ciudadano del cielo que <em>espera</em> al Salvador. La postura del creyente frente al arrebatamiento es de espera activa y esperanzada, no de temor.</p>
+
+  <div class="section-label">Tito 2:13 — La esperanza bienaventurada</div>
+  <div class="quote">
+    <p>"Aguardando la esperanza bienaventurada y la manifestación gloriosa de nuestro gran Dios y Salvador Jesucristo."</p>
+    <cite>Tito 2:13</cite>
+  </div>
+  <p>Pablo llama al arrebatamiento la <strong>esperanza bienaventurada</strong>. No una amenaza, no un motivo de ansiedad — una esperanza gloriosa que motiva la vida santa del creyente ahora.</p>
+
+  <div class="section-label">Apocalipsis 3:10 — Guardados de la hora</div>
+  <div class="quote">
+    <p>"Por cuanto has guardado la palabra de mi paciencia, yo también te guardaré de la hora de la prueba que ha de venir sobre el mundo entero."</p>
+    <cite>Apocalipsis 3:10 — Carta a la iglesia de Filadelfia</cite>
+  </div>
+  <p>El Señor promete guardar a su iglesia fiel <em>de</em> la hora de la prueba — no <em>a través de</em> ella. El griego <em>ek</em> (de) indica separación, no preservación dentro de la tribulación.</p>
+</section>
+
+<!-- CAP 5 POSICIONES -->
+<section class="chapter" id="cap5">
+  <div class="ch-num">Lección 5</div>
+  <h2 class="ch-title">Las posiciones teológicas</h2>
+  <div class="ch-sub">Lo que los diferentes grupos creen y por qué</div>
+  <div class="ch-divider"></div>
+
+  <p>Este es el punto donde existe la mayor controversia. No sobre <em>si</em> habrá arrebatamiento — el texto es claro en que sí — sino sobre <em>cuándo</em> ocurrirá en relación con la Gran Tribulación. Aquí están las posiciones principales, presentadas con honestidad.</p>
+
+  <div class="posicion pre">
+    <div class="pos-header">
+      <span class="pos-badge">Pre-tribulacional</span>
+      <span class="pos-titulo">El arrebatamiento ocurre ANTES de la tribulación</span>
+    </div>
+    <p><strong>Lo que enseña:</strong> Cristo regresa por su iglesia antes de que comience el período de 7 años de tribulación. La iglesia no pasa por la ira de Dios porque fue redimida de ella.</p>
+    <p><strong>Textos clave:</strong> 1 Tesalonicenses 5:9 ("Dios no nos ha puesto para ira"), Apocalipsis 3:10, Juan 14:1-3, Apocalipsis 4 (la iglesia en el cielo antes del inicio de los juicios).</p>
+    <p><strong>Argumento fuerte:</strong> La distinción entre el propósito de la tribulación (juicio sobre el mundo e Israel) y el propósito de la iglesia (novia de Cristo guardada de la ira). Si la tribulación es la ira de Dios, la iglesia redimida no debería sufrirla.</p>
+    <p><strong>Objeción:</strong> Algunos señalan que el término "arrebatamiento pre-tribulacional" no aparece explícitamente en la Biblia y fue popularizado en el siglo XIX.</p>
+  </div>
+
+  <div class="posicion mid">
+    <div class="pos-header">
+      <span class="pos-badge">Mid-tribulacional</span>
+      <span class="pos-titulo">El arrebatamiento ocurre en la MITAD de la tribulación</span>
+    </div>
+    <p><strong>Lo que enseña:</strong> La iglesia pasa los primeros 3½ años de tribulación pero es arrebatada antes de la segunda mitad — la Gran Tribulación propiamente dicha.</p>
+    <p><strong>Textos clave:</strong> Daniel 9:27, Apocalipsis 11 (los dos testigos arrebatados a la mitad de la semana), 1 Corintios 15:52 (la "última trompeta" identificada con la 7ª trompeta de Apocalipsis).</p>
+    <p><strong>Argumento:</strong> La promesa no es librarnos de toda prueba sino de la ira específica de Dios, que se concentra en la segunda mitad.</p>
+    <p><strong>Objeción:</strong> La identificación de la "última trompeta" de 1 Corintios 15 con la 7ª trompeta del Apocalipsis no tiene base exegética sólida — son contextos completamente diferentes.</p>
+  </div>
+
+  <div class="posicion post">
+    <div class="pos-header">
+      <span class="pos-badge">Post-tribulacional</span>
+      <span class="pos-titulo">El arrebatamiento ocurre AL FINAL de la tribulación</span>
+    </div>
+    <p><strong>Lo que enseña:</strong> El arrebatamiento y la Segunda Venida son un solo evento al final de la tribulación. La iglesia pasa por la tribulación protegida por Dios, como Israel en Egipto durante las plagas.</p>
+    <p><strong>Textos clave:</strong> Mateo 24:29-31 (la venida del Hijo del Hombre después de la tribulación), Juan 17:15 ("no que los saques del mundo, sino que los guardes del mal"), Apocalipsis 7 (multitud que sale de la gran tribulación).</p>
+    <p><strong>Argumento:</strong> La iglesia siempre ha sufrido tribulación. El Nuevo Testamento no promete escapar del sufrimiento sino ser guardados en él.</p>
+    <p><strong>Objeción:</strong> Confunde la tribulación general que los creyentes experimentan siempre con el período específico de la ira de Dios sobre el mundo.</p>
+  </div>
+
+  <div class="gold-box">
+    <h4>Lo que sí es seguro independientemente de la posición</h4>
+    <p>✅ <strong>Habrá un arrebatamiento</strong> — el harpazo del texto es innegable</p>
+    <p>✅ <strong>Los muertos en Cristo resucitarán</strong> — su esperanza es real</p>
+    <p>✅ <strong>Los vivos serán transformados</strong> — el cuerpo mortal se hará inmortal</p>
+    <p>✅ <strong>Estaremos siempre con el Señor</strong> — el destino final es la presencia eterna de Cristo</p>
+    <p>✅ <strong>La fecha es desconocida</strong> — "nadie sabe el día ni la hora" — Mateo 24:36</p>
+  </div>
+</section>
+
+<!-- CAP 6 ¿IGLESIA EN LA TRIBULACIÓN? -->
+<section class="chapter" id="cap6">
+  <div class="ch-num">Lección 6</div>
+  <h2 class="ch-title">¿La iglesia pasará la tribulación?</h2>
+  <div class="ch-sub">Los argumentos bíblicos más sólidos</div>
+  <div class="ch-divider"></div>
+
+  <p>Más allá de las posiciones denominacionales, hay argumentos bíblicos que hay que examinar honestamente. ¿Qué dice el texto cuando se lee en contexto?</p>
+
+  <div class="section-label">Argumentos a favor de que la iglesia NO pasará la tribulación</div>
+  <ul class="list-yes">
+    <li><strong>1 Tesalonicenses 5:9</strong> — "Dios no nos ha puesto para ira, sino para alcanzar salvación." Si la tribulación es expresión de la ira de Dios sobre el mundo, la iglesia está explícitamente excluida.</li>
+    <li><strong>Apocalipsis 3:10</strong> — El Señor promete guardar a su iglesia fiel <em>de</em> la hora de la prueba. El griego <em>ek</em> significa separación total, no protección dentro.</li>
+    <li><strong>Apocalipsis 4-5</strong> — La iglesia (representada en los 24 ancianos) aparece en el cielo antes de que comiencen los juicios del capítulo 6 en adelante. La iglesia no aparece en la tierra durante los capítulos de los sellos y trompetas.</li>
+    <li><strong>Juan 14:2-3</strong> — Jesús fue a preparar lugar y prometió volver a tomarlos. La imagen es el novio que va a preparar la casa y vuelve por la novia antes del banquete — no después del período de duelo.</li>
+    <li><strong>La naturaleza de la tribulación</strong> — Su propósito en Daniel y Apocalipsis es completar el juicio sobre las naciones y la restauración de Israel (Daniel 9:24). No es un período de prueba para la iglesia.</li>
+  </ul>
+
+  <div class="section-label">Argumento que debe responderse — Mateo 24</div>
+  <p>Los post-tribulacionistas señalan Mateo 24 donde Jesús describe la tribulación y parece hablar a sus discípulos. La respuesta exegética es que Mateo 24 tiene un contexto primariamente <em>judío</em> — habla de Israel, del templo, de la abominación desoladora — no de la iglesia como entidad. El Olivet Discourse responde preguntas específicas de los discípulos judíos sobre el fin de Jerusalén y los tiempos de Israel.</p>
+
+  <div class="frase"><p>"Si Dios guardó a Noé del diluvio, a Lot de Sodoma, y a Israel en Gosén durante las plagas — su patrón es librar a los suyos antes del juicio, no dejarlos en él."</p></div>
+</section>
+
+<!-- CAP 7 LA GRAN TRIBULACIÓN -->
+<section class="chapter" id="cap7">
+  <div class="ch-num">Lección 7</div>
+  <h2 class="ch-title">La Gran Tribulación</h2>
+  <div class="ch-sub">Qué es, cuánto dura y para qué sirve</div>
+  <div class="ch-divider"></div>
+
+  <p>Para entender el debate del arrebatamiento hay que entender qué es exactamente la Gran Tribulación. No es simplemente un período difícil — es un evento escatológico específico con propósito, duración y alcance definidos en la Escritura.</p>
+
+  <div class="section-label">¿Qué es?</div>
+  <div class="quote">
+    <p>"Porque habrá entonces gran tribulación, cual no la ha habido desde el principio del mundo hasta ahora, ni la habrá."</p>
+    <cite>Mateo 24:21</cite>
+  </div>
+  <p>Jesús describe un período de sufrimiento sin precedentes en la historia humana. Daniel lo llama "tiempo de angustia, cual nunca fue desde que hubo gente hasta entonces" (Daniel 12:1). Jeremías lo llama el "tiempo de angustia para Jacob" (Jeremías 30:7) — indicando su enfoque en Israel.</p>
+
+  <div class="section-label">¿Cuánto dura?</div>
+  <div class="tip-box">
+    <h4>La semana 70 de Daniel — Daniel 9:24-27</h4>
+    <p>Daniel habla de 70 semanas de años (490 años) decretados sobre Israel y Jerusalén. Las primeras 69 semanas se cumplieron históricamente. La semana 70 — los últimos 7 años — es el período de la Gran Tribulación.</p>
+    <p><strong>Primera mitad:</strong> 3½ años de pacto con el anticristo — aparente paz</p>
+    <p><strong>Segunda mitad:</strong> 3½ años de la Gran Tribulación propiamente — la "gran angustia" de Mateo 24:21</p>
+    <p>Apocalipsis confirma esta duración: 42 meses, 1260 días, "tiempo, tiempos y medio tiempo" (Apocalipsis 11:2-3; 12:6,14; 13:5)</p>
+  </div>
+
+  <div class="section-label">¿Para qué sirve?</div>
+  <div class="compare">
+    <div class="compare-box a">
+      <h4>Propósito para Israel</h4>
+      <ul>
+        <li>Completar la disciplina y restauración de Israel</li>
+        <li>Llevar a Israel al reconocimiento de su Mesías</li>
+        <li>"Angustia de Jacob" — Jeremías 30:7</li>
+        <li>Cumplir las 70 semanas de Daniel</li>
+      </ul>
+    </div>
+    <div class="compare-box b">
+      <h4>Propósito para el mundo</h4>
+      <ul>
+        <li>Juicio sobre las naciones que rechazaron a Dios</li>
+        <li>Revelar y destruir al anticristo</li>
+        <li>Preparar el camino para el reino milenial</li>
+        <li>Demostrar la soberanía de Dios en la historia</li>
+      </ul>
+    </div>
+  </div>
+
+  <p>El punto clave: el propósito de la tribulación es <strong>Israel y las naciones</strong> — no la iglesia. La iglesia ya fue disciplinada, ya fue probada, ya tiene su relación con Dios establecida en Cristo. La tribulación no tiene un papel específico para la iglesia en la Escritura.</p>
+</section>
+
+<!-- CAP 8 SEÑALES Y PREPARACIÓN -->
+<section class="chapter" id="cap8">
+  <div class="ch-num">Lección 8</div>
+  <h2 class="ch-title">Señales y preparación</h2>
+  <div class="ch-sub">¿Cómo vivir a la luz del arrebatamiento?</div>
+  <div class="ch-divider"></div>
+
+  <p>El arrebatamiento no es un tema para satisfacer la curiosidad teológica. Es una verdad que debe cambiar cómo vives hoy. La Biblia es muy clara sobre la actitud práctica del creyente frente a esta esperanza.</p>
+
+  <div class="section-label">¿Hay señales del arrebatamiento?</div>
+  <p>Esta es una pregunta frecuente y la respuesta bíblica es importante: <strong>el arrebatamiento es inminente</strong> — puede ocurrir en cualquier momento, sin señales previas específicas que lo anuncien. Jesús dijo claramente:</p>
+
+  <div class="quote">
+    <p>"Pero del día y la hora nadie sabe, ni aun los ángeles de los cielos, sino sólo mi Padre."</p>
+    <cite>Mateo 24:36</cite>
+  </div>
+
+  <div class="tip-box">
+    <h4>Señales generales de los últimos tiempos</h4>
+    <p>La Biblia habla de señales que describen el clima general del período antes del fin — no fechas específicas:</p>
+    <ul>
+      <li>Apostasía y enfriamiento del amor — Mateo 24:12; 2 Timoteo 3:1-5</li>
+      <li>Guerras, rumores de guerras, naciones contra naciones — Mateo 24:6-7</li>
+      <li>Pestes, hambres, terremotos en diferentes lugares — Mateo 24:7</li>
+      <li>Persecución del pueblo de Dios — Mateo 24:9</li>
+      <li>El evangelio predicado a todas las naciones — Mateo 24:14</li>
+      <li>Restauración de Israel como nación — Ezequiel 37; 1948</li>
+    </ul>
+  </div>
+
+  <div class="section-label">La actitud correcta del creyente</div>
+  <ul class="list-yes">
+    <li><strong>Vigilancia:</strong> "Velad, pues, porque no sabéis el día ni la hora" — Mateo 25:13</li>
+    <li><strong>Santidad:</strong> "¿qué clase de personas debéis ser vosotros en santa y piadosa manera de vivir?" — 2 Pedro 3:11</li>
+    <li><strong>Esperanza activa:</strong> "Aguardando la esperanza bienaventurada" — Tito 2:13</li>
+    <li><strong>Servicio fiel:</strong> "¿Quién es el siervo fiel y prudente al cual puso su señor sobre su casa para que les dé el alimento a tiempo?" — Mateo 24:45</li>
+    <li><strong>Evangelismo urgente:</strong> Cada día que pasa es un día menos para que los que no conocen a Cristo puedan conocerlo antes del arrebatamiento</li>
+  </ul>
+
+  <div class="frase"><p>"La mejor preparación para el arrebatamiento no es calcular cuándo ocurrirá — es vivir como si fuera hoy."</p></div>
+</section>
+
+<!-- CAP 9 LO QUE ES SEGURO -->
+<section class="chapter" id="cap9">
+  <div class="ch-num">Lección 9</div>
+  <h2 class="ch-title">Lo que sí es seguro</h2>
+  <div class="ch-sub">Las verdades inamovibles sobre el arrebatamiento</div>
+  <div class="ch-divider"></div>
+
+  <p>Después de explorar el debate teológico, necesitamos fijar lo que el texto dice con certeza — separado de las opiniones de los hombres. Hay verdades sobre las que todos los que creen en la Biblia deben estar de acuerdo.</p>
+
+  <div class="gold-box">
+    <h4>Las certezas bíblicas del arrebatamiento</h4>
+    <p><strong>1. Ocurrirá:</strong> El harpazo de 1 Tesalonicenses 4:17 es tan claro que negarlo requeriría torcer el texto. Habrá un arrebatamiento.</p>
+    <p><strong>2. Cristo vendrá personalmente:</strong> "El Señor mismo descenderá" — no un representante, no una señal. El mismo Jesús.</p>
+    <p><strong>3. Los muertos en Cristo resucitarán:</strong> La muerte no es el fin para el creyente. Los que murieron en Cristo resucitarán con cuerpos glorificados.</p>
+    <p><strong>4. Será instantáneo:</strong> "En un momento, en un abrir y cerrar de ojos" — 1 Corintios 15:52. No gradual — inmediato.</p>
+    <p><strong>5. Nadie sabe cuándo:</strong> Mateo 24:36 es absoluto. Nadie — ningún predicador, ningún cálculo, ninguna profecía — puede fechar el arrebatamiento.</p>
+    <p><strong>6. Estará siempre con el Señor:</strong> El destino final del creyente es la comunión eterna con Cristo. Esa es la esperanza inamovible.</p>
+  </div>
+
+  <div class="section-label">El arrebatamiento y la salvación</div>
+  <p>Una pregunta práctica: ¿necesito creer en el arrebatamiento pre-tribulacional para ser salvo? No. La posición específica sobre el momento del arrebatamiento no es un requisito de salvación. Es un tema de escatología — importante y digno de estudio — pero no es parte del evangelio central.</p>
+
+  <p>Lo que sí importa para la salvación es estar <em>listo</em>. No importa si el arrebatamiento es pre, mid o post-tribulacional — <strong>lo que importa es estar en Cristo cuando ocurra</strong>. La persona que no esté en Cristo no será arrebatada en ninguno de los escenarios.</p>
+
+  <div class="quote">
+    <p>"Porque el Señor mismo con voz de mando... descenderá del cielo... y así estaremos siempre con el Señor. Por tanto, alentaos los unos a los otros con estas palabras."</p>
+    <cite>1 Tesalonicenses 4:16-18 — El resumen y el propósito</cite>
+  </div>
+
+  <div class="section-label">Una palabra final sobre la controversia</div>
+  <p>Este tema ha dividido a creyentes genuinos por siglos. La posición sobre el arrebatamiento no debe ser una línea divisoria entre hermanos que comparten la misma fe en Cristo, el mismo bautismo en su nombre y el mismo Espíritu Santo. Debemos estudiar con honestidad, sostener con convicción lo que el texto enseña, y mantener la unidad en lo esencial.</p>
+
+  <div class="frase"><p>"En las cosas esenciales: unidad. En las dudosas: libertad. En todas las cosas: amor."</p></div>
+</section>
+
+</main>
+
+<section class="epilogo">
+  <span class="big">PRONTO</span>
+  <h2>La esperanza bienaventurada</h2>
+  <p>El arrebatamiento no es un tema de debate académico. Es la esperanza viva del creyente. Es lo que hace que el sufrimiento de hoy sea temporal y la gloria de mañana sea segura.</p>
+  <p>No sabemos el día ni la hora. Pero sí sabemos esto: el que prometió vendrá. Y cuando venga, los que están en Cristo serán recibidos.</p>
+  <div class="quote" style="max-width:480px;margin:32px auto;">
+    <p>"Y así estaremos siempre con el Señor. Por tanto, alentaos los unos a los otros con estas palabras."</p>
+    <cite>1 Tesalonicenses 4:17-18</cite>
+  </div>
+  <div class="firma">El Arrebatamiento · Serie Escatología · Predicador IPUC</div>
+</section>
+
+</div>
+
+<script>
+const obs=new IntersectionObserver(e=>{e.forEach(el=>{if(el.isIntersecting)el.target.classList.add('visible');});},{threshold:.08});
+document.querySelectorAll('.chapter').forEach(e=>obs.observe(e));
+const nav=document.getElementById('sidenav');
+const wrap=document.getElementById('pageWrap');
+const isMobile=()=>window.innerWidth<=768;
+function toggleNav(){
+  if(isMobile()){nav.classList.toggle('show');}
+  else{nav.classList.toggle('hidden');wrap.classList.toggle('full');}
+}
+const secs=document.querySelectorAll('section[id]');
+const links=document.querySelectorAll('nav a');
+window.addEventListener('scroll',()=>{
+  let cur='';
+  secs.forEach(s=>{if(window.scrollY>=s.offsetTop-200)cur=s.id;});
+  links.forEach(a=>{a.classList.remove('active');if(a.getAttribute('href')==='#'+cur)a.classList.add('active');});
+});
+links.forEach(a=>{a.addEventListener('click',()=>{if(isMobile())nav.classList.remove('show');});});
+document.addEventListener('click',e=>{
+  if(isMobile()&&nav.classList.contains('show')&&!nav.contains(e.target)&&!e.target.closest('.nav-toggle')){nav.classList.remove('show');}
+});
+</script>
+</body>
+</html>

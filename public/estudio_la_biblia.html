@@ -1,0 +1,790 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>La Biblia — Revelación Divina y Autoridad Suprema</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --marino: #003B6F;
+    --marino-deep: #001f3f;
+    --marino-mid: #00306080;
+    --azul: #009FDA;
+    --oro: #F0AB00;
+    --oro-pale: #f0ab0022;
+    --oro-mid: #F0AB0066;
+    --blanco: #f5f0e8;
+    --texto: #d4c9b0;
+    --gris: #8a9bb0;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background-color: var(--marino-deep);
+    color: var(--texto);
+    font-family: 'Crimson Pro', Georgia, serif;
+    font-size: 18px;
+    line-height: 1.8;
+    overflow-x: hidden;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 60px 24px;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 80% 60% at 50% 40%, #00306055 0%, transparent 70%),
+      radial-gradient(ellipse 40% 30% at 70% 80%, #F0AB0015 0%, transparent 60%);
+  }
+
+  .hero-cross {
+    position: absolute;
+    font-size: 340px;
+    color: #ffffff04;
+    font-family: 'Cinzel', serif;
+    font-weight: 900;
+    letter-spacing: -20px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    user-select: none;
+    pointer-events: none;
+  }
+
+  .categoria-badge {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--oro-pale);
+    border: 1px solid var(--oro-mid);
+    color: var(--oro);
+    font-family: 'Cinzel', serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    padding: 6px 18px;
+    border-radius: 2px;
+    margin-bottom: 28px;
+  }
+
+  .hero h1 {
+    position: relative;
+    font-family: 'Cinzel', serif;
+    font-size: clamp(2.2rem, 6vw, 4.2rem);
+    font-weight: 900;
+    color: var(--blanco);
+    line-height: 1.15;
+    letter-spacing: 2px;
+    margin-bottom: 16px;
+    text-shadow: 0 0 60px #009FDA44;
+  }
+
+  .hero h1 span {
+    color: var(--oro);
+  }
+
+  .hero-subtitle {
+    position: relative;
+    font-family: 'Cinzel', serif;
+    font-size: clamp(0.85rem, 2vw, 1.1rem);
+    font-weight: 400;
+    color: var(--azul);
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    margin-bottom: 36px;
+  }
+
+  .hero-verse {
+    position: relative;
+    max-width: 540px;
+    font-style: italic;
+    font-size: 1.05rem;
+    color: var(--gris);
+    border-left: 2px solid var(--oro);
+    padding-left: 20px;
+    text-align: left;
+    line-height: 1.7;
+  }
+
+  .hero-verse cite {
+    display: block;
+    margin-top: 8px;
+    font-style: normal;
+    font-family: 'Cinzel', serif;
+    font-size: 0.78rem;
+    letter-spacing: 2px;
+    color: var(--oro);
+  }
+
+  .scroll-hint {
+    position: absolute;
+    bottom: 32px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    color: var(--gris);
+    font-size: 0.72rem;
+    letter-spacing: 2px;
+    font-family: 'Cinzel', serif;
+    animation: bounce 2s infinite;
+  }
+
+  .scroll-hint::after {
+    content: '↓';
+    font-size: 1.1rem;
+    color: var(--oro);
+  }
+
+  @keyframes bounce {
+    0%, 100% { transform: translateX(-50%) translateY(0); }
+    50% { transform: translateX(-50%) translateY(6px); }
+  }
+
+  /* ── DIVIDER ── */
+  .divider {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 0 32px;
+    margin: 48px auto;
+    max-width: 800px;
+  }
+  .divider::before, .divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--oro-mid), transparent);
+  }
+  .divider-symbol {
+    font-family: 'Cinzel', serif;
+    color: var(--oro);
+    font-size: 1.2rem;
+  }
+
+  /* ── SECCIÓN GENERAL ── */
+  .seccion {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px 28px 60px;
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+
+  .seccion.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ── NÚMERO + TÍTULO ── */
+  .seccion-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+    margin-bottom: 28px;
+  }
+
+  .num {
+    font-family: 'Cinzel', serif;
+    font-size: 3.5rem;
+    font-weight: 900;
+    color: var(--oro-mid);
+    line-height: 1;
+    flex-shrink: 0;
+    min-width: 54px;
+  }
+
+  .seccion-titulo {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(1.15rem, 3vw, 1.55rem);
+    font-weight: 700;
+    color: var(--blanco);
+    letter-spacing: 1px;
+    padding-top: 10px;
+    line-height: 1.3;
+  }
+
+  /* ── PARTE (parte del estudio) ── */
+  .parte-titulo {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(1.5rem, 4vw, 2.2rem);
+    font-weight: 900;
+    color: var(--azul);
+    letter-spacing: 3px;
+    text-align: center;
+    margin-bottom: 8px;
+  }
+
+  .parte-desc {
+    font-family: 'Crimson Pro', serif;
+    font-size: 1rem;
+    color: var(--gris);
+    text-align: center;
+    letter-spacing: 1px;
+    font-style: italic;
+    margin-bottom: 16px;
+  }
+
+  /* ── TEXTO ── */
+  p {
+    margin-bottom: 16px;
+    color: var(--texto);
+    font-size: 1.05rem;
+  }
+
+  /* ── VERSÍCULO DESTACADO ── */
+  .versiculo {
+    background: linear-gradient(135deg, #00306040, #F0AB0008);
+    border: 1px solid var(--oro-mid);
+    border-left: 3px solid var(--oro);
+    padding: 20px 24px;
+    margin: 28px 0;
+    border-radius: 0 4px 4px 0;
+  }
+
+  .versiculo p {
+    font-style: italic;
+    font-size: 1.1rem;
+    color: var(--blanco);
+    margin-bottom: 6px;
+  }
+
+  .versiculo cite {
+    font-style: normal;
+    font-family: 'Cinzel', serif;
+    font-size: 0.8rem;
+    letter-spacing: 2px;
+    color: var(--oro);
+  }
+
+  /* ── LISTA DOCTRINAL ── */
+  .lista-doc {
+    list-style: none;
+    margin: 20px 0 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .lista-doc li {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    font-size: 1.02rem;
+    color: var(--texto);
+  }
+
+  .lista-doc li::before {
+    content: '✦';
+    color: var(--oro);
+    font-size: 0.8rem;
+    margin-top: 5px;
+    flex-shrink: 0;
+  }
+
+  /* ── TARJETA DATO ── */
+  .dato-card {
+    background: linear-gradient(135deg, #009FDA10, #003B6F40);
+    border: 1px solid #009FDA30;
+    border-radius: 4px;
+    padding: 20px 24px;
+    margin: 20px 0;
+    display: flex;
+    gap: 16px;
+    align-items: center;
+  }
+
+  .dato-num {
+    font-family: 'Cinzel', serif;
+    font-size: 2.5rem;
+    font-weight: 900;
+    color: var(--azul);
+    line-height: 1;
+    flex-shrink: 0;
+  }
+
+  .dato-texto {
+    font-size: 0.95rem;
+    color: var(--gris);
+    line-height: 1.5;
+  }
+
+  .dato-texto strong {
+    display: block;
+    color: var(--blanco);
+    font-size: 1rem;
+    margin-bottom: 2px;
+  }
+
+  /* ── GRID GÉNEROS ── */
+  .generos-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 12px;
+    margin: 24px 0;
+  }
+
+  .genero-item {
+    background: var(--marino-mid);
+    border: 1px solid #009FDA22;
+    border-radius: 4px;
+    padding: 14px 12px;
+    text-align: center;
+    font-family: 'Cinzel', serif;
+    font-size: 0.82rem;
+    letter-spacing: 1px;
+    color: var(--azul);
+    transition: border-color 0.3s, color 0.3s;
+  }
+
+  .genero-item:hover {
+    border-color: var(--oro-mid);
+    color: var(--oro);
+  }
+
+  /* ── CONCLUSIÓN ── */
+  .conclusion-box {
+    background: linear-gradient(135deg, #F0AB0010, #003B6F60);
+    border: 1px solid var(--oro-mid);
+    border-radius: 6px;
+    padding: 32px 28px;
+    margin: 32px 0;
+    text-align: center;
+  }
+
+  .conclusion-box h3 {
+    font-family: 'Cinzel', serif;
+    font-size: 1rem;
+    letter-spacing: 3px;
+    color: var(--oro);
+    margin-bottom: 16px;
+    text-transform: uppercase;
+  }
+
+  .conclusion-box p {
+    font-size: 1.1rem;
+    font-style: italic;
+    color: var(--blanco);
+    line-height: 1.8;
+    margin-bottom: 8px;
+  }
+
+  .conclusion-box .firma {
+    font-family: 'Cinzel', serif;
+    font-size: 0.85rem;
+    letter-spacing: 2px;
+    color: var(--azul);
+    font-style: normal;
+    margin-top: 12px;
+  }
+
+  /* ── NAV LATERAL ── */
+  .nav-lateral {
+    position: fixed;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    z-index: 100;
+  }
+
+  .nav-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #ffffff20;
+    border: 1px solid #ffffff30;
+    cursor: pointer;
+    transition: all 0.3s;
+    position: relative;
+  }
+
+  .nav-dot.active {
+    background: var(--oro);
+    border-color: var(--oro);
+    transform: scale(1.4);
+  }
+
+  .nav-dot:hover {
+    background: var(--azul);
+    border-color: var(--azul);
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    text-align: center;
+    padding: 60px 24px 40px;
+    border-top: 1px solid #ffffff10;
+    margin-top: 40px;
+  }
+
+  footer p {
+    font-family: 'Cinzel', serif;
+    font-size: 0.75rem;
+    letter-spacing: 3px;
+    color: var(--gris);
+    text-transform: uppercase;
+  }
+
+  .footer-logo {
+    font-size: 1.6rem;
+    color: var(--oro);
+    margin-bottom: 12px;
+  }
+
+  @media (max-width: 600px) {
+    .nav-lateral { display: none; }
+    .seccion { padding: 16px 18px 48px; }
+    .dato-card { flex-direction: column; align-items: flex-start; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV LATERAL -->
+<nav class="nav-lateral" id="navLateral"></nav>
+
+<!-- HERO -->
+<section class="hero" data-section="0" data-label="Inicio">
+  <div class="hero-cross">✝</div>
+  <div class="categoria-badge">✦ Estudio Bíblico ✦</div>
+  <h1>La <span>Biblia</span></h1>
+  <p class="hero-subtitle">Revelación Divina &amp; Autoridad Suprema</p>
+  <blockquote class="hero-verse">
+    Toda la Escritura es inspirada por Dios, y útil para enseñar, para redargüir, para corregir, para instruir en justicia.
+    <cite>— 2 Timoteo 3:16</cite>
+  </blockquote>
+  <div class="scroll-hint">LEER</div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     PARTE I — AUTORIDAD Y REVELACIÓN
+     ═══════════════════════════════════════════ -->
+<div class="divider" data-section="1" data-label="Parte I"><div class="divider-symbol">✦</div></div>
+
+<div class="seccion" data-section="1">
+  <p class="parte-titulo">Parte I</p>
+  <p class="parte-desc">Autoridad, Inspiración y Propósito de la Escritura</p>
+</div>
+
+<!-- 1. Revelación -->
+<section class="seccion" data-section="1">
+  <div class="seccion-header">
+    <span class="num">01</span>
+    <h2 class="seccion-titulo">La Biblia como Revelación de Dios</h2>
+  </div>
+  <p>La Biblia es la revelación escrita de Dios a la humanidad. No surge de la iniciativa humana ni de pensamientos filosóficos, sino de la voluntad soberana de Dios que decidió darse a conocer por medio de su Palabra. En ella, Dios revela su carácter, su santidad, su justicia, su amor y su plan eterno de salvación.</p>
+  <p>Dios habló y se dio a conocer en distintas etapas y formas:</p>
+  <ul class="lista-doc">
+    <li>A través de los profetas, preparando el camino de la redención <em>(Hebreos 1:1)</em></li>
+    <li>Por medio de su Hijo Jesucristo, la Palabra hecha carne <em>(Hebreos 1:2; Juan 1:14)</em></li>
+    <li>Mediante la Palabra escrita, inspirada y preservada por el Espíritu Santo</li>
+  </ul>
+  <div class="versiculo">
+    <p>Dios, habiendo hablado muchas veces y de muchas maneras en otro tiempo a los padres por los profetas, en estos postreros días nos ha hablado por el Hijo…</p>
+    <cite>Hebreos 1:1-2</cite>
+  </div>
+  <p>La Biblia no solo informa acerca de Dios: <strong style="color:var(--blanco)">es el medio autorizado por Dios para revelarse</strong>. Quien la conoce, conoce al Dios vivo.</p>
+</section>
+
+<!-- 2. Inspiración -->
+<section class="seccion" data-section="1">
+  <div class="seccion-header">
+    <span class="num">02</span>
+    <h2 class="seccion-titulo">Inspiración y Autoridad de la Biblia</h2>
+  </div>
+  <p>La Biblia es inspirada por Dios. La palabra griega <em>theopneustos</em> —"soplada por Dios"— describe cómo el Espíritu Santo obró en los autores humanos para que escribieran exactamente lo que Dios quiso comunicar, sin error en su mensaje y con total autoridad divina.</p>
+  <div class="versiculo">
+    <p>Toda la Escritura es inspirada por Dios, y útil para enseñar, para redargüir, para corregir, para instruir en justicia…</p>
+    <cite>2 Timoteo 3:16</cite>
+  </div>
+  <p>Aunque fue escrita por hombres, su origen es enteramente divino. Por eso:</p>
+  <ul class="lista-doc">
+    <li>Tiene autoridad absoluta sobre la fe y la conducta del creyente</li>
+    <li>Es la norma final y suficiente de verdad</li>
+    <li>No puede ser contradicha, anulada ni superada por opinión humana</li>
+    <li>Su mensaje permanece vigente para todas las generaciones</li>
+  </ul>
+  <p style="color:var(--blanco); font-weight:600; font-size:1.1rem; margin-top:20px; text-align:center; letter-spacing:1px;">
+    "La Biblia no <em>contiene</em> la Palabra de Dios: la Biblia <em>ES</em> la Palabra de Dios."
+  </p>
+</section>
+
+<!-- 3. Unidad -->
+<section class="seccion" data-section="1">
+  <div class="seccion-header">
+    <span class="num">03</span>
+    <h2 class="seccion-titulo">Unidad y Coherencia del Mensaje Bíblico</h2>
+  </div>
+  <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:16px; margin-bottom:28px;">
+    <div class="dato-card" style="flex-direction:column; gap:4px; text-align:center;">
+      <span class="dato-num">66</span>
+      <span class="dato-texto"><strong>Libros</strong>un solo mensaje</span>
+    </div>
+    <div class="dato-card" style="flex-direction:column; gap:4px; text-align:center;">
+      <span class="dato-num">40</span>
+      <span class="dato-texto"><strong>Autores</strong>un solo Espíritu</span>
+    </div>
+    <div class="dato-card" style="flex-direction:column; gap:4px; text-align:center;">
+      <span class="dato-num" style="font-size:1.8rem;">1600</span>
+      <span class="dato-texto"><strong>Años</strong>un solo propósito</span>
+    </div>
+  </div>
+  <p>Cuarenta autores, dieciséis siglos de historia, tres idiomas, incontables culturas: y sin embargo la Escritura guarda una perfecta unidad temática que ninguna obra humana ha podido replicar.</p>
+  <p>Esa unidad se explica porque:</p>
+  <ul class="lista-doc">
+    <li>Tiene un solo Autor principal: Dios mismo</li>
+    <li>Presenta un solo plan: la redención del hombre a través de Cristo</li>
+    <li>Señala a un solo centro: <strong style="color:var(--blanco)">Jesucristo</strong></li>
+  </ul>
+  <p>Desde Génesis hasta Apocalipsis, la Escritura desarrolla de forma progresiva el propósito eterno de Dios. El Antiguo Testamento apunta al Cristo que vendrá; el Nuevo Testamento proclama al Cristo que vino.</p>
+</section>
+
+<!-- 4. Propósito -->
+<section class="seccion" data-section="1">
+  <div class="seccion-header">
+    <span class="num">04</span>
+    <h2 class="seccion-titulo">Propósito de la Escritura</h2>
+  </div>
+  <p>Dios no dio su Palabra por accidente ni por tradición religiosa. La Biblia fue entregada con propósitos claros, eternos y transformadores:</p>
+  <ul class="lista-doc">
+    <li><strong style="color:var(--blanco)">Revelar la verdad</strong> — sobre Dios, el hombre, el pecado y la salvación</li>
+    <li><strong style="color:var(--blanco)">Confrontar el pecado</strong> — señalando lo que se aparta de la voluntad de Dios</li>
+    <li><strong style="color:var(--blanco)">Formar el carácter</strong> — transformando el interior del creyente</li>
+    <li><strong style="color:var(--blanco)">Guiar al hombre a la salvación</strong> — mostrando el camino a Cristo</li>
+    <li><strong style="color:var(--blanco)">Preparar para toda buena obra</strong> — equipando al creyente para su misión</li>
+  </ul>
+  <div class="versiculo">
+    <p>…a fin de que el hombre de Dios sea perfecto, enteramente preparado para toda buena obra.</p>
+    <cite>2 Timoteo 3:17</cite>
+  </div>
+  <p>La Escritura no solo apunta al conocimiento doctrinal: apunta a la <strong style="color:var(--blanco)">transformación de la vida</strong>. Una Biblia conocida pero no obedecida no cumple su propósito.</p>
+</section>
+
+<!-- 5. Efecto -->
+<section class="seccion" data-section="1">
+  <div class="seccion-header">
+    <span class="num">05</span>
+    <h2 class="seccion-titulo">El Efecto Espiritual de la Palabra de Dios</h2>
+  </div>
+  <p>La Palabra de Dios no es letra muerta. Es viva, activa y más cortante que espada de dos filos. Produce efectos reales en quienes la reciben con corazón obediente:</p>
+  <ul class="lista-doc">
+    <li>Produce fe en el corazón del oyente <em>(Romanos 10:17)</em></li>
+    <li>Da vida espiritual al alma seca <em>(Juan 6:63)</em></li>
+    <li>Ilumina el camino cuando todo parece oscuro <em>(Salmo 119:105)</em></li>
+    <li>Limpia y santifica al creyente <em>(Juan 17:17)</em></li>
+    <li>Destruye fortalezas y renueva la mente <em>(Romanos 12:2)</em></li>
+  </ul>
+  <div class="versiculo">
+    <p>Porque la Palabra de Dios es viva y eficaz, y más cortante que toda espada de dos filos…</p>
+    <cite>Hebreos 4:12</cite>
+  </div>
+  <p>Cuando la Palabra es escuchada, creída y obedecida, genera una vida completamente alineada con la voluntad de Dios. No se trata de religión exterior, sino de transformación interior.</p>
+</section>
+
+<div class="seccion" data-section="1">
+  <div class="conclusion-box">
+    <h3>Conclusión — Parte I</h3>
+    <p>La Biblia es la autoridad suprema en la vida del creyente. No está sujeta a cultura, tradición ni opinión humana. Es eterna, verdadera y suficiente.</p>
+    <p class="firma">Desconocer la Escritura es vivir sin dirección; obedecerla es caminar en la voluntad de Dios.</p>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     PARTE II — COMPOSICIÓN Y AUTORÍA
+     ═══════════════════════════════════════════ -->
+<div class="divider" data-section="2" data-label="Parte II"><div class="divider-symbol">✦</div></div>
+
+<div class="seccion" data-section="2">
+  <p class="parte-titulo">Parte II</p>
+  <p class="parte-desc">Composición, Diversidad y Autoría de la Biblia</p>
+</div>
+
+<!-- 6. Composición -->
+<section class="seccion" data-section="2">
+  <div class="seccion-header">
+    <span class="num">06</span>
+    <h2 class="seccion-titulo">Composición de la Biblia</h2>
+  </div>
+  <p>La Biblia no es un libro único, sino una colección ordenada de 66 escritos inspirados por Dios, divididos en dos grandes secciones:</p>
+  <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px; margin:24px 0;">
+    <div class="dato-card" style="flex-direction:column; align-items:flex-start;">
+      <span class="dato-num">39</span>
+      <span class="dato-texto">
+        <strong>Antiguo Testamento</strong>
+        Creación, historia de Israel, Ley, Profetas y promesas mesiánicas
+      </span>
+    </div>
+    <div class="dato-card" style="flex-direction:column; align-items:flex-start;">
+      <span class="dato-num">27</span>
+      <span class="dato-texto">
+        <strong>Nuevo Testamento</strong>
+        Cumplimiento en Cristo, nacimiento de la Iglesia, esperanza futura
+      </span>
+    </div>
+  </div>
+  <p>Esta composición no es accidental. Cada libro ocupa un lugar específico dentro del desarrollo progresivo del plan redentor de Dios, formando una narrativa coherente desde la creación hasta la consumación final.</p>
+</section>
+
+<!-- 7. Diversidad literaria -->
+<section class="seccion" data-section="2">
+  <div class="seccion-header">
+    <span class="num">07</span>
+    <h2 class="seccion-titulo">Diversidad Literaria bajo un Mismo Propósito</h2>
+  </div>
+  <p>La Biblia contiene una amplia variedad de géneros literarios que reflejan la riqueza de la comunicación divina:</p>
+  <div class="generos-grid">
+    <div class="genero-item">Historia</div>
+    <div class="genero-item">Ley</div>
+    <div class="genero-item">Poesía</div>
+    <div class="genero-item">Profecía</div>
+    <div class="genero-item">Evangelios</div>
+    <div class="genero-item">Epístolas</div>
+    <div class="genero-item">Apocalíptica</div>
+    <div class="genero-item">Sabiduría</div>
+  </div>
+  <p>A pesar de esta diversidad de formas y estilos, el mensaje nunca se contradice, porque todos los escritos apuntan a un mismo propósito: <strong style="color:var(--blanco)">revelar la voluntad de Dios y conducir al hombre a la salvación.</strong></p>
+</section>
+
+<!-- 8. Autores humanos -->
+<section class="seccion" data-section="2">
+  <div class="seccion-header">
+    <span class="num">08</span>
+    <h2 class="seccion-titulo">Los Autores Humanos de la Biblia</h2>
+  </div>
+  <p>La Biblia fue escrita por aproximadamente <strong style="color:var(--blanco)">40 autores humanos</strong>, provenientes de contextos radicalmente distintos:</p>
+  <ul class="lista-doc">
+    <li>Reyes y gobernantes como David y Salomón</li>
+    <li>Profetas como Isaías, Jeremías y Ezequiel</li>
+    <li>Sacerdotes como Esdras y Zacarías</li>
+    <li>Pescadores como Pedro y Juan</li>
+    <li>Médicos como Lucas</li>
+    <li>Fariseos convertidos como Pablo</li>
+    <li>Pastores y hombres del campo como Amós</li>
+  </ul>
+  <p>Estos autores vivieron en distintas épocas, muchos sin conocerse entre sí. Y sin embargo, <strong style="color:var(--blanco)">existe una profunda armonía doctrinal en todos sus escritos.</strong> Eso solo puede explicarse por un Autor divino que los guiaba a todos.</p>
+</section>
+
+<!-- 9. Autor divino -->
+<section class="seccion" data-section="2">
+  <div class="seccion-header">
+    <span class="num">09</span>
+    <h2 class="seccion-titulo">El Autor Divino de la Escritura</h2>
+  </div>
+  <p>Aunque hubo múltiples instrumentos humanos, la Biblia tiene un solo <strong style="color:var(--blanco)">Autor supremo: Dios.</strong> Él utilizó la personalidad, el lenguaje y las experiencias de cada escritor, sin anular su individualidad, pero garantizando que el mensaje transmitido fuera exactamente el que Él quiso revelar.</p>
+  <div class="versiculo">
+    <p>Porque nunca la profecía fue traída por voluntad humana, sino que los santos hombres de Dios hablaron siendo inspirados por el Espíritu Santo.</p>
+    <cite>2 Pedro 1:21</cite>
+  </div>
+  <p>Esta es la doctrina de la <strong style="color:var(--blanco)">inspiración verbal plenaria</strong>: cada palabra de la Escritura fue supervisada por el Espíritu, de modo que lo que los hombres escribieron es exactamente lo que Dios quiso que quedara escrito.</p>
+</section>
+
+<!-- 10. Unidad doctrinal -->
+<section class="seccion" data-section="2">
+  <div class="seccion-header">
+    <span class="num">10</span>
+    <h2 class="seccion-titulo">Unidad Doctrinal y Credibilidad</h2>
+  </div>
+  <p>La unidad doctrinal de la Biblia es una de las mayores evidencias de su origen divino. No existe contradicción en su mensaje central, sino una revelación progresiva que se complementa y se cumple a lo largo del tiempo.</p>
+  <ul class="lista-doc">
+    <li>El Génesis planta semillas que el Apocalipsis cosecha</li>
+    <li>El Antiguo Testamento sombrea lo que el Nuevo cumple en Cristo</li>
+    <li>Las profecías escritas siglos antes se cumplen con exactitud histórica</li>
+    <li>El mensaje de salvación es coherente desde Génesis hasta Apocalipsis</li>
+  </ul>
+  <p>Ninguna obra humana, escrita por tantos autores en tantos siglos, podría mantener tal coherencia. Esto confirma que la Biblia no es producto del azar ni de la tradición: <strong style="color:var(--blanco)">es Palabra inspirada por Dios.</strong></p>
+</section>
+
+<!-- Conclusión Final -->
+<div class="seccion" data-section="2">
+  <div class="conclusion-box">
+    <h3>Conclusión Final</h3>
+    <p>La composición y autoría de la Biblia fortalecen su autoridad y su credibilidad. No es un libro del hombre, sino una obra divina transmitida fielmente por medio de hombres escogidos por Dios.</p>
+    <p style="color:var(--oro); font-size:1.2rem; font-weight:600; margin-top:12px;">
+      Muchos escritores, un solo mensaje;<br>muchas épocas, un solo Autor:
+    </p>
+    <p class="firma" style="color:var(--blanco); font-size:1.1rem; letter-spacing:3px; margin-top:8px;">EL SEÑOR JESUCRISTO</p>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">✝</div>
+  <p>IPUC Algarrobo · Biblioteca Digital</p>
+  <p style="margin-top:6px; font-size:0.65rem;">Estudio Bíblico — La Biblia</p>
+</footer>
+
+<script>
+// ── SCROLL REVEAL ──
+const secciones = document.querySelectorAll('.seccion');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(el => {
+    if (el.isIntersecting) el.target.classList.add('visible');
+  });
+}, { threshold: 0.1 });
+secciones.forEach(s => observer.observe(s));
+
+// ── NAV LATERAL ──
+const navItems = document.querySelectorAll('[data-section]');
+const nav = document.getElementById('navLateral');
+
+// Crear dots únicos por sección
+const sections = [];
+const seen = new Set();
+navItems.forEach(el => {
+  const id = el.dataset.section;
+  if (!seen.has(id)) {
+    seen.add(id);
+    sections.push({ id, label: el.dataset.label || '' });
+  }
+});
+
+sections.forEach(({ id, label }) => {
+  const dot = document.createElement('div');
+  dot.className = 'nav-dot';
+  dot.title = label;
+  dot.addEventListener('click', () => {
+    const target = document.querySelector(`[data-section="${id}"]`);
+    if (target) target.scrollIntoView({ behavior: 'smooth' });
+  });
+  nav.appendChild(dot);
+});
+
+// Actualizar dot activo
+window.addEventListener('scroll', () => {
+  const scrollY = window.scrollY + window.innerHeight * 0.4;
+  let active = '0';
+  navItems.forEach(el => {
+    if (el.offsetTop <= scrollY) active = el.dataset.section;
+  });
+  nav.querySelectorAll('.nav-dot').forEach((dot, i) => {
+    dot.classList.toggle('active', sections[i].id === active);
+  });
+});
+</script>
+</body>
+</html>

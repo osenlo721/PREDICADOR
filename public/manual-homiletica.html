@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Manual de Homilética — Osmar Lugo</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Raleway:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --azul:#009FDA; --marino:#003B6F; --oro:#F0AB00; --oro-claro:#FFD166;
+  --fondo:#040e1c; --fondo2:#071628; --fondo3:#0a1e38;
+  --texto:#e8e0d0; --texto-suave:#a89f90; --linea:rgba(240,171,0,.2);
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{background:var(--fondo);color:var(--texto);font-family:'Crimson Pro',Georgia,serif;font-size:18px;line-height:1.85;overflow-x:hidden;}
+::-webkit-scrollbar{width:4px;}
+::-webkit-scrollbar-track{background:var(--fondo);}
+::-webkit-scrollbar-thumb{background:var(--azul);border-radius:2px;}
+
+.nav-toggle{position:fixed;top:16px;left:16px;z-index:200;background:var(--marino);border:1px solid var(--linea);color:var(--oro);width:40px;height:40px;border-radius:8px;cursor:pointer;font-size:18px;display:flex;align-items:center;justify-content:center;transition:all .2s;}
+.nav-toggle:hover{background:var(--azul);color:#fff;}
+
+nav{position:fixed;left:0;top:0;bottom:0;width:250px;background:linear-gradient(180deg,var(--marino) 0%,#011529 100%);border-right:1px solid var(--linea);z-index:100;overflow-y:auto;transform:translateX(-100%);transition:transform .35s ease;padding:32px 0;}
+nav.show{transform:translateX(0);}
+nav .nav-title{font-family:'Cinzel',serif;font-size:10px;letter-spacing:4px;color:var(--oro);padding:0 20px 16px;border-bottom:1px solid var(--linea);margin-bottom:12px;}
+nav a{display:block;padding:7px 20px;font-family:'Raleway',sans-serif;font-size:11px;font-weight:500;letter-spacing:1px;color:var(--texto-suave);text-decoration:none;border-left:2px solid transparent;transition:all .2s;}
+nav a:hover,nav a.active{color:var(--oro);border-left-color:var(--oro);background:rgba(240,171,0,.06);}
+
+.cover{min-height:100vh;background:linear-gradient(160deg,#041830 0%,var(--fondo) 65%);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:80px 32px 60px;position:relative;overflow:hidden;}
+.cover::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 50% at 50% 10%,rgba(0,159,218,.18) 0%,transparent 70%),radial-gradient(ellipse 40% 40% at 80% 85%,rgba(240,171,0,.1) 0%,transparent 60%);pointer-events:none;}
+.cover-icon{font-size:64px;margin-bottom:24px;animation:fadeDown .8s ease both;}
+.cover-tag{font-family:'Cinzel',serif;font-size:10px;letter-spacing:5px;color:var(--azul);text-transform:uppercase;margin-bottom:20px;animation:fadeDown .9s ease .1s both;}
+.cover-title{font-family:'Cinzel',serif;font-size:clamp(40px,9vw,88px);font-weight:900;line-height:1.05;margin-bottom:8px;animation:fadeDown 1s ease .2s both;}
+.cover-title span{color:var(--oro);}
+.cover-sub{font-family:'Cinzel',serif;font-size:clamp(13px,2vw,17px);color:var(--azul);letter-spacing:2px;margin-bottom:32px;animation:fadeDown 1s ease .25s both;}
+.cover-line{width:60px;height:1px;background:linear-gradient(to right,transparent,var(--oro),transparent);margin:0 auto 24px;animation:fadeIn 1.1s ease .35s both;}
+.cover-author{font-family:'Raleway',sans-serif;font-size:13px;letter-spacing:4px;color:var(--texto-suave);text-transform:uppercase;animation:fadeDown 1.1s ease .4s both;}
+.cover-verse{position:absolute;bottom:40px;font-family:'Crimson Pro',serif;font-style:italic;font-size:14px;color:var(--texto-suave);max-width:400px;text-align:center;line-height:1.6;animation:fadeIn 1.4s ease .6s both;}
+
+main{max-width:740px;margin:0 auto;padding:0 24px;}
+
+.chapter{padding:80px 0 60px;border-bottom:1px solid rgba(240,171,0,.1);opacity:0;transform:translateY(30px);transition:opacity .7s ease,transform .7s ease;}
+.chapter.visible{opacity:1;transform:none;}
+.ch-num{font-family:'Cinzel',serif;font-size:11px;letter-spacing:4px;color:var(--azul);text-transform:uppercase;margin-bottom:12px;}
+.ch-title{font-family:'Cinzel',serif;font-size:clamp(20px,4vw,32px);font-weight:700;color:var(--oro);line-height:1.2;margin-bottom:8px;}
+.ch-sub{font-family:'Cinzel',serif;font-size:clamp(14px,2.5vw,20px);color:var(--azul);margin-bottom:28px;}
+.ch-divider{width:40px;height:2px;background:linear-gradient(to right,var(--oro),var(--azul));margin-bottom:32px;border-radius:2px;}
+p{margin-bottom:20px;}
+strong{color:var(--oro);font-weight:600;}
+em{color:var(--azul);font-style:italic;}
+
+.quote{border-left:3px solid var(--oro);padding:16px 24px;margin:28px 0;background:rgba(240,171,0,.05);border-radius:0 8px 8px 0;}
+.quote p{font-family:'Crimson Pro',serif;font-style:italic;font-size:1.05em;color:var(--oro-claro);margin-bottom:6px;}
+.quote cite{font-family:'Raleway',sans-serif;font-size:12px;letter-spacing:2px;color:var(--texto-suave);}
+
+.section-label{font-family:'Cinzel',serif;font-size:11px;letter-spacing:3px;color:var(--azul);text-transform:uppercase;margin:32px 0 12px;}
+.section-title{font-family:'Cinzel',serif;font-size:clamp(16px,2.5vw,22px);color:var(--oro-claro);margin-bottom:16px;}
+
+.list-yes,.list-no{list-style:none;margin:16px 0 24px;padding:0;}
+.list-yes li,.list-no li{padding:6px 0 6px 28px;position:relative;font-size:.97em;color:var(--texto-suave);border-bottom:1px solid rgba(255,255,255,.05);}
+.list-yes li::before{content:'✅';position:absolute;left:0;top:6px;font-size:14px;}
+.list-no li::before{content:'❌';position:absolute;left:0;top:6px;font-size:14px;}
+
+.list-num{padding-left:20px;color:var(--texto-suave);margin:16px 0 24px;}
+.list-num li{margin-bottom:10px;}
+
+.compare{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:28px 0;}
+.compare-box{padding:20px;border-radius:8px;border:1px solid;}
+.compare-box.a{border-color:rgba(0,159,218,.3);background:rgba(0,159,218,.05);}
+.compare-box.b{border-color:rgba(240,171,0,.3);background:rgba(240,171,0,.05);}
+.compare-box.c{border-color:rgba(45,122,90,.3);background:rgba(45,122,90,.05);}
+.compare-box h4{font-family:'Cinzel',serif;font-size:10px;letter-spacing:3px;margin-bottom:12px;text-transform:uppercase;}
+.compare-box.a h4{color:var(--azul);}
+.compare-box.b h4{color:var(--oro);}
+.compare-box.c h4{color:#4ecb8d;}
+.compare-box ul{list-style:none;}
+.compare-box ul li{font-size:14px;padding:4px 0;color:var(--texto-suave);border-bottom:1px solid rgba(255,255,255,.06);}
+
+.frase{text-align:center;padding:40px 24px;margin:32px 0;position:relative;}
+.frase::before{content:'"';font-family:'Cinzel',serif;font-size:100px;color:rgba(240,171,0,.07);position:absolute;top:-10px;left:16px;line-height:1;}
+.frase p{font-family:'Cinzel',serif;font-size:clamp(15px,2.2vw,20px);color:var(--texto);line-height:1.5;position:relative;z-index:1;margin:0;}
+
+.tip-box{background:linear-gradient(135deg,rgba(0,59,111,.4) 0%,rgba(4,14,28,.8) 100%);border:1px solid rgba(0,159,218,.25);border-radius:12px;padding:24px;margin:28px 0;}
+.tip-box h4{font-family:'Cinzel',serif;font-size:11px;letter-spacing:4px;color:var(--azul);text-transform:uppercase;margin-bottom:12px;}
+.tip-box p,.tip-box li{color:var(--texto-suave);font-size:.95em;}
+
+.bosquejo{background:rgba(240,171,0,.04);border:1px solid rgba(240,171,0,.15);border-radius:8px;padding:24px;margin:24px 0;font-family:'Raleway',sans-serif;font-size:14px;}
+.bosquejo .b-titulo{color:var(--oro);font-weight:600;font-size:15px;margin-bottom:4px;}
+.bosquejo .b-prop{color:var(--azul);font-style:italic;margin-bottom:12px;font-size:13px;}
+.bosquejo ol{padding-left:20px;color:var(--texto-suave);}
+.bosquejo ol li{margin-bottom:6px;}
+.bosquejo ol li ol{margin-top:6px;}
+
+.epilogo{text-align:center;padding:80px 32px 120px;}
+.epilogo .big{font-family:'Cinzel',serif;font-size:clamp(36px,8vw,72px);font-weight:900;color:transparent;-webkit-text-stroke:1px rgba(240,171,0,.35);letter-spacing:6px;display:block;margin-bottom:40px;}
+.epilogo h2{font-family:'Cinzel',serif;font-size:clamp(18px,3vw,28px);color:var(--oro);margin-bottom:24px;}
+.epilogo p{max-width:540px;margin:0 auto 16px;color:var(--texto-suave);}
+.epilogo .firma{margin-top:48px;font-family:'Cinzel',serif;font-size:13px;letter-spacing:4px;color:var(--azul);}
+
+@keyframes fadeDown{from{opacity:0;transform:translateY(-20px);}to{opacity:1;transform:none;}}
+@keyframes fadeIn{from{opacity:0;}to{opacity:1;}}
+@media(max-width:600px){.compare{grid-template-columns:1fr;}nav{width:210px;}}
+</style>
+</head>
+<body>
+
+<button class="nav-toggle" onclick="toggleNav()">☰</button>
+
+<nav id="sidenav">
+  <div class="nav-title">Contenido</div>
+  <a href="#portada">Portada</a>
+  <a href="#intro">¿Qué es la Homilética?</a>
+  <a href="#cap1">1. El predicador</a>
+  <a href="#cap2">2. Tipos de sermón</a>
+  <a href="#cap3">3. Partes del sermón</a>
+  <a href="#cap4">4. El bosquejo</a>
+  <a href="#cap5">5. La introducción</a>
+  <a href="#cap6">6. El cuerpo del sermón</a>
+  <a href="#cap7">7. La conclusión</a>
+  <a href="#cap8">8. Ilustraciones</a>
+  <a href="#cap9">9. La entrega oral</a>
+  <a href="#cap10">10. Errores comunes</a>
+  <a href="#cap11">11. Ejemplo práctico</a>
+</nav>
+
+<!-- PORTADA -->
+<section class="cover" id="portada">
+  <div class="cover-icon">🎤</div>
+  <div class="cover-tag">Osmar Lugo · Manual Práctico</div>
+  <h1 class="cover-title">Manual de<br><span>Homilética</span></h1>
+  <div class="cover-sub">El arte y la ciencia de predicar la Palabra de Dios</div>
+  <div class="cover-line"></div>
+  <div class="cover-author">Predicador IPUC</div>
+  <div class="cover-verse">"Predica la palabra; insiste a tiempo y fuera de tiempo." — 2 Timoteo 4:2</div>
+</section>
+
+<main>
+
+<!-- INTRO -->
+<section class="chapter" id="intro">
+  <div class="ch-num">Introducción</div>
+  <h2 class="ch-title">¿Qué es la Homilética?</h2>
+  <div class="ch-sub">El arte de predicar con propósito</div>
+  <div class="ch-divider"></div>
+  <p>La <strong>Homilética</strong> es el arte y la ciencia de predicar para comunicar el mensaje de la Palabra de Dios. Estudia cómo organizar el material bíblico, preparar el bosquejo y predicar de manera efectiva, clara y transformadora.</p>
+  <p>La palabra viene del griego <em>homilía</em>, que significa conversación o discurso. No es simplemente hablar en público — es proclamar la verdad eterna de Dios con estructura, claridad y poder del Espíritu Santo.</p>
+  <div class="quote">
+    <p>"Predica la palabra; insiste a tiempo y fuera de tiempo; redarguye, reprende, exhorta con toda paciencia y doctrina."</p>
+    <cite>2 Timoteo 4:2</cite>
+  </div>
+  <p>Un buen predicador no nace — se forma. La homilética provee las herramientas para que cualquier ministro pueda comunicar el evangelio con excelencia.</p>
+  <div class="compare">
+    <div class="compare-box a"><h4>Sin homilética</h4><ul><li>Mensajes desorganizados</li><li>Congregación confundida</li><li>Verdad bíblica diluida</li><li>Impacto limitado</li></ul></div>
+    <div class="compare-box b"><h4>Con homilética</h4><ul><li>Mensajes claros y poderosos</li><li>Congregación edificada</li><li>Verdad bíblica proclamada</li><li>Vidas transformadas</li></ul></div>
+  </div>
+</section>
+
+<!-- CAP 1 -->
+<section class="chapter" id="cap1">
+  <div class="ch-num">Capítulo Uno</div>
+  <h2 class="ch-title">El predicador</h2>
+  <div class="ch-sub">Llamado, carácter y preparación</div>
+  <div class="ch-divider"></div>
+  <p>Antes de hablar de técnicas, hay que hablar del <strong>predicador</strong>. El mensaje no puede ser más grande que el mensajero. Dios busca vasos limpios, no solo voces elocuentes.</p>
+  <div class="section-label">El llamado a predicar</div>
+  <p>La predicación no es una carrera que se escoge — es un llamado que se recibe. El predicador verdadero siente una compulsión interior que no puede ignorar.</p>
+  <div class="quote">
+    <p>"¡Ay de mí si no predicare el evangelio!"</p>
+    <cite>1 Corintios 9:16 — Pablo</cite>
+  </div>
+  <div class="section-label">Características del buen predicador</div>
+  <ul class="list-yes">
+    <li><strong>Hombre de oración:</strong> la predicación nace en el cuarto de oración</li>
+    <li><strong>Conocedor de la Biblia:</strong> no se predica lo que no se conoce</li>
+    <li><strong>Vida íntegra:</strong> el carácter respalda el mensaje</li>
+    <li><strong>Amor por las almas:</strong> predica con pasión y compasión</li>
+    <li><strong>Humildad:</strong> el predicador sirve, no impresiona</li>
+    <li><strong>Dependencia del Espíritu Santo:</strong> la técnica sin unción es ruido</li>
+  </ul>
+  <div class="frase"><p>"El predicador que no llora en su cuarto de oración, difícilmente hará llorar a la congregación."</p></div>
+  <div class="section-label">Preparación del predicador</div>
+  <div class="compare">
+    <div class="compare-box a"><h4>Preparación espiritual</h4><ul><li>Orar antes de preparar</li><li>Vivir el texto antes de predicarlo</li><li>Ayuno cuando sea necesario</li></ul></div>
+    <div class="compare-box b"><h4>Preparación intelectual</h4><ul><li>Estudiar el texto en contexto</li><li>Leer comentarios y concordancias</li><li>Conocer a la audiencia</li></ul></div>
+  </div>
+</section>
+
+<!-- CAP 2 -->
+<section class="chapter" id="cap2">
+  <div class="ch-num">Capítulo Dos</div>
+  <h2 class="ch-title">Tipos de sermón</h2>
+  <div class="ch-sub">Expositivo, temático, textual y narrativo</div>
+  <div class="ch-divider"></div>
+  <p>Existen diferentes tipos de sermones según la forma en que se aborda el texto bíblico. Todo predicador debe conocerlos y dominarlos.</p>
+
+  <div class="section-label">1 — Sermón Expositivo</div>
+  <p>Es la forma <strong>más antigua y poderosa</strong> de predicación. El predicador comenta un pasaje bíblico de manera consecutiva, siendo fiel a su forma, contexto y función. Toda la estructura del sermón nace del texto mismo.</p>
+  <ul class="list-yes">
+    <li>Permite conocer el texto en toda su riqueza</li>
+    <li>Es fiel al propósito original del autor bíblico</li>
+    <li>Educa a la congregación en el manejo de la Biblia</li>
+    <li>Ideal para series por libros bíblicos</li>
+  </ul>
+  <div class="quote">
+    <p>"Del género de mensajes, el modelo más apasionante es el expositivo. Históricamente ha jugado un papel preponderante en la evangelización."</p>
+    <cite>Principio homilético clásico</cite>
+  </div>
+
+  <div class="section-label">2 — Sermón Temático</div>
+  <p>El predicador escoge un <strong>tema o asunto bíblico</strong> y busca en las Escrituras los textos que lo sostienen. No sigue las líneas de un texto específico sino la enseñanza global de la Biblia sobre ese tema. Fue el método que usó Jesús en el camino a Emaús (Lucas 24:27).</p>
+  <ul class="list-yes">
+    <li>Permite abordar temas doctrinales completos</li>
+    <li>Útil para responder preguntas específicas de la congregación</li>
+    <li>Jesús mismo lo usó</li>
+  </ul>
+  <ul class="list-no">
+    <li>Peligro de usar "textos prueba" fuera de contexto</li>
+    <li>Requiere honestidad exegética</li>
+  </ul>
+
+  <div class="section-label">3 — Sermón Textual</div>
+  <p>Se limita a exponer y explicar <strong>un texto o versículo específico</strong>. Los puntos principales nacen directamente del texto elegido. Es ideal para versículos ricos en contenido doctrinal o práctico.</p>
+
+  <div class="section-label">4 — Sermón Narrativo</div>
+  <p>Presenta la verdad bíblica mediante <strong>estructuras narrativas</strong>. El predicador cuenta una historia bíblica o contemporánea para conectar con la experiencia de los oyentes. Muy efectivo para audiencias no religiosas.</p>
+
+  <div class="section-label">5 — Sermón Biográfico</div>
+  <p>Se centra en la vida de un <strong>personaje bíblico</strong> — sus virtudes, fracasos, lecciones y legado. Ideal para inspirar y enseñar principios de vida con ejemplos concretos. (Ejemplo: "La fe de Abraham", "La obediencia de Moisés")</p>
+
+  <div class="compare">
+    <div class="compare-box a"><h4>Expositivo</h4><ul><li>Nace del texto</li><li>Versículo por versículo</li><li>Máxima fidelidad bíblica</li></ul></div>
+    <div class="compare-box b"><h4>Temático</h4><ul><li>Nace del tema</li><li>Múltiples textos</li><li>Visión doctrinal amplia</li></ul></div>
+    <div class="compare-box c"><h4>Narrativo</h4><ul><li>Nace de la historia</li><li>Estructura de relato</li><li>Alta conexión emocional</li></ul></div>
+  </div>
+</section>
+
+<!-- CAP 3 -->
+<section class="chapter" id="cap3">
+  <div class="ch-num">Capítulo Tres</div>
+  <h2 class="ch-title">Partes del sermón</h2>
+  <div class="ch-sub">Estructura esencial de todo mensaje</div>
+  <div class="ch-divider"></div>
+  <p>Todo sermón bíblico bien preparado tiene una estructura clara. Como un edificio necesita cimientos, paredes y techo, el sermón necesita introducción, cuerpo y conclusión.</p>
+
+  <div class="compare">
+    <div class="compare-box a"><h4>Encabezado (privado)</h4><ul><li>Tema general</li><li>Tema específico</li><li>Proposición</li><li>Propósito</li></ul></div>
+    <div class="compare-box b"><h4>Cuerpo (público)</h4><ul><li>Introducción</li><li>Divisiones principales (2-5)</li><li>Subdivisiones</li><li>Ilustraciones y aplicaciones</li></ul></div>
+    <div class="compare-box c"><h4>Cierre (público)</h4><ul><li>Conclusión</li><li>Llamado o aplicación final</li><li>Oración</li></ul></div>
+  </div>
+
+  <div class="section-label">El encabezado homilético</div>
+  <p>El encabezado es una guía para el <strong>predicador</strong>, no para la audiencia. Consta de 4 elementos clave:</p>
+  <div class="tip-box">
+    <h4>Los 4 elementos del encabezado</h4>
+    <ol class="list-num">
+      <li><strong>Tema general:</strong> el área temática amplia. Ej: "La fe"</li>
+      <li><strong>Tema específico:</strong> el ángulo concreto. Ej: "La fe que mueve montañas"</li>
+      <li><strong>Proposición:</strong> la verdad central que se proclama. Ej: "La fe genuina actúa aun cuando no ve"</li>
+      <li><strong>Propósito:</strong> lo que se espera lograr. Ej: "Que los oyentes confíen en Dios en tiempos difíciles"</li>
+    </ol>
+  </div>
+
+  <div class="section-label">La proposición</div>
+  <p>La proposición es el corazón del sermón. Es una <strong>oración completa que resume la verdad central</strong> del mensaje. Toda división principal debe estar relacionada con ella. Una proposición débil produce un sermón débil.</p>
+  <div class="quote">
+    <p>La proposición responde a la pregunta: ¿Qué verdad bíblica estoy proclamando hoy?</p>
+    <cite>Principio homilético fundamental</cite>
+  </div>
+</section>
+
+<!-- CAP 4 -->
+<section class="chapter" id="cap4">
+  <div class="ch-num">Capítulo Cuatro</div>
+  <h2 class="ch-title">El bosquejo</h2>
+  <div class="ch-sub">El esqueleto que sostiene el sermón</div>
+  <div class="ch-divider"></div>
+  <p>El bosquejo es la <strong>estructura organizada</strong> que da forma al sermón. Es como el plano arquitectónico de un edificio: define los cimientos, distribuye los espacios y establece cómo se conectarán las ideas.</p>
+
+  <div class="section-label">Estructura del bosquejo</div>
+  <div class="tip-box">
+    <h4>Jerarquía del bosquejo</h4>
+    <ol class="list-num">
+      <li><strong>Divisiones principales (A, B, C...):</strong> ideas generales, mínimo 2 y máximo 5. Nacen de la proposición.</li>
+      <li><strong>Subdivisiones (1, 2, 3...):</strong> desglosan cada división principal. Mínimo 2 por división.</li>
+      <li><strong>Ilustraciones:</strong> máximo 1 por división principal.</li>
+      <li><strong>Aplicaciones:</strong> puentes entre el texto y la vida actual.</li>
+      <li><strong>Transiciones:</strong> frases que conectan un punto con el siguiente.</li>
+    </ol>
+  </div>
+
+  <div class="section-label">La palabra clave</div>
+  <p>La <strong>palabra clave</strong> es el término que unifica las divisiones principales. Ayuda a formular los puntos de manera coherente y paralela. Puede ser: razones, maneras, pasos, características, bendiciones, principios, etc.</p>
+  <div class="tip-box">
+    <h4>Preguntas para generar divisiones</h4>
+    <p>Tomando la proposición, pregunta:</p>
+    <ul class="list-yes">
+      <li><strong>¿Por qué?</strong> → genera razones u objeciones</li>
+      <li><strong>¿Cómo?</strong> → genera métodos y formas</li>
+      <li><strong>¿Qué?</strong> → genera significados o elementos</li>
+      <li><strong>¿Cuándo?</strong> → genera tiempos o etapas</li>
+      <li><strong>¿Quién?</strong> → genera personas o ejemplos</li>
+    </ul>
+  </div>
+</section>
+
+<!-- CAP 5 -->
+<section class="chapter" id="cap5">
+  <div class="ch-num">Capítulo Cinco</div>
+  <h2 class="ch-title">La introducción</h2>
+  <div class="ch-sub">Cómo captar la atención desde el primer segundo</div>
+  <div class="ch-divider"></div>
+  <p>La introducción es el <strong>primer contacto</strong> del predicador con la audiencia. Su propósito es preparar las mentes y los corazones para el mensaje. Una buena introducción gana o pierde a la congregación en los primeros minutos.</p>
+  <div class="quote">
+    <p>El predicador que no logra conectar en la introducción, predicará a oyentes ausentes aunque estén sentados.</p>
+    <cite>Principio homilético</cite>
+  </div>
+
+  <div class="section-label">Funciones de la introducción</div>
+  <ul class="list-yes">
+    <li>Captar la atención de los oyentes</li>
+    <li>Despertar el interés en el tema</li>
+    <li>Conectar el texto con la realidad actual</li>
+    <li>Presentar la proposición de manera atractiva</li>
+    <li>Establecer rapport con la congregación</li>
+  </ul>
+
+  <div class="section-label">Formas de comenzar</div>
+  <div class="compare">
+    <div class="compare-box a"><h4>Efectivas</h4><ul><li>Una historia real o ilustración</li><li>Una pregunta provocadora</li><li>Una estadística impactante</li><li>Una situación de la vida cotidiana</li><li>Una cita poderosa</li></ul></div>
+    <div class="compare-box b"><h4>Evitar</h4><ul><li>"Hoy vamos a ver..."</li><li>"El texto dice..."</li><li>Disculpas innecesarias</li><li>Comenzar con el bosquejo</li><li>Introducción más larga que el mensaje</li></ul></div>
+  </div>
+  <div class="frase"><p>"Gana la atención en los primeros 60 segundos, o no la ganarás nunca."</p></div>
+</section>
+
+<!-- CAP 6 -->
+<section class="chapter" id="cap6">
+  <div class="ch-num">Capítulo Seis</div>
+  <h2 class="ch-title">El cuerpo del sermón</h2>
+  <div class="ch-sub">Desarrollo, argumentación y aplicación</div>
+  <div class="ch-divider"></div>
+  <p>El cuerpo es el <strong>corazón del sermón</strong>. Aquí se desarrollan las divisiones principales, se argumenta bíblicamente, se ilustra y se aplica la verdad a la vida de los oyentes.</p>
+
+  <div class="section-label">Desarrollo de cada punto</div>
+  <p>Cada división principal debe desarrollarse en 3 pasos:</p>
+  <div class="tip-box">
+    <h4>Los 3 pasos del desarrollo</h4>
+    <ol class="list-num">
+      <li><strong>Explicación:</strong> ¿Qué dice el texto? Exégesis clara del pasaje.</li>
+      <li><strong>Ilustración:</strong> ¿Cómo se ve esto en la vida real? Una historia, ejemplo o metáfora.</li>
+      <li><strong>Aplicación:</strong> ¿Qué debo hacer yo? El puente entre la Biblia y la vida actual.</li>
+    </ol>
+  </div>
+
+  <div class="section-label">Las transiciones</div>
+  <p>Las transiciones son <strong>frases que conectan</strong> un punto con el siguiente. Sin ellas, el sermón parece una lista de ideas desconectadas. Una buena transición resume el punto anterior y anticipa el siguiente.</p>
+  <div class="tip-box">
+    <h4>Ejemplo de transición</h4>
+    <p>"Hemos visto que la fe requiere obediencia. Pero también vemos en el texto que la fe requiere algo más: <em>perseverancia</em>. Pasemos al segundo punto..."</p>
+  </div>
+
+  <div class="section-label">La aplicación</div>
+  <p>La aplicación es el <strong>alma del sermón</strong>. Sin aplicación, el mensaje es información, no transformación. Todo punto debe tener al menos una aplicación práctica que responda: ¿Qué debo creer, cambiar o hacer a partir de esta verdad?</p>
+  <div class="quote">
+    <p>Un predicador que no aplica su mensaje a la vida presenta una osamenta homilética — divisiones sin vida.</p>
+    <cite>Principio clásico de homilética</cite>
+  </div>
+</section>
+
+<!-- CAP 7 -->
+<section class="chapter" id="cap7">
+  <div class="ch-num">Capítulo Siete</div>
+  <h2 class="ch-title">La conclusión</h2>
+  <div class="ch-sub">El ataque final a la fortaleza de la voluntad</div>
+  <div class="ch-divider"></div>
+  <p>La conclusión es el <strong>momento más poderoso del sermón</strong>. Es el último llamado a la acción, el ataque final a la voluntad del oyente. Muchos predicadores pierden el sermón en la conclusión.</p>
+  <div class="quote">
+    <p>"La conclusión del sermón constituye el ataque final a la fortaleza de la voluntad de los oyentes."</p>
+    <cite>Principio homilético clásico</cite>
+  </div>
+
+  <div class="section-label">Propósitos de la conclusión</div>
+  <ul class="list-yes">
+    <li>Resumir la verdad central del mensaje</li>
+    <li>Hacer un llamado claro a la acción o decisión</li>
+    <li>Crear urgencia espiritual en el oyente</li>
+    <li>Cerrar con una imagen o frase memorable</li>
+    <li>Conducir a la oración o al altar</li>
+  </ul>
+
+  <div class="section-label">Errores en la conclusión</div>
+  <ul class="list-no">
+    <li>Decir "para terminar" y seguir predicando 20 minutos más</li>
+    <li>Introducir ideas nuevas al concluir</li>
+    <li>Terminar con debilidad o disculpas</li>
+    <li>Concluir sin llamado a la acción</li>
+    <li>Una conclusión más larga que el cuerpo</li>
+  </ul>
+  <div class="frase"><p>"El último versículo que prediques debe ser el que el oyente lleve a casa."</p></div>
+</section>
+
+<!-- CAP 8 -->
+<section class="chapter" id="cap8">
+  <div class="ch-num">Capítulo Ocho</div>
+  <h2 class="ch-title">Las ilustraciones</h2>
+  <div class="ch-sub">Ventanas que iluminan la verdad</div>
+  <div class="ch-divider"></div>
+  <p>Las ilustraciones son <strong>ventanas del sermón</strong>. Permiten que la luz de la verdad bíblica entre de manera comprensible al corazón del oyente. Jesús fue el maestro de las ilustraciones — usó parábolas para hacer la verdad eterna accesible a todos.</p>
+
+  <div class="section-label">Tipos de ilustraciones</div>
+  <div class="compare">
+    <div class="compare-box a"><h4>Narrativas</h4><ul><li>Historias de la vida real</li><li>Testimonios personales</li><li>Anécdotas históricas</li><li>Parábolas originales</li></ul></div>
+    <div class="compare-box b"><h4>Descriptivas</h4><ul><li>Metáforas y comparaciones</li><li>Imágenes visuales</li><li>Escenarios hipotéticos</li><li>Citas de grandes predicadores</li></ul></div>
+  </div>
+
+  <div class="section-label">Reglas de oro para ilustrar</div>
+  <ul class="list-yes">
+    <li>Máximo <strong>una ilustración por división principal</strong></li>
+    <li>La ilustración sirve al punto, no el punto a la ilustración</li>
+    <li>Usa ilustraciones que la audiencia pueda entender</li>
+    <li>Las mejores ilustraciones vienen de la vida cotidiana</li>
+    <li>Nunca inventes ilustraciones falsas como si fueran reales</li>
+  </ul>
+  <div class="frase"><p>"Una buena ilustración hace que el oyente diga: 'Ahora entiendo' — y eso vale más que diez argumentos."</p></div>
+</section>
+
+<!-- CAP 9 -->
+<section class="chapter" id="cap9">
+  <div class="ch-num">Capítulo Nueve</div>
+  <h2 class="ch-title">La entrega oral</h2>
+  <div class="ch-sub">Voz, cuerpo y presencia en el púlpito</div>
+  <div class="ch-divider"></div>
+  <p>Un sermón excelente puede arruinarse por una entrega pobre. La forma en que se predica es casi tan importante como el contenido. El predicador comunica con todo su ser: voz, cuerpo, mirada y presencia.</p>
+
+  <div class="section-label">El uso de la voz</div>
+  <div class="compare">
+    <div class="compare-box a"><h4>Elementos de la voz</h4><ul><li><strong>Volumen:</strong> varía para énfasis y drama</li><li><strong>Velocidad:</strong> pausa para impacto, acelera para urgencia</li><li><strong>Tono:</strong> varía para evitar monotonía</li><li><strong>Dicción:</strong> pronuncia con claridad</li></ul></div>
+    <div class="compare-box b"><h4>El silencio estratégico</h4><ul><li>Una pausa de 3 segundos puede ser más poderosa que 10 palabras</li><li>Pausa antes de un punto clave</li><li>Pausa después de una pregunta retórica</li><li>Pausa al concluir cada punto</li></ul></div>
+  </div>
+
+  <div class="section-label">El lenguaje corporal</div>
+  <ul class="list-yes">
+    <li>Contacto visual con toda la congregación, no con notas</li>
+    <li>Postura firme pero natural — no rígida ni encorvada</li>
+    <li>Gestos naturales que refuerzan las palabras</li>
+    <li>Movimiento intencional en el púlpito</li>
+    <li>Expresión facial coherente con el mensaje</li>
+  </ul>
+
+  <div class="section-label">Métodos de predicación</div>
+  <div class="compare">
+    <div class="compare-box a"><h4>Memorizado</h4><ul><li>Mayor contacto visual</li><li>Riesgo de rigidez</li><li>Requiere mucha preparación</li></ul></div>
+    <div class="compare-box b"><h4>Con notas</h4><ul><li>Más flexible y natural</li><li>Permite improvisación guiada</li><li>El más recomendado</li></ul></div>
+    <div class="compare-box c"><h4>Manuscrito</h4><ul><li>Máxima precisión doctrinal</li><li>Menor espontaneidad</li><li>Ideal para radio o TV</li></ul></div>
+  </div>
+</section>
+
+<!-- CAP 10 -->
+<section class="chapter" id="cap10">
+  <div class="ch-num">Capítulo Diez</div>
+  <h2 class="ch-title">Errores comunes</h2>
+  <div class="ch-sub">Lo que debilita el sermón</div>
+  <div class="ch-divider"></div>
+  <p>Todo predicador, especialmente los que están comenzando, comete errores. Conocerlos es el primer paso para superarlos.</p>
+
+  <div class="section-label">Errores de preparación</div>
+  <ul class="list-no">
+    <li>Preparar el sermón el día anterior o minutos antes</li>
+    <li>No orar antes de preparar</li>
+    <li>Usar textos fuera de contexto</li>
+    <li>Tener demasiados puntos (más de 5)</li>
+    <li>No tener una proposición clara</li>
+    <li>Predicar sin aplicación práctica</li>
+  </ul>
+
+  <div class="section-label">Errores de entrega</div>
+  <ul class="list-no">
+    <li>Predicar con la cabeza abajo leyendo todo</li>
+    <li>Gritar sin variación durante todo el mensaje</li>
+    <li>Hablar demasiado rápido sin pausas</li>
+    <li>Extenderse innecesariamente después de la conclusión</li>
+    <li>Usar jerga o tecnicismos que la audiencia no entiende</li>
+    <li>Predicar al reloj, no a la gente</li>
+  </ul>
+
+  <div class="section-label">Errores de actitud</div>
+  <ul class="list-no">
+    <li>Predicar para impresionar, no para transformar</li>
+    <li>No recibir retroalimentación ni corrección</li>
+    <li>Compararse con otros predicadores</li>
+    <li>Predicar lo que uno no vive</li>
+  </ul>
+
+  <div class="frase"><p>"El predicador que deja de aprender, deja de predicar — aunque siga subiendo al púlpito."</p></div>
+</section>
+
+<!-- CAP 11 -->
+<section class="chapter" id="cap11">
+  <div class="ch-num">Capítulo Once</div>
+  <h2 class="ch-title">Ejemplo práctico</h2>
+  <div class="ch-sub">Bosquejo completo paso a paso</div>
+  <div class="ch-divider"></div>
+  <p>Veamos cómo se aplica todo lo aprendido en un bosquejo real. Este es un ejemplo de <strong>sermón expositivo-textual</strong> basado en uno de los textos más predicados en el contexto pentecostal.</p>
+
+  <div class="bosquejo">
+    <div class="b-titulo">📖 "Creciendo en la Obra del Señor"</div>
+    <div class="b-prop">Texto base: 1 Corintios 15:58 | Tipo: Textual | Propósito: Edificar</div>
+    <p style="color:var(--texto-suave);font-size:14px;margin-bottom:12px;"><strong style="color:var(--azul);">Proposición:</strong> El creyente que permanece firme en la obra del Señor tiene garantía de que su trabajo no es en vano.</p>
+    <ol>
+      <li><strong>Introducción:</strong> ¿Alguna vez has sentido que tu servicio a Dios no tiene resultados? ¿Que nadie nota tu esfuerzo? El apóstol Pablo escribe desde la prisión y nos da la respuesta...</li>
+      <li><strong>A. La exhortación: Estar firmes y constantes</strong>
+        <ol>
+          <li>¿Qué significa estar "firmes"? (arraigados en la fe)</li>
+          <li>¿Qué significa "constantes"? (perseverancia en medio de pruebas)</li>
+          <li>Ilustración: el árbol en la tormenta — las raíces profundas no se doblan</li>
+        </ol>
+      </li>
+      <li><strong>B. La actividad: Abundar en la obra del Señor</strong>
+        <ol>
+          <li>¿Qué es "la obra del Señor"? (todo lo que hacemos para Su gloria)</li>
+          <li>Abundar: no hacer lo mínimo — dar lo máximo</li>
+          <li>Aplicación: ¿En qué área de servicio estás abundando?</li>
+        </ol>
+      </li>
+      <li><strong>C. La promesa: Vuestro trabajo en el Señor no es en vano</strong>
+        <ol>
+          <li>El trabajo visible vs el trabajo eterno</li>
+          <li>Dios ve lo que los hombres no ven</li>
+          <li>Ilustración: el sembrador que siembra sin ver la cosecha</li>
+        </ol>
+      </li>
+      <li><strong>Conclusión:</strong> No te canses de hacer el bien. Tu nombre puede no estar en ningún cartel, pero está escrito en el libro de la vida. El Señor no olvida ningún acto de amor hecho en su nombre. Por fe, sigue edificando. ¡Tu trabajo en el Señor NO es en vano!</li>
+    </ol>
+  </div>
+
+  <div class="tip-box">
+    <h4>Proceso de preparación recomendado</h4>
+    <ol class="list-num">
+      <li><strong>Orar:</strong> pide iluminación antes de abrir la Biblia</li>
+      <li><strong>Leer el texto:</strong> varias veces en diferentes traducciones</li>
+      <li><strong>Observar:</strong> ¿Qué dice el texto exactamente?</li>
+      <li><strong>Interpretar:</strong> ¿Qué quiso decir el autor original?</li>
+      <li><strong>Formular la proposición:</strong> la verdad central en una oración</li>
+      <li><strong>Construir el bosquejo:</strong> divisiones, subdivisiones, ilustraciones</li>
+      <li><strong>Aplicar:</strong> ¿Qué debe cambiar en la vida del oyente?</li>
+      <li><strong>Orar de nuevo:</strong> pide unción para la predicación</li>
+    </ol>
+  </div>
+</section>
+
+</main>
+
+<section class="epilogo">
+  <span class="big">PREDICA</span>
+  <h2>El llamado más alto</h2>
+  <p>La homilética es una herramienta, no el fin. El fin es predicar a Cristo crucificado y resucitado con todo el poder del Espíritu Santo.</p>
+  <p>Estudia, prepárate, practica — pero nunca olvides que detrás de cada técnica hay un Dios vivo que quiere hablar a través de ti.</p>
+  <div class="quote" style="max-width:480px;margin:32px auto;">
+    <p>"Predica la palabra; insiste a tiempo y fuera de tiempo."</p>
+    <cite>2 Timoteo 4:2</cite>
+  </div>
+  <div class="firma">Manual de Homilética · Osmar Lugo · IPUC</div>
+</section>
+
+<script>
+const obs=new IntersectionObserver(e=>{e.forEach(el=>{if(el.isIntersecting)el.target.classList.add('visible');});},{threshold:.1});
+document.querySelectorAll('.chapter').forEach(e=>obs.observe(e));
+function toggleNav(){document.getElementById('sidenav').classList.toggle('show');}
+document.querySelectorAll('nav a').forEach(a=>{a.addEventListener('click',()=>{document.getElementById('sidenav').classList.remove('show');document.querySelectorAll('nav a').forEach(x=>x.classList.remove('active'));a.classList.add('active');});});
+document.addEventListener('click',e=>{const nav=document.getElementById('sidenav');if(nav.classList.contains('show')&&!nav.contains(e.target)&&!e.target.closest('.nav-toggle')){nav.classList.remove('show');}});
+</script>
+</body>
+</html>

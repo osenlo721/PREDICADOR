@@ -1,0 +1,1180 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Evangelismo — Identidad y Comisión</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --marino: #003B6F;
+    --marino-deep: #001f3f;
+    --marino-mid: #00306070;
+    --azul: #009FDA;
+    --oro: #F0AB00;
+    --oro-pale: #f0ab0018;
+    --oro-mid: #F0AB0055;
+    --blanco: #f5f0e8;
+    --texto: #d4c9b0;
+    --gris: #8a9bb0;
+    --verde: #2ecc71;
+    --verde-pale: #2ecc7115;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background-color: var(--marino-deep);
+    color: var(--texto);
+    font-family: 'Crimson Pro', Georgia, serif;
+    font-size: 18px;
+    line-height: 1.8;
+    overflow-x: hidden;
+  }
+
+  /* ══ HERO ══ */
+  .hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 60px 24px;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 80% 60% at 50% 40%, #00306055 0%, transparent 70%),
+      radial-gradient(ellipse 50% 40% at 80% 70%, #F0AB0012 0%, transparent 60%),
+      radial-gradient(ellipse 40% 30% at 20% 80%, #009FDA10 0%, transparent 60%);
+  }
+
+  .bg-text {
+    position: absolute;
+    font-family: 'Cinzel', serif;
+    font-weight: 900;
+    font-size: 22vw;
+    color: #ffffff03;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    white-space: nowrap;
+    user-select: none;
+    pointer-events: none;
+    letter-spacing: -4px;
+  }
+
+  .badge {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--oro-pale);
+    border: 1px solid var(--oro-mid);
+    color: var(--oro);
+    font-family: 'Cinzel', serif;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 3.5px;
+    text-transform: uppercase;
+    padding: 6px 18px;
+    border-radius: 2px;
+    margin-bottom: 28px;
+  }
+
+  .hero h1 {
+    position: relative;
+    font-family: 'Cinzel', serif;
+    font-size: clamp(2rem, 6vw, 4.4rem);
+    font-weight: 900;
+    color: var(--blanco);
+    line-height: 1.1;
+    letter-spacing: 3px;
+    margin-bottom: 14px;
+    text-shadow: 0 0 80px #009FDA33;
+  }
+
+  .hero h1 em {
+    font-style: normal;
+    color: var(--oro);
+  }
+
+  .hero-sub {
+    position: relative;
+    font-family: 'Cinzel', serif;
+    font-size: clamp(0.75rem, 2vw, 0.95rem);
+    color: var(--azul);
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    margin-bottom: 40px;
+  }
+
+  .temas-preview {
+    position: relative;
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-bottom: 40px;
+  }
+
+  .tema-chip {
+    background: var(--marino-mid);
+    border: 1px solid #009FDA30;
+    border-radius: 3px;
+    padding: 10px 20px;
+    font-family: 'Cinzel', serif;
+    font-size: 0.78rem;
+    letter-spacing: 2px;
+    color: var(--azul);
+    transition: border-color 0.3s, color 0.3s;
+    cursor: pointer;
+  }
+
+  .tema-chip:hover {
+    border-color: var(--oro-mid);
+    color: var(--oro);
+  }
+
+  .scroll-hint {
+    position: absolute;
+    bottom: 32px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    color: var(--gris);
+    font-size: 0.7rem;
+    font-family: 'Cinzel', serif;
+    letter-spacing: 2px;
+    animation: bounce 2.2s infinite;
+  }
+  .scroll-hint::after { content: '↓'; font-size: 1rem; color: var(--oro); }
+  @keyframes bounce {
+    0%,100% { transform: translateX(-50%) translateY(0); }
+    50% { transform: translateX(-50%) translateY(7px); }
+  }
+
+  /* ══ DIVIDER ══ */
+  .divider {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 0 32px;
+    margin: 48px auto 20px;
+    max-width: 840px;
+  }
+  .divider::before,.divider::after {
+    content:'';flex:1;height:1px;
+    background:linear-gradient(to right,transparent,var(--oro-mid),transparent);
+  }
+  .divider span {
+    font-family:'Cinzel',serif;
+    color:var(--oro);font-size:1rem;
+  }
+
+  /* ══ TEMA HEADER ══ */
+  .tema-header {
+    max-width: 840px;
+    margin: 0 auto;
+    padding: 0 28px 12px;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity .7s ease, transform .7s ease;
+  }
+  .tema-header.visible { opacity:1; transform:translateY(0); }
+
+  .tema-num {
+    font-family: 'Cinzel', serif;
+    font-size: 0.75rem;
+    letter-spacing: 5px;
+    color: var(--oro);
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+
+  .tema-title {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(1.4rem, 4vw, 2.3rem);
+    font-weight: 900;
+    color: var(--blanco);
+    line-height: 1.2;
+    letter-spacing: 2px;
+    margin-bottom: 8px;
+  }
+
+  .tema-title em {
+    font-style: normal;
+    color: var(--azul);
+  }
+
+  .tema-intro {
+    font-style: italic;
+    color: var(--gris);
+    font-size: 1rem;
+    max-width: 560px;
+    line-height: 1.6;
+    border-left: 2px solid var(--azul);
+    padding-left: 16px;
+    margin-top: 16px;
+  }
+
+  /* ══ SECCIÓN ══ */
+  .seccion {
+    max-width: 840px;
+    margin: 0 auto;
+    padding: 8px 28px 52px;
+    opacity: 0;
+    transform: translateY(36px);
+    transition: opacity .7s ease, transform .7s ease;
+  }
+  .seccion.visible { opacity:1; transform:translateY(0); }
+
+  /* ══ SUBTÍTULO ══ */
+  .sub-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+
+  .sub-num {
+    font-family: 'Cinzel', serif;
+    font-size: 2.8rem;
+    font-weight: 900;
+    color: var(--oro-mid);
+    line-height: 1;
+    flex-shrink: 0;
+    min-width: 48px;
+  }
+
+  .sub-titulo {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(1rem, 2.5vw, 1.35rem);
+    font-weight: 700;
+    color: var(--blanco);
+    letter-spacing: 1.5px;
+    line-height: 1.3;
+  }
+
+  p { margin-bottom: 16px; color: var(--texto); font-size: 1.05rem; }
+
+  /* ══ VERSÍCULO ══ */
+  .versiculo {
+    background: linear-gradient(135deg, #00306040, #F0AB0008);
+    border: 1px solid var(--oro-mid);
+    border-left: 3px solid var(--oro);
+    padding: 20px 24px;
+    margin: 24px 0;
+    border-radius: 0 4px 4px 0;
+  }
+  .versiculo p {
+    font-style: italic;
+    font-size: 1.08rem;
+    color: var(--blanco);
+    margin-bottom: 8px;
+  }
+  .versiculo cite {
+    font-style: normal;
+    font-family: 'Cinzel', serif;
+    font-size: 0.78rem;
+    letter-spacing: 2px;
+    color: var(--oro);
+  }
+
+  /* ══ LISTA ══ */
+  .lista {
+    list-style: none;
+    margin: 16px 0 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .lista li {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    font-size: 1.02rem;
+    color: var(--texto);
+  }
+  .lista li::before {
+    content: '✦';
+    color: var(--oro);
+    font-size: 0.75rem;
+    margin-top: 6px;
+    flex-shrink: 0;
+  }
+
+  /* ══ ETIMOLOGÍA ══ */
+  .etimo {
+    background: linear-gradient(135deg, #009FDA0d, #003B6F50);
+    border: 1px solid #009FDA28;
+    border-radius: 4px;
+    padding: 18px 22px;
+    margin: 20px 0;
+  }
+  .etimo-label {
+    font-family: 'Cinzel', serif;
+    font-size: 0.7rem;
+    letter-spacing: 3px;
+    color: var(--azul);
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .etimo p {
+    font-size: 0.98rem;
+    color: var(--gris);
+    margin-bottom: 6px;
+  }
+  .etimo strong {
+    color: var(--blanco);
+    font-size: 1.05rem;
+  }
+
+  /* ══ CONTRASTE (No es / Es) ══ */
+  .contraste {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin: 24px 0;
+  }
+  .contraste-col {
+    border-radius: 4px;
+    padding: 18px 18px;
+  }
+  .contraste-col.no {
+    background: #ff444410;
+    border: 1px solid #ff444425;
+  }
+  .contraste-col.si {
+    background: var(--verde-pale);
+    border: 1px solid #2ecc7125;
+  }
+  .contraste-col h4 {
+    font-family: 'Cinzel', serif;
+    font-size: 0.75rem;
+    letter-spacing: 3px;
+    margin-bottom: 12px;
+    text-transform: uppercase;
+  }
+  .contraste-col.no h4 { color: #ff7070; }
+  .contraste-col.si h4 { color: var(--verde); }
+  .contraste-col ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .contraste-col ul li {
+    font-size: 0.95rem;
+    color: var(--texto);
+    display: flex;
+    gap: 8px;
+    align-items: flex-start;
+  }
+  .contraste-col.no ul li::before { content: '✗'; color: #ff7070; flex-shrink:0; }
+  .contraste-col.si ul li::before { content: '✓'; color: var(--verde); flex-shrink:0; }
+
+  /* ══ DECLARACIÓN ══ */
+  .declaracion {
+    background: linear-gradient(135deg, #F0AB0015, #003B6F60);
+    border: 1px solid var(--oro-mid);
+    border-radius: 6px;
+    padding: 28px 24px;
+    margin: 28px 0;
+    text-align: center;
+  }
+  .declaracion-label {
+    font-family: 'Cinzel', serif;
+    font-size: 0.7rem;
+    letter-spacing: 4px;
+    color: var(--oro);
+    text-transform: uppercase;
+    margin-bottom: 14px;
+  }
+  .declaracion p {
+    font-size: 1.25rem;
+    font-style: italic;
+    color: var(--blanco);
+    line-height: 1.7;
+    margin-bottom: 0;
+  }
+
+  /* ══ MÉTODO / PASOS ══ */
+  .pasos {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    margin: 24px 0;
+  }
+  .paso {
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+    background: var(--marino-mid);
+    border: 1px solid #ffffff10;
+    border-radius: 4px;
+    padding: 16px 18px;
+  }
+  .paso-n {
+    font-family: 'Cinzel', serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--oro);
+    line-height: 1;
+    flex-shrink: 0;
+    min-width: 32px;
+  }
+  .paso-texto {
+    font-size: 1rem;
+    color: var(--texto);
+    line-height: 1.6;
+  }
+  .paso-texto strong {
+    color: var(--blanco);
+    display: block;
+    margin-bottom: 2px;
+  }
+
+  /* ══ EJERCICIO ══ */
+  .ejercicio {
+    background: linear-gradient(135deg, #009FDA0d, #00306050);
+    border: 1px solid #009FDA30;
+    border-radius: 6px;
+    padding: 28px 24px;
+    margin: 28px 0;
+  }
+  .ejercicio-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+  .ejercicio-icon {
+    font-size: 1.8rem;
+  }
+  .ejercicio-header h3 {
+    font-family: 'Cinzel', serif;
+    font-size: 0.95rem;
+    letter-spacing: 3px;
+    color: var(--azul);
+    text-transform: uppercase;
+  }
+
+  /* ══ RESULTADO ══ */
+  .resultado {
+    background: var(--verde-pale);
+    border: 1px solid #2ecc7125;
+    border-radius: 6px;
+    padding: 24px;
+    margin: 24px 0;
+  }
+  .resultado h3 {
+    font-family: 'Cinzel', serif;
+    font-size: 0.8rem;
+    letter-spacing: 3px;
+    color: var(--verde);
+    text-transform: uppercase;
+    margin-bottom: 14px;
+  }
+  .resultado ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .resultado ul li {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    font-size: 1rem;
+    color: var(--texto);
+  }
+  .resultado ul li::before {
+    content: '→';
+    color: var(--verde);
+    flex-shrink: 0;
+    font-style: normal;
+  }
+
+  /* ══ CONCLUSIÓN ══ */
+  .conclusion {
+    background: linear-gradient(135deg, #F0AB0010, #003B6F60);
+    border: 1px solid var(--oro-mid);
+    border-radius: 6px;
+    padding: 32px 28px;
+    margin: 32px 0;
+    text-align: center;
+  }
+  .conclusion h3 {
+    font-family: 'Cinzel', serif;
+    font-size: 0.85rem;
+    letter-spacing: 4px;
+    color: var(--oro);
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  .conclusion p {
+    font-size: 1.1rem;
+    font-style: italic;
+    color: var(--blanco);
+    line-height: 1.8;
+    margin-bottom: 6px;
+  }
+  .conclusion .firma {
+    font-family: 'Cinzel', serif;
+    font-size: 0.78rem;
+    letter-spacing: 3px;
+    color: var(--azul);
+    font-style: normal;
+    margin-top: 14px;
+  }
+
+  /* ══ IDENTIDAD BOX ══ */
+  .identidad-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin: 24px 0;
+  }
+  .id-item {
+    background: var(--marino-mid);
+    border: 1px solid #F0AB0025;
+    border-radius: 4px;
+    padding: 14px 16px;
+    text-align: center;
+  }
+  .id-item .id-icon { font-size: 1.5rem; margin-bottom: 6px; }
+  .id-item .id-label {
+    font-family: 'Cinzel', serif;
+    font-size: 0.85rem;
+    letter-spacing: 1px;
+    color: var(--oro);
+    display: block;
+    margin-bottom: 4px;
+  }
+  .id-item .id-contra {
+    font-size: 0.85rem;
+    color: var(--gris);
+    font-style: italic;
+  }
+
+  /* ══ NAV LATERAL ══ */
+  .nav-lateral {
+    position: fixed;
+    right: 18px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    z-index: 100;
+  }
+  .nav-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: #ffffff18;
+    border: 1px solid #ffffff28;
+    cursor: pointer;
+    transition: all .3s;
+  }
+  .nav-dot.active { background: var(--oro); border-color: var(--oro); transform: scale(1.4); }
+  .nav-dot:hover { background: var(--azul); border-color: var(--azul); }
+
+  /* ══ FOOTER ══ */
+  footer {
+    text-align: center;
+    padding: 60px 24px 40px;
+    border-top: 1px solid #ffffff10;
+    margin-top: 40px;
+  }
+  footer .footer-icon { font-size: 1.4rem; color: var(--oro); margin-bottom: 10px; }
+  footer p {
+    font-family: 'Cinzel', serif;
+    font-size: 0.72rem;
+    letter-spacing: 3px;
+    color: var(--gris);
+    text-transform: uppercase;
+  }
+
+  @media (max-width: 600px) {
+    .nav-lateral { display: none; }
+    .seccion,.tema-header { padding-left: 18px; padding-right: 18px; }
+    .contraste { grid-template-columns: 1fr; }
+    .identidad-grid { grid-template-columns: 1fr 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav-lateral" id="navLateral"></nav>
+
+<!-- ══ HERO ══ -->
+<section class="hero" data-section="0" data-label="Inicio">
+  <div class="bg-text">ID</div>
+  <div class="badge">✦ Escuela de Evangelismo ✦</div>
+  <h1>Identidad &<br><em>Comisión</em></h1>
+  <p class="hero-sub">Sabe que no está solo</p>
+  <div class="temas-preview">
+    <div class="tema-chip" onclick="document.querySelector('[data-section=\'1\']').scrollIntoView({behavior:'smooth'})">Tema 1 — Identidad del Creyente</div>
+    <div class="tema-chip" onclick="document.querySelector('[data-section=\'2\']').scrollIntoView({behavior:'smooth'})">Tema 2 — La Gran Comisión</div>
+  </div>
+  <div class="scroll-hint">LEER</div>
+</section>
+
+<!-- ══════════════════════════════════════
+     TEMA 1
+     ══════════════════════════════════════ -->
+<div class="divider" data-section="1" data-label="Tema 1"><span>✦</span></div>
+
+<div class="tema-header" data-section="1">
+  <p class="tema-num">Tema 1 de 2</p>
+  <h2 class="tema-title">La Identidad del Creyente:<br><em>Hijo de Dios</em> y Heredero de Promesas</h2>
+  <p class="tema-intro">Este tema establece la base espiritual del creyente antes de hablar de evangelizar. Nadie puede compartir lo que no entiende ni vive.</p>
+</div>
+
+<!-- 1. Qué debe saber -->
+<section class="seccion" data-section="1">
+  <div class="sub-header">
+    <span class="sub-num">01</span>
+    <h3 class="sub-titulo">Lo que el Creyente Debe Saber</h3>
+  </div>
+  <p>Antes de salir a evangelizar, el creyente necesita resolver una pregunta fundamental: <strong style="color:var(--blanco)">¿quién soy yo?</strong> La respuesta a esa pregunta determina todo: la motivación, la valentía, la autoridad y el resultado.</p>
+
+  <div class="declaracion">
+    <p class="declaracion-label">Verdad Fundamental</p>
+    <p>No evangelizas para <em>llegar a ser</em> hijo de Dios.<br>Evangelizas porque <em>ya eres</em> hijo de Dios.</p>
+  </div>
+
+  <p>Esta distinción no es semántica: cambia radicalmente la actitud con la que el creyente sale. No va a ganar aprobación divina. Va como embajador de un Padre que ya lo recibió.</p>
+
+  <div class="versiculo">
+    <p>Mas a todos los que le recibieron, a los que creen en su nombre, les dio potestad de ser hechos hijos de Dios.</p>
+    <cite>Juan 1:12</cite>
+  </div>
+
+  <div class="versiculo">
+    <p>Porque todos los que son guiados por el Espíritu de Dios, éstos son hijos de Dios… el Espíritu mismo da testimonio a nuestro espíritu, de que somos hijos de Dios.</p>
+    <cite>Romanos 8:14–16</cite>
+  </div>
+
+  <p>Ser hijo de Dios no es un título ceremonial. Es una realidad espiritual con consecuencias prácticas:</p>
+  <div class="identidad-grid">
+    <div class="id-item">
+      <span class="id-icon">🤝</span>
+      <span class="id-label">Relación</span>
+      <span class="id-contra">no religión</span>
+    </div>
+    <div class="id-item">
+      <span class="id-icon">🚪</span>
+      <span class="id-label">Acceso</span>
+      <span class="id-contra">no distancia</span>
+    </div>
+    <div class="id-item">
+      <span class="id-icon">👤</span>
+      <span class="id-label">Identidad</span>
+      <span class="id-contra">no inseguridad</span>
+    </div>
+    <div class="id-item">
+      <span class="id-icon">🛡️</span>
+      <span class="id-label">Confianza</span>
+      <span class="id-contra">no temor</span>
+    </div>
+  </div>
+</section>
+
+<!-- 2. Heredero -->
+<section class="seccion" data-section="1">
+  <div class="sub-header">
+    <span class="sub-num">02</span>
+    <h3 class="sub-titulo">Hijo de Dios = Heredero de Promesas</h3>
+  </div>
+
+  <div class="etimo">
+    <p class="etimo-label">Etimología</p>
+    <p>La palabra <strong>"heredero"</strong> viene del latín <em>heres</em>: <strong>"el que recibe por derecho familiar".</strong></p>
+    <p>En el reino de Dios, las promesas no se ganan por esfuerzo — se reciben por filiación.</p>
+  </div>
+
+  <p>Este principio libera al creyente del evangelismo de rendimiento. No está buscando probar su valor. Ya fue aceptado. Lo que Dios promete no depende de cuánto el creyente se esfuerce:</p>
+
+  <ul class="lista">
+    <li>Dios no hace promesas vacías ni retira lo que concede</li>
+    <li>Lo que Dios promete, lo cumple — su carácter lo garantiza</li>
+    <li>Las promesas no dependen del carácter humano, sino de la fidelidad divina</li>
+  </ul>
+
+  <div class="versiculo">
+    <p>Porque todas las promesas de Dios son en él Sí, y en él Amén, por medio de nosotros, para la gloria de Dios.</p>
+    <cite>2 Corintios 1:20</cite>
+  </div>
+
+  <div class="versiculo">
+    <p>Así que ya no eres esclavo, sino hijo; y si hijo, también heredero de Dios por medio de Cristo.</p>
+    <cite>Gálatas 4:7</cite>
+  </div>
+
+  <p>El creyente no sale a evangelizar para <em>ver si</em> Dios lo respalda. Sale <strong style="color:var(--blanco)">sabiendo que Dios ya va con él.</strong></p>
+</section>
+
+<!-- 3. Poder -->
+<section class="seccion" data-section="1">
+  <div class="sub-header">
+    <span class="sub-num">03</span>
+    <h3 class="sub-titulo">El Poder Sobrenatural que Reposa en el Creyente</h3>
+  </div>
+
+  <p>La filiación divina no es solo una realidad espiritual interna — viene acompañada de capacidad sobrenatural. Ser hijo implica tener acceso a los recursos del Padre.</p>
+
+  <div class="versiculo">
+    <p>Recibiréis poder cuando haya venido sobre vosotros el Espíritu Santo, y me seréis testigos…</p>
+    <cite>Hechos 1:8</cite>
+  </div>
+
+  <div class="etimo">
+    <p class="etimo-label">Etimología</p>
+    <p>La palabra <strong>"poder"</strong> viene del griego <em>dýnamis</em>: <strong>"fuerza activa, capacidad para producir efecto".</strong></p>
+    <p>De esta palabra deriva "dinamita" — algo que transforma lo que toca.</p>
+  </div>
+
+  <div class="versiculo">
+    <p>Mayor es el que está en vosotros, que el que está en el mundo.</p>
+    <cite>1 Juan 4:4</cite>
+  </div>
+
+  <p>Este poder tiene un propósito específico. No es para exhibición personal:</p>
+
+  <div class="contraste">
+    <div class="contraste-col no">
+      <h4>No es poder para</h4>
+      <ul>
+        <li>Presumir ante otros</li>
+        <li>Discutir doctrinas</li>
+        <li>Imponerse por fuerza</li>
+      </ul>
+    </div>
+    <div class="contraste-col si">
+      <h4>Es poder para</h4>
+      <ul>
+        <li>Testificar con autoridad</li>
+        <li>Amar sin temor</li>
+        <li>Permanecer firme</li>
+        <li>Resistir el rechazo</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 4. Cómo enseñar -->
+<section class="seccion" data-section="1">
+  <div class="sub-header">
+    <span class="sub-num">04</span>
+    <h3 class="sub-titulo">Cómo Enseñar Esta Verdad al Nuevo Creyente</h3>
+  </div>
+
+  <p>La identidad espiritual no se transmite solo con información: se transmite con método. Un proceso sencillo y replicable produce resultados duraderos:</p>
+
+  <div class="pasos">
+    <div class="paso">
+      <span class="paso-n">1</span>
+      <div class="paso-texto"><strong>Leer el texto bíblico</strong>Presentar el versículo directamente — que la Palabra hable primero.</div>
+    </div>
+    <div class="paso">
+      <span class="paso-n">2</span>
+      <div class="paso-texto"><strong>Explicarlo en una sola frase clara</strong>Síntesis concreta. Sin tecnicismos. El nuevo creyente debe poder repetirlo.</div>
+    </div>
+    <div class="paso">
+      <span class="paso-n">3</span>
+      <div class="paso-texto"><strong>Hacer que el creyente lo repita</strong>La repetición produce convicción. Lo que se declara se asienta.</div>
+    </div>
+    <div class="paso">
+      <span class="paso-n">4</span>
+      <div class="paso-texto"><strong>Aplicarlo a una situación real</strong>Conectar la verdad bíblica con una experiencia concreta de su vida.</div>
+    </div>
+  </div>
+
+  <div class="etimo" style="border-color:#F0AB0028; background: var(--oro-pale);">
+    <p class="etimo-label" style="color:var(--oro);">Ejemplo Práctico</p>
+    <p><strong>Texto:</strong> Lucas 10:16 — <em>"El que a vosotros oye, a mí me oye…"</em></p>
+    <p style="margin-top:8px;"><strong>Aplicación:</strong> <span style="color:var(--blanco)">"Si alguien me rechaza, no me rechaza a mí. Rechaza el mensaje de Cristo."</span></p>
+  </div>
+</section>
+
+<!-- 5. Declarar identidad -->
+<section class="seccion" data-section="1">
+  <div class="sub-header">
+    <span class="sub-num">05</span>
+    <h3 class="sub-titulo">Cómo Enseñarle a Declarar su Identidad</h3>
+  </div>
+
+  <p>La fe se activa con la declaración. Enseñar al nuevo creyente a proclamar en voz alta su identidad bíblica no es arrogancia: es apropiación de lo que Dios ya le concedió.</p>
+
+  <div class="declaracion">
+    <p class="declaracion-label">Declaración de Identidad</p>
+    <p>"Soy hijo de Dios.<br>Camino bajo Sus promesas.<br>Él va conmigo."</p>
+  </div>
+
+  <div class="versiculo">
+    <p>Aunque ande en valle de sombra de muerte, no temeré mal alguno, porque tú estarás conmigo…</p>
+    <cite>Salmo 23:4</cite>
+  </div>
+</section>
+
+<!-- 6. Lo que evita -->
+<section class="seccion" data-section="1">
+  <div class="sub-header">
+    <span class="sub-num">06</span>
+    <h3 class="sub-titulo">Lo que Esta Verdad Evita en el Nuevo Creyente</h3>
+  </div>
+
+  <p>La identidad espiritual clara no es solo edificante — es protectora. Cuando el creyente sabe quién es en Cristo, muchos de los obstáculos más comunes del evangelismo desaparecen:</p>
+
+  <ul class="lista">
+    <li>Se elimina el <strong style="color:var(--blanco)">miedo</strong> al rechazo y al ridículo</li>
+    <li>Se elimina la <strong style="color:var(--blanco)">inseguridad</strong> sobre si Dios lo respalda</li>
+    <li>Se elimina la <strong style="color:var(--blanco)">vergüenza</strong> del evangelio</li>
+    <li>Se rompe el <strong style="color:var(--blanco)">silencio espiritual</strong> que paraliza al creyente</li>
+  </ul>
+
+  <div class="versiculo">
+    <p>Si Dios es por nosotros, ¿quién contra nosotros?</p>
+    <cite>Romanos 8:31</cite>
+  </div>
+</section>
+
+<!-- Ejercicio T1 -->
+<section class="seccion" data-section="1">
+  <div class="ejercicio">
+    <div class="ejercicio-header">
+      <span class="ejercicio-icon">📖</span>
+      <h3>Ejercicio de Formación Espiritual</h3>
+    </div>
+    <div class="pasos">
+      <div class="paso">
+        <span class="paso-n">1</span>
+        <div class="paso-texto"><strong>Lectura completa</strong>Leer Romanos capítulo 8 completo sin prisa.</div>
+      </div>
+      <div class="paso">
+        <span class="paso-n">2</span>
+        <div class="paso-texto"><strong>Subrayar y marcar</strong>Identificar todo lo que hable de: <em>hijos, herederos, Espíritu.</em></div>
+      </div>
+      <div class="paso">
+        <span class="paso-n">3</span>
+        <div class="paso-texto"><strong>Escribir una oración</strong>Agradecer a Dios específicamente por la identidad recibida en Cristo.</div>
+      </div>
+      <div class="paso">
+        <span class="paso-n">4</span>
+        <div class="paso-texto"><strong>Declarar en voz alta</strong>"No hablo solo. Dios va conmigo." — Repetirlo hasta que se vuelva convicción.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="resultado">
+    <h3>Resultado del Tema 1</h3>
+    <ul>
+      <li>Identidad espiritual clara y apropiada</li>
+      <li>Certeza de que no está solo en el proceso</li>
+      <li>Camina con seguridad y sin vergüenza</li>
+      <li>Está listo para recibir instrucciones prácticas de evangelismo</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════
+     TEMA 2
+     ══════════════════════════════════════ -->
+<div class="divider" data-section="2" data-label="Tema 2"><span>✦</span></div>
+
+<div class="tema-header" data-section="2">
+  <p class="tema-num">Tema 2 de 2</p>
+  <h2 class="tema-title">La Gran Comisión:<br>El Llamado de <em>Todo</em> Hijo de Dios</h2>
+  <p class="tema-intro">Este tema enseña al creyente que evangelizar no es una opción ni un cargo: es la respuesta natural a su identidad como hijo de Dios.</p>
+</div>
+
+<!-- 1. Qué es -->
+<section class="seccion" data-section="2">
+  <div class="sub-header">
+    <span class="sub-num">01</span>
+    <h3 class="sub-titulo">¿Qué es la Gran Comisión?</h3>
+  </div>
+
+  <p>La Gran Comisión es la orden final que Jesús dio a Sus discípulos antes de ascender al cielo. No es el deseo de un líder religioso — es el mandato del Señor del universo.</p>
+
+  <div class="versiculo">
+    <p>Por tanto, id, y haced discípulos a todas las naciones, bautizándolos en el nombre del Padre, y del Hijo, y del Espíritu Santo; enseñándoles que guarden todas las cosas que os he mandado…</p>
+    <cite>Mateo 28:18–20</cite>
+  </div>
+
+  <div class="etimo">
+    <p class="etimo-label">Etimología</p>
+    <p>La palabra <strong>"comisión"</strong> viene del latín <em>commissio</em>: <strong>"encargo dado con autoridad para ser ejecutado".</strong></p>
+    <p>No es una sugerencia. No es una recomendación. Jesús no pidió voluntarios — dio una orden respaldada por Su autoridad absoluta.</p>
+  </div>
+
+  <div class="versiculo">
+    <p>Toda potestad me es dada en el cielo y en la tierra.</p>
+    <cite>Mateo 28:18</cite>
+  </div>
+</section>
+
+<!-- 2. A quién va dirigida -->
+<section class="seccion" data-section="2">
+  <div class="sub-header">
+    <span class="sub-num">02</span>
+    <h3 class="sub-titulo">¿A Quién Va Dirigida la Gran Comisión?</h3>
+  </div>
+
+  <p>Es común pensar que evangelizar es responsabilidad exclusiva de pastores, líderes o personas con formación teológica. La Escritura corrige ese error con claridad:</p>
+
+  <ul class="lista">
+    <li>No fue dada solo a pastores ni apóstoles</li>
+    <li>No fue dada solo a líderes ni maestros</li>
+    <li>Fue dada a <strong style="color:var(--blanco)">todo creyente</strong>, sin excepción</li>
+  </ul>
+
+  <div class="versiculo">
+    <p>Id por todo el mundo y predicad el evangelio a toda criatura.</p>
+    <cite>Marcos 16:15</cite>
+  </div>
+
+  <div class="etimo">
+    <p class="etimo-label">Etimología</p>
+    <p>La palabra <strong>"predicar"</strong> viene del griego <em>kērýssō</em>: <strong>"proclamar públicamente como un heraldo".</strong></p>
+    <p>Un heraldo no opina. Un heraldo anuncia un mensaje que le fue confiado. El creyente es heraldo de Cristo.</p>
+  </div>
+</section>
+
+<!-- 3. Qué debe entender -->
+<section class="seccion" data-section="2">
+  <div class="sub-header">
+    <span class="sub-num">03</span>
+    <h3 class="sub-titulo">Qué Debe Entender el Creyente</h3>
+  </div>
+
+  <p>El mayor obstáculo para evangelizar no suele ser la oposición externa, sino la convicción interna de que el creyente no está "listo" todavía. La Escritura define los requisitos reales:</p>
+
+  <div class="contraste">
+    <div class="contraste-col no">
+      <h4>No necesita</h4>
+      <ul>
+        <li>Título eclesiástico</li>
+        <li>Años de experiencia</li>
+        <li>Saber toda la Biblia</li>
+      </ul>
+    </div>
+    <div class="contraste-col si">
+      <h4>Necesita</h4>
+      <ul>
+        <li>Obediencia al llamado</li>
+        <li>Disposición sincera</li>
+        <li>Dependencia del Espíritu</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="etimo">
+    <p class="etimo-label">Etimología</p>
+    <p>La palabra <strong>"testigo"</strong> viene del griego <em>mártys</em>: <strong>"el que da testimonio de lo que ha visto y vivido".</strong></p>
+    <p>El creyente no anuncia teorías. Anuncia lo que Cristo hizo en su propia vida. Eso no requiere título — requiere experiencia personal.</p>
+  </div>
+</section>
+
+<!-- 4. Qué es evangelizar -->
+<section class="seccion" data-section="2">
+  <div class="sub-header">
+    <span class="sub-num">04</span>
+    <h3 class="sub-titulo">¿Qué es Evangelizar Realmente?</h3>
+  </div>
+
+  <div class="etimo">
+    <p class="etimo-label">Etimología</p>
+    <p>La palabra <strong>"evangelio"</strong> viene del griego <em>euangelion</em>: <strong>"buena noticia".</strong></p>
+    <p>Evangelizar es comunicar la mejor noticia que el mundo puede recibir: que hay salvación, hay perdón y hay esperanza en Cristo.</p>
+  </div>
+
+  <div class="contraste">
+    <div class="contraste-col no">
+      <h4>Evangelizar NO es</h4>
+      <ul>
+        <li>Imponer una religión</li>
+        <li>Discutir doctrinas</li>
+        <li>Ganar debates</li>
+        <li>Condenar al oyente</li>
+      </ul>
+    </div>
+    <div class="contraste-col si">
+      <h4>Evangelizar ES</h4>
+      <ul>
+        <li>Compartir la buena noticia</li>
+        <li>Mostrar el amor de Cristo</li>
+        <li>Anunciar que hay esperanza</li>
+        <li>Invitar a una relación real</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="versiculo">
+    <p>Porque no me avergüenzo del evangelio, porque es poder de Dios para salvación a todo aquel que cree…</p>
+    <cite>Romanos 1:16</cite>
+  </div>
+</section>
+
+<!-- 5. Cómo hacerlo -->
+<section class="seccion" data-section="2">
+  <div class="sub-header">
+    <span class="sub-num">05</span>
+    <h3 class="sub-titulo">Cómo Debe Hacerlo el Creyente</h3>
+  </div>
+
+  <p>Jesús mismo resumió el método en una sola palabra imperativa que lo cambia todo:</p>
+
+  <div class="declaracion">
+    <p class="declaracion-label">La Primera Instrucción</p>
+    <p><em>"Id…"</em><br><span style="font-size:0.9rem; color:var(--gris);">El evangelismo comienza yendo — no esperando.</span></p>
+  </div>
+
+  <p>La actitud con la que se va determina el resultado. La comisión se ejecuta con:</p>
+
+  <ul class="lista">
+    <li><strong style="color:var(--blanco)">Amor</strong> — genuino, no calculado</li>
+    <li><strong style="color:var(--blanco)">Humildad</strong> — el mensajero no es mayor que el mensaje</li>
+    <li><strong style="color:var(--blanco)">Respeto</strong> — hacia la persona y su proceso</li>
+    <li><strong style="color:var(--blanco)">Dependencia del Espíritu Santo</strong> — es Él quien convence, no la elocuencia</li>
+  </ul>
+
+  <div class="versiculo">
+    <p>Sea vuestra palabra siempre con gracia, sazonada con sal, para que sepáis cómo debéis responder a cada uno.</p>
+    <cite>Colosenses 4:6</cite>
+  </div>
+</section>
+
+<!-- 6. Resultados -->
+<section class="seccion" data-section="2">
+  <div class="sub-header">
+    <span class="sub-num">06</span>
+    <h3 class="sub-titulo">Qué Resultados Produce la Gran Comisión</h3>
+  </div>
+
+  <p>El evangelismo obediente no es un esfuerzo humano que espera resultados humanos. Es la cooperación del creyente con el poder de Dios:</p>
+
+  <ul class="lista">
+    <li>Dios respalda el mensaje porque Él mismo lo comisionó</li>
+    <li>El Espíritu Santo convence al oyente — esa no es tarea del creyente</li>
+    <li>Las vidas son transformadas por el poder de la Palabra</li>
+  </ul>
+
+  <div class="versiculo">
+    <p>No me elegisteis vosotros a mí, sino que yo os elegí a vosotros, y os he puesto para que vayáis y llevéis fruto, y vuestro fruto permanezca…</p>
+    <cite>Juan 15:16</cite>
+  </div>
+
+  <p>El fruto no depende de la capacidad del mensajero. Depende de la fidelidad del que envió el mensaje.</p>
+</section>
+
+<!-- Ejercicio T2 -->
+<section class="seccion" data-section="2">
+  <div class="ejercicio">
+    <div class="ejercicio-header">
+      <span class="ejercicio-icon">📖</span>
+      <h3>Ejercicio Práctico</h3>
+    </div>
+    <div class="pasos">
+      <div class="paso">
+        <span class="paso-n">1</span>
+        <div class="paso-texto"><strong>Lectura meditada</strong>Leer Mateo 28:18–20 lentamente, tres veces.</div>
+      </div>
+      <div class="paso">
+        <span class="paso-n">2</span>
+        <div class="paso-texto"><strong>Subrayar palabras clave</strong>Marcar: <em>Id, haced discípulos, enseñándoles.</em> Meditar en el peso de cada una.</div>
+      </div>
+      <div class="paso">
+        <span class="paso-n">3</span>
+        <div class="paso-texto"><strong>Escribir en una frase</strong>Completar: <em>"La Gran Comisión significa para mí…"</em></div>
+      </div>
+      <div class="paso">
+        <span class="paso-n">4</span>
+        <div class="paso-texto"><strong>Orar con disposición</strong>Decir en voz alta: <em>"Señor, aquí estoy. Envíame."</em></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="resultado">
+    <h3>Resultado del Tema 2</h3>
+    <ul>
+      <li>Entiende que fue enviado por Cristo, no por la iglesia</li>
+      <li>Comprende que tiene autoridad delegada del Señor</li>
+      <li>Sabe que evangelizar es parte natural de su fe</li>
+      <li>Está preparado para aprender el cómo práctico</li>
+    </ul>
+  </div>
+</section>
+
+<!-- Conclusión final -->
+<section class="seccion" data-section="2">
+  <div class="conclusion">
+    <h3>Conclusión del Módulo</h3>
+    <p>El creyente que conoce su identidad no evangeliza por obligación — evangeliza por convicción. No va asustado — va confiado. No va solo — va acompañado.</p>
+    <p style="color:var(--oro); font-size:1.15rem; font-weight:600; margin-top:14px;">
+      "No hablo solo.<br>Dios va conmigo."
+    </p>
+    <p class="firma">Escuela de Evangelismo · IPUC Algarrobo</p>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-icon">✝</div>
+  <p>IPUC Algarrobo · Biblioteca Digital</p>
+  <p style="margin-top:6px; font-size:0.65rem; opacity:.6;">Escuela de Evangelismo — Identidad y Comisión</p>
+</footer>
+
+<script>
+// Scroll reveal
+const items = document.querySelectorAll('.seccion, .tema-header');
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.08 });
+items.forEach(i => obs.observe(i));
+
+// Nav lateral
+const navEl = document.getElementById('navLateral');
+const sections = [];
+const seen = new Set();
+document.querySelectorAll('[data-section]').forEach(el => {
+  const id = el.dataset.section;
+  if (!seen.has(id)) {
+    seen.add(id);
+    sections.push({ id, label: el.dataset.label || '' });
+  }
+});
+sections.forEach(({ id, label }) => {
+  const dot = document.createElement('div');
+  dot.className = 'nav-dot';
+  dot.title = label;
+  dot.onclick = () => {
+    const t = document.querySelector(`[data-section="${id}"]`);
+    if (t) t.scrollIntoView({ behavior: 'smooth' });
+  };
+  navEl.appendChild(dot);
+});
+window.addEventListener('scroll', () => {
+  const sy = window.scrollY + window.innerHeight * 0.4;
+  let active = '0';
+  document.querySelectorAll('[data-section]').forEach(el => {
+    if (el.offsetTop <= sy) active = el.dataset.section;
+  });
+  navEl.querySelectorAll('.nav-dot').forEach((dot, i) => {
+    dot.classList.toggle('active', sections[i].id === active);
+  });
+});
+</script>
+</body>
+</html>

@@ -3,179 +3,540 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-<meta name="theme-color" content="#003B6F">
+<meta name="theme-color" content="#001f3f">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="Predicador">
 <title>Predicador</title>
 <link rel="manifest" href="/manifest.json">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Crimson+Pro:ital,wght@0,300;0,400;1,400&display=swap" rel="stylesheet">
 <style>
-:root{--az:#009FDA;--marino:#003B6F;--oro:#F0AB00;--bg:#F0F4F8;--card:#fff;--texto:#1a2e3b;--gris:#7a93a8;--border:#e0eaf2;--sombra:0 1px 6px rgba(0,59,111,.09);--radio:12px}
-[data-theme=dark]{--bg:#0d1117;--card:#161b22;--texto:#e6edf3;--gris:#8b949e;--border:#30363d;--sombra:0 1px 6px rgba(0,0,0,.3)}
+/* ── TOKENS ─────────────────────────────────────────────── */
+:root{
+  --marino:#003B6F;
+  --marino-deep:#001f3f;
+  --az:#009FDA;
+  --oro:#F0AB00;
+  --oro-glow:rgba(240,171,0,.28);
+  --bg:#F5F3EE;
+  --bg2:#EDEAE3;
+  --card:#FFFFFF;
+  --card2:#F9F7F3;
+  --texto:#0f1e2c;
+  --texto2:#3a5068;
+  --gris:#7a93a8;
+  --border:rgba(0,59,111,.10);
+  --border2:rgba(0,59,111,.06);
+  --sombra:0 2px 12px rgba(0,30,60,.08);
+  --sombra-lg:0 8px 32px rgba(0,30,60,.14);
+  --radio:16px;
+  --radio-sm:10px;
+  --header-h:64px;
+}
+[data-theme=dark]{
+  --bg:#080d14;
+  --bg2:#0d1520;
+  --card:#0f1923;
+  --card2:#131d2a;
+  --texto:#e8dfc8;
+  --texto2:#8fa5b8;
+  --gris:#5a7a94;
+  --border:rgba(240,171,0,.10);
+  --border2:rgba(255,255,255,.04);
+  --sombra:0 2px 12px rgba(0,0,0,.4);
+  --sombra-lg:0 8px 32px rgba(0,0,0,.55);
+}
+/* ── RESET ───────────────────────────────────────────────── */
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
-body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:var(--bg);color:var(--texto);height:100vh;overflow:hidden;transition:background .25s,color .25s}
-#splash{position:fixed;inset:0;background:linear-gradient(160deg,var(--marino),var(--az));display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:999;transition:opacity .5s}
-.splash-icon{font-size:64px;margin-bottom:14px;animation:pulse 1.5s ease-in-out infinite}
-@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.08)}}
-#splash h1{color:white;font-size:24px;font-weight:800;letter-spacing:2px}
-#splash p{color:rgba(255,255,255,.6);font-size:12px;margin-top:6px;letter-spacing:1px}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  background:var(--bg);
+  color:var(--texto);
+  height:100vh;
+  overflow:hidden;
+  transition:background .3s,color .3s;
+}
+
+/* ── SPLASH ──────────────────────────────────────────────── */
+#splash{
+  position:fixed;inset:0;z-index:999;
+  background:var(--marino-deep);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  transition:opacity .6s ease;
+}
+.splash-ring{
+  width:90px;height:90px;border-radius:50%;
+  background:linear-gradient(135deg,var(--marino),var(--az));
+  display:flex;align-items:center;justify-content:center;
+  font-size:40px;
+  box-shadow:0 0 0 16px rgba(0,159,218,.08),0 0 0 32px rgba(0,159,218,.04);
+  animation:ring-pulse 2s ease-in-out infinite;
+  margin-bottom:28px;
+}
+@keyframes ring-pulse{0%,100%{box-shadow:0 0 0 8px rgba(0,159,218,.12),0 0 0 20px rgba(0,159,218,.05)}50%{box-shadow:0 0 0 16px rgba(0,159,218,.08),0 0 0 32px rgba(0,159,218,.03)}}
+.splash-wordmark{font-family:'Cinzel',serif;color:#fff;font-size:26px;font-weight:700;letter-spacing:6px;text-transform:uppercase}
+.splash-tagline{color:rgba(255,255,255,.38);font-size:11px;letter-spacing:3px;text-transform:uppercase;margin-top:8px;font-family:'Cinzel',serif}
+.splash-bar{
+  width:48px;height:2px;
+  background:linear-gradient(90deg,transparent,var(--oro),transparent);
+  margin:20px auto 0;
+  animation:bar-slide 1.4s ease-in-out infinite;
+}
+@keyframes bar-slide{0%{opacity:.3;transform:scaleX(.6)}50%{opacity:1;transform:scaleX(1)}100%{opacity:.3;transform:scaleX(.6)}}
+
+/* ── APP SHELL ───────────────────────────────────────────── */
 #app{display:none;flex-direction:column;height:100vh}
-#header{background:linear-gradient(90deg,var(--marino),#005a9e);padding:10px 14px;display:flex;align-items:center;gap:10px;flex-shrink:0;box-shadow:0 2px 10px rgba(0,0,0,.2)}
-.h-title{color:white;font-size:16px;font-weight:800;flex:1;letter-spacing:.5px}
-.h-btn{background:rgba(255,255,255,.15);border:none;color:white;width:34px;height:34px;border-radius:50%;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+
+/* ── HEADER ──────────────────────────────────────────────── */
+#header{
+  flex-shrink:0;
+  height:var(--header-h);
+  padding:0 16px;
+  background:var(--marino-deep);
+  display:flex;align-items:center;gap:12px;
+  position:relative;overflow:hidden;
+}
+#header::before{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(120deg,rgba(0,159,218,.18) 0%,transparent 60%);
+  pointer-events:none;
+}
+#header::after{
+  content:'';
+  position:absolute;bottom:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,var(--oro),transparent);
+  opacity:.5;
+}
+.h-brand{display:flex;flex-direction:column;flex:1;min-width:0}
+.h-wordmark{
+  font-family:'Cinzel',serif;
+  color:#fff;font-size:15px;font-weight:700;letter-spacing:4px;
+  text-transform:uppercase;line-height:1;
+}
+.h-sub{color:rgba(255,255,255,.36);font-size:9px;letter-spacing:2px;text-transform:uppercase;margin-top:3px;font-family:'Cinzel',serif}
+.h-icon{
+  width:38px;height:38px;border-radius:50%;
+  background:linear-gradient(135deg,var(--marino),var(--az));
+  display:flex;align-items:center;justify-content:center;
+  font-size:18px;flex-shrink:0;
+  box-shadow:0 0 0 2px rgba(255,255,255,.08);
+}
+.h-btn{
+  background:rgba(255,255,255,.07);
+  border:1px solid rgba(255,255,255,.10);
+  color:rgba(255,255,255,.8);
+  width:36px;height:36px;border-radius:50%;
+  cursor:pointer;font-size:15px;
+  display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;transition:background .2s;
+}
+.h-btn:active{background:rgba(255,255,255,.15)}
+
+/* ── CONTENT SCROLL AREA ─────────────────────────────────── */
 #content{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch}
-.sub{background:linear-gradient(135deg,var(--marino),#005a9e);padding:12px 14px 10px}
-.bib-search{display:flex;align-items:center;background:rgba(255,255,255,.14);border-radius:10px;padding:0 12px;height:40px;gap:8px}
-.bib-search svg{width:16px;height:16px;stroke:rgba(255,255,255,.7);fill:none;flex-shrink:0;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-.bib-search input{flex:1;background:none;border:none;outline:none;color:white;font-size:13px;font-family:inherit}
-.bib-search input::placeholder{color:rgba(255,255,255,.45)}
-.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;padding:12px 14px 4px}
-.stat{background:var(--card);border-radius:var(--radio);padding:10px 8px;text-align:center;box-shadow:var(--sombra)}
-.stat-n{font-size:20px;font-weight:800;color:var(--az);line-height:1}
-.stat-l{font-size:10px;color:var(--gris);font-weight:600;text-transform:uppercase;letter-spacing:.4px;margin-top:3px}
-.pills{display:flex;gap:8px;overflow-x:auto;padding:8px 14px 4px;scrollbar-width:none}
+
+/* ── SEARCH BAND ─────────────────────────────────────────── */
+.search-band{
+  background:var(--marino-deep);
+  padding:12px 16px 16px;
+  position:relative;
+}
+.search-band::before{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(180deg,rgba(0,159,218,.06) 0%,transparent 100%);
+  pointer-events:none;
+}
+.search-wrap{
+  display:flex;align-items:center;
+  background:rgba(255,255,255,.08);
+  border:1px solid rgba(255,255,255,.10);
+  border-radius:100px;
+  padding:0 16px;height:44px;gap:10px;
+  backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
+  transition:border-color .2s,background .2s;
+}
+.search-wrap:focus-within{
+  border-color:rgba(240,171,0,.4);
+  background:rgba(255,255,255,.12);
+}
+.search-wrap svg{width:15px;height:15px;stroke:rgba(255,255,255,.45);fill:none;flex-shrink:0;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}
+.search-wrap input{
+  flex:1;background:none;border:none;outline:none;
+  color:#fff;font-size:13px;font-family:inherit;
+}
+.search-wrap input::placeholder{color:rgba(255,255,255,.3)}
+
+/* ── STATS ───────────────────────────────────────────────── */
+.stats{
+  display:grid;grid-template-columns:repeat(3,1fr);
+  gap:1px;background:var(--border2);
+  border-bottom:1px solid var(--border2);
+  background-image:linear-gradient(to right,var(--border2) 1px,transparent 1px);
+  background-size:33.33% 100%;
+}
+.stat{
+  padding:14px 8px;text-align:center;
+  background:var(--bg);
+  position:relative;
+}
+[data-theme=dark] .stat{background:var(--bg2)}
+.stat-n{
+  font-family:'Cinzel',serif;
+  font-size:22px;font-weight:700;
+  color:var(--oro);line-height:1;
+  letter-spacing:-1px;
+}
+.stat-l{
+  font-size:9px;color:var(--gris);font-weight:600;
+  text-transform:uppercase;letter-spacing:1.5px;margin-top:5px;
+}
+
+/* ── CATEGORY PILLS ──────────────────────────────────────── */
+.pills-wrap{
+  padding:14px 16px 10px;
+  background:var(--bg);
+  border-bottom:1px solid var(--border2);
+}
+[data-theme=dark] .pills-wrap{background:var(--bg2)}
+.pills{display:flex;gap:7px;overflow-x:auto;scrollbar-width:none}
 .pills::-webkit-scrollbar{display:none}
-.pill{padding:6px 14px;border-radius:100px;font-size:12px;font-weight:700;white-space:nowrap;cursor:pointer;border:1.5px solid var(--border);font-family:inherit;transition:all .2s;flex-shrink:0;background:var(--card);color:var(--gris)}
-.pill.all{background:var(--marino);color:white;border-color:var(--marino)}
-.pill.on-bosquejo{background:#009FDA;color:white;border-color:#009FDA}
-.pill.on-ebook{background:#6C3FC5;color:white;border-color:#6C3FC5}
-.pill.on-evangelismo{background:#E05C2A;color:white;border-color:#E05C2A}
-.pill.on-estudio{background:#00A878;color:white;border-color:#00A878}
-.pill.on-devocion{background:#F0AB00;color:#003B6F;border-color:#F0AB00}
-.pill.on-serie{background:#534AB7;color:white;border-color:#534AB7}
-.grid{display:flex;flex-direction:column;gap:10px;padding:10px 14px 100px}
-.card{background:var(--card);border-radius:var(--radio);padding:14px;box-shadow:var(--sombra);cursor:pointer;display:flex;gap:12px;align-items:flex-start;transition:transform .15s;border-left:3px solid transparent}
-.card:active{transform:scale(.98)}
-.card[data-cat="bosquejo"]{border-left-color:#009FDA}
-.card[data-cat="ebook"]{border-left-color:#6C3FC5}
-.card[data-cat="evangelismo"]{border-left-color:#E05C2A}
-.card[data-cat="estudio"]{border-left-color:#00A878}
-.card[data-cat="devocion"]{border-left-color:#F0AB00}
-.card[data-cat="serie"]{border-left-color:#534AB7}
-.card-emoji{font-size:28px;flex-shrink:0;margin-top:2px}
+.pill{
+  padding:7px 15px;border-radius:100px;
+  font-size:11px;font-weight:700;letter-spacing:.5px;
+  white-space:nowrap;cursor:pointer;
+  border:1.5px solid var(--border);
+  font-family:inherit;transition:all .2s;flex-shrink:0;
+  background:var(--card);color:var(--gris);
+  text-transform:uppercase;
+}
+.pill.all{background:var(--marino-deep);color:#fff;border-color:transparent}
+[data-theme=dark] .pill.all{background:rgba(240,171,0,.15);color:var(--oro);border-color:rgba(240,171,0,.3)}
+.pill.on-bosquejo{background:#009FDA;color:#fff;border-color:#009FDA}
+.pill.on-ebook{background:#6C3FC5;color:#fff;border-color:#6C3FC5}
+.pill.on-evangelismo{background:#E05C2A;color:#fff;border-color:#E05C2A}
+.pill.on-estudio{background:#00A878;color:#fff;border-color:#00A878}
+.pill.on-devocion{background:#F0AB00;color:#001f3f;border-color:#F0AB00}
+.pill.on-serie{background:#534AB7;color:#fff;border-color:#534AB7}
+
+/* ── GRID ────────────────────────────────────────────────── */
+.grid{display:flex;flex-direction:column;gap:0;padding-bottom:100px}
+
+/* ── CARD ────────────────────────────────────────────────── */
+.card{
+  background:var(--card);
+  border-bottom:1px solid var(--border2);
+  padding:16px 16px 16px 20px;
+  cursor:pointer;
+  display:flex;gap:14px;align-items:flex-start;
+  transition:background .15s;
+  position:relative;
+  overflow:hidden;
+}
+.card::before{
+  content:'';
+  position:absolute;left:0;top:0;bottom:0;width:3px;
+  transition:width .2s;
+}
+.card:active{background:var(--card2)}
+.card[data-cat="bosquejo"]::before{background:#009FDA}
+.card[data-cat="ebook"]::before{background:#6C3FC5}
+.card[data-cat="evangelismo"]::before{background:#E05C2A}
+.card[data-cat="estudio"]::before{background:#00A878}
+.card[data-cat="devocion"]::before{background:#F0AB00}
+.card[data-cat="serie"]::before{background:#534AB7}
+.card-emoji{
+  font-size:30px;flex-shrink:0;margin-top:1px;
+  width:46px;height:46px;border-radius:12px;
+  background:var(--bg2);
+  display:flex;align-items:center;justify-content:center;
+}
+[data-theme=dark] .card-emoji{background:rgba(255,255,255,.05)}
 .card-body{flex:1;min-width:0}
-.card-cat{font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:3px}
+.card-cat{
+  font-size:9px;font-weight:700;letter-spacing:2px;
+  text-transform:uppercase;margin-bottom:4px;
+  font-family:'Cinzel',serif;
+}
 .card[data-cat="bosquejo"] .card-cat{color:#009FDA}
-.card[data-cat="ebook"] .card-cat{color:#6C3FC5}
+.card[data-cat="ebook"] .card-cat{color:#7c52d4}
 .card[data-cat="evangelismo"] .card-cat{color:#E05C2A}
 .card[data-cat="estudio"] .card-cat{color:#00A878}
-.card[data-cat="devocion"] .card-cat{color:#b8860b}
+.card[data-cat="devocion"] .card-cat{color:#c88f00}
+[data-theme=dark] .card[data-cat="devocion"] .card-cat{color:#F0AB00}
 .card[data-cat="serie"] .card-cat{color:#534AB7}
-.card-titulo{font-size:14px;font-weight:700;color:var(--texto);margin-bottom:3px;line-height:1.3}
-.card-verso{font-size:11px;color:var(--gris);font-style:italic;margin-bottom:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.card-resumen{font-size:12px;color:var(--gris);line-height:1.5;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
-.card-meta{display:flex;align-items:center;justify-content:space-between;margin-top:8px}
-.card-nuevo{font-size:9px;background:#e8f5e9;color:#2e7d32;padding:2px 7px;border-radius:20px;font-weight:700}
-.empty{text-align:center;padding:50px 20px;color:var(--gris)}
-.empty-icon{font-size:44px;margin-bottom:10px}
-.fab{position:fixed;bottom:20px;right:16px;z-index:40;background:var(--oro);color:var(--marino);border:none;width:52px;height:52px;border-radius:50%;font-size:26px;cursor:pointer;box-shadow:0 4px 16px rgba(240,171,0,.5);display:flex;align-items:center;justify-content:center}
-.modal-bg{display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:100;align-items:flex-end;justify-content:center}
+.card-titulo{
+  font-size:14px;font-weight:700;color:var(--texto);
+  margin-bottom:3px;line-height:1.35;
+  font-family:'Cinzel',serif;letter-spacing:.2px;
+}
+.card-verso{
+  font-size:11px;color:var(--gris);font-style:italic;
+  margin-bottom:5px;
+  font-family:'Crimson Pro',serif;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+.card-resumen{
+  font-size:12px;color:var(--texto2);line-height:1.55;
+  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;
+}
+.card-meta{display:flex;align-items:center;justify-content:space-between;margin-top:9px}
+.card-nuevo{
+  font-size:8px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;
+  background:linear-gradient(135deg,var(--oro),#ffcc33);
+  color:var(--marino-deep);
+  padding:2px 8px;border-radius:20px;
+  font-family:'Cinzel',serif;
+}
+.card-chevron{color:var(--gris);font-size:16px;opacity:.5}
+
+/* ── EMPTY STATE ─────────────────────────────────────────── */
+.empty{text-align:center;padding:60px 20px;color:var(--gris)}
+.empty-icon{font-size:48px;margin-bottom:12px;opacity:.6}
+.empty p{font-size:13px;letter-spacing:.5px;font-family:'Cinzel',serif}
+
+/* ── FAB ─────────────────────────────────────────────────── */
+.fab{
+  position:fixed;bottom:24px;right:18px;z-index:40;
+  background:linear-gradient(135deg,var(--oro),#ffcc33);
+  color:var(--marino-deep);border:none;
+  width:54px;height:54px;border-radius:50%;
+  font-size:28px;font-weight:300;cursor:pointer;
+  box-shadow:0 4px 20px var(--oro-glow),0 2px 8px rgba(0,0,0,.2);
+  display:flex;align-items:center;justify-content:center;
+  transition:transform .2s,box-shadow .2s;
+}
+.fab:active{transform:scale(.93);box-shadow:0 2px 10px var(--oro-glow)}
+
+/* ── MODAL / SHEET ───────────────────────────────────────── */
+.modal-bg{
+  display:none;position:fixed;inset:0;
+  background:rgba(0,0,0,.6);z-index:100;
+  align-items:flex-end;justify-content:center;
+  backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);
+}
 .modal-bg.open{display:flex}
-.sheet{background:var(--card);border-radius:20px 20px 0 0;padding:20px 16px 36px;width:100%;max-width:480px;max-height:92vh;overflow-y:auto}
-.sheet-title{font-size:16px;font-weight:800;color:var(--texto);margin-bottom:16px;display:flex;align-items:center;justify-content:space-between}
-.sheet-close{background:none;border:none;font-size:24px;cursor:pointer;color:var(--gris);line-height:1}
-.lbl{font-size:11px;font-weight:700;color:var(--gris);margin-bottom:4px;display:block;text-transform:uppercase;letter-spacing:.5px}
-.inp,.sel,.ta{width:100%;border:1.5px solid var(--border);border-radius:10px;padding:10px 12px;font-size:13px;font-family:inherit;color:var(--texto);background:var(--card);margin-bottom:12px;outline:none}
-.ta{min-height:60px;resize:vertical}
-.file-zone{border:2px dashed var(--border);border-radius:12px;padding:24px;text-align:center;cursor:pointer;margin-bottom:8px;transition:all .2s;position:relative;overflow:hidden}
-.file-zone.ok{border-color:#00A878;background:#f0faf6}
-[data-theme=dark] .file-zone.ok{background:#0d2e1c}
-.file-zone input{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%}
-.check-row{display:flex;gap:8px;align-items:center;margin-bottom:12px}
-.check-row input{width:18px;height:18px;accent-color:var(--oro);cursor:pointer}
-.check-row label{font-size:13px;color:var(--gris);cursor:pointer}
-.btn-sub{width:100%;background:linear-gradient(135deg,var(--marino),var(--az));color:white;border:none;padding:14px;border-radius:12px;font-size:15px;font-weight:800;cursor:pointer;margin-top:4px}
+.sheet{
+  background:var(--card);
+  border-radius:24px 24px 0 0;
+  padding:0 0 40px;
+  width:100%;max-width:480px;max-height:92vh;overflow-y:auto;
+  box-shadow:0 -8px 40px rgba(0,0,0,.3);
+}
+.sheet-handle{
+  width:36px;height:4px;border-radius:2px;
+  background:var(--border);margin:14px auto 0;
+}
+.sheet-head{
+  padding:16px 20px 14px;
+  border-bottom:1px solid var(--border2);
+  display:flex;align-items:center;justify-content:space-between;
+}
+.sheet-title{
+  font-size:15px;font-weight:700;color:var(--texto);
+  font-family:'Cinzel',serif;letter-spacing:.5px;
+}
+.sheet-close{
+  background:var(--bg2);border:none;
+  color:var(--gris);width:30px;height:30px;border-radius:50%;
+  cursor:pointer;font-size:18px;
+  display:flex;align-items:center;justify-content:center;
+  line-height:1;
+}
+.sheet-body{padding:20px 20px 0}
+.lbl{
+  font-size:9px;font-weight:700;color:var(--gris);
+  margin-bottom:5px;display:block;
+  text-transform:uppercase;letter-spacing:1.5px;
+  font-family:'Cinzel',serif;
+}
+.inp,.sel,.ta{
+  width:100%;
+  border:1.5px solid var(--border);
+  border-radius:12px;padding:11px 14px;
+  font-size:13px;font-family:inherit;
+  color:var(--texto);background:var(--card2);
+  margin-bottom:14px;outline:none;
+  transition:border-color .2s,background .2s;
+}
+.inp:focus,.sel:focus,.ta:focus{border-color:var(--az);background:var(--card)}
+.ta{min-height:64px;resize:vertical}
+.check-row{display:flex;gap:10px;align-items:center;margin-bottom:14px}
+.check-row input{width:18px;height:18px;accent-color:var(--oro);cursor:pointer;border-radius:4px}
+.check-row label{font-size:13px;color:var(--texto2);cursor:pointer}
+.btn-sub{
+  width:100%;
+  background:linear-gradient(135deg,var(--marino-deep),var(--marino));
+  color:#fff;border:none;padding:16px;
+  border-radius:14px;font-size:14px;font-weight:800;
+  cursor:pointer;margin-top:4px;
+  font-family:'Cinzel',serif;letter-spacing:1px;text-transform:uppercase;
+  box-shadow:0 4px 20px rgba(0,59,111,.35);
+  transition:opacity .2s,transform .2s;
+}
+.btn-sub:active{opacity:.85;transform:scale(.98)}
+.btn-sub:disabled{opacity:.5;pointer-events:none}
+
+/* ── LECTOR ──────────────────────────────────────────────── */
 #lector{display:none;position:fixed;inset:0;z-index:200;background:#001f3f;flex-direction:column}
 #lector.open{display:flex}
-.lector-bar{background:var(--marino);padding:12px 14px;display:flex;align-items:center;gap:10px;flex-shrink:0}
-.lector-back{background:rgba(255,255,255,.15);border:none;color:white;width:34px;height:34px;border-radius:50%;font-size:20px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.lector-titulo{flex:1;color:white;font-size:14px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.lector-del{background:rgba(255,80,80,.15);border:1px solid rgba(255,80,80,.3);color:#ff7070;padding:6px 10px;border-radius:8px;font-size:11px;font-weight:700;cursor:pointer;display:none}
-#lector-frame{flex:1;border:none;width:100%;background:white}
-#toast{position:fixed;bottom:80px;left:50%;transform:translateX(-50%) translateY(20px);background:#1a2e3b;color:white;padding:10px 20px;border-radius:100px;font-size:13px;font-weight:600;opacity:0;transition:all .3s;z-index:500;white-space:nowrap;pointer-events:none}
+.lector-bar{
+  background:var(--marino-deep);
+  padding:0 14px;height:54px;
+  display:flex;align-items:center;gap:10px;flex-shrink:0;
+  border-bottom:1px solid rgba(240,171,0,.15);
+}
+.lector-back{
+  background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.08);
+  color:#fff;width:36px;height:36px;border-radius:50%;
+  font-size:18px;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;
+}
+.lector-titulo{
+  flex:1;color:#fff;font-size:13px;font-weight:600;
+  font-family:'Cinzel',serif;letter-spacing:.3px;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+.lector-del{
+  background:rgba(255,80,80,.12);
+  border:1px solid rgba(255,80,80,.25);color:#ff7a7a;
+  padding:6px 12px;border-radius:8px;font-size:11px;font-weight:700;
+  cursor:pointer;display:none;font-family:inherit;
+}
+#lector-frame{flex:1;border:none;width:100%;background:#fff}
+
+/* ── TOAST ───────────────────────────────────────────────── */
+#toast{
+  position:fixed;bottom:88px;left:50%;
+  transform:translateX(-50%) translateY(16px);
+  background:var(--marino-deep);color:#fff;
+  padding:10px 22px;border-radius:100px;
+  font-size:13px;font-weight:600;
+  border:1px solid rgba(240,171,0,.2);
+  opacity:0;transition:all .3s;z-index:500;
+  white-space:nowrap;pointer-events:none;
+  box-shadow:0 4px 20px rgba(0,0,0,.4);
+}
 #toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+/* ── DIVIDER BETWEEN SECTIONS ────────────────────────────── */
+.section-divider{
+  display:flex;align-items:center;gap:10px;
+  padding:10px 16px 6px;
+  color:var(--gris);font-size:9px;letter-spacing:2px;
+  text-transform:uppercase;font-family:'Cinzel',serif;
+}
+.section-divider::before,.section-divider::after{
+  content:'';flex:1;height:1px;background:var(--border2);
+}
 </style>
 </head>
 <body>
 
+<!-- SPLASH -->
 <div id="splash">
-  <div class="splash-icon">🎤</div>
-  <h1>PREDICADOR</h1>
-  <p>Recursos para el ministro</p>
+  <div class="splash-ring">🎤</div>
+  <div class="splash-wordmark">Predicador</div>
+  <div class="splash-tagline">Recursos para el ministro</div>
+  <div class="splash-bar"></div>
 </div>
 
+<!-- APP -->
 <div id="app">
+
+  <!-- HEADER -->
   <div id="header">
-    <span style="font-size:22px">🎤</span>
-    <span class="h-title">Predicador</span>
+    <div class="h-icon">🎤</div>
+    <div class="h-brand">
+      <div class="h-wordmark">Predicador</div>
+      <div class="h-sub">IPUC · Biblioteca Ministerial</div>
+    </div>
     <button class="h-btn" onclick="toggleTheme()" id="theme-btn">🌙</button>
   </div>
+
+  <!-- SCROLL CONTENT -->
   <div id="content">
-    <div class="sub">
-      <div class="bib-search">
+
+    <!-- SEARCH -->
+    <div class="search-band">
+      <div class="search-wrap">
         <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
         <input type="text" id="s-input" placeholder="Buscar título, versículo..." oninput="filtrar()">
       </div>
     </div>
+
+    <!-- STATS -->
     <div class="stats">
       <div class="stat"><div class="stat-n" id="st-total">0</div><div class="stat-l">Total</div></div>
       <div class="stat"><div class="stat-n" id="st-nuevos">0</div><div class="stat-l">Nuevos</div></div>
       <div class="stat"><div class="stat-n" id="st-cats">0</div><div class="stat-l">Categorías</div></div>
     </div>
-    <div class="pills">
-      <button class="pill all" data-cat="all" onclick="filtraCat('all',this)">Todos</button>
-      <button class="pill" data-cat="bosquejo" onclick="filtraCat('bosquejo',this)">📋 Bosquejos</button>
-      <button class="pill" data-cat="ebook" onclick="filtraCat('ebook',this)">📕 Ebooks</button>
-      <button class="pill" data-cat="evangelismo" onclick="filtraCat('evangelismo',this)">✝️ Evangelismo</button>
-      <button class="pill" data-cat="estudio" onclick="filtraCat('estudio',this)">📖 Estudios</button>
-      <button class="pill" data-cat="devocion" onclick="filtraCat('devocion',this)">🙏 Devocionales</button>
-      <button class="pill" data-cat="serie" onclick="filtraCat('serie',this)">🔗 Series</button>
+
+    <!-- PILLS -->
+    <div class="pills-wrap">
+      <div class="pills">
+        <button class="pill all" data-cat="all" onclick="filtraCat('all',this)">Todos</button>
+        <button class="pill" data-cat="bosquejo" onclick="filtraCat('bosquejo',this)">📋 Bosquejos</button>
+        <button class="pill" data-cat="ebook" onclick="filtraCat('ebook',this)">📕 Ebooks</button>
+        <button class="pill" data-cat="evangelismo" onclick="filtraCat('evangelismo',this)">✝️ Evangelismo</button>
+        <button class="pill" data-cat="estudio" onclick="filtraCat('estudio',this)">📖 Estudios</button>
+        <button class="pill" data-cat="devocion" onclick="filtraCat('devocion',this)">🙏 Devocionales</button>
+        <button class="pill" data-cat="serie" onclick="filtraCat('serie',this)">🔗 Series</button>
+      </div>
     </div>
+
+    <!-- GRID -->
     <div class="grid" id="grid">
       <div class="empty"><div class="empty-icon">⏳</div><p>Cargando...</p></div>
     </div>
-  </div>
-</div>
 
+  </div><!-- /content -->
+</div><!-- /app -->
+
+<!-- FAB -->
 <button class="fab" id="fab" onclick="abrirAdmin()">＋</button>
 
+<!-- MODAL SUBIR -->
 <div class="modal-bg" id="modal-sub">
   <div class="sheet">
-    <div class="sheet-title">📤 Subir contenido <button class="sheet-close" onclick="cerrarModal('modal-sub')">×</button></div>
-    <label class="lbl">Categoría</label>
-    <select class="sel" id="f-tipo">
-      <option value="bosquejo">📋 Bosquejo</option>
-      <option value="ebook">📕 Ebook</option>
-      <option value="evangelismo">✝️ Evangelismo</option>
-      <option value="estudio">📖 Estudio</option>
-      <option value="devocion">🙏 Devocional</option>
-      <option value="serie">🔗 Serie</option>
-    </select>
-    <label class="lbl">Emoji</label>
-    <input class="inp" id="f-emoji" type="text" placeholder="📖" maxlength="4">
-    <label class="lbl">Título</label>
-    <input class="inp" id="f-titulo" type="text" placeholder="Ej: Creciendo en la Obra del Señor">
-    <label class="lbl">Versículo / Referencia</label>
-    <input class="inp" id="f-versiculo" type="text" placeholder="Ej: 1 Corintios 15:58">
-    <label class="lbl">Resumen breve</label>
-    <textarea class="ta" id="f-resumen" placeholder="Una línea que describa el contenido..."></textarea>
-    <label class="lbl">Contenido HTML (pega el código aquí)</label>
-    <textarea class="ta" id="f-html" placeholder="Pega aquí el HTML completo generado por Claude..." style="min-height:160px;font-family:monospace;font-size:11px"></textarea>
-    <div class="check-row"><input type="checkbox" id="f-dest"><label for="f-dest">Destacado ⭐</label></div>
-    <div class="check-row"><input type="checkbox" id="f-nuevo" checked><label for="f-nuevo">Nuevo 🆕</label></div>
-    <button class="btn-sub" onclick="subir()">📤 Subir a Predicador</button>
+    <div class="sheet-handle"></div>
+    <div class="sheet-head">
+      <div class="sheet-title">Subir contenido</div>
+      <button class="sheet-close" onclick="cerrarModal('modal-sub')">×</button>
+    </div>
+    <div class="sheet-body">
+      <label class="lbl">Categoría</label>
+      <select class="sel" id="f-tipo">
+        <option value="bosquejo">📋 Bosquejo</option>
+        <option value="ebook">📕 Ebook</option>
+        <option value="evangelismo">✝️ Evangelismo</option>
+        <option value="estudio">📖 Estudio</option>
+        <option value="devocion">🙏 Devocional</option>
+        <option value="serie">🔗 Serie</option>
+      </select>
+      <label class="lbl">Emoji</label>
+      <input class="inp" id="f-emoji" type="text" placeholder="📖" maxlength="4">
+      <label class="lbl">Título</label>
+      <input class="inp" id="f-titulo" type="text" placeholder="Ej: Creciendo en la Obra del Señor">
+      <label class="lbl">Versículo / Referencia</label>
+      <input class="inp" id="f-versiculo" type="text" placeholder="Ej: 1 Corintios 15:58">
+      <label class="lbl">Resumen breve</label>
+      <textarea class="ta" id="f-resumen" placeholder="Una línea que describa el contenido..."></textarea>
+      <label class="lbl">Contenido HTML</label>
+      <textarea class="ta" id="f-html" placeholder="Pega aquí el HTML completo generado por Claude..." style="min-height:160px;font-family:monospace;font-size:11px"></textarea>
+      <div class="check-row"><input type="checkbox" id="f-dest"><label for="f-dest">Destacado ⭐</label></div>
+      <div class="check-row"><input type="checkbox" id="f-nuevo" checked><label for="f-nuevo">Nuevo 🆕</label></div>
+      <button class="btn-sub" onclick="subir()">Subir a Predicador</button>
+    </div>
   </div>
 </div>
 
+<!-- LECTOR -->
 <div id="lector">
   <div class="lector-bar">
     <button class="lector-back" onclick="cerrarLector()">←</button>
-    <button id="ar-btn" onclick="toggleAudio()" style="background:rgba(240,171,0,.2);border:1px solid rgba(240,171,0,.4);color:#F0AB00;width:34px;height:34px;border-radius:50%;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;" title="Escuchar">🎧</button>
-    <input type="range" id="ar-speed" min="0.5" max="2" step="0.1" value="1" style="width:70px;accent-color:#F0AB00;" title="Velocidad">
-    <span id="ar-speed-label" style="color:#F0AB00;font-size:11px;min-width:28px;">1.0x</span>
     <span class="lector-titulo" id="l-titulo">Cargando...</span>
     <button class="lector-del" id="l-del" onclick="eliminar()">🗑 Eliminar</button>
   </div>
-  <iframe id="lector-frame" sandbox="allow-same-origin allow-scripts allow-popups allow-modals"></iframe>
+  <iframe id="lector-frame" sandbox="allow-same-origin allow-scripts"></iframe>
 </div>
 
 <div id="toast"></div>
@@ -237,7 +598,7 @@ function render(data){
   const g=document.getElementById('grid');
   if(!data.length){g.innerHTML='<div class="empty"><div class="empty-icon">📚</div><p>Sin contenido aquí aún.</p></div>';return;}
   g.innerHTML=data.map(i=>{
-    const nuevo=i.nuevo?'<span class="card-nuevo">NUEVO</span>':'<span></span>';
+    const nuevo=i.nuevo?'<span class="card-nuevo">Nuevo</span>':'<span></span>';
     const verso=i.versiculo?'<div class="card-verso">'+esc(i.versiculo)+'</div>':'';
     const res=i.resumen?'<div class="card-resumen">'+esc(i.resumen)+'</div>':'';
     return '<div class="card" data-cat="'+i.tipo+'" onclick="abrirLector(\''+i.id+'\')">'
@@ -246,7 +607,7 @@ function render(data){
       +'<div class="card-cat">'+(CATS[i.tipo]||i.tipo)+'</div>'
       +'<div class="card-titulo">'+esc(i.titulo)+'</div>'
       +verso+res
-      +'<div class="card-meta">'+nuevo+'<span style="color:var(--gris);font-size:18px">›</span></div>'
+      +'<div class="card-meta">'+nuevo+'<span class="card-chevron">›</span></div>'
       +'</div></div>';
   }).join('');
 }
@@ -275,9 +636,6 @@ window.abrirAdmin=function(){
   document.getElementById('modal-sub').classList.add('open');
 }
 
-
-
-
 window.subir=async function(){
   const titulo=document.getElementById('f-titulo').value.trim();
   if(!titulo){toast('⚠️ Título obligatorio');return;}
@@ -304,7 +662,7 @@ window.subir=async function(){
     toast('✅ Subido correctamente');
     cargar();
   }catch(e){toast('❌ '+e.message);}
-  finally{btn.disabled=false;btn.textContent='📤 Subir a Predicador';}
+  finally{btn.disabled=false;btn.textContent='Subir a Predicador';}
 }
 
 window.eliminar=async function(){
@@ -320,7 +678,6 @@ window.eliminar=async function(){
 
 window.cerrarModal=function(id){document.getElementById(id).classList.remove('open');}
 
-// Tema
 let dark=localStorage.getItem('pred_theme')==='dark';
 function applyTheme(d){
   dark=d;
@@ -332,7 +689,6 @@ function applyTheme(d){
 window.toggleTheme=()=>applyTheme(!dark);
 applyTheme(dark);
 
-// Toast
 let _tt;
 window.toast=function(msg){
   const el=document.getElementById('toast');
@@ -340,7 +696,6 @@ window.toast=function(msg){
   clearTimeout(_tt);_tt=setTimeout(()=>el.classList.remove('show'),2800);
 }
 
-// Init
 cargar();
 setTimeout(()=>{
   document.getElementById('splash').style.opacity='0';
@@ -351,52 +706,5 @@ setTimeout(()=>{
 },1400);
 </script>
 <script>if('serviceWorker' in navigator) navigator.serviceWorker.register('/sw.js').catch(()=>{});</script>
-<script src="audio-reader.js"></script>
-<script>
-// ── AUDIO READER ──
-let arPlaying=false, arUtts=[], arIdx=0, arRate=1;
-function arGetText(){
-  try{
-    const doc=document.getElementById('lector-frame').contentDocument||document.getElementById('lector-frame').contentWindow.document;
-    const skip='nav,.nav-toggle,script,style,cite,.ch-num,.cover-tag,.cover-author,.nav-brand,.nav-section';
-    const clone=doc.body.cloneNode(true);
-    clone.querySelectorAll(skip).forEach(e=>e.remove());
-    return (clone.innerText||clone.textContent).replace(/\s+/g,' ').trim();
-  }catch(e){return '';}
-}
-function arBuild(){
-  const text=arGetText(); if(!text)return [];
-  const words=text.split(' '); const chunks=[]; let buf='';
-  words.forEach(w=>{buf+=w+' '; if(buf.length>250){chunks.push(buf.trim());buf='';}});
-  if(buf.trim())chunks.push(buf.trim());
-  return chunks.map(t=>{const u=new SpeechSynthesisUtterance(t);u.lang='es-MX';u.rate=arRate;return u;});
-}
-function arSpeak(idx){
-  if(idx>=arUtts.length){arStop();return;}
-  arIdx=idx;
-  const u=arUtts[idx];
-  u.rate=arRate;
-  u.onend=()=>{if(arPlaying)arSpeak(arIdx+1);};
-  speechSynthesis.speak(u);
-}
-function arStop(){arPlaying=false;speechSynthesis.cancel();arIdx=0;document.getElementById('ar-btn').innerHTML='🎧';}
-function toggleAudio(){
-  if(arPlaying){arPlaying=false;speechSynthesis.cancel();document.getElementById('ar-btn').innerHTML='🎧';}
-  else{
-    arPlaying=true;
-    document.getElementById('ar-btn').innerHTML='⏹';
-    arUtts=arBuild();
-    if(!arUtts.length){arPlaying=false;return;}
-    arSpeak(arIdx);
-  }
-}
-document.getElementById('ar-speed').addEventListener('input',function(){
-  arRate=parseFloat(this.value);
-  document.getElementById('ar-speed-label').textContent=arRate.toFixed(1)+'x';
-});
-// detener al cerrar lector
-const _cerrar=window.cerrarLector;
-window.cerrarLector=function(){arStop();if(_cerrar)_cerrar();};
-</script>
 </body>
 </html>
